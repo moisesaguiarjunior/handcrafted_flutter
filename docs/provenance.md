@@ -12,3 +12,8 @@ The example uses unmodified Inter and Caveat fonts with their original SIL OFL
 1.1 copyright and license notices in example/assets/fonts. These are example
 assets, not an exported font dependency. FFmpeg is an optional external capture
 tool; no binary or codec library is distributed. See dependencies.md.
+
+The curve/ink primitives and drawing playground are authored here using Flutter
+paths and synthetic waypoints. The drawing capture also renders the SDK-provided
+Material Icons font; that font is loaded from the SDK for capture and is not
+copied into this repository. No consumer artwork or screenshots are bundled.

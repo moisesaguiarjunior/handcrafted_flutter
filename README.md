@@ -67,6 +67,8 @@ in an application. Keep source-access credentials outside code and URLs.
 | `CraftSurface` | Material behind native Flutter widgets |
 | `pigmentOutline` | Reproducible organic contours |
 | `CraftOutline` | Value-based rectangle, rounded rectangle and organic recipes |
+| `craftCurveThrough`, `trimCraftPath` | Curved waypoints and explicit arc-length reveal |
+| `CraftStrokeStyle`, `paintCraftStroke` | Continuous, dashed or dotted pen/marker/brush ink |
 | `runningStitchPath`, `paintRunningStitch` | Arc-length stitches and illustrative puncture shading |
 | `PartPose`, `CraftPart` | Shared paint, input and attachment transforms |
 | `SceneEntrance` | Finite lifecycle-aware entrance progress |
@@ -80,6 +82,18 @@ size. Reserve parent space for moving touch targets.
 Motion is authored, not a physics solver. Punctures are shading, not displaced
 cloth. Textures are cached per surface; phone performance remains unmeasured.
 Watercolor, inset text, additional edges and stitch families remain future work.
+
+## Curves, ink and completed paths
+
+![Curved line playground with native controls](docs/assets/stroke-playground.png)
+
+Build a smooth route through waypoints, or supply your own Flutter `Path`. Choose
+continuous, dashed or dotted ink independently of pen, broad marker or brush
+treatment. Explicit progress reveals the line by distance without creating a
+clock. Paint a quiet track behind a solid prefix to show a completed route.
+
+Run `flutter run -d chrome -t lib/main_strokes.dart` from `example/`.
+See [drawing recipes and examples](docs/drawing-strokes.md).
 
 ## Development
 

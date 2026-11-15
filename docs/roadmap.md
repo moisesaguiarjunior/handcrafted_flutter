@@ -9,6 +9,8 @@ identity, themes and editorial decisions belong to the application.
 - Five seeded textures: paper, linen, twill, felt and wood.
 - Organic contours; value-based rectangle, rounded rectangle and pigment recipes.
 - Running stitches with illustrative puncture shading.
+- Curves through waypoints, continuous/dashed/dotted ink, pen/marker/brush
+  treatments and arc-length reveal with an interactive drawing playground.
 - Clipped surfaces, shared paint/input/anchor transforms, finite entrance motion.
 - One authored kite-tail preset and runnable synthetic compositions.
 
@@ -37,7 +39,7 @@ shared texture cache. Watercolor contour geometry is not watercolor pigment.
 | Fabric | Existing linen/twill/felt; cotton, canvas, denim, burlap, knit and satin | Weave, fiber, nap and directional sheen |
 | Edges | Clean cut, scissor cut, torn white fibers, serrated, postage perforations and deckle | Silhouette geometry, edge shading and fiber detail remain separate |
 | Relief | Dry embossing, debossing, inset lettering and foil/gilding | Depth approximation, light, contact shadow and highlight; preserve native text |
-| Marks | Ballpoint, fountain pen, pencil, chalk, wax crayon, felt-tip marker, broad marker, dry brush and wet brush | Width/pressure, coverage, edge bleed, granulation, taper and seed |
+| Marks | Basic pen, translucent broad marker and illustrative brush exist; fountain pen, pencil, chalk, wax crayon and wet pigment remain candidates | Width/pressure, coverage, edge bleed, granulation, taper and seed |
 | Stitches | Existing running stitch; backstitch, blanket/buttonhole, chain, cross and basting | Shared seam, spacing, thread thickness and puncture shading |
 | Layers | Contact plus cast shadow, lifted corners and stacked cut paper | Elevation, light direction and clipping; avoid inaccessible transformed targets |
 | Fasteners | Peg, sewn button, eyelet, wax seal and V-cut ribbon | Wrap native controls; do not paint away focus or semantics |

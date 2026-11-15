@@ -5,19 +5,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
-Future<Uint8List> pixels(void Function(Canvas) paint) async {
-  final recorder = ui.PictureRecorder();
-  paint(Canvas(recorder));
-  final picture = recorder.endRecording();
-  final image = await picture.toImage(100, 80);
-  try {
-    final data = await image.toByteData();
-    return Uint8List.fromList(data!.buffer.asUint8List());
-  } finally {
-    image.dispose();
-    picture.dispose();
-  }
-}
+import 'support/raster.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

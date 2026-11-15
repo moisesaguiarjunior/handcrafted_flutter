@@ -1,6 +1,6 @@
-import 'dart:math' as math;
-
 import 'package:flutter/painting.dart';
+
+import 'path_geometry.dart';
 
 /// Extracts visible running-stitch spans from a caller-supplied seam.
 ///
@@ -13,30 +13,7 @@ Path runningStitchPath(
   required double dash,
   required double gap,
 }) {
-  if (!dash.isFinite || dash < .5 || !gap.isFinite || gap < .5) {
-    throw ArgumentError(
-      'Dash and gap must be finite and at least 0.5 logical pixels',
-    );
-  }
-  final metrics = source.computeMetrics().take(33).toList();
-  if (metrics.length > 32 ||
-      metrics.fold<double>(0, (n, m) => n + m.length) > 8192) {
-    throw ArgumentError(
-      'Expected at most 32 contours and 8192 logical pixels of seam',
-    );
-  }
-  final out = Path();
-  for (final metric in metrics) {
-    var d = 0.0;
-    while (d < metric.length) {
-      out.addPath(
-        metric.extractPath(d, math.min(d + dash, metric.length)),
-        Offset.zero,
-      );
-      d += dash + gap;
-    }
-  }
-  return out;
+  return spanPath(pathSpans(checkedPathMetrics(source), dash: dash, gap: gap));
 }
 
 /// Paints a running stitch with optional illustrative puncture compression.

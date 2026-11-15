@@ -31,8 +31,9 @@ anchors, and reserve parent space for translated/rotated touch targets.
 Let the frame timeline supply progress. Do not mount a second `SceneEntrance`
 clock in captured artwork. The following adapter pattern uses Fluvie's
 experimental `FrameBuilder` API; it belongs in a consumer that depends on both
-packages, not in the core package. It has been checked against source signatures,
-but an end-to-end video export has not yet been validated here.
+packages, not in the core package. The snippet is analyzed against Fluvie 0.3.1;
+its experimental-use warning is acknowledged at the call site. An end-to-end
+video export has not yet been validated here.
 
 ```dart
 import 'package:fluvie/fluvie.dart';
@@ -40,9 +41,11 @@ import 'package:flutter/widgets.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 // Place inside the video/scene's resolved time scope.
+// ignore: experimental_member_use
 FrameBuilder((frame) {
   final p = frame.progress;
   return CraftPart(
+    key: const ValueKey('keepsake-piece'),
     size: const Size(320, 180),
     pose: PartPose(translation: Offset(0, (1 - p) * 24)),
     child: const CraftSurface(

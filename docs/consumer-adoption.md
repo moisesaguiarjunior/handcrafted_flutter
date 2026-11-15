@@ -1,16 +1,17 @@
 # Adoption recipes and evidence-driven extensions
 
 Status: integration guidance and proposed work, not additional shipped APIs.
-The adoption baseline is 0664174; this branch adds explicit stroke joins. Keep application identities, artwork and internal
-reviews in their consumer repositories.
+The adoption baseline is 0664174; explicit stroke joins are now available. Keep
+application identities, artwork and internal reviews in their consumer repositories.
 
 ## Start with one rendering responsibility
 
 For existing authored paths, reuse `paintCraftStroke` with explicit width, dash,
 gap, color and progress. Set `CraftStrokeStyle.join` explicitly when matching
-a legacy corner treatment; its default remains `StrokeJoin.round`. Keep the supplied paths: `craftCurveThrough` is useful
-when a caller has waypoints, but replacing an authored cubic with interpolated
-waypoints changes the drawing. Use selective imports or a namespace when a
+a legacy corner treatment; its default remains `StrokeJoin.round`. Keep the
+supplied paths: `craftCurveThrough` is useful when a caller has waypoints, but
+replacing an authored cubic with interpolated waypoints changes the drawing.
+Use selective imports or a namespace when a
 consumer already has primitives with names such as `pigmentOutline`.
 
 Pin an immutable Git revision in the consumer and commit its resolved lockfile.
@@ -54,7 +55,6 @@ Animation adoption should also preserve the existing host's clock and visibility
 policy. An application that already supplies progress does not need a second
 `SceneEntrance`. Physics, gravity and a realistic/cartoon parameter remain planned
 work; the current kite and balloon examples are authored motion.
-
 
 ## First implemented extension: stroke joins
 

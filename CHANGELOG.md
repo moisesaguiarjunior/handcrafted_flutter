@@ -2,6 +2,9 @@
 
 ## 0.0.1 (unreleased)
 
+- Explicit pen/marker stroke joins, preserving the round default and allowing
+  authored miter/bevel corners. Adds adoption guidance and proposed imported-layer,
+  rotary-control and bounded-effect recipes with acceptance criteria.
 - Bounded palette-explicit watercolor, directional motif relief and native
   raised/inset lettering. Adds material/impression/pigment image sheets and
   independently controlled kite body/tail, balloon/tether and hanging examples.

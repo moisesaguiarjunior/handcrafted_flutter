@@ -79,3 +79,8 @@ See [adoption recipes](consumer-adoption.md) for a first stroke migration and
 prioritized evidence gates: measure repeated painting before adding prepared
 geometry/cache APIs; demonstrate accessible decorated layouts as examples; keep
 optional capillary edges separate from silhouette-preserving watercolor.
+
+The next composition example should demonstrate imported crops, pivots and
+anchors using existing parts, without creating a manifest API. The next evidence
+task is a repeatable rendering-cost scene. These complement the delivery order;
+neither shared caches nor prepared-geometry APIs are justified without profiling.

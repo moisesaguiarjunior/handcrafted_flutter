@@ -5,6 +5,23 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 void main() {
+  test('attachment mapping rejects nonfinite local coordinates', () {
+    final pose = PartPose();
+    for (final value in [
+      double.nan,
+      double.infinity,
+      double.negativeInfinity,
+    ]) {
+      for (final point in [Offset(value, 0), Offset(0, value)]) {
+        expect(
+          () => pose.mapPoint(point, size: const Size(80, 60)),
+          throwsArgumentError,
+        );
+      }
+    }
+    expect(pose.mapPoint(Offset.zero, size: const Size(80, 60)), Offset.zero);
+  });
+
   test('attachments use the same pivot rotation scale and translation', () {
     final pose = PartPose(
       translation: const Offset(10, 20),

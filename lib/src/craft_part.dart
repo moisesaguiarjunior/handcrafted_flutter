@@ -55,11 +55,17 @@ class PartPose {
   }
 
   /// Maps a local attachment to parent coordinates through that same matrix.
+  /// Throws [ArgumentError] if either local coordinate is nonfinite.
   Offset mapPoint(
     Offset point, {
     required Size size,
     Alignment pivot = Alignment.topCenter,
-  }) => MatrixUtils.transformPoint(matrixFor(size, pivot), point);
+  }) {
+    if (!point.dx.isFinite || !point.dy.isFinite) {
+      throw ArgumentError.value(point, 'point', 'Coordinates must be finite');
+    }
+    return MatrixUtils.transformPoint(matrixFor(size, pivot), point);
+  }
 }
 
 /// A keyed native-widget artwork part with one paint/input transform.

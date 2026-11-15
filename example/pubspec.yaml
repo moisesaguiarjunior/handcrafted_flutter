@@ -12,3 +12,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter.ttf
+    - family: Caveat
+      fonts:
+        - asset: assets/fonts/Caveat.ttf

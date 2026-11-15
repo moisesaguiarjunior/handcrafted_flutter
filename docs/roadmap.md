@@ -65,3 +65,10 @@ mark recipes, then validate them in independent consumer applications.
 Parameters should compose: changing paper must not replace a control or restart
 an unrelated motion clock. Shape presets and authored actors must not dictate a
 general physics architecture. See [integration contracts](integration.md).
+
+## Concrete composition requests
+
+[Imported-layer, rotary-control and bounded-effect recipes](requests/authored-scene-composition.md)
+refine items 4, 5, 6 and 8 above. They are proposals with acceptance boundaries,
+not shipped APIs. Start by composing existing parts and clocks in examples;
+avoid a manifest, shared cache or physics framework without validated callers.

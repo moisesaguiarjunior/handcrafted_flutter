@@ -32,6 +32,7 @@ class PartPose {
   final double scale;
 
   /// One matrix used by rendering, inverse hit testing and mapped anchors.
+  /// [size] is the actual laid-out size, not an unconstrained preferred size.
   Matrix4 matrixFor(Size size, Alignment pivot) {
     if (!size.width.isFinite ||
         !size.height.isFinite ||
@@ -86,7 +87,9 @@ class CraftPart extends StatelessWidget {
     this.pivot = Alignment.topCenter,
   });
 
-  /// Logical artwork bounds, independent of the scene viewport.
+  /// Preferred logical artwork bounds, constrained by the parent during layout.
+  /// A child LayoutBuilder receives the effective size; use that size with
+  /// PartPose.mapPoint when mapping attachments.
   final Size size;
 
   /// Authored or simulated pose.
@@ -108,7 +111,10 @@ class CraftPart extends StatelessWidget {
       throw ArgumentError('Expected finite positive size and finite pivot');
     }
     return Transform(
-      transform: pose.matrixFor(size, pivot),
+      // Flutter resolves alignment against the actual child size after layout.
+      // Keep Transform outermost so translated controls retain hit testing.
+      alignment: pivot,
+      transform: pose.matrixFor(Size.zero, Alignment.topLeft),
       transformHitTests: true,
       child: SizedBox.fromSize(size: size, child: child),
     );

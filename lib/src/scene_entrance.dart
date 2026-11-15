@@ -2,7 +2,9 @@ import 'package:flutter/widgets.dart';
 
 /// Extracted finite scene clock with lifecycle and reduced-motion suspension.
 ///
-/// No ticker runs while inactive, backgrounded, under disabled TickerMode or
+/// The host must set [active] from its viewport/route visibility policy; this
+/// widget does not detect scroll visibility. No ticker runs while inactive,
+/// backgrounded, under disabled TickerMode or
 /// after completion. Resume continues the saved pose without integrating the
 /// elapsed gap. Platform reduced motion settles immediately, even if inactive.
 /// A new key starts a new entrance; the host owns visit and identity policy.
@@ -24,7 +26,8 @@ class SceneEntrance extends StatefulWidget {
   /// Receives linear normalized progress, from zero to one.
   final Widget Function(BuildContext context, double progress) builder;
 
-  /// Whether the host scene is visible; false pauses elapsed time.
+  /// Host-supplied visibility/activity policy; false pauses elapsed time.
+  /// Defaults to true. Viewport visibility is not detected automatically.
   final bool active;
 
   /// Suppress replay when returning to an already greeted home this session.

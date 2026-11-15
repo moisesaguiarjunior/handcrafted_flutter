@@ -5,6 +5,59 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 void main() {
+  testWidgets(
+    'constrained parts share the laid-out pivot with touch and anchors',
+    (tester) async {
+      for (final actual in [const Size(50, 50), const Size(120, 80)]) {
+        const childKey = ValueKey('constrained-control');
+        var taps = 0;
+        Offset? mappedCenter;
+        final pose = PartPose(rotation: math.pi / 2);
+        await tester.pumpWidget(
+          Directionality(
+            textDirection: TextDirection.ltr,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox.fromSize(
+                size: actual,
+                child: CraftPart(
+                  key: const ValueKey('constrained-part'),
+                  size: const Size(100, 100),
+                  pose: pose,
+                  pivot: Alignment.center,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final laidOut = constraints.biggest;
+                      mappedCenter = pose.mapPoint(
+                        laidOut.center(Offset.zero),
+                        size: laidOut,
+                        pivot: Alignment.center,
+                      );
+                      return GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () => taps++,
+                        child: const SizedBox.expand(key: childKey),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+        final box = tester.renderObject<RenderBox>(find.byKey(childKey));
+        expect(box.size, actual);
+        final center = box.localToGlobal(actual.center(Offset.zero));
+        expect(center.dx, closeTo(actual.width / 2, .001));
+        expect(center.dy, closeTo(actual.height / 2, .001));
+        expect(mappedCenter?.dx, closeTo(center.dx, .001));
+        expect(mappedCenter?.dy, closeTo(center.dy, .001));
+        await tester.tapAt(actual.center(Offset.zero));
+        expect(taps, 1);
+      }
+    },
+  );
+
   test('attachment mapping rejects nonfinite local coordinates', () {
     final pose = PartPose();
     for (final value in [

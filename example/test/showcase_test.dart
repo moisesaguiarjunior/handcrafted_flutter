@@ -39,14 +39,24 @@ void main() {
     expect(find.text('Keepsake card'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
-  testWidgets('enlarged text uses flowing card content', (tester) async {
-    await tester.binding.setSurfaceSize(const Size(320, 850));
-    tester.platformDispatcher.textScaleFactorTestValue = 2.5;
-    addTearDown(() => tester.binding.setSurfaceSize(null));
-    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
-    await tester.pumpWidget(const ShowcaseApp());
-    await tester.pumpAndSettle();
-    expect(find.text('Little things, kept close.'), findsOneWidget);
-    expect(tester.takeException(), isNull);
-  });
+  for (final scale in [1.0, 1.2, 1.3, 1.4, 1.5, 1.51, 2.5]) {
+    testWidgets('card fits with real fonts at text scale $scale', (
+      tester,
+    ) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      tester.platformDispatcher.textScaleFactorTestValue = scale;
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+      await tester.pumpWidget(const ShowcaseApp());
+      await tester.pumpAndSettle();
+      expect(find.text('Open collection'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+      if (scale == 1) {
+        expect(
+          tester.getSize(find.byKey(const ValueKey('paper-card'))),
+          const Size(340, 250),
+        );
+      }
+    });
+  }
 }

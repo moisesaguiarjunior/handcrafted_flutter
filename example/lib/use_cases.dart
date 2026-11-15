@@ -79,7 +79,7 @@ class UseCaseArt extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (kind == CraftUseCase.keepsake &&
-        MediaQuery.textScalerOf(context).scale(14) > 21) {
+        MediaQuery.textScalerOf(context).scale(14) >= 21) {
       return SizedBox(
         width: 440,
         child: CraftSurface(
@@ -108,7 +108,7 @@ class UseCaseArt extends StatelessWidget {
     }
     return SizedBox(
       width: 440,
-      height: 340,
+      height: kind == CraftUseCase.keepsake ? null : 340,
       child: switch (kind) {
         CraftUseCase.keepsake => _KeepsakeCard(onAction: onAction),
         CraftUseCase.hanging => _HangingParts(
@@ -132,41 +132,42 @@ class _KeepsakeCard extends StatelessWidget {
   Widget build(BuildContext context) => Stack(
     clipBehavior: Clip.none,
     children: [
-      Positioned(
-        left: 46,
-        top: 52,
-        child: CraftPart(
+      Padding(
+        padding: const EdgeInsets.fromLTRB(46, 52, 54, 38),
+        child: Transform.rotate(
           key: const ValueKey('paper-card'),
-          size: const Size(340, 250),
-          pose: PartPose(rotation: -.035),
-          pivot: Alignment.center,
+          angle: -.035,
           child: RepaintBoundary(
-            child: CraftSurface(
-              material: CraftMaterial.paper,
-              color: DemoPalette.paper,
-              outline: _paperCut,
-              child: CustomPaint(
-                foregroundPainter: const _CardSeam(),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(32, 38, 32, 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Little things,\nkept close.',
-                        style: TextStyle(
-                          fontFamily: 'Caveat',
-                          fontSize: 42,
-                          height: 1.05,
-                          color: DemoPalette.ink,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minWidth: 340, minHeight: 250),
+              child: CraftSurface(
+                material: CraftMaterial.paper,
+                color: DemoPalette.paper,
+                outline: _paperCut,
+                child: CustomPaint(
+                  foregroundPainter: const _CardSeam(),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(32, 38, 32, 24),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Little things,\nkept close.',
+                          style: TextStyle(
+                            fontFamily: 'Caveat',
+                            fontSize: 42,
+                            height: 1.05,
+                            color: DemoPalette.ink,
+                          ),
                         ),
-                      ),
-                      const Spacer(),
-                      TextButton(
-                        onPressed: onAction,
-                        child: const Text('Open collection'),
-                      ),
-                    ],
+                        TextButton(
+                          onPressed: onAction,
+                          child: const Text('Open collection'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -3,6 +3,8 @@
 - [Compatibility and evolution](compatibility.md)
 - [Runnable examples and capture recipe](showcase.md)
 - [Reuse map](reuse.md)
+- [Material-focused roadmap](roadmap.md)
+- [Composition, Fluvie and Social Studio integration](integration.md)
 - [Dependencies](dependencies.md) and [license inventory](dependency-license-audit.md)
 - [Provenance](provenance.md)
 

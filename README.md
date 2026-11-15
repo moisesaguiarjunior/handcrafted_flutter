@@ -22,6 +22,7 @@ import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 CraftSurface(
   material: CraftMaterial.paper,
   color: const Color(0xFFFFFDF8),
+  shape: const CraftOutline.pigment(seed: 23, broad: true),
   child: TextButton(
     onPressed: openCollection,
     child: const Text('Open collection'),
@@ -30,7 +31,8 @@ CraftSurface(
 ```
 
 Give the surface normal Flutter constraints. An optional `outline` supplies one
-cached silhouette for painting, clipping and child hit testing. The host supplies
+cached silhouette for painting, clipping and child hit testing. Prefer a value
+`shape` recipe to retain the cache across equivalent rebuilds. The host supplies
 the seam path; the package does not yet calculate a general inset contour.
 
 ## Runnable examples
@@ -64,6 +66,7 @@ in an application. Keep source-access credentials outside code and URLs.
 | `CraftMaterial`, `MaterialTextures` | Five seeded textures and explicitly owned raster resources |
 | `CraftSurface` | Material behind native Flutter widgets |
 | `pigmentOutline` | Reproducible organic contours |
+| `CraftOutline` | Value-based rectangle, rounded rectangle and organic recipes |
 | `runningStitchPath`, `paintRunningStitch` | Arc-length stitches and illustrative puncture shading |
 | `PartPose`, `CraftPart` | Shared paint, input and attachment transforms |
 | `SceneEntrance` | Finite lifecycle-aware entrance progress |
@@ -89,6 +92,10 @@ bash tool/encode_showcase.sh
 Captures are explicit and do not regenerate goldens. See the [capture recipe](docs/showcase.md),
 [reuse map](docs/reuse.md), [contribution rules](CONTRIBUTING.md) and
 [documentation index](docs/README.md).
+
+See the [material and movement roadmap](docs/roadmap.md) for current/planned
+capabilities and [integration contracts](docs/integration.md) for Fluvie and
+Social Studio adapter boundaries.
 
 ## License
 

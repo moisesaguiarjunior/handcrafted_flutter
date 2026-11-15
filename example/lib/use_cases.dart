@@ -121,9 +121,6 @@ class UseCaseArt extends StatelessWidget {
   }
 }
 
-Path _paperCut(Size size) =>
-    pigmentOutline((Offset.zero & size).deflate(5), seed: 23, broad: true);
-
 class _KeepsakeCard extends StatelessWidget {
   const _KeepsakeCard({this.onAction});
   final VoidCallback? onAction;
@@ -143,7 +140,11 @@ class _KeepsakeCard extends StatelessWidget {
               child: CraftSurface(
                 material: CraftMaterial.paper,
                 color: DemoPalette.paper,
-                outline: _paperCut,
+                shape: const CraftOutline.pigment(
+                  seed: 23,
+                  broad: true,
+                  padding: 5,
+                ),
                 child: CustomPaint(
                   foregroundPainter: const _CardSeam(),
                   child: Padding(

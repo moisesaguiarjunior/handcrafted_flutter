@@ -11,6 +11,51 @@ List<Offset> samples(Path path) {
 }
 
 void main() {
+  test('value recipe preserves canonical geometry and returns owned paths', () {
+    const recipe = CraftOutline.pigment(seed: 23, broad: true, padding: 5);
+    final first = recipe.pathFor(const Size(100, 80));
+    final expected = samples(
+      pigmentOutline(const Rect.fromLTWH(5, 5, 90, 70), seed: 23, broad: true),
+    );
+    expect(samples(first), expected);
+    first.reset();
+    expect(samples(recipe.pathFor(const Size(100, 80))), expected);
+    expect(recipe, CraftOutline.pigment(seed: 23, broad: true, padding: 5));
+    expect({
+      recipe,
+      CraftOutline.pigment(seed: 23, broad: true, padding: 5),
+    }, hasLength(1));
+    expect(recipe, isNot(const CraftOutline.pigment(seed: 24, broad: true)));
+  });
+
+  test('value recipe rejects invalid inputs and handles exhausted bounds', () {
+    for (final recipe in [
+      const CraftOutline.rectangle(padding: -1),
+      const CraftOutline.pigment(seed: 1, padding: double.nan),
+      const CraftOutline.roundedRectangle(radius: double.infinity),
+      const CraftOutline.roundedRectangle(radius: -1),
+    ]) {
+      expect(() => recipe.pathFor(const Size(80, 60)), throwsArgumentError);
+    }
+    for (final size in [
+      const Size(-1, 10),
+      const Size(10, double.nan),
+      const Size(double.infinity, 10),
+    ]) {
+      expect(
+        () => const CraftOutline.rectangle().pathFor(size),
+        throwsArgumentError,
+      );
+    }
+    for (final recipe in [
+      const CraftOutline.rectangle(padding: 50),
+      const CraftOutline.roundedRectangle(padding: 50),
+      const CraftOutline.pigment(seed: 1, padding: 50),
+    ]) {
+      expect(recipe.pathFor(const Size(100, 80)).computeMetrics(), isEmpty);
+    }
+  });
+
   test('seed is stable across unrelated calls and changes the contour', () {
     const rect = Rect.fromLTWH(20, 30, 180, 90);
     final first = samples(pigmentOutline(rect, seed: 4));

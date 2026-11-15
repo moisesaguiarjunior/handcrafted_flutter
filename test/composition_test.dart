@@ -5,6 +5,79 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 void main() {
+  testWidgets('equivalent value silhouettes retain geometry across rebuilds', (
+    tester,
+  ) async {
+    Future<void> mount({int seed = 23, double width = 100}) =>
+        tester.pumpWidget(
+          Directionality(
+            textDirection: TextDirection.ltr,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(
+                width: width,
+                height: 80,
+                child: CraftSurface(
+                  material: CraftMaterial.paper,
+                  color: const Color(0xFFFFFDF8),
+                  // Deliberately allocate a new, equivalent recipe every build.
+                  shape: CraftOutline.pigment(
+                    seed: seed,
+                    broad: true,
+                    padding: 5,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+    CustomClipper<Path> clipper() => tester
+        .widget<ClipPath>(
+          find.descendant(
+            of: find.byType(CraftSurface),
+            matching: find.byType(ClipPath),
+          ),
+        )
+        .clipper!;
+    await mount();
+    final firstClipper = clipper();
+    final first = firstClipper.getClip(const Size(100, 80));
+    await mount();
+    expect(clipper().shouldReclip(firstClipper), isFalse);
+    expect(identical(clipper().getClip(const Size(100, 80)), first), isTrue);
+    await mount(seed: 24);
+    final changed = clipper().getClip(const Size(100, 80));
+    expect(identical(changed, first), isFalse);
+    expect(
+      changed.computeMetrics().single.getTangentForOffset(0)!.position,
+      isNot(first.computeMetrics().single.getTangentForOffset(0)!.position),
+    );
+    expect(clipper().shouldReclip(firstClipper), isTrue);
+    await mount(seed: 24, width: 150);
+    final resized = clipper().getClip(const Size(150, 80));
+    expect(identical(resized, changed), isFalse);
+    expect(resized.getBounds().width, closeTo(140, .001));
+    await tester.pumpWidget(const SizedBox());
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('ambiguous value and callback silhouettes fail explicitly', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: CraftSurface(
+          material: CraftMaterial.paper,
+          color: const Color(0xFFFFFDF8),
+          shape: const CraftOutline.rectangle(),
+          outline: (size) => Path()..addOval(Offset.zero & size),
+        ),
+      ),
+    );
+    expect(tester.takeException(), isArgumentError);
+  });
+
   testWidgets(
     'constrained parts share the laid-out pivot with touch and anchors',
     (tester) async {

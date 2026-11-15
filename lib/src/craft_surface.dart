@@ -1,12 +1,14 @@
 import 'package:flutter/widgets.dart';
 
 import 'material_textures.dart';
+import 'craft_outline.dart';
 
 /// A material background behind native widgets, clipped to its local shape.
 ///
 /// Owns and disposes its texture cache. Changing [seed] replaces that cache.
 /// A color/material change does not recreate the child or an animation clock.
-/// [outline] receives current layout size; cache expensive geometry in the host.
+/// [shape] is a value recipe; equivalent values retain cached geometry on rebuild.
+/// [outline] accepts custom paths and receives current layout size. Use one only.
 /// Child layout, semantics, focus and actions are preserved. Shape clipping also
 /// clips child input; keep captions outside this surface if they exceed the art.
 class CraftSurface extends StatefulWidget {
@@ -18,6 +20,7 @@ class CraftSurface extends StatefulWidget {
     this.seed = 7,
     this.scale = 1,
     this.strength = 1,
+    this.shape,
     this.outline,
     this.child,
   });
@@ -37,7 +40,13 @@ class CraftSurface extends StatefulWidget {
   /// Grain strength, 0..1.
   final double strength;
 
+  /// Optional value silhouette, cached across equivalent recipe instances.
+  final CraftOutline? shape;
+
   /// Optional silhouette; defaults to local rectangular bounds.
+  ///
+  /// Retained for custom geometry. Callback identity controls cache invalidation;
+  /// keep the callback stable, or prefer [shape] for built-in recipes.
   final Path Function(Size)? outline;
 
   /// Real widgets painted over the material.
@@ -49,13 +58,17 @@ class CraftSurface extends StatefulWidget {
 
 class _CraftSurfaceState extends State<CraftSurface> {
   late MaterialTextures _textures = MaterialTextures(seed: widget.seed);
-  late _SurfaceGeometry _geometry = _SurfaceGeometry(widget.outline);
+  late _SurfaceGeometry _geometry = _SurfaceGeometry(
+    widget.shape,
+    widget.outline,
+  );
 
   @override
   void didUpdateWidget(CraftSurface oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.outline != widget.outline) {
-      _geometry = _SurfaceGeometry(widget.outline);
+    if (oldWidget.shape != widget.shape ||
+        oldWidget.outline != widget.outline) {
+      _geometry = _SurfaceGeometry(widget.shape, widget.outline);
     }
     if (oldWidget.seed != widget.seed) {
       _textures.dispose();
@@ -113,13 +126,21 @@ class _SurfacePainter extends CustomPainter {
 }
 
 class _SurfaceGeometry {
-  _SurfaceGeometry(this.outline);
+  _SurfaceGeometry(this.shape, this.outline) {
+    if (shape != null && outline != null) {
+      throw ArgumentError('Supply shape or outline, not both');
+    }
+  }
+  final CraftOutline? shape;
   final Path Function(Size)? outline;
   Size? _size;
   Path? _path;
   Path pathFor(Size size) {
     if (_size != size) {
-      _path = outline?.call(size) ?? (Path()..addRect(Offset.zero & size));
+      _path =
+          shape?.pathFor(size) ??
+          outline?.call(size) ??
+          (Path()..addRect(Offset.zero & size));
       _size = size;
     }
     return _path!;

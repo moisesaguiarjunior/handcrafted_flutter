@@ -1,0 +1,14 @@
+name: handcrafted_flutter
+description: Experimental tactile materials, composable artwork and finite scene motion.
+version: 0.0.1
+publish_to: none
+repository: https://github.com/moisesaguiarjunior/handcrafted_flutter
+environment:
+  sdk: '>=3.13.7 <4.0.0'
+  flutter: '>=3.47.9'
+dependencies:
+  flutter:
+    sdk: flutter
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

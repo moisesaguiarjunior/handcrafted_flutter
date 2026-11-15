@@ -1,0 +1,14 @@
+name: handcrafted_example
+description: Synthetic contour extraction example.
+version: 0.0.1
+publish_to: none
+environment:
+  sdk: '>=3.13.7 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  handcrafted_flutter:
+    path: ../
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

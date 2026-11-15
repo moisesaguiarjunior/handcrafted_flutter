@@ -186,7 +186,7 @@ class ImportedComposition extends StatelessWidget {
                   child: IconButton(
                     key: const ValueKey('inspect-specimen'),
                     tooltip: 'Inspect the specimen',
-                color: DemoPalette.paper,
+                    color: DemoPalette.paper,
                     onPressed: onInspect,
                     icon: const Icon(Icons.local_florist_outlined),
                   ),

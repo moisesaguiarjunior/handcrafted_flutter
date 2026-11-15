@@ -27,6 +27,9 @@ text and controls, and avoid adding an animation clock to externally timed scene
 
 ## A. Imported layers, pivots and anchors (first priority)
 
+The [imported-layer example](../imported-layers.md) now demonstrates this recipe.
+The adapter is example-local; a general manifest remains proposed.
+
 Start with a runnable example and documented adapter: full source size, crop
 rectangle, pivot in source coordinates, logical scale and explicit pose. The
 adapter can compose existing CraftPart/PartPose; a general manifest needs a

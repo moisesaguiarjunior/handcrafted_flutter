@@ -20,6 +20,7 @@
 | Shared specimen layouts and visual inventory | `example/lib/material_studies.dart`, `example/lib/main_atlas.dart` |
 | Authored actor examples with independent progress | `example/lib/motion_studies.dart`, `example/lib/kite_art.dart` |
 | Canonical example palette and typography | `example/lib/showcase_theme.dart` |
+| Imported crop, source hinge and attachment recipe | `example/lib/imported_layers.dart`, `example/lib/main_scenes.dart` |
 | Shared example capture shell and PNG writer | `tool/capture_support.dart` |
 | Format, analysis and behavior checks | `tool/check.sh` |
 
@@ -60,3 +61,9 @@ conditional extensions; they add no second renderer or clock.
 `CraftStrokeStyle.join` reuses Flutter's `StrokeJoin` for solid/dashed pen/marker
 painting. The round default is preserved. Native-raster regression checks cover
 miter, round and bevel; the existing style value contract includes the join.
+
+For imported artwork, searched crop, pivot, matrixFor, mapPoint, clipping and
+native focus through the package and examples. Reused CraftPart/PartPose and
+the capture/font helpers. SourceLayer remains an example adapter; its supplied
+PNG, crop and hit shape are original synthetic artwork. No second transform,
+alpha-testing engine, clock or general manifest was added.

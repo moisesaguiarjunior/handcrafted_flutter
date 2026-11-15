@@ -23,3 +23,7 @@ maintainer-owned source, with explicit inputs, bounded work and native paragraph
 configuration. This generic code is covered by the maintainer's MIT authorization.
 The botanical specimens, balloon and motion comparisons are newly authored
 synthetic examples. They do not reproduce a consumer application's artwork.
+
+The cabinet sprite sheet is original synthetic artwork authored with Flutter in
+tool/author_layer_asset.dart and distributed under MIT. Its runtime example
+imports the resulting PNG unchanged. No third-party or consumer image is used.

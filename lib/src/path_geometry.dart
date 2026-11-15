@@ -45,7 +45,10 @@ List<PathSpan> pathSpans(
   final spans = <PathSpan>[];
   for (final metric in metrics) {
     if (metric.length == 0) continue;
-    final visible = math.min(remaining, metric.length);
+    // At completion, subtraction rounding must not trim or drop tiny contours.
+    final visible = progress == 1
+        ? metric.length
+        : math.min(remaining, metric.length);
     if (visible <= 0) break;
     if (dash == null) {
       spans.add((metric: metric, start: 0, end: visible));

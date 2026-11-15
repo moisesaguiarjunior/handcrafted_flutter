@@ -91,6 +91,31 @@ void main() {
     },
   );
 
+  test('completion retains tiny contours after ordinary contours', () {
+    for (final side in [1e-12, 1e-15]) {
+      final source = Path()
+        ..addRect(const Rect.fromLTWH(0, 0, 100, 100))
+        ..addRect(Rect.fromLTWH(0, 0, side, side));
+      final original = source.computeMetrics().toList();
+      expect(original, hasLength(2));
+      expect(original.last.length, greaterThan(0));
+      final completed = trimCraftPath(
+        source,
+        progress: 1,
+      ).computeMetrics().toList();
+      final stitches = runningStitchPath(
+        source,
+        dash: 9999,
+        gap: 1,
+      ).computeMetrics().toList();
+      for (final result in [completed, stitches]) {
+        expect(result, hasLength(2));
+        expect(result.map((m) => m.length), original.map((m) => m.length));
+      }
+      expect(completed.every((m) => m.isClosed), isTrue);
+    }
+  });
+
   test('patterns leave real gaps, and marker ink is translucent', () async {
     final path = Path()
       ..moveTo(10, 40)

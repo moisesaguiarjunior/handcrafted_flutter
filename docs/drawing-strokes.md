@@ -114,6 +114,9 @@ separate roadmap item. Phone performance remains unmeasured.
 `CraftStrokeStyle(join: StrokeJoin.miter)` retains native pointed corners when
 migrating an authored pen/marker path. Round remains the default; bevel is also
 available. This controls solid/dashed stroked paths, not brush polygons or dotted
-dabs. Flutter's default miter limit applies. Compare the consumer's original
+dabs. Flutter's default miter limit applies. Pointed miter corners can extend
+farther than half the stroke width from the centerline; reserve space for the
+actual corner geometry rather than assuming half-width padding is sufficient.
+Compare the consumer's original
 render before changing its join; even thin curves can expose a pixel difference.
 See [adoption recipes](consumer-adoption.md) for migration boundaries.

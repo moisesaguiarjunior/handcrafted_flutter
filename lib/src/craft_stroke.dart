@@ -157,9 +157,11 @@ Path trimCraftPath(Path source, {required double progress}) {
 /// faint track first if incomplete and complete portions should coexist.
 ///
 /// Drawing is deterministic for identical inputs on the same renderer. Brush
-/// width depends on seed and distance, not elapsed time. Caps/ink can extend by
-/// half the nominal width outside the centerline; the caller owns clipping and
-/// layout padding. This does not compute an inset seam or simulate wet pigment.
+/// width depends on seed and distance, not elapsed time. Round caps and dabs can
+/// extend half the nominal width outside the centerline. Miter corners can extend
+/// farther, subject to Flutter's native miter limit; half-width padding is not
+/// sufficient for those corners. The caller owns clipping and layout padding.
+/// This does not compute an inset seam or simulate wet pigment.
 void paintCraftStroke(
   Canvas canvas,
   Path source, {

@@ -2,6 +2,8 @@
 
 ## 0.0.1 (unreleased)
 
+- Native rotary-control example with bounded stepping, stable control identity,
+  current-pose retargeting and finite, activity-aware decorative movement.
 - Explicit pen/marker stroke joins, preserving the round default and allowing
   authored miter/bevel corners. Adds adoption guidance and proposed imported-layer,
   rotary-control and bounded-effect recipes with acceptance criteria.

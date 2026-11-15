@@ -47,6 +47,9 @@ Acceptance:
 
 ## B. Small rotary control around a native action
 
+The [rotary example](../rotary-control.md) now demonstrates this recipe without
+adding a public dial abstraction.
+
 A dial/reel recipe should reuse PartPose for its rotating illustration while a
 native accessible control owns stepping, focus and semantics. Do not make core
 geometry depend on application dates, recording state or device audio.

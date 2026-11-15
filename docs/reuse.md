@@ -60,3 +60,9 @@ conditional extensions; they add no second renderer or clock.
 `CraftStrokeStyle.join` reuses Flutter's `StrokeJoin` for solid/dashed pen/marker
 painting. The round default is preserved. Native-raster regression checks cover
 miter, round and bevel; the existing style value contract includes the join.
+
+For the rotary recipe, searched native Slider, PartPose, CraftPart, SceneEntrance
+and keyed interaction ownership. The native slider owns focus/semantics; the
+existing finite clock times only decorative artwork. CraftSurface owns its wood
+texture. Angle mapping/retarget policy stay example-local, without a second
+clock implementation or public dial abstraction.

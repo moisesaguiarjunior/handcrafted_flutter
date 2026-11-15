@@ -1,13 +1,10 @@
-import 'dart:io';
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import '../example/lib/use_cases.dart';
 import '../example/test/support/fonts.dart';
+import 'capture_support.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -20,47 +17,16 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetDevicePixelRatio);
     addTearDown(tester.view.resetPhysicalSize);
-    Future<void> capture(String path, Size size, Widget child) async {
-      tester.view.physicalSize = size;
-      final key = GlobalKey();
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: showcaseTheme(),
-          home: RepaintBoundary(
-            key: key,
-            child: Scaffold(
-              backgroundColor: DemoPalette.board,
-              body: Center(child: child),
-            ),
-          ),
-        ),
-      );
-      await tester.pump();
-      expect(tester.takeException(), isNull);
-      final boundary = key.currentContext?.findRenderObject();
-      if (boundary is! RenderRepaintBoundary)
-        throw StateError('Missing capture boundary');
-      await tester.runAsync(() async {
-        final image = await boundary.toImage();
-        try {
-          final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
-          if (bytes == null) throw StateError('PNG encoding failed');
-          final file = File(path);
-          await file.parent.create(recursive: true);
-          await file.writeAsBytes(bytes.buffer.asUint8List());
-        } finally {
-          image.dispose();
-        }
-      });
-    }
 
-    await capture(
+    await captureExample(
+      tester,
       'build/showcase/hero.png',
       const Size(1100, 500),
       const _Hero(),
     );
     for (final kind in CraftUseCase.values) {
-      await capture(
+      await captureExample(
+        tester,
         'build/showcase/${kind.name}.png',
         const Size(440, 340),
         UseCaseArt(kind: kind, onAction: () {}),
@@ -68,7 +34,8 @@ void main() {
     }
     for (final kind in [CraftUseCase.hanging, CraftUseCase.kite]) {
       for (var frame = 0; frame <= 50; frame++) {
-        await capture(
+        await captureExample(
+          tester,
           'build/showcase/${kind.name}/frame_${frame.toString().padLeft(3, '0')}.png',
           const Size(440, 340),
           UseCaseArt(kind: kind, progress: frame / 50, onAction: () {}),

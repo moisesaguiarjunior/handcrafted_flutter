@@ -11,4 +11,6 @@ export 'src/craft_part.dart';
 export 'src/craft_surface.dart';
 export 'src/craft_outline.dart';
 export 'src/craft_stroke.dart';
+export 'src/watercolor.dart';
+export 'src/craft_relief.dart';
 export 'src/authored_kite_tail.dart';

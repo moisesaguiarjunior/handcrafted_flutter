@@ -2,11 +2,11 @@
 
 **Give your Flutter widgets a handmade surface.**
 
-![Paper, fabric and stitched native controls](docs/assets/hero.png)
+![Botanical relief and native lettering on twill, linen and felt](docs/assets/impressions-atlas.png)
 
 Seeded paper, linen, twill, felt and wood textures, running stitches, organic
-contours and composable moving parts for Flutter. Text remains text; buttons
-retain native focus, actions and semantics.
+contours, watercolor pigment, relief and composable moving parts for Flutter.
+Text remains text; buttons retain native focus, actions and semantics.
 
 [![Checks](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml/badge.svg)](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml)
 
@@ -35,13 +35,36 @@ cached silhouette for painting, clipping and child hit testing. Prefer a value
 `shape` recipe to retain the cache across equivalent rebuilds. The host supplies
 the seam path; the package does not yet calculate a general inset contour.
 
-## Runnable examples
+## Materials you can compose
 
-![A stitched keepsake card with native text and button](docs/assets/keepsake.png)
+![Large procedural twill, linen, felt, paper and wood swatches](docs/assets/materials-atlas.png)
 
-![Independently moving paper and felt](docs/assets/hanging-parts.gif)
+Five material algorithms, with explicit colors, grain scale and seed. The three
+fabric impressions above keep the fabric grain visible inside original botanical motifs.
+Their captions are native widgets; the pressed lettering uses `CraftReliefText`.
+See the [implemented catalog](docs/materials-and-motion.md) for API/examples and
+what remains planned.
 
-![An authored kite tail](docs/assets/kite-tail.gif)
+## Watercolor on paper
+
+![Overlapping pigment, a botanical painting and a paper cutout](docs/assets/watercolor-atlas.png)
+
+Layer puddles, blooms, drying lines and deposits inside your own closed shape.
+Supply pigment, companion and paper colors; the silhouette and its holes remain
+unchanged. `paintWatercolor` composes with the existing paper grain. This is a
+seeded visual approximation of watercolor.
+
+## Body, tail and tether
+
+![Independent kite body and tail motion, combined motion and an attached balloon tether](docs/assets/motion-atlas.gif)
+
+Move the kite's parent part while its ribbon tail keeps its own progress. Hold
+the body still to animate only the tail, or combine both. The balloon's string
+follows its transformed knot. The original showcase also includes hanging
+paper/felt pieces with native controls. These are finite authored examples;
+GIFs loop for replay.
+
+## Run the examples
 
 ```sh
 gh repo clone moisesaguiarjunior/handcrafted_flutter
@@ -49,10 +72,11 @@ cd handcrafted_flutter
 flutter pub get --enforce-lockfile
 cd example
 flutter pub get --enforce-lockfile
-flutter run -d chrome -t lib/main_showcase.dart
+flutter run -d chrome -t lib/main_atlas.dart
 ```
 
-- [Showcase](example/lib/main_showcase.dart): keepsake card, hanging pieces and kite.
+- [Material and motion atlas](example/lib/main_atlas.dart): four sections with live controls.
+- [Original showcase](example/lib/main_showcase.dart): keepsake card, hanging pieces and kite.
 - [Material playground](example/lib/main.dart): seed, scale, grain and lighting.
 - [Shared compositions](example/lib/use_cases.dart): complete runnable widget code.
 
@@ -65,6 +89,8 @@ in an application. Keep source-access credentials outside code and URLs.
 | --- | --- |
 | `CraftMaterial`, `MaterialTextures` | Five seeded textures and explicitly owned raster resources |
 | `CraftSurface` | Material behind native Flutter widgets |
+| `paintWatercolor` | Layered pigment with explicit colors, seed and granulation |
+| `paintCraftRelief`, `CraftReliefText` | Directional motif shading and native raised/inset lettering |
 | `pigmentOutline` | Reproducible organic contours |
 | `CraftOutline` | Value-based rectangle, rounded rectangle and organic recipes |
 | `craftCurveThrough`, `trimCraftPath` | Curved waypoints and explicit arc-length reveal |
@@ -80,8 +106,10 @@ Pivots use the actual constrained size; attachment mapping must use that same
 size. Reserve parent space for moving touch targets.
 
 Motion is authored, not a physics solver. Punctures are shading, not displaced
-cloth. Textures are cached per surface; phone performance remains unmeasured.
-Watercolor, inset text, additional edges and stitch families remain future work.
+cloth. Textures are cached per surface.
+General contour insets, additional material/edge/stitch families and physical
+cloth/wind remain future work. Glyph shading uses bounded offscreen layers;
+phone performance remains unmeasured.
 
 ## Curves, ink and completed paths
 
@@ -101,6 +129,8 @@ See [drawing recipes and examples](docs/drawing-strokes.md).
 bash tool/check.sh
 flutter test tool/capture_showcase.dart
 bash tool/encode_showcase.sh
+flutter test tool/capture_atlas.dart
+bash tool/encode_atlas.sh
 ```
 
 Captures are explicit and do not regenerate goldens. See the [capture recipe](docs/showcase.md),

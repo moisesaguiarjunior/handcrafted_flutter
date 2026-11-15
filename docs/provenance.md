@@ -17,3 +17,9 @@ The curve/ink primitives and drawing playground are authored here using Flutter
 paths and synthetic waypoints. The drawing capture also renders the SDK-provided
 Material Icons font; that font is loaded from the SDK for capture and is not
 copied into this repository. No consumer artwork or screenshots are bundled.
+
+Palette-independent pigment and glyph-shading logic is adapted from
+maintainer-owned source, with explicit inputs, bounded work and native paragraph
+configuration. This generic code is covered by the maintainer's MIT authorization.
+The botanical specimens, balloon and motion comparisons are newly authored
+synthetic examples. They do not reproduce a consumer application's artwork.

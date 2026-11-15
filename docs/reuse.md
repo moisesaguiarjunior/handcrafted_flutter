@@ -5,6 +5,8 @@
 | Seeded perimeter | `pigmentOutline` |
 | Value-based silhouette recipes | `CraftOutline`, `CraftSurface.shape` |
 | Material tiles and owned resources | `MaterialTextures`, `CraftMaterial` |
+| Bounded layered pigment with explicit palette | `paintWatercolor` |
+| Directional motif rims and native lettering | `paintCraftRelief`, `CraftReliefText` |
 | Stitch spans and puncture shading | `runningStitchPath`, `paintRunningStitch` |
 | Shared bounded arc-length geometry | `lib/src/path_geometry.dart` (internal) |
 | Curved waypoints and explicit reveal | `craftCurveThrough`, `trimCraftPath` |
@@ -15,6 +17,10 @@
 | Authored kite-tail preset | `authoredKiteTail` |
 | Runnable compositions and captures | `example/lib/use_cases.dart`, `tool/capture_showcase.dart` |
 | Drawing playground and capture | `example/lib/main_strokes.dart`, `tool/capture_strokes.dart` |
+| Shared specimen layouts and visual inventory | `example/lib/material_studies.dart`, `example/lib/main_atlas.dart` |
+| Authored actor examples with independent progress | `example/lib/motion_studies.dart`, `example/lib/kite_art.dart` |
+| Canonical example palette and typography | `example/lib/showcase_theme.dart` |
+| Shared example capture shell and PNG writer | `tool/capture_support.dart` |
 | Format, analysis and behavior checks | `tool/check.sh` |
 
 Search by name, behavior and type before introducing a parallel implementation.
@@ -36,3 +42,12 @@ existing public contract. New ink patterns reuse those intervals. The example
 reuses `CraftSurface`, `SceneEntrance` and the licensed showcase theme/fonts.
 Raster fixtures share `test/support/raster.dart`; no second tile renderer,
 animation clock or independently maintained dashed-path algorithm was added.
+
+For the material/motion atlas, searched `pigment`, `relief`, `imprint`,
+`authoredKiteTail`, `PartPose`, texture ownership and capture writers. Adapted
+maintainer-owned pigment/glyph-shading logic into palette-explicit bounded APIs;
+the native paragraph supplies lettering layout instead of duplicating inherited
+text configuration. Cloth motifs use the canonical material/stitch primitives.
+Extracted the existing kite artwork and example theme, preserving legacy entry
+points through the use_cases export. Balloon attachments use PartPose.mapPoint.
+New sampled captures reuse the existing shell/writer rather than a mock renderer.

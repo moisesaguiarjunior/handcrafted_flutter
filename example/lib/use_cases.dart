@@ -3,6 +3,11 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
+import 'kite_art.dart';
+import 'showcase_theme.dart';
+
+export 'showcase_theme.dart';
+
 /// Three runnable compositions built from the package's implemented APIs.
 enum CraftUseCase {
   /// A textured paper card with a felt label and a native action.
@@ -14,38 +19,6 @@ enum CraftUseCase {
   /// The extracted, authored kite-tail deformation.
   kite,
 }
-
-/// Colors shared by runnable examples and deterministic README captures.
-abstract final class DemoPalette {
-  /// Pale blue presentation workspace.
-  static const board = Color(0xFFEDF3F8);
-
-  /// Dark blue reading ink.
-  static const ink = Color(0xFF1E3044);
-
-  /// Light paper fill.
-  static const paper = Color(0xFFFFFDF8);
-
-  /// Sage cloth fill.
-  static const sage = Color(0xFF80A99A);
-
-  /// Rose felt fill.
-  static const rose = Color(0xFFD4A0AE);
-
-  /// Dark rose thread, kept distinct from the felt substrate.
-  static const thread = Color(0xFFB77584);
-
-  /// Wooden support fill.
-  static const wood = Color(0xFFBF9D70);
-}
-
-/// Theme for the gallery and capture harness; fonts live only in the example.
-ThemeData showcaseTheme() => ThemeData(
-  fontFamily: 'Inter',
-  scaffoldBackgroundColor: DemoPalette.board,
-  colorScheme: ColorScheme.fromSeed(seedColor: DemoPalette.ink),
-  textTheme: const TextTheme(bodyMedium: TextStyle(color: DemoPalette.ink)),
-);
 
 /// Human-readable example names, independent of scene identity.
 String useCaseTitle(CraftUseCase value) => switch (value) {
@@ -115,7 +88,7 @@ class UseCaseArt extends StatelessWidget {
           progress: progress,
           onAction: onAction,
         ),
-        CraftUseCase.kite => _KiteStudy(progress: progress),
+        CraftUseCase.kite => KiteArt(progress: progress),
       },
     );
   }
@@ -313,91 +286,4 @@ class _Strings extends CustomPainter {
 
   @override
   bool shouldRepaint(_Strings oldDelegate) => false;
-}
-
-class _KiteStudy extends StatefulWidget {
-  const _KiteStudy({required this.progress});
-  final double progress;
-  @override
-  State<_KiteStudy> createState() => _KiteStudyState();
-}
-
-class _KiteStudyState extends State<_KiteStudy> {
-  final textures = MaterialTextures();
-  @override
-  void dispose() {
-    textures.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) =>
-      CustomPaint(painter: _KitePainter(widget.progress, textures));
-}
-
-class _KitePainter extends CustomPainter {
-  _KitePainter(this.progress, this.textures);
-  final double progress;
-  final MaterialTextures textures;
-  @override
-  void paint(Canvas canvas, Size size) {
-    canvas.save();
-    canvas.translate(size.width * .63, 88);
-    canvas.scale(1.1);
-    final sail = Path()
-      ..moveTo(0, -31)
-      ..lineTo(24, 2)
-      ..lineTo(-2, 31)
-      ..lineTo(-21, 0)
-      ..close();
-    textures.paint(
-      canvas,
-      sail,
-      material: CraftMaterial.paper,
-      color: DemoPalette.rose,
-    );
-    final thread = Paint()
-      ..color = DemoPalette.ink
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1;
-    canvas.drawPath(
-      Path()
-        ..moveTo(0, -31)
-        ..lineTo(-2, 31)
-        ..moveTo(-21, 0)
-        ..lineTo(24, 2),
-      thread,
-    );
-    final tail = authoredKiteTail(progress);
-    canvas.drawPath(tail, thread);
-    final metric = tail.computeMetrics().single;
-    for (final fraction in [.18, .36, .66]) {
-      final tangent = metric.getTangentForOffset(metric.length * fraction);
-      if (tangent == null) continue;
-      canvas.save();
-      canvas.translate(tangent.position.dx, tangent.position.dy);
-      canvas.rotate(tangent.angle);
-      final bow = Path()
-        ..moveTo(0, 0)
-        ..lineTo(-5, -8)
-        ..lineTo(6, -7)
-        ..close()
-        ..moveTo(0, 0)
-        ..lineTo(-5, 8)
-        ..lineTo(6, 7)
-        ..close();
-      textures.paint(
-        canvas,
-        bow,
-        material: CraftMaterial.twill,
-        color: DemoPalette.sage,
-      );
-      canvas.restore();
-    }
-    canvas.restore();
-  }
-
-  @override
-  bool shouldRepaint(_KitePainter old) =>
-      old.progress != progress || old.textures != textures;
 }

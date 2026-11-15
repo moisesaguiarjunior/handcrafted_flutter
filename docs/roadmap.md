@@ -13,16 +13,19 @@ identity, themes and editorial decisions belong to the application.
   treatments and arc-length reveal with an interactive drawing playground.
 - Clipped surfaces, shared paint/input/anchor transforms, finite entrance motion.
 - One authored kite-tail preset and runnable synthetic compositions.
+- Layered watercolor washes and directional motif/native-text relief, with a
+  visual atlas and independently controlled body/tail/tether motion examples.
 
 There is no general path inset, physical cloth, shared wind, water solver or
-shared texture cache. Watercolor contour geometry is not watercolor pigment.
+shared texture cache. Pigment and relief are visual approximations; fabrics are
+not physically displaced and wet paint is not simulated over time.
 
 ## Delivery order
 
 | Priority | Delivery | Acceptance boundary |
 | --- | --- | --- |
 | 1 | Contour-following seams and corrected showcase | Insets handle concavities, holes and collapsed narrow regions; thread and relief stay inside the substrate |
-| 2 | Watercolor and inset lettering | Pigment pooling/bleed are explicit approximations; text retains semantics and text scaling |
+| 2 | Refine watercolor and inset lettering | Bounded visual implementations now exist; preserve semantics/scaling while validating their quality and phone performance |
 | 3 | Material/edge/mark recipes and playground | Parameters have visible effects, deterministic seeds, bounded work and small runnable examples |
 | 4 | Layered artwork manifest | Imported SVG layers retain supplied silhouettes, pivots and hit regions; no procedural redrawing requirement |
 | 5 | Responsive and accessible compositions | Native actions, keyboard focus, reduced motion and enlarged text remain usable |
@@ -38,7 +41,7 @@ shared texture cache. Watercolor contour geometry is not watercolor pigment.
 | Paper | Drawing paper, cardstock, kraft, corrugated cardboard, letterhead, recycled, handmade, watercolor, tracing and tissue | Fiber, tooth, opacity, thickness, grain scale; letterhead is composition over a substrate |
 | Fabric | Existing linen/twill/felt; cotton, canvas, denim, burlap, knit and satin | Weave, fiber, nap and directional sheen |
 | Edges | Clean cut, scissor cut, torn white fibers, serrated, postage perforations and deckle | Silhouette geometry, edge shading and fiber detail remain separate |
-| Relief | Dry embossing, debossing, inset lettering and foil/gilding | Depth approximation, light, contact shadow and highlight; preserve native text |
+| Relief | Raised/inset motifs and native lettering exist; foil/gilding and physical displacement remain candidates | Depth approximation, light, contact shadow and highlight; preserve native text |
 | Marks | Basic pen, translucent broad marker and illustrative brush exist; fountain pen, pencil, chalk, wax crayon and wet pigment remain candidates | Width/pressure, coverage, edge bleed, granulation, taper and seed |
 | Stitches | Existing running stitch; backstitch, blanket/buttonhole, chain, cross and basting | Shared seam, spacing, thread thickness and puncture shading |
 | Layers | Contact plus cast shadow, lifted corners and stacked cut paper | Elevation, light direction and clipping; avoid inaccessible transformed targets |
@@ -51,11 +54,11 @@ mark recipes, then validate them in independent consumer applications.
 
 | Subject | Available now | Planned |
 | --- | --- | --- |
-| Kite | Authored tail deformation driven by progress | Shared wind, tether and locally coupled pieces |
+| Kite | Authored tail deformation plus independent parent sway examples | Shared wind, tether and physically coupled pieces |
 | Bird | Generic part transforms | Wing/body pose presets, attachment and trajectory |
 | Water | No dedicated effect | Surface/ripple recipes and bounded time-driven motion |
 | Crib mobile | Independently pivoting example parts | Chain pendulums, constraints and settling |
-| Balloon | Generic part transforms | Buoyancy/sway preset, tether and attachment |
+| Balloon | Authored body/tether example with a transformed attachment | Buoyancy and physical tether constraints |
 | Clothesline | Generic parts and authored strings | Catenary and attached labels that sway |
 | Dreamlike light | No dedicated effect | Window light and dust with an explicit reduced-motion pose |
 

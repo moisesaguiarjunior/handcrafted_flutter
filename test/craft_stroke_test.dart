@@ -12,6 +12,76 @@ int alpha(Uint8List image, int x, int y) => image[(y * 100 + x) * 4 + 3];
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  test(
+    'explicit pen joins match native corners and retain the round default',
+    () async {
+      final path = Path()
+        ..moveTo(15, 65)
+        ..lineTo(50, 15)
+        ..lineTo(85, 65);
+      const color = Color(0xFF79445F);
+      Future<Uint8List> render(CraftStrokeStyle style) => pixels(
+        (canvas) => paintCraftStroke(canvas, path, color: color, style: style),
+      );
+      for (final join in StrokeJoin.values) {
+        final actual = await render(CraftStrokeStyle(width: 12, join: join));
+        final expected = await pixels(
+          (canvas) => canvas.drawPath(
+            path,
+            Paint()
+              ..color = color
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 12
+              ..strokeCap = StrokeCap.round
+              ..strokeJoin = join,
+          ),
+        );
+        expect(actual, orderedEquals(expected));
+      }
+      final defaults = await render(const CraftStrokeStyle(width: 12));
+      final round = await render(
+        const CraftStrokeStyle(width: 12, join: StrokeJoin.round),
+      );
+      final miter = await render(
+        const CraftStrokeStyle(width: 12, join: StrokeJoin.miter),
+      );
+      expect(defaults, orderedEquals(round));
+      expect(miter, isNot(orderedEquals(round)));
+      expect({
+        const CraftStrokeStyle(),
+        const CraftStrokeStyle(join: StrokeJoin.miter),
+      }, hasLength(2));
+    },
+  );
+
+  test('joins do not alter filled brush artwork or dotted dabs', () async {
+    final path = Path()
+      ..moveTo(15, 65)
+      ..lineTo(50, 15)
+      ..lineTo(85, 65);
+    for (final pattern in CraftLinePattern.values) {
+      Future<Uint8List> render(StrokeJoin join) => pixels(
+        (canvas) => paintCraftStroke(
+          canvas,
+          path,
+          color: const Color(0xFF79445F),
+          style: CraftStrokeStyle(
+            tool: CraftStrokeTool.brush,
+            width: 12,
+            dash: 80,
+            gap: 5,
+            pattern: pattern,
+            join: join,
+          ),
+        ),
+      );
+      expect(
+        await render(StrokeJoin.miter),
+        orderedEquals(await render(StrokeJoin.round)),
+      );
+    }
+  });
+
   test('smooth curves pass through waypoints and preserve endpoints', () {
     const points = [
       Offset(10, 40),

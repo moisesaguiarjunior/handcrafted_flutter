@@ -2,6 +2,7 @@
 
 - [Compatibility and evolution](compatibility.md)
 - [Runnable examples and capture recipe](showcase.md)
+- [Adoption recipes and evidence-driven extensions](consumer-adoption.md)
 - [Reuse map](reuse.md)
 - [Material-focused roadmap](roadmap.md)
 - [Proposed authored-scene composition recipes](requests/authored-scene-composition.md)

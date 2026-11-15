@@ -108,3 +108,12 @@ Cache stable paths outside paint in production compositions. The host owns
 clipping, padding, text labels, actions and hit regions. These are centerline ink
 tools, not a silhouette offset solver: contour-following inset seams remain a
 separate roadmap item. Phone performance remains unmeasured.
+
+### Preserving an existing corner treatment
+
+`CraftStrokeStyle(join: StrokeJoin.miter)` retains native pointed corners when
+migrating an authored pen/marker path. Round remains the default; bevel is also
+available. This controls solid/dashed stroked paths, not brush polygons or dotted
+dabs. Flutter's default miter limit applies. Compare the consumer's original
+render before changing its join; even thin curves can expose a pixel difference.
+See [adoption recipes](consumer-adoption.md) for migration boundaries.

@@ -51,3 +51,12 @@ text configuration. Cloth motifs use the canonical material/stitch primitives.
 Extracted the existing kite artwork and example theme, preserving legacy entry
 points through the use_cases export. Balloon attachments use PartPose.mapPoint.
 New sampled captures reuse the existing shell/writer rather than a mock renderer.
+
+For adoption guidance, searched authored paths, stroke spans, watercolor contour
+handling, relief paragraph painting, cache ownership and finite entrance clocks.
+[Adoption recipes](consumer-adoption.md) reuse these contracts and describe
+conditional extensions; they add no second renderer or clock.
+
+`CraftStrokeStyle.join` reuses Flutter's `StrokeJoin` for solid/dashed pen/marker
+painting. The round default is preserved. Native-raster regression checks cover
+miter, round and bevel; the existing style value contract includes the join.

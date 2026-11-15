@@ -44,6 +44,7 @@ final class CraftStrokeStyle {
     this.dash = 8,
     this.gap = 6,
     this.variation = .35,
+    this.join = StrokeJoin.round,
   });
 
   /// Instrument treatment.
@@ -61,6 +62,12 @@ final class CraftStrokeStyle {
   /// Centerline dash gap, or dotted edge-to-edge spacing, in logical pixels.
   /// Round caps reduce a dash gap's visible opening; use gap > width to keep it.
   final double gap;
+
+  /// Corner treatment for solid/dashed pen and marker strokes.
+  ///
+  /// Brush outlines and dotted dabs do not use stroked joins. The default
+  /// remains rounded; miter uses Flutter's default miter limit of 4.
+  final StrokeJoin join;
 
   /// Seeded brush width/texture variation. Does not change the centerline.
   final double variation;
@@ -88,9 +95,11 @@ final class CraftStrokeStyle {
       width == other.width &&
       dash == other.dash &&
       gap == other.gap &&
-      variation == other.variation;
+      variation == other.variation &&
+      join == other.join;
   @override
-  int get hashCode => Object.hash(tool, pattern, width, dash, gap, variation);
+  int get hashCode =>
+      Object.hash(tool, pattern, width, dash, gap, variation, join);
 }
 
 /// A smooth open cubic path through 2..64 caller-supplied waypoints.
@@ -223,7 +232,7 @@ void paintCraftStroke(
       ..style = PaintingStyle.stroke
       ..strokeWidth = style.width
       ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round
+      ..strokeJoin = style.join
       ..color = style.tool == CraftStrokeTool.marker
           ? color.withValues(alpha: color.a * .68)
           : color,

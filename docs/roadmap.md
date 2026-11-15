@@ -72,3 +72,10 @@ general physics architecture. See [integration contracts](integration.md).
 refine items 4, 5, 6 and 8 above. They are proposals with acceptance boundaries,
 not shipped APIs. Start by composing existing parts and clocks in examples;
 avoid a manifest, shared cache or physics framework without validated callers.
+
+## Adoption feedback
+
+See [adoption recipes](consumer-adoption.md) for a first stroke migration and
+prioritized evidence gates: measure repeated painting before adding prepared
+geometry/cache APIs; demonstrate accessible decorated layouts as examples; keep
+optional capillary edges separate from silhouette-preserving watercolor.

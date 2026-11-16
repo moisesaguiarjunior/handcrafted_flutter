@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 0.1.0
 
 - Breaking: removes the application-specific `authoredKiteTail` export. Keep actor
   artwork in consumers; the example uses its own generic waypoint curve.

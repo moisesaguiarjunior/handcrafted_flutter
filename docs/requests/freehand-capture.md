@@ -56,4 +56,5 @@ On the documented Flutter 3.47.9 baseline, an isolated experiment measured
 24,075 logical pixels for that fifty-point polyline. Native solid drawPath
 accepted it; paintCraftStroke rejected it through the documented arc guard.
 The experiment is not a phone performance measurement. Repository checks passed
-(50 library tests and 66 example tests); this change adds documentation only.
+(50 library tests and 66 example tests at `10af430`); this change adds
+documentation only.

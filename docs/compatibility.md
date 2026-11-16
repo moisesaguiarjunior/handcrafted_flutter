@@ -17,7 +17,7 @@ No lower SDK support is claimed without testing it.
 
 ## API policy before 1.0
 
-Version 0.1.0 is unreleased and experimental; publish_to remains none. Source
+Version 0.1.0 is an experimental source release; publish_to remains none. Source
 consumers should pin an immutable reviewed Git SHA. We follow semantic versioning
 when making releases: incompatible API changes advance the pre-1.0 minor version;
 patches document bug fixes, invalid-input handling and corrected layout behavior.

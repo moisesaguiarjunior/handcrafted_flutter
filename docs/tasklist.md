@@ -15,10 +15,10 @@ a passing widget test is not a phone benchmark or visual approval.
 | HC-D02 | Paper stocks, independent edges and finishes | Shipped in PR #10; six stock recipes, four edge styles |
 | HC-D03 | Explicit stroke joins | Shipped in PR #4; round/miter/bevel |
 | HC-D04–07 | Imported layers, rotary action, pour/light, rendering-cost scene | Runnable recipes in PRs #5–8; cost measurement in actual consumers/phones pending |
-| HC-R01 | Traceable independent reviews | Record added; retrospective release-range audit pending |
-| HC-R02 | Remove consumer-specific actor preset | Integrated locally; exact integrated candidate review/publication pending |
-| HC-R03 | Dependency/license release audit | clipper2 0.0.3 BSL-1.0 documented; final lockfile audit pending |
-| HC-R04 | Immutable version/tag | 0.1.0 candidate only; no release tag published yet |
+| HC-R01 | Traceable independent reviews | Record added; retrospective audit approved at `7c7225a` |
+| HC-R02 | Remove consumer-specific actor preset | Integrated and independently reviewed at `7c7225a`; release publication pending |
+| HC-R03 | Dependency/license release audit | 22 license hashes verified; clipper2 0.0.3 BSL-1.0 attribution retained |
+| HC-R04 | Immutable version/tag | 0.1.0 source baseline; tag follows final review/CI (check repository tags) |
 | HC-P01 | Public clock-free image crop/artboard placement | Shipped in PR #11 at `e420be8`; independent review and CI passed |
 | HC-P02 | Long freehand paths | [Contract request](requests/freehand-capture.md); point/stroke budget assessment pending, existing decoration guard retained |
 | HC-P03 | Rope, ribbon and embroidery over textures or contours | Pending; open/closed paths, width, relief/light and optional nominal edge gap |

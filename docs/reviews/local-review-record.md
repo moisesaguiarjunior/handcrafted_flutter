@@ -25,6 +25,11 @@ remains incomplete for the image adapter.
 
 ## Release follow-up
 
-A fresh audit of the requested `0664174..10af430` range and the integrated
-consumer-art cleanup is pending. Earlier local reviews do not replace exact-SHA
-review of that new release candidate. Version 0.1.0 and its tag remain unreleased.
+Independent Astra audit approved `7c7225a956ee3fefb42f09fe922d18f6c02e4a0a`,
+including the requested `0664174..10af430` retrospective and integrated actor
+cleanup. Current checks passed 53 package / 66 example tests; historical
+`10af430` passed 50 / 66. Four negative controls failed as intended; all 22
+locked dependency license hashes matched. No privacy/metadata findings.
+A low-severity evidence clarification now names the historical revision in the
+freehand request. The tag is published only after the final candidate review
+and green CI; check Git tags for publication status.

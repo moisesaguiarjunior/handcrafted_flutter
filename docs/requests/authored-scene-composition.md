@@ -27,6 +27,9 @@ text and controls, and avoid adding an animation clock to externally timed scene
 
 ## A. Imported layers, pivots and anchors (first priority)
 
+The [imported-layer example](../imported-layers.md) now demonstrates this recipe.
+The adapter is example-local; a general manifest remains proposed.
+
 Start with a runnable example and documented adapter: full source size, crop
 rectangle, pivot in source coordinates, logical scale and explicit pose. The
 adapter can compose existing CraftPart/PartPose; a general manifest needs a
@@ -46,6 +49,9 @@ Acceptance:
   is supplied externally. Native controls remain usable at enlarged text.
 
 ## B. Small rotary control around a native action
+
+The [rotary example](../rotary-control.md) now demonstrates this recipe without
+adding a public dial abstraction.
 
 A dial/reel recipe should reuse PartPose for its rotating illustration while a
 native accessible control owns stepping, focus and semantics. Do not make core

@@ -20,6 +20,7 @@
 | Shared specimen layouts and visual inventory | `example/lib/material_studies.dart`, `example/lib/main_atlas.dart` |
 | Authored actor examples with independent progress | `example/lib/motion_studies.dart`, `example/lib/kite_art.dart` |
 | Canonical example palette and typography | `example/lib/showcase_theme.dart` |
+| Imported crop, source hinge and attachment recipe | `example/lib/imported_layers.dart`, `example/lib/main_scenes.dart` |
 | Shared example capture shell and PNG writer | `tool/capture_support.dart` |
 | Format, analysis and behavior checks | `tool/check.sh` |
 
@@ -65,3 +66,15 @@ For bounded effects, searched PartPose attachment mapping, seeded material
 ownership and SceneEntrance. Reused those contracts; a fixed-size example-local
 PourRecipe stores authored variations without a global particle list, image
 cache, blur layer or second clock. Empty endpoints perform no effect painting.
+
+For the rotary recipe, searched native Slider, PartPose, CraftPart, SceneEntrance
+and keyed interaction ownership. The native slider owns focus/semantics; the
+existing finite clock times only decorative artwork. CraftSurface owns its wood
+texture. Angle mapping/retarget policy stay example-local, without a second
+clock implementation or public dial abstraction.
+
+For imported artwork, searched crop, pivot, matrixFor, mapPoint, clipping and
+native focus through the package and examples. Reused CraftPart/PartPose and
+the capture/font helpers. SourceLayer remains an example adapter; its supplied
+PNG, crop and hit shape are original synthetic artwork. No second transform,
+alpha-testing engine, clock or general manifest was added.

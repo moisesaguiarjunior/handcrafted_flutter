@@ -7,6 +7,7 @@
 | Material tiles and owned resources | `MaterialTextures`, `CraftMaterial` |
 | Bounded layered pigment with explicit palette | `paintWatercolor` |
 | Directional motif rims and native lettering | `paintCraftRelief`, `CraftReliefText` |
+| Raised cord/ribbon/embroidered bands and nominal edge gap | `paintCraftTrim`, `contourTrimPath` |
 | Stitch spans and puncture shading | `runningStitchPath`, `paintRunningStitch` |
 | Shared bounded arc-length geometry | `lib/src/path_geometry.dart` (internal) |
 | Closed-silhouette polygonal insets | `insetCraftPath`, using pinned clipper2 union/offset |
@@ -122,3 +123,10 @@ For delivery tracking, searched the roadmap, request records, PR descriptions an
 retained local review reports. The tasklist links existing contracts rather than
 duplicating consumer inventories; the review index distinguishes local agent
 review from GitHub/human approval. No new runtime implementation is introduced.
+
+For cord/ribbon/embroidery, searched rope, ribbon, embroidery, running stitches,
+path metrics and contour offsets in library/examples. Reused checkedPathMetrics,
+insetCraftPath and CraftSurface. Created only band shading/texture and a nominal
+gap helper; existing running stitches keep their own puncture contract. Example
+plates share the actual substrate silhouette and existing capture/theme helpers.
+No second texture engine, transform, clock or copied application art is added.

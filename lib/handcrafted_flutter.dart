@@ -17,3 +17,4 @@ export 'src/paper_finish.dart';
 export 'src/craft_stroke.dart';
 export 'src/watercolor.dart';
 export 'src/craft_relief.dart';
+export 'src/craft_trim.dart';

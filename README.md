@@ -143,6 +143,13 @@ clock. Paint a quiet track behind a solid prefix to show a completed route.
 Run `flutter run -d chrome -t lib/main_strokes.dart` from `example/`.
 See [drawing recipes and examples](docs/drawing-strokes.md).
 
+### Cord, ribbon and embroidered lines
+
+![Original cord, ribbon and embroidered compositions](docs/assets/trim-studies.png)
+
+Draw raised bands over textures or follow the actual cut with an optional edge gap.
+[API and runnable playground](docs/cord-ribbon-embroidery.md).
+
 ## Development
 
 ```sh

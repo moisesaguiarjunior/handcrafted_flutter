@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Composable cord/ribbon/embroidered bands over open or closed paths, with bounded
+  texture stations, directional shading and nominal contour-gap preparation.
+  Adds original material compositions and an accessible parameter playground.
+
 ## 0.1.0
 
 - Breaking: removes the application-specific `authoredKiteTail` export. Keep actor

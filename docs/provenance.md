@@ -43,3 +43,8 @@ simple waypoint ribbon local to the example. This is a forward source cleanup,
 not a claim that historical Git objects or prior immutable versions are erased.
 New motion captures require review before replacing the removed documentation
 media. Consumer artwork remains the consumer's responsibility.
+
+Cord/ribbon/embroidered trim algorithms and the original looping cord, shaped
+paper and leaf-sprig study are maintainer-authored geometry. No private reference
+image, name, motif or consumer artwork is distributed. The trim image is captured
+from example/lib/trim_studies.dart using the existing licensed fonts.

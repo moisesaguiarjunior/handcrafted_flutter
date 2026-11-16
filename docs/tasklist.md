@@ -21,7 +21,7 @@ a passing widget test is not a phone benchmark or visual approval.
 | HC-R04 | Immutable version/tag | 0.1.0 source baseline; tag follows final review/CI (check repository tags) |
 | HC-P01 | Public clock-free image crop/artboard placement | Shipped in PR #11 at `e420be8`; independent review and CI passed |
 | HC-P02 | Long freehand paths | [Contract request](requests/freehand-capture.md); point/stroke budget assessment pending, existing decoration guard retained |
-| HC-P03 | Rope, ribbon and embroidery over textures or contours | Pending; open/closed paths, width, relief/light and optional nominal edge gap |
+| HC-P03 | Rope, ribbon and embroidery over textures or contours | Implemented locally; bounded open/closed bands, width, relief/light and nominal gap; review/publication pending |
 | HC-P04 | Gravity/wind and realistic/cartoon response | Pending; bounded externally advanced simulation, starting with suspended parts |
 | HC-P05 | Public rotary-control abstraction | Example only; promote after complete consumer flows demonstrate a stable contract |
 | HC-P06 | Deeper fabrics, stitches, relief and embroidered fills | Backlog; original shapes, native text/actions, separate visual review |

@@ -16,7 +16,6 @@
 | Paint, input and anchor transform | `PartPose`, `CraftPart` |
 | Material behind native widgets | `CraftSurface` |
 | Finite entrance clock | `SceneEntrance` |
-| Authored kite-tail preset | `authoredKiteTail` |
 | Runnable compositions and captures | `example/lib/use_cases.dart`, `tool/capture_showcase.dart` |
 | Drawing playground and capture | `example/lib/main_strokes.dart`, `tool/capture_strokes.dart` |
 | Shared specimen layouts and visual inventory | `example/lib/material_studies.dart`, `example/lib/main_atlas.dart` |
@@ -47,7 +46,7 @@ Raster fixtures share `test/support/raster.dart`; no second tile renderer,
 animation clock or independently maintained dashed-path algorithm was added.
 
 For the material/motion atlas, searched `pigment`, `relief`, `imprint`,
-`authoredKiteTail`, `PartPose`, texture ownership and capture writers. Adapted
+`PartPose`, texture ownership and capture writers. Adapted
 maintainer-owned pigment/glyph-shading logic into palette-explicit bounded APIs;
 the native paragraph supplies lettering layout instead of duplicating inherited
 text configuration. Cloth motifs use the canonical material/stitch primitives.
@@ -109,3 +108,9 @@ base algorithm and added bounded overlay finishes, without a parallel texture
 cache. Paper edge geometry is separate from fiber fringe and native printing.
 Extracted PreparedOutlineGeometry from the example's seam cache for both studies;
 offset preparation stays lazy when enlarged content omits decorative sewing.
+
+For the public boundary correction, searched exported actor presets, example
+callers, tests and documentation media. Removed the consumer-specific tail from
+`lib/` and its dedicated test. The example now composes its own waypoint curve
+with `craftCurveThrough`; generic clock/pose tests stay in place. No replacement
+actor preset is exported. See the 0.1.0 migration in compatibility.md.

@@ -23,7 +23,7 @@ are included. Source: [material studies](../example/lib/material_studies.dart),
 | Drawing | `craftCurveThrough`, `trimCraftPath`, `paintCraftStroke` | Continuous, dotted or dashed pen/marker/brush lines and explicit reveal |
 | Watercolor | `paintWatercolor` | Overlapping washes, a botanical painting and a resist/cutout study |
 | Relief | `paintCraftRelief`, `CraftReliefText` | Pressed/raised botanical motifs, reversible light and native lettering |
-| Motion | `PartPose`, `CraftPart`, `SceneEntrance`, `authoredKiteTail` | Body sway, local tail deformation, both together, balloon/tether and hanging pieces |
+| Motion | `PartPose`, `CraftPart`, `SceneEntrance` | Body sway, local tail deformation, both together, balloon/tether and hanging pieces |
 | Imported image | `CraftImagePart` | One public crop/hinge/artboard adapter with native overlay, source mask and attachment mapping |
 
 Colored twill and linen specimens are recipes of existing algorithms, not new
@@ -91,7 +91,7 @@ Changing a seed or palette is explicit; no frame or wall clock changes the grain
 
 ## Independent motion
 
-![Kite body, local tail, both together and a balloon with attached tether](assets/motion-atlas.gif)
+Updated motion captures await visual review of the example-owned geometry.
 
 The body example moves a parent CraftPart, carrying the attached tail rigidly.
 The tail-only example holds the sail still and deforms the local ribbon. The

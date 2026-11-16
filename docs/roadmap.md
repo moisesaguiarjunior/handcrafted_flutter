@@ -17,7 +17,7 @@ identity, themes and editorial decisions belong to the application.
 - Curves through waypoints, continuous/dashed/dotted ink, pen/marker/brush
   treatments and arc-length reveal with an interactive drawing playground.
 - Clipped surfaces, shared paint/input/anchor transforms, finite entrance motion.
-- One authored kite-tail preset and runnable synthetic compositions.
+- Generic progress/pose primitives and example-owned synthetic compositions.
 - Layered watercolor washes and directional motif/native-text relief, with a
   visual atlas and independently controlled body/tail/tether motion examples.
 - Imported crop/hinge/attachment, native rotary-control and bounded pour/light

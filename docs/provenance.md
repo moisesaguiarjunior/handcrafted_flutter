@@ -36,3 +36,10 @@ here. Dependency notices and inspected LICENSE hash are recorded separately.
 Paper finish/edge algorithms and specimen captures are original synthetic work
 authored here under MIT. Stock names describe visual composition recipes over
 existing paper grain, not externally sourced material scans or product assets.
+
+The 0.1.0 boundary correction removes the earlier consumer-specific kite-tail
+source/export and the captures containing that motion. The example uses a new,
+simple waypoint ribbon local to the example. This is a forward source cleanup,
+not a claim that historical Git objects or prior immutable versions are erased.
+New motion captures require review before replacing the removed documentation
+media. Consumer artwork remains the consumer's responsibility.

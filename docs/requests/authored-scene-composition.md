@@ -10,7 +10,7 @@ repository. Prefer composition recipes before adding public APIs.
 
 ## Reuse first
 
-Searched `CraftPart`, `PartPose`, `SceneEntrance`, `authoredKiteTail`, `paintWatercolor`,
+Searched `CraftPart`, `PartPose`, `SceneEntrance`, example-owned actors, `paintWatercolor`,
 `paintCraftRelief`, `paintCraftStroke`, attachment mapping and resource ownership
 across library, tests and examples. The following needs already have foundations:
 

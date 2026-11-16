@@ -10,7 +10,7 @@ Text remains text; buttons retain native focus, actions and semantics.
 
 [![Checks](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml/badge.svg)](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml)
 
-Experimental version 0.0.1, licensed under [MIT](LICENSE). Not published on pub.dev.
+Experimental version 0.1.0, licensed under [MIT](LICENSE). Not published on pub.dev.
 Tested baseline: Flutter 3.47.9 / Dart 3.13.7. See [compatibility](docs/compatibility.md).
 
 ## Paper behind a real control
@@ -66,7 +66,7 @@ seeded visual approximation of watercolor.
 
 ## Body, tail and tether
 
-![Independent kite body and tail motion, combined motion and an attached balloon tether](docs/assets/motion-atlas.gif)
+Motion examples use example-owned geometry. Updated captures await visual review.
 
 Move the kite's parent part while its ribbon tail keeps its own progress. Hold
 the body still to animate only the tail, or combine both. The balloon's string
@@ -118,7 +118,6 @@ in an application. Keep source-access credentials outside code and URLs.
 | `PartPose`, `CraftPart` | Shared paint, input and attachment transforms |
 | `CraftImagePart` | Image crop in an artboard rect, optional hinge/pose, native overlay and attachment mapping |
 | `SceneEntrance` | Finite lifecycle-aware entrance progress |
-| `authoredKiteTail` | An artwork preset with bounded authored motion |
 
 `SceneEntrance.active` is supplied by the host's viewport or route policy.
 Background/TickerMode suspension and reduced motion are handled by the clock.

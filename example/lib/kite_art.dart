@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
@@ -11,7 +13,7 @@ class KiteArt extends StatefulWidget {
   /// Uniform artwork scale; the legacy capture uses 1.1.
   final double artScale;
 
-  /// Finite authored tail progress, clamped by authoredKiteTail.
+  /// Finite authored tail progress, clamped by the example painter.
   final double progress;
   @override
   State<KiteArt> createState() => _KiteStudyState();
@@ -44,7 +46,7 @@ class _KitePainter extends CustomPainter {
   /// Uniform artwork scale; the legacy capture uses 1.1.
   final double artScale;
 
-  /// Finite authored tail progress, clamped by authoredKiteTail.
+  /// Finite authored tail progress, clamped by the example painter.
   final double progress;
   final MaterialTextures textures;
   @override
@@ -53,10 +55,10 @@ class _KitePainter extends CustomPainter {
     canvas.translate(size.width * .63, 88);
     canvas.scale(artScale);
     final sail = Path()
-      ..moveTo(0, -31)
-      ..lineTo(24, 2)
-      ..lineTo(-2, 31)
-      ..lineTo(-21, 0)
+      ..moveTo(0, -28)
+      ..lineTo(20, 0)
+      ..lineTo(0, 28)
+      ..lineTo(-20, 0)
       ..close();
     textures.paint(
       canvas,
@@ -70,13 +72,22 @@ class _KitePainter extends CustomPainter {
       ..strokeWidth = 1;
     canvas.drawPath(
       Path()
-        ..moveTo(0, -31)
-        ..lineTo(-2, 31)
-        ..moveTo(-21, 0)
-        ..lineTo(24, 2),
+        ..moveTo(0, -28)
+        ..lineTo(0, 28)
+        ..moveTo(-20, 0)
+        ..lineTo(20, 0),
       thread,
     );
-    final tail = authoredKiteTail(progress);
+    if (!progress.isFinite) throw ArgumentError('Expected finite progress');
+    final p = progress.clamp(0.0, 1.0);
+    final bend = 6 * math.sin(p * math.pi) * math.sin(p * math.pi * 4);
+    // Example-only waypoints: no application artwork or exported actor preset.
+    final tail = craftCurveThrough([
+      const Offset(0, 28),
+      Offset(18 + bend, 60),
+      Offset(-12 - bend, 98),
+      const Offset(6, 132),
+    ]);
     canvas.drawPath(tail, thread);
     final metric = tail.computeMetrics().single;
     for (final fraction in [.18, .36, .66]) {

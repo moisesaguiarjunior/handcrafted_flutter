@@ -17,7 +17,7 @@ No lower SDK support is claimed without testing it.
 
 ## API policy before 1.0
 
-Version 0.0.1 is unreleased and experimental; publish_to remains none. Source
+Version 0.1.0 is unreleased and experimental; publish_to remains none. Source
 consumers should pin an immutable reviewed Git SHA. We follow semantic versioning
 when making releases: incompatible API changes advance the pre-1.0 minor version;
 patches document bug fixes, invalid-input handling and corrected layout behavior.
@@ -39,7 +39,9 @@ This policy does not promise an unannounced support lifetime or release schedule
 - Visual recipe changes require reviewed captures and a migration note. Golden
   updates are never a substitute for approval of a composition.
 
-`authoredKiteTail` is a named artwork preset preserved for the original consumer,
-not the basis of a general motion/physics API. General integration surfaces remain
-Path, palette, pose/progress and normal Flutter widgets. External animation and
-shape tooling can be evaluated without building a parallel general sequencer.
+Version 0.1.0 removes the application-specific `authoredKiteTail` export. Keep
+artwork in the consumer and pass progress from `SceneEntrance` to its painter.
+Generic integration surfaces remain Path, palette, pose/progress and native
+widgets. The example kite now builds its own simple waypoint curve; it is not an
+exported preset or a physics API. This removal is an explicit pre-1.0 breaking
+change; existing immutable pins continue to resolve their original source.

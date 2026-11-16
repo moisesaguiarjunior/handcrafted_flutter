@@ -1,6 +1,13 @@
 # Changelog
 
-## 0.0.1 (unreleased)
+## 0.1.0 (unreleased)
+
+- Breaking: removes the application-specific `authoredKiteTail` export. Keep actor
+  artwork in consumers; the example uses its own generic waypoint curve.
+  Existing immutable source pins are unaffected. See docs/compatibility.md.
+- Adds a public delivery tasklist and a local independent review record.
+
+## 0.0.1 (experimental source baseline)
 
 - Public CraftImagePart extracts source crop/hinge/artboard placement from the
   imported-layer example, retaining native paint/input transforms and image cache

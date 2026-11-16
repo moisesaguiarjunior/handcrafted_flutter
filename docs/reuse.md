@@ -117,3 +117,8 @@ actor preset is exported. See the 0.1.0 migration in compatibility.md.
 
 Bounded freehand capture has a [consumer request](requests/freehand-capture.md).
 The illustrative path arc limit remains intact; no new renderer is implemented.
+
+For delivery tracking, searched the roadmap, request records, PR descriptions and
+retained local review reports. The tasklist links existing contracts rather than
+duplicating consumer inventories; the review index distinguishes local agent
+review from GitHub/human approval. No new runtime implementation is introduced.

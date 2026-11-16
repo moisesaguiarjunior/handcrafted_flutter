@@ -157,6 +157,9 @@ Captures are explicit and do not regenerate goldens. See the [capture recipe](do
 [reuse map](docs/reuse.md), [contribution rules](CONTRIBUTING.md) and
 [documentation index](docs/README.md).
 
+Follow the [delivery tasklist](docs/tasklist.md) and
+[independent review record](docs/reviews/local-review-record.md).
+
 See the [material and movement roadmap](docs/roadmap.md) for current/planned
 capabilities and [integration contracts](docs/integration.md) for Fluvie and
 Social Studio adapter boundaries.

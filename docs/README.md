@@ -20,3 +20,6 @@
 
 Application-specific adoption assessments and internal product inventories do not
 belong in this package repository.
+
+- [Delivery tasklist](tasklist.md): implementation, review and publication gates.
+- [Local independent reviews](reviews/local-review-record.md): candidate SHAs and limitations.

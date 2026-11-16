@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'craft_outline.dart';
+import 'craft_relief.dart';
 import 'craft_stitch.dart';
 import 'material_textures.dart';
 
@@ -192,11 +193,15 @@ final class CraftTheme extends ThemeExtension<CraftTheme> {
   /// Copies [roles] so callers cannot mutate an installed theme.
   CraftTheme({
     required this.surface,
+    this.heading,
     Map<CraftRole, CraftPanelStyle> roles = const {},
   }) : roles = Map.unmodifiable(roles);
 
   /// Fallback style for every unspecified role.
   final CraftPanelStyle surface;
+
+  /// Optional glyph lighting for CraftHeading; no font or color is supplied.
+  final CraftReliefStyle? heading;
 
   /// Immutable overrides for semantic visual roles.
   final Map<CraftRole, CraftPanelStyle> roles;
@@ -214,9 +219,13 @@ final class CraftTheme extends ThemeExtension<CraftTheme> {
   @override
   CraftTheme copyWith({
     CraftPanelStyle? surface,
+    CraftReliefStyle? heading,
     Map<CraftRole, CraftPanelStyle>? roles,
-  }) =>
-      CraftTheme(surface: surface ?? this.surface, roles: roles ?? this.roles);
+  }) => CraftTheme(
+    surface: surface ?? this.surface,
+    heading: heading ?? this.heading,
+    roles: roles ?? this.roles,
+  );
 
   @override
   CraftTheme lerp(covariant CraftTheme? other, double t) {
@@ -236,8 +245,34 @@ final class CraftTheme extends ThemeExtension<CraftTheme> {
       );
     }
 
+    CraftReliefStyle? mixHeading() {
+      if (heading == null && other.heading == null) return null;
+      final fallback = heading ?? other.heading!;
+      final a =
+          heading ??
+          CraftReliefStyle(
+            kind: fallback.kind,
+            light: fallback.light,
+            depth: 0,
+          );
+      final b =
+          other.heading ??
+          CraftReliefStyle(
+            kind: fallback.kind,
+            light: fallback.light,
+            depth: 0,
+          );
+      final recipe = t < .5 ? a : b;
+      return CraftReliefStyle(
+        kind: recipe.kind,
+        light: recipe.light,
+        depth: a.depth + (b.depth - a.depth) * t,
+      );
+    }
+
     return CraftTheme(
       surface: mix(surface, other.surface),
+      heading: mixHeading(),
       roles: {
         for (final role in {...roles.keys, ...other.roles.keys})
           role: mix(styleFor(role), other.styleFor(role)),

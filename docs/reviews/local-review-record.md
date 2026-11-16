@@ -91,3 +91,8 @@ and green CI; check Git tags for publication status.
   independent browser probes passed. Actual-image/native-target mapping was
   checked at 12 fit/pose combinations; an 8px mapping negative control failed.
   New real-font captures and the existing imported capture reproduced exactly.
+
+- PR #26: `1c54c33e0b0d1a8b02012727ec262d869a895979` independently approved
+  by Astra for the 0.2.0 source release; 94 package / 89 example checks, eight
+  Chrome tests, web build, enforced locks and 22 license/version hashes passed.
+  Main/tag CI passed; public-tag consumer resolution matched the exact source.

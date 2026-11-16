@@ -51,6 +51,8 @@ along a curve; choose whether the brush is visible and lifts away at the end.
 material without replacing the form or its contents.
 [Try both themes](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=vocabulary)
 · [Use the components](docs/material-vocabulary.md).
+Current source also adds `CraftHeading` with themed raised/inset lettering and
+native heading semantics; this addition is not yet in the v0.2.0 tag.
 
 ## Artwork fits. Words keep their size.
 

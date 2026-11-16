@@ -7,6 +7,7 @@
 | Material tiles and owned resources | `MaterialTextures`, `CraftMaterial` |
 | Bounded layered pigment with explicit palette | `paintWatercolor` |
 | Directional motif rims and native lettering | `paintCraftRelief`, `CraftReliefText` |
+| Native themed headings | `CraftHeading`, `CraftReliefStyle`, `CraftTheme.heading` |
 | Raised cord/ribbon/embroidered bands and nominal edge gap | `paintCraftTrim`, `contourTrimPath` |
 | Patterned thread geometry and shared puncture paint | `craftStitchPath`, `paintCraftStitch`, internal `thread_paint.dart` |
 | Stitch spans and puncture shading | `runningStitchPath`, `paintRunningStitch` |
@@ -237,3 +238,10 @@ For the 0.2.0 source release, searched the version manifest, lockfiles, Git tags
 public exports, changelog, compatibility policy and dependency/license inventory.
 Reused the existing release/check/review flow; no parallel publishing tool or
 runtime API is added. Release notes separate package APIs from example recipes.
+
+For material headings, searched CraftReliefText, native heading semantics,
+ThemeExtension/copyWith/lerp, vocabulary forms and capture/pixel helpers. Reused
+the exact glyph renderer/validation and native headlineMedium/Text layout.
+CraftHeading adds semantic heading and theme resolution only; CraftReliefStyle
+stores host lighting without palette/fonts/content. Depth interpolates while
+kind/light switch discretely, avoiding invalid opposing-vector interpolation.

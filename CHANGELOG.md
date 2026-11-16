@@ -2,7 +2,11 @@
 
 ## Unreleased
 
-No changes yet.
+- Add native CraftHeading with host-themed CraftReliefStyle over the existing
+  glyph renderer. Typography stays in the native theme; heading semantics,
+  wrapping/scaling and plain-text fallback remain native. Material themes can
+  switch pressed/raised lettering, with bounded depth and discrete light changes.
+  These APIs are current-source additions after v0.2.0.
 
 ## 0.2.0
 

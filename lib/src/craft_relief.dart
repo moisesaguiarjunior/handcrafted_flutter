@@ -14,6 +14,38 @@ enum CraftReliefKind {
   inset,
 }
 
+/// Host-owned glyph lighting; typography and color remain native.
+@immutable
+final class CraftReliefStyle {
+  /// Validates the same 0..8 depth and light contract as [CraftReliefText].
+  CraftReliefStyle({
+    this.kind = CraftReliefKind.inset,
+    this.depth = 1.2,
+    this.light = const Offset(-1, -1),
+  }) {
+    _validateRelief(depth, 1, light);
+  }
+
+  /// Raised or pressed glyph shading.
+  final CraftReliefKind kind;
+
+  /// Logical glyph shading offset; zero leaves ordinary native text.
+  final double depth;
+
+  /// Finite nonzero incoming light direction.
+  final Offset light;
+
+  @override
+  bool operator ==(Object other) =>
+      other is CraftReliefStyle &&
+      other.kind == kind &&
+      other.depth == depth &&
+      other.light == light;
+
+  @override
+  int get hashCode => Object.hash(kind, depth, light);
+}
+
 /// Paints an illustrative raised or pressed motif over an existing material.
 ///
 /// Without [fill], the original substrate remains visible. [depth] is 0..8

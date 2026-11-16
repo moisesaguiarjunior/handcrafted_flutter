@@ -11,6 +11,7 @@ recipes over the same native controls.
 
 ```dart
 final materials = CraftTheme(
+  heading: CraftReliefStyle(kind: CraftReliefKind.inset, depth: 1.6),
   surface: CraftPanelStyle(
     material: CraftMaterial.paper,
     color: paperColor, // supplied by your application
@@ -32,6 +33,7 @@ CraftPanel(
   child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      const CraftHeading('Make room for small wonders'),
       TextField(controller: titleController),
       CraftChoice(
         selected: selected,
@@ -47,9 +49,47 @@ CraftPanel(
 `CraftRole` names sheet, card, tag, ribbon, tray, button and unselected/selected
 choices. Roles select styles, not application layouts or authored art. Missing
 roles use the theme's `surface`. Explicit component styles need no CraftTheme.
-This is the first foundation slice: native relief text already exists as
-`CraftReliefText`; further heading/finish recipes and an experience frame remain
-separate work. A role name does not add a complete tray, ribbon control or scene.
+`CraftHeading` adds native heading semantics and optional themed lettering over
+`CraftReliefText`. More finish/layout recipes remain separate work. The
+[experience frame](experience-frame.md) is still an example recipe. A role name
+does not add a complete tray, ribbon control or scene.
+
+## Native material headings (current source)
+
+`CraftHeading` and `CraftReliefStyle` are additions **after v0.2.0**, available
+from reviewed current source; the v0.2.0 tag does not contain them. Pin the exact
+reviewed source SHA when trying these APIs before a later tagged release.
+
+The host's `ThemeData.textTheme.headlineMedium` supplies typography and color;
+`style` can override it. Text wraps, follows native scaling, bold-text, locale
+and direction, and has one accessible heading label. It never becomes a bitmap
+or receives an artwork transform. Keep the native foreground sufficiently
+contrasting against the host material; shading is decorative.
+
+`CraftTheme.heading` configures kind, depth and light, not fonts or content.
+Use an explicit `relief` to override the theme or to use the heading without a
+CraftTheme. Without either, it is plain native text with heading semantics.
+Set depth to zero to disable decoration, including inside a decorated theme.
+
+```dart
+CraftHeading(
+  localizedTitle,
+  style: Theme.of(context).textTheme.headlineLarge,
+  relief: CraftReliefStyle(kind: CraftReliefKind.raised, depth: 1.1),
+);
+```
+
+Depth is 0..8 logical pixels; light is finite and nonzero. The value validates
+before painting and reuses the existing glyph renderer and its layer budgets.
+No glyph cache or new clock is introduced. The native text is still readable
+when large/background-painted paragraphs use the existing shadow-only fallback.
+Relief may reach beyond glyph edges; leave space around the native heading.
+
+Theme transitions interpolate depth. Kind and light switch at the midpoint;
+opposite light vectors are never interpolated through zero. Null lighting
+fades to/from zero depth. `copyWith` preserves unspecified lighting; supply a
+zero-depth style to turn it off. The example switches pressed paper lettering
+to raised cloth lettering while retaining the same form/controller/focus.
 
 ## Native interaction and identity
 

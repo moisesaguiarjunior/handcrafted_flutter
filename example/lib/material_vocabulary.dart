@@ -54,6 +54,10 @@ CraftTheme exampleMaterialTheme({required bool cloth}) {
   );
   return CraftTheme(
     surface: base,
+    heading: CraftReliefStyle(
+      kind: cloth ? CraftReliefKind.raised : CraftReliefKind.inset,
+      depth: cloth ? 1.1 : 1.6,
+    ),
     roles: {
       CraftRole.button: button,
       CraftRole.choice: recipe(
@@ -143,7 +147,7 @@ class _MaterialVocabularyStudyState extends State<MaterialVocabularyStudy> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const CraftReliefText(
+                    const CraftHeading(
                       'Make room for small wonders',
                       style: TextStyle(
                         fontFamily: 'Caveat',

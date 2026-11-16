@@ -68,3 +68,20 @@ with their original copyright/license notices. They are example/capture assets,
 not a font dependency exported by the Dart library. See dependencies.md and
 provenance.md. FFmpeg is an external developer tool used only to encode these
 GIFs; no FFmpeg binary or codec library is distributed by this package.
+
+## README cover and distinct relief objects
+
+`flutter test tool/capture_cover.dart` renders the same MaterialCover and
+ReliefObjectsSheet as `example/lib/main_cover.dart`. Outputs are
+`build/cover/material-cover.png` (1200×750) and
+`build/cover/relief-objects.png` (1100×560), copied explicitly to docs/assets/.
+These are new documentation compositions, not updates to golden baselines.
+The fixed poster uses the controlled font/scale capture baseline; the live cover
+scrolls its artboard horizontally, while the separate object studies reflow.
+Application layouts must be validated separately at their own text scales.
+
+A raised shell, pressed feather and crescent replace repeated botanical motifs
+in the documentation presentation. The cover combines real textured substrates,
+contour-matched cord, embroidered sprig, torn paper, layered pigment and a native
+button. Cast shadows follow each actual cut; they do not imply displaced fabric.
+The poster has no animation clock. Existing motion captures remain separate.

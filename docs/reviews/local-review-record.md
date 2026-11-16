@@ -33,3 +33,15 @@ locked dependency license hashes matched. No privacy/metadata findings.
 A low-severity evidence clarification now names the historical revision in the
 freehand request. The tag is published only after the final candidate review
 and green CI; check Git tags for publication status.
+
+## Follow-up candidates
+
+- PR #12: final `87786ecd1481ebc463978147ad1d421a0d1743d1` approved by independent
+  Astra review; 53 package / 66 example tests, CI green, source tag v0.1.0.
+- PR #13: `086763efbca3b6cd1658f64b2268cbb904b7565c` approved after fixing
+  degenerate-contour dots; 58 package / 67 example tests, five trim tests in
+  Chrome. Negative control failed as intended; captured composition unchanged.
+- PR #14: `46e151888eaaaffe340c8a2bc70f1a348ad3822a` approved; 62 package /
+  69 example tests, independent numerical-reference/extreme-force probes and
+  60 transformed native taps. Wind-sign, time-limit and reduced-motion negative
+  controls failed as intended. CI passed and the candidate was integrated.

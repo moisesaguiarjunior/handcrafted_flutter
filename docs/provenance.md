@@ -48,3 +48,9 @@ Cord/ribbon/embroidered trim algorithms and the original looping cord, shaped
 paper and leaf-sprig study are maintainer-authored geometry. No private reference
 image, name, motif or consumer artwork is distributed. The trim image is captured
 from example/lib/trim_studies.dart using the existing licensed fonts.
+
+The material cover and relief-object sheet are original code-native compositions
+in example/lib/cover_studies.dart, captured by tool/capture_cover.dart. Shell,
+feather, crescent, landscape and sprig geometry are newly authored. They reuse
+public material, watercolor, relief, trim and pose primitives, with existing
+example-only licensed fonts. No private screenshot or consumer artwork is used.

@@ -137,3 +137,9 @@ attachments and SceneEntrance. Reused pose/input mapping and the trim renderer
 for the example tether. Authored sway is not a force integrator; created one
 bounded fixed-step point-mass recipe sampled from caller time, without a second
 clock, framework, flexible-rope solver or global simulation owner.
+
+For the README cover, searched existing atlas/showcase capture shells, specimen
+layout, textures, native lettering, watercolor, contour trims and PartPose.
+Reused those renderers and fonts; created distinct shell/feather/crescent motifs
+and one shared live/capture composition. No marketing mockup renderer, animation
+clock, new dependency or golden-baseline replacement is introduced.

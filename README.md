@@ -2,15 +2,18 @@
 
 **Give your Flutter widgets a handmade surface.**
 
-![Botanical relief and native lettering on twill, linen and felt](docs/assets/impressions-atlas.png)
+![Sculpted shell relief on twill, watercolor landscape on torn paper, and embroidered cord on linen](docs/assets/material-cover.png)
 
 Seeded paper, linen, twill, felt and wood textures, running stitches, organic
-contours, watercolor pigment, relief and composable moving parts for Flutter.
+contours, watercolor pigment, relief, cord/ribbon bands and composable moving
+parts for Flutter.
 Text remains text; buttons retain native focus, actions and semantics.
 
 [![Checks](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml/badge.svg)](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml)
 
-Experimental version 0.1.0, licensed under [MIT](LICENSE). Not published on pub.dev.
+Experimental, licensed under [MIT](LICENSE). Not published on pub.dev.
+Latest tagged baseline: [v0.1.0](https://github.com/moisesaguiarjunior/handcrafted_flutter/releases/tag/v0.1.0);
+examples and APIs below follow the current source branch.
 Tested baseline: Flutter 3.47.9 / Dart 3.13.7. See [compatibility](docs/compatibility.md).
 
 ## Paper behind a real control
@@ -42,9 +45,12 @@ closed silhouette, respecting concavities and holes. See [contour seams](docs/co
 
 ![Large procedural twill, linen, felt, paper and wood swatches](docs/assets/materials-atlas.png)
 
-Five material algorithms, with explicit colors, grain scale and seed. The three
-fabric impressions above keep the fabric grain visible inside original botanical motifs.
-Their captions are native widgets; the pressed lettering uses `CraftReliefText`.
+Five material algorithms, with explicit colors, grain scale and seed.
+
+![Distinct shell, feather and crescent relief on twill, linen and felt](docs/assets/relief-objects.png)
+
+Each relief has its own shape and edge lighting. Substrate grain stays visible;
+pressed lettering uses native `CraftReliefText`. These are shading approximations.
 See the [implemented catalog](docs/materials-and-motion.md) for API/examples and
 what remains planned.
 
@@ -85,6 +91,9 @@ flutter pub get --enforce-lockfile
 flutter run -d chrome -t lib/main_atlas.dart
 ```
 
+- [Cover and relief gallery](example/lib/main_cover.dart): the real compositions behind the README images.
+- [Cord/ribbon playground](docs/cord-ribbon-embroidery.md): open paths and contour gaps; run `lib/main_trims.dart`.
+- [Gravity/wind comparison](docs/bounded-physics.md): supplied time and realistic/cartoon response; run `lib/main_physics.dart`.
 - [Material and motion atlas](example/lib/main_atlas.dart): four sections with live controls.
 - [Original showcase](example/lib/main_showcase.dart): keepsake card, hanging pieces and kite.
 - [Material playground](example/lib/main.dart): seed, scale, grain and lighting.
@@ -117,6 +126,8 @@ in an application. Keep source-access credentials outside code and URLs.
 | `paintPaperFinish`, `paintPaperEdgeFibers` | Clipped stock finish marks and independent fiber fringe |
 | `PartPose`, `CraftPart` | Shared paint, input and attachment transforms |
 | `CraftImagePart` | Image crop in an artboard rect, optional hinge/pose, native overlay and attachment mapping |
+| `paintCraftTrim`, `contourTrimPath` | Cord/ribbon/embroidered bands and nominal edge clearance |
+| `CraftPendulum` | Bounded gravity/wind samples with direct or cartoon response, no clock |
 | `SceneEntrance` | Finite lifecycle-aware entrance progress |
 
 `SceneEntrance.active` is supplied by the host's viewport or route policy.
@@ -124,10 +135,10 @@ Background/TickerMode suspension and reduced motion are handled by the clock.
 Pivots use the actual constrained size; attachment mapping must use that same
 size. Reserve parent space for moving touch targets.
 
-Motion is authored, not a physics solver. Punctures are shading, not displaced
-cloth. Textures are cached per surface.
-Additional material/edge/stitch families and physical cloth/wind remain future
-work. Insets approximate curves with polygons and have explicit work limits.
+Actor examples use authored motion. `CraftPendulum` separately models one rigid
+suspended mass with constant gravity/wind; flexible cloth/rope, shared wind fields
+and fluid dynamics remain future work. Punctures are shading; textures are cached
+per surface. Insets approximate curves with polygons and have explicit work limits.
 Glyph shading uses bounded offscreen layers;
 phone performance remains unmeasured.
 
@@ -154,6 +165,7 @@ Draw raised bands over textures or follow the actual cut with an optional edge g
 
 ```sh
 bash tool/check.sh
+flutter test tool/capture_cover.dart
 flutter test tool/capture_showcase.dart
 bash tool/encode_showcase.sh
 flutter test tool/capture_atlas.dart

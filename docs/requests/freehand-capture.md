@@ -59,9 +59,10 @@ See [current stroke contracts](../drawing-strokes.md) and
 On the documented Flutter 3.47.9 baseline, an isolated experiment measured
 24,075 logical pixels for that fifty-point polyline. Native solid drawPath
 accepted it; paintCraftStroke rejected it through the documented arc guard.
-The experiment is not a phone performance measurement. Repository checks passed
-(50 library tests and 66 example tests at `10af430`); this change adds
-documentation only.
+The experiment is not a phone performance measurement. The original request-only
+assessment recorded 50 library and 66 example tests at `10af430`; it introduced
+no renderer. The solid-pen implementation described below is a later change,
+with its own review and checks tracked by the pull request.
 
 ## Minimal rendering adapter
 

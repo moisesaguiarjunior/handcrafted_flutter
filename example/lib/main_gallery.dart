@@ -133,21 +133,23 @@ class _GalleryPageState extends State<_GalleryPage> {
         ),
       ),
     ),
-    body: KeyedSubtree(
-      key: ValueKey(selected),
-      child: selected == GalleryStudy.cover
-          ? const CoverGallery()
-          : SingleChildScrollView(
-              padding: const EdgeInsets.all(24),
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1100),
-                  child: _content(),
-                ),
-              ),
-            ),
-    ),
+    body: KeyedSubtree(key: ValueKey(selected), child: _body()),
   );
+  Widget _body() {
+    final content = _content();
+    if (selected == GalleryStudy.cover || selected == GalleryStudy.ink)
+      return content;
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(24),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1100),
+          child: content,
+        ),
+      ),
+    );
+  }
+
   Widget _content() => switch (selected) {
     GalleryStudy.cover => const CoverGallery(),
     GalleryStudy.materials => const Column(

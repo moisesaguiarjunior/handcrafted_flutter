@@ -9,6 +9,34 @@ import 'support/fonts.dart';
 
 void main() {
   testWidgets(
+    'every hosted study lays out at narrow enlarged text, including full-page ink',
+    (tester) async {
+      await tester.runAsync(loadShowcaseFonts);
+      tester.view.devicePixelRatio = 1;
+      tester.view.physicalSize = const Size(320, 1100);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      addTearDown(tester.view.resetPhysicalSize);
+      for (final study in GalleryStudy.values) {
+        await tester.pumpWidget(
+          MediaQuery(
+            data: const MediaQueryData(
+              size: Size(320, 1100),
+              textScaler: TextScaler.linear(2.5),
+            ),
+            child: HandcraftedGalleryApp(
+              key: ValueKey(study),
+              initialStudy: study,
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull, reason: study.name);
+      }
+      await tester.pumpWidget(const SizedBox());
+      expect(tester.binding.transientCallbackCount, 0);
+    },
+  );
+  testWidgets(
     'gallery switches studies and disposes offscreen motion rather than retaining clocks',
     (tester) async {
       await tester.runAsync(loadShowcaseFonts);

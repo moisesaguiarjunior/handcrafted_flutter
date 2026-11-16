@@ -75,6 +75,10 @@ blur/layers or any shared cache.
 
 ## D. Reproducible motion/material budget
 
+The [rendering harness](../rendering-budget.md) now makes the workload runnable.
+Native-device timing and memory measurements remain pending; the harness is not
+a demonstrated performance budget.
+
 Before a larger cache or physics abstraction, add a repeatable stress scene:
 repeated textured surfaces, overlapping washes, relief lettering, stitched
 curves and a few independently moving imported parts. Report UI/raster timings,

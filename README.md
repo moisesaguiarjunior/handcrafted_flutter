@@ -80,6 +80,7 @@ flutter run -d chrome -t lib/main_atlas.dart
 - [Material playground](example/lib/main.dart): seed, scale, grain and lighting.
 - [Shared compositions](example/lib/use_cases.dart): complete runnable widget code.
 - [Imported artwork recipe](docs/imported-layers.md): source crops, hinges and attached thread; run `lib/main_scenes.dart`.
+- [Rendering budget](docs/rendering-budget.md): bounded stress scene and runtime UI/raster timing; run `lib/main_budget.dart` in profile mode.
 
 Use a local path dependency during development, or pin an immutable Git commit
 in an application. Keep source-access credentials outside code and URLs.

@@ -67,3 +67,9 @@ native focus through the package and examples. Reused CraftPart/PartPose and
 the capture/font helpers. SourceLayer remains an example adapter; its supplied
 PNG, crop and hit shape are original synthetic artwork. No second transform,
 alpha-testing engine, clock or general manifest was added.
+
+For the budget scene, searched texture disposal, watercolor, stitches, relief,
+imported layers and finite clocks. Reused all actual painters and the imported
+adapter; fixed geometry remains prepared in the example. Explicit per-consumer
+owners retain resources across equal rebuilds. Engine FrameTiming callbacks feed
+a bounded local window without scheduling UI work or adding a global cache.

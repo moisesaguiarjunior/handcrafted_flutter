@@ -2,6 +2,8 @@
 
 ## 0.0.1 (unreleased)
 
+- Reproducible rendering-cost harness with bounded engine UI/raster samples,
+  explicit resource/disposal counts and repeated mixed material workloads.
 - Imported-artwork example with source crops, authored hinges, mapped thread,
   supplied hit shapes and native content actions that leave focus when covered.
 - Explicit pen/marker stroke joins, preserving the round default and allowing

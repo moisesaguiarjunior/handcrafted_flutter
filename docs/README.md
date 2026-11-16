@@ -7,6 +7,7 @@
 - [Material-focused roadmap](roadmap.md)
 - [Proposed authored-scene composition recipes](requests/authored-scene-composition.md)
 - [Imported layers, source pivots and attachments](imported-layers.md)
+- [Rendering-cost harness and resource ownership](rendering-budget.md)
 - [Curved lines, patterns and drawing playground](drawing-strokes.md)
 - [Implemented catalog: materials, relief, watercolor and independent motion](materials-and-motion.md)
 - [Composition, Fluvie and Social Studio integration](integration.md)

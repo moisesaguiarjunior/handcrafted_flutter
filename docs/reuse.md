@@ -8,6 +8,7 @@
 | Bounded layered pigment with explicit palette | `paintWatercolor` |
 | Directional motif rims and native lettering | `paintCraftRelief`, `CraftReliefText` |
 | Raised cord/ribbon/embroidered bands and nominal edge gap | `paintCraftTrim`, `contourTrimPath` |
+| Patterned thread geometry and shared puncture paint | `craftStitchPath`, `paintCraftStitch`, internal `thread_paint.dart` |
 | Stitch spans and puncture shading | `runningStitchPath`, `paintRunningStitch` |
 | Shared bounded arc-length geometry | `lib/src/path_geometry.dart` (internal) |
 | Closed-silhouette polygonal insets | `insetCraftPath`, using pinned clipper2 union/offset |
@@ -150,3 +151,10 @@ paint setup, decorative arc guards and native drawPath/drawPoints. Reused style
 validation and extracted one shared native paint factory. Created only a bounded
 solid-pen rendering adapter, not a capture controller/export service. Ordered
 input, native joins and taps are retained; decorative safeguards are unchanged.
+
+For stitch families, searched runningStitchPath, path metrics, blanket/chain/cross
+patterns and trim shading in library/examples. Reused arc validation, native seam
+extraction, contour insets and the existing thread painter (extracted unchanged).
+Created only bounded family geometry; the legacy running painter remains pixel
+identical against an isolated old-source raster probe. The six-plate example uses
+actual layout-size cuts, existing materials, native sliders and capture helpers.

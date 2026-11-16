@@ -54,3 +54,7 @@ in example/lib/cover_studies.dart, captured by tool/capture_cover.dart. Shell,
 feather, crescent, landscape and sprig geometry are newly authored. They reuse
 public material, watercolor, relief, trim and pose primitives, with existing
 example-only licensed fonts. No private screenshot or consumer artwork is used.
+
+Stitch family geometry and the six-plate comparison are original implementations
+of general sewing patterns. The image uses the real package painters, existing
+licensed fonts and seeded substrates, without copied consumer art or documents.

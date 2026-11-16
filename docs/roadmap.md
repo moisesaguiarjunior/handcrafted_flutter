@@ -56,7 +56,7 @@ not physically displaced and wet paint is not simulated over time.
 | Edges | Clean cut, scissor cut, torn white fibers, serrated, postage perforations and deckle | Silhouette geometry, edge shading and fiber detail remain separate |
 | Relief | Raised/inset motifs and native lettering exist; foil/gilding and physical displacement remain candidates | Depth approximation, light, contact shadow and highlight; preserve native text |
 | Marks | Basic pen, translucent broad marker and illustrative brush exist; fountain pen, pencil, chalk, wax crayon and wet pigment remain candidates | Width/pressure, coverage, edge bleed, granulation, taper and seed |
-| Stitches | Existing running stitch; backstitch, blanket/buttonhole, chain, cross and basting | Shared seam, spacing, thread thickness and puncture shading |
+| Stitches | Running, backstitch, blanket, chain, cross and basting surface geometry now implemented; physical thread intersections remain future work | Shared seam, spacing, thread thickness and puncture shading |
 | Layers | Contact plus cast shadow, lifted corners and stacked cut paper | Elevation, light direction and clipping; avoid inaccessible transformed targets |
 | Fasteners | Peg, sewn button, eyelet, wax seal and V-cut ribbon | Wrap native controls; do not paint away focus or semantics |
 

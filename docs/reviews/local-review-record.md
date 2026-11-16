@@ -50,3 +50,8 @@ and green CI; check Git tags for publication status.
   62 package / 69 example tests, byte-identical cover/relief captures, narrow and
   enlarged-text native-action probes, and web build passed. No privacy/metadata
   findings. Publication status is recorded by the PR and its CI checks.
+
+- PR #16: `bae45ca0c445428677a5427895f645f1b267c122` independently approved;
+  65 package / 69 example tests, three freehand Chrome tests, enlarged native
+  export parity and atomic-validation probes passed. Three negative controls
+  failed as intended; restored stroke/freehand tests passed. CI green, integrated.

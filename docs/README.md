@@ -12,6 +12,7 @@
 - [Imported layers, source pivots and attachments](imported-layers.md)
 - [Rendering-cost harness and resource ownership](rendering-budget.md)
 - [Contour-following seams and approximation limits](contour-seams.md)
+- [Six stitch families and shared-contour playground](stitch-families.md)
 - [Cord, ribbon and embroidered lines](cord-ribbon-embroidery.md)
 - [Paper stock, edges, finishes and native letterhead](paper-recipes.md)
 - [Curved lines, patterns and drawing playground](drawing-strokes.md)

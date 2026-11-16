@@ -61,6 +61,13 @@ then choose clean, torn, handmade or postage edges independently. These are
 visual recipes; letterhead stays real text over a substrate. See
 [paper recipes and controls](docs/paper-recipes.md).
 
+## Thread, six ways
+
+![Running, backstitch, blanket, chain, cross and basting following the actual cut](docs/assets/stitch-families.png)
+
+Choose a thread pattern while keeping the same seam, substrate and native controls.
+[Stitch geometry, clearance and playground](docs/stitch-families.md).
+
 ## Watercolor on paper
 
 ![Overlapping pigment, a botanical painting and a paper cutout](docs/assets/watercolor-atlas.png)
@@ -121,6 +128,7 @@ in an application. Keep source-access credentials outside code and URLs.
 | `craftCurveThrough`, `trimCraftPath` | Curved waypoints and explicit arc-length reveal |
 | `CraftStrokeStyle`, `paintCraftStroke` | Continuous, dashed or dotted pen/marker/brush ink |
 | `paintCraftFreehand` | Bounded solid-pen input by points/strokes, including long scribbles and taps |
+| `craftStitchPath`, `paintCraftStitch` | Six bounded thread families over a supplied seam |
 | `runningStitchPath`, `paintRunningStitch` | Arc-length stitches and illustrative puncture shading |
 | `insetCraftPath` | Bounded winding-aware polygonal inset of a closed silhouette |
 | `paperOutline`, `CraftOutline.paper` | Clean, torn, handmade and postage silhouettes |

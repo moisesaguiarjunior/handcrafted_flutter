@@ -24,20 +24,20 @@ a passing widget test is not a phone benchmark or visual approval.
 | HC-P03 | Rope, ribbon and embroidery over textures or contours | Published in PR #13 at `086763e`; native/Chrome checks and original compositions |
 | HC-P04 | Gravity/wind and realistic/cartoon response | Published in PR #14 at `46e1518`; numerical/native-action checks and CI passed |
 | HC-P05 | Public rotary-control abstraction | Example only; promote after complete consumer flows demonstrate a stable contract |
-| HC-P06 | Deeper fabrics, stitches, relief and embroidered fills | Backlog; original shapes, native text/actions, separate visual review |
+| HC-P06 | Deeper fabrics, stitches, relief and embroidered fills | Six stitch families implemented locally; more fabric algorithms/filled embroidery remain backlog; review/publication tracked by PR |
 | HC-P07 | Capillary edges, prepared geometry and shared caches | Conditional; require demonstrated need/profile before new ownership contracts |
 | HC-I01 | Fluvie / Social Studio adapters | [Explicit parameters and supplied progress](integration.md); no second clock or application schema ownership |
 | HC-V01 | Material/motion imagery and interactive gallery | New material cover and distinct relief studies in PR #15; replacement motion captures and hosted gallery remain pending |
 
 ## Next sequence
 
-1. Review and publish the generic-art boundary correction, release evidence and
-   immutable baseline without erasing retained work.
-2. Implement composable rope/ribbon/embroidery with bounded work and examples.
-3. Add bounded gravity/wind response with caller-supplied time and explicit styles.
-4. Assess long freehand rendering separately from decorative arc-length budgets.
-5. Profile actual consumer scenes, then devices; promote additional abstractions
-   only when real callers require them.
+1. Review/publish six stitch families and preserve legacy running pixels.
+2. Restore generic motion captures and host the live gallery with bounded demos.
+3. Validate external-timeline adapters without adding a second clock or adopting
+   application-owned schemas into the core package.
+4. Expand fabrics/instruments in bounded recipes with actual visual examples.
+5. Profile actual consumer scenes, then devices; promote shared caches only when
+   demonstrated by measured workloads.
 
 Consumer migrations, pixel-parity checks, application visual approvals and phone
 measurements have separate gates. This queue does not mark them completed by a

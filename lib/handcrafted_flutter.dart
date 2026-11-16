@@ -19,3 +19,4 @@ export 'src/watercolor.dart';
 export 'src/craft_relief.dart';
 export 'src/craft_trim.dart';
 export 'src/craft_pendulum.dart';
+export 'src/craft_stitch.dart';

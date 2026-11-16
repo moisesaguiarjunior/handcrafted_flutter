@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Six thread families share bounded seam geometry and the original puncture
+  painter: running, backstitch, blanket, chain, cross and basting. Adds a native
+  parameter playground and actual-contour image without changing legacy pixels.
+
 - Bounded solid-pen freehand renderer preserves native ordered paths, joins and
   taps with point/stroke budgets, independently of decorative arc-length guards.
   Capturing, consent, persistence and export policy remain consumer-owned.

@@ -4,7 +4,7 @@ part of 'craft_stitch.dart';
 ///
 /// Supply output from [craftStitchPath]. Geometry is copied; later mutations of
 /// the supplied path cannot change this frame. A partial strand has a starting
-/// puncture but no hole at the travelling tip. No needle or cloth physics.
+/// puncture but no hole at the travelling tip. No dynamic thread or cloth physics.
 final class CraftStitchFrame {
   CraftStitchFrame._(this._path, this._punctures, this.tip);
 

@@ -186,5 +186,11 @@ budgets, shared thread shading, SceneEntrance, native Router/Interval, galleries
 and captures. Reused existing palettes/material ownership and defaults. Added
 only bounded front geometry and owned thread-frame sampling; existing static
 endpoints retain their pixels. Browser history uses Flutter Router instead of a
-parallel JavaScript history layer. Example wet mixing/needle returns stay authored
+parallel JavaScript history layer. Example wet mixing/hidden thread returns stay authored
 recipes. New foundation requests reuse existing native contracts before extraction.
+
+For enlarged gallery navigation, searched native dropdown/popup intrinsic layout,
+text selection boxes and the existing licensed-font test loader. Reused the native
+popup menu with a wrapping label instead of fixing its selected-field height.
+Browser tests read the canonical font files through the test asset server, with
+a relative symlink instead of duplicated font bytes; runtime assets are unchanged.

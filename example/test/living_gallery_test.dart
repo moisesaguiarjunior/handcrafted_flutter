@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:handcrafted_example/gallery_routes.dart';
@@ -10,6 +12,43 @@ import 'package:handcrafted_example/motion_studies.dart';
 import 'support/fonts.dart';
 
 void main() {
+  testWidgets('mobile study label fits at 250 percent text without shrinking', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(320, 900);
+    tester.view.devicePixelRatio = 1;
+    tester.platformDispatcher.textScaleFactorTestValue = 2.5;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await tester.pumpWidget(
+      const HandcraftedGalleryApp(initialStudy: GalleryStudy.spreading),
+    );
+    await tester.pumpAndSettle();
+    final label = find.byKey(const ValueKey('mobile-study-label'));
+    final paragraph = tester.renderObject<RenderParagraph>(label);
+    final boxes = paragraph.getBoxesForSelection(
+      const TextSelection(baseOffset: 0, extentOffset: 15),
+    );
+    expect(boxes.length, greaterThan(1));
+    for (final box in boxes) {
+      expect(box.bottom, lessThanOrEqualTo(paragraph.size.height));
+      expect(box.right, lessThanOrEqualTo(paragraph.size.width));
+    }
+    final picker = find.byKey(const ValueKey('mobile-study-picker'));
+    expect(
+      tester.getRect(picker).contains(tester.getRect(label).bottomRight),
+      isTrue,
+    );
+    await tester.tap(picker);
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.widgetWithText(PopupMenuItem<GalleryStudy>, 'Paint spreading'),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byType(LivingMaterialStudy), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
   testWidgets(
     'material replay pauses resumes scrubs and settles without idle clocks',
     (tester) async {
@@ -189,11 +228,13 @@ void main() {
       expect(
         tester.getSemantics(find.widgetWithText(ChoiceChip, 'Pink + blue')),
         matchesSemantics(
-          isSelected: true,
+          isSelected: !kIsWeb,
+          isChecked: kIsWeb,
+          hasCheckedState: kIsWeb,
           isEnabled: true,
           hasEnabledState: true,
           isFocusable: true,
-          hasSelectedState: true,
+          hasSelectedState: !kIsWeb,
           isButton: true,
           label: 'Pink + blue',
           hasTapAction: true,

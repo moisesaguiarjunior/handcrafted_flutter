@@ -27,12 +27,12 @@ No reference image or third-party rendering code is copied.
 
 ![Dry and wet pink bases receiving a blue brush](assets/watercolor-reaction.gif)
 
-## Thread following the needle
+## Thread moving through the surface
 
 Prepare with craftStitchPath, then sample CraftStitchFrame at progress 0..1.
 The snapshot owns its geometry; changing the source or a returned path copy does
 not change it. Frame.paint reuses the existing thread renderer. Its optional tip
-provides position/direction for caller-owned needle art. At completion there is
+provides position/direction for caller-owned tip artwork. At completion there is
 no travelling tip; the final geometry and pixels match the static thread.
 
 Prepared budgets are 3072 contours / 32768 arc units and finite bounds within

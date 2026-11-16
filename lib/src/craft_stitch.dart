@@ -174,7 +174,7 @@ void _checkOutput(Path result) {
 /// Caller owns clipping, silhouette clearance and native controls. [progress]
 /// is 0..1 in generated thread order; partial tips are not new punctures.
 /// The default completes the original static geometry. Use [CraftStitchFrame]
-/// to reuse prepared geometry and obtain a caller-owned needle position.
+/// to reuse prepared geometry and obtain a caller-owned thread-tip position.
 void paintCraftStitch(
   Canvas canvas,
   Path seam, {

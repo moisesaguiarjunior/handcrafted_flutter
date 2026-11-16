@@ -49,8 +49,9 @@ boundaries. These are proposed components, not shipped APIs.
 
 - Paint spreading: elongated brush contact and uneven front, moving-brush and
   pink/blue-layer experiments; visual approximations, not a fluid solver.
-- Ordered embroidery reveal with actual anchors, a travelling tip and example
-  above/below-cloth choreography; one caller-owned finite progress.
+- Needle-free thread with nonperiodic waves between fixed entry/exit anchors;
+  below-cloth connectors stay hidden. Ordered botanical embroidery reveal is a
+  separate example; both reuse caller-owned finite progress.
 - Paint-led gallery discovery, native history/share links, varied material cuts
   and distinct kite/balloon rhythms. Broad README catalog retained; thread imagery
   lives in dedicated studies rather than dominating the README.

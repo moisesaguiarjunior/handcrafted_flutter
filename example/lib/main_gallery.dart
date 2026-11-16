@@ -152,24 +152,43 @@ class _GalleryPage extends StatelessWidget {
                               Text(galleryDescription(selected)),
                             ],
                           )
-                        : DropdownButtonFormField<GalleryStudy>(
-                            key: ValueKey(selected),
-                            initialValue: selected,
-                            isExpanded: true,
-                            itemHeight: null,
-                            decoration: const InputDecoration(
-                              labelText: 'Explore a study',
-                            ),
-                            items: [
-                              for (final study in galleryOrder)
-                                DropdownMenuItem(
-                                  value: study,
-                                  child: Text(galleryLabel(study)),
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              const Text('Explore a study'),
+                              PopupMenuButton<GalleryStudy>(
+                                key: const ValueKey('mobile-study-picker'),
+                                tooltip: 'Explore a study',
+                                initialValue: selected,
+                                onSelected: select,
+                                itemBuilder: (context) => [
+                                  for (final study in galleryOrder)
+                                    PopupMenuItem(
+                                      value: study,
+                                      child: Text(galleryLabel(study)),
+                                    ),
+                                ],
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 12,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          galleryLabel(selected),
+                                          key: const ValueKey(
+                                            'mobile-study-label',
+                                          ),
+                                          style: const TextStyle(fontSize: 20),
+                                        ),
+                                      ),
+                                      const Icon(Icons.arrow_drop_down),
+                                    ],
+                                  ),
                                 ),
+                              ),
                             ],
-                            onChanged: (study) {
-                              if (study != null) select(study);
-                            },
                           ),
                   ),
                   Expanded(

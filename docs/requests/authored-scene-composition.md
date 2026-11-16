@@ -1,7 +1,9 @@
 # Authored scene composition requests
 
-Status: proposed consumer-driven requests, assessed against `0664174` on
-2026-11-15. These are not implemented features or release commitments. Examples
+Status: consumer-driven recipes, originally assessed against `0664174` on
+2026-11-15. A, B and C now have runnable examples; D has a measurement harness,
+with native-device results still pending. General manifest, dial, particle and
+shared-cache APIs remain proposals, not release commitments. Examples
 must use original synthetic artwork and generic labels; application scenes,
 product inventories, permissions and private design references stay outside this
 repository. Prefer composition recipes before adding public APIs.
@@ -50,6 +52,9 @@ Acceptance:
 
 ## B. Small rotary control around a native action
 
+The [rotary example](../rotary-control.md) now demonstrates this recipe without
+adding a public dial abstraction.
+
 A dial/reel recipe should reuse PartPose for its rotating illustration while a
 native accessible control owns stepping, focus and semantics. Do not make core
 geometry depend on application dates, recording state or device audio.
@@ -61,6 +66,9 @@ that real recording or saving occurred. Prefer an example over a universal dial
 API until callers agree on interaction and snapping.
 
 ## C. Bounded pour, droplets and light
+
+The [bounded-effects example](../bounded-effects.md) now demonstrates this recipe.
+It remains authored motion, without a general particle or fluid API.
 
 A recipe for a short pour can accept emitter and destination anchors mapped by
 PartPose plus explicit progress and seed. A light/dust recipe can share that

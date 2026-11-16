@@ -6,6 +6,8 @@
 - [Reuse map](reuse.md)
 - [Material-focused roadmap](roadmap.md)
 - [Proposed authored-scene composition recipes](requests/authored-scene-composition.md)
+- [Bounded pour, droplets and light](bounded-effects.md)
+- [Native rotary control and retargetable artwork](rotary-control.md)
 - [Imported layers, source pivots and attachments](imported-layers.md)
 - [Rendering-cost harness and resource ownership](rendering-budget.md)
 - [Curved lines, patterns and drawing playground](drawing-strokes.md)

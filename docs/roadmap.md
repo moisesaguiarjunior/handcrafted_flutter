@@ -15,6 +15,9 @@ identity, themes and editorial decisions belong to the application.
 - One authored kite-tail preset and runnable synthetic compositions.
 - Layered watercolor washes and directional motif/native-text relief, with a
   visual atlas and independently controlled body/tail/tether motion examples.
+- Imported crop/hinge/attachment, native rotary-control and bounded pour/light
+  recipes, plus a rendering-cost harness with owner-scoped resource bookkeeping.
+  Native-device performance results remain pending.
 
 There is no general path inset, physical cloth, shared wind, water solver or
 shared texture cache. Pigment and relief are visual approximations; fabrics are

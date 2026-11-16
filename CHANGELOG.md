@@ -2,6 +2,9 @@
 
 ## 0.0.1 (unreleased)
 
+- Composable paper finishes and cut/torn/deckle/postage edge recipes, including
+  value-based CraftOutline.paper and separate fiber fringe. Adds six visual stock
+  specimens, edge comparison images and native letterhead at enlarged text.
 - Bounded contour insets via pinned clipper2, respecting fill rules, holes and
   collapsed narrow regions. Adds a seam study and corrects the card/material
   showcases to follow the actual cut rather than scaled or unrelated contours.

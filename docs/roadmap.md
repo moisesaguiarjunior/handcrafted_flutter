@@ -11,6 +11,9 @@ identity, themes and editorial decisions belong to the application.
 - Running stitches with illustrative puncture shading.
 - Bounded polygonal contour insets respecting holes, concavities and exhausted
   narrow regions, with a shared-contour showcase and interactive seam study.
+- Six visual paper-stock recipes from existing base grain and bounded fiber,
+  fluted, cold-pressed and laid overlays; cut/torn/deckle/postage silhouettes and
+  independent fiber fringe. Native letterhead remains composition.
 - Curves through waypoints, continuous/dashed/dotted ink, pen/marker/brush
   treatments and arc-length reveal with an interactive drawing playground.
 - Clipped surfaces, shared paint/input/anchor transforms, finite entrance motion.
@@ -31,7 +34,7 @@ not physically displaced and wet paint is not simulated over time.
 | --- | --- | --- |
 | 1 | Refine contour-following seams | Bounded polygonal implementation and corrected showcase exist; preserve clearance and topology within documented approximation/work limits |
 | 2 | Refine watercolor and inset lettering | Bounded visual implementations now exist; preserve semantics/scaling while validating their quality and phone performance |
-| 3 | Material/edge/mark recipes and playground | Parameters have visible effects, deterministic seeds, bounded work and small runnable examples |
+| 3 | Expand material/edge/mark recipes | Paper/edge recipes and playground now exist; additional fabrics, marks and edge structures remain candidates with explicit seeds/work limits |
 | 4 | Layered artwork manifest | Imported SVG layers retain supplied silhouettes, pivots and hit regions; no procedural redrawing requirement |
 | 5 | Responsive and accessible compositions | Native actions, keyboard focus, reduced motion and enlarged text remain usable |
 | 6 | Reproducible performance scene | Measure repeated surfaces, transparency and dense stitches before changing cache ownership |

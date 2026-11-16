@@ -3,11 +3,13 @@ import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import 'material_studies.dart';
 import 'showcase_theme.dart';
+import 'prepared_outline.dart';
 
 /// Example-local one-size geometry cache shared by the runnable seam studies.
 class PreparedSeamGeometry {
   /// Retains one outline and offset until effective size changes.
-  PreparedSeamGeometry(this.makeOutline, this.inset);
+  PreparedSeamGeometry(this.makeOutline, this.inset)
+    : _source = PreparedOutlineGeometry(makeOutline);
 
   /// Stable caller-supplied silhouette builder.
   final Path Function(Size) makeOutline;
@@ -15,23 +17,20 @@ class PreparedSeamGeometry {
   /// Requested seam-center offset.
   final double inset;
   Size? _size;
-  Path _outline = Path(), _seam = Path();
+  final PreparedOutlineGeometry _source;
+  Path _seam = Path();
 
   /// Returns the cached silhouette; consumers must not mutate it.
-  Path outlineFor(Size size) {
-    if (_size != size) {
-      final outline = makeOutline(size);
-      final seam = insetCraftPath(outline, distance: inset);
-      _outline = outline;
-      _seam = seam;
-      _size = size;
-    }
-    return _outline;
-  }
+  Path outlineFor(Size size) => _source.pathFor(size);
 
   /// Returns the offset derived from that same silhouette and effective size.
   Path seamFor(Size size) {
-    outlineFor(size);
+    if (_size != size) {
+      final outline = _source.pathFor(size);
+      final seam = insetCraftPath(outline, distance: inset);
+      _seam = seam;
+      _size = size;
+    }
     return _seam;
   }
 }
@@ -47,6 +46,7 @@ class SeamedSurface extends StatefulWidget {
     required this.child,
     this.inset = 12,
     this.seed = 7,
+    this.showSeam = true,
   });
 
   /// Value recipe for the material and seam.
@@ -66,6 +66,9 @@ class SeamedSurface extends StatefulWidget {
 
   /// Texture seed; does not change the supplied shape recipe.
   final int seed;
+
+  /// Lets enlarged native content keep the surface while omitting decoration.
+  final bool showSeam;
   @override
   State<SeamedSurface> createState() => _SeamedSurfaceState();
 }
@@ -90,7 +93,7 @@ class _SeamedSurfaceState extends State<SeamedSurface> {
     seed: widget.seed,
     outline: _geometry.outlineFor,
     child: CustomPaint(
-      foregroundPainter: _SeamPainter(_geometry),
+      foregroundPainter: widget.showSeam ? _SeamPainter(_geometry) : null,
       child: widget.child,
     ),
   );

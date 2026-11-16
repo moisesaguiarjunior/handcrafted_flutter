@@ -48,6 +48,13 @@ Their captions are native widgets; the pressed lettering uses `CraftReliefText`.
 See the [implemented catalog](docs/materials-and-motion.md) for API/examples and
 what remains planned.
 
+![Cardstock, kraft, recycled, corrugated, watercolor and laid paper recipes](docs/assets/paper-recipes.png)
+
+Compose the existing paper grain with fiber, fluted, pitted or laid finishes,
+then choose clean, torn, handmade or postage edges independently. These are
+visual recipes; letterhead stays real text over a substrate. See
+[paper recipes and controls](docs/paper-recipes.md).
+
 ## Watercolor on paper
 
 ![Overlapping pigment, a botanical painting and a paper cutout](docs/assets/watercolor-atlas.png)
@@ -87,6 +94,7 @@ flutter run -d chrome -t lib/main_atlas.dart
 - [Imported artwork recipe](docs/imported-layers.md): source crops, hinges and attached thread; run `lib/main_scenes.dart`.
 - [Rendering budget](docs/rendering-budget.md): bounded stress scene and runtime UI/raster timing; run `lib/main_budget.dart` in profile mode.
 - [Contour seam study](docs/contour-seams.md): holes, concavities and disappearing necks; run `lib/main_seams.dart`.
+- [Paper recipes](docs/paper-recipes.md): stock, edge and finish controls plus native letterhead; run `lib/main_papers.dart`.
 
 Use a local path dependency during development, or pin an immutable Git commit
 in an application. Keep source-access credentials outside code and URLs.
@@ -105,6 +113,8 @@ in an application. Keep source-access credentials outside code and URLs.
 | `CraftStrokeStyle`, `paintCraftStroke` | Continuous, dashed or dotted pen/marker/brush ink |
 | `runningStitchPath`, `paintRunningStitch` | Arc-length stitches and illustrative puncture shading |
 | `insetCraftPath` | Bounded winding-aware polygonal inset of a closed silhouette |
+| `paperOutline`, `CraftOutline.paper` | Clean, torn, handmade and postage silhouettes |
+| `paintPaperFinish`, `paintPaperEdgeFibers` | Clipped stock finish marks and independent fiber fringe |
 | `PartPose`, `CraftPart` | Shared paint, input and attachment transforms |
 | `SceneEntrance` | Finite lifecycle-aware entrance progress |
 | `authoredKiteTail` | An artwork preset with bounded authored motion |

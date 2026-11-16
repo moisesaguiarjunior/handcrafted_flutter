@@ -127,8 +127,8 @@ class _MaterialStudyState extends State<_MaterialStudy> {
         ),
         const SizedBox(height: 24),
         const Text(
-          'Next: paper recipes (cardstock, kraft, solid/corrugated board) '
-          'and letterhead as printing over a substrate. See docs/roadmap.md.',
+          'Explore the paper-stock gallery for cardstock, kraft, laid and '
+          'corrugated recipes. Letterhead stays native text over a substrate.',
         ),
       ],
     ),

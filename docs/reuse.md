@@ -10,6 +10,7 @@
 | Stitch spans and puncture shading | `runningStitchPath`, `paintRunningStitch` |
 | Shared bounded arc-length geometry | `lib/src/path_geometry.dart` (internal) |
 | Closed-silhouette polygonal insets | `insetCraftPath`, using pinned clipper2 union/offset |
+| Paper finish and edge composition | `paintPaperFinish`, `paperOutline`, `paintPaperEdgeFibers`, `CraftOutline.paper` |
 | Curved waypoints and explicit reveal | `craftCurveThrough`, `trimCraftPath` |
 | Pen, marker and brush patterns | `CraftStrokeStyle`, `paintCraftStroke` |
 | Paint, input and anchor transform | `PartPose`, `CraftPart` |
@@ -93,3 +94,10 @@ instead of a new offset engine. The bounded adapter samples Flutter paths;
 example-local PreparedSeamGeometry is shared by the seam study, card and material
 playground. Equivalent recipes retain the pair; effective size changes replace
 it. Shape, thread, native content and texture ownership remain independent.
+
+For paper recipes, searched grain, fiber, corrugation, contours, shape value
+equality and existing specimen controls. Retained MaterialTextures.paper as the
+base algorithm and added bounded overlay finishes, without a parallel texture
+cache. Paper edge geometry is separate from fiber fringe and native printing.
+Extracted PreparedOutlineGeometry from the example's seam cache for both studies;
+offset preparation stays lazy when enlarged content omits decorative sewing.

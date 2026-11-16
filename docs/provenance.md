@@ -32,3 +32,7 @@ Contour insets use clipper2 0.0.3 as a pub-resolved dependency under BSL-1.0;
 its algorithm/source is not vendored or relicensed as MIT. The bounded Flutter
 path adapter, seam specimens and updated synthetic card captures are authored
 here. Dependency notices and inspected LICENSE hash are recorded separately.
+
+Paper finish/edge algorithms and specimen captures are original synthetic work
+authored here under MIT. Stock names describe visual composition recipes over
+existing paper grain, not externally sourced material scans or product assets.

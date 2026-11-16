@@ -18,6 +18,7 @@ are included. Source: [material studies](../example/lib/material_studies.dart),
 | --- | --- | --- |
 | Five texture algorithms | `CraftMaterial`, `MaterialTextures`, `CraftSurface` | Indigo twill, flax linen, rose felt, drawing paper and wood |
 | Silhouettes | `pigmentOutline`, `CraftOutline` | Organic swatches, native-widget surfaces and circular fabric specimens |
+| Paper recipes | `paperOutline`, `CraftOutline.paper`, `paintPaperFinish`, `paintPaperEdgeFibers` | Six visual stocks, four edges and native letterhead; existing base grain is reused |
 | Sewing | `insetCraftPath`, `runningStitchPath`, `paintRunningStitch` | Polygonal contour-following seams and puncture shading; circular seams retain an exact concentric recipe |
 | Drawing | `craftCurveThrough`, `trimCraftPath`, `paintCraftStroke` | Continuous, dotted or dashed pen/marker/brush lines and explicit reveal |
 | Watercolor | `paintWatercolor` | Overlapping washes, a botanical painting and a resist/cutout study |

@@ -111,7 +111,8 @@ class BudgetResources {
 class BudgetTimingWindow {
   final _samples = <({int ui, int raster})>[];
   int _warmup = 12;
-  int _minimumBuildStart = 0;
+  int _afterVsync = 0;
+  int? _firstVsync;
   bool _active = false;
 
   /// Number of retained post-warmup engine samples, capped at 120.
@@ -120,11 +121,13 @@ class BudgetTimingWindow {
   /// Whether callbacks are still accepted.
   bool get active => _active;
 
-  /// Clears the previous run and skips twelve engine-reported warmup frames.
-  void start({int minimumBuildStart = 0}) {
+  /// Excludes the last pre-run vsync, then skips twelve fresh warmup frames.
+  /// The first eligible vsync anchors an eight-second collection boundary.
+  void start({int afterVsync = 0}) {
     _samples.clear();
     _warmup = 12;
-    _minimumBuildStart = minimumBuildStart;
+    _afterVsync = afterVsync;
+    _firstVsync = null;
     _active = true;
   }
 
@@ -135,9 +138,13 @@ class BudgetTimingWindow {
   void record(List<FrameTiming> timings) {
     for (final frame in timings) {
       if (!_active) break;
-      if (frame.timestampInMicroseconds(FramePhase.buildStart) <=
-          _minimumBuildStart)
-        continue;
+      final vsync = frame.timestampInMicroseconds(FramePhase.vsyncStart);
+      if (vsync <= _afterVsync) continue;
+      _firstVsync ??= vsync;
+      if (vsync - _firstVsync! > const Duration(seconds: 8).inMicroseconds) {
+        _active = false;
+        break;
+      }
       if (_warmup > 0) {
         _warmup--;
         continue;
@@ -366,7 +373,7 @@ class _RenderingBudgetPageState extends State<RenderingBudgetPage> {
                 TextButton(
                   onPressed: () => setState(() {
                     _timings.start(
-                      minimumBuildStart: SchedulerBinding
+                      afterVsync: SchedulerBinding
                           .instance
                           .currentSystemFrameTimeStamp
                           .inMicroseconds,

@@ -24,7 +24,7 @@ void main() {
     final window = BudgetTimingWindow();
     window.record([frame(1)]);
     expect(window.count, 0);
-    window.start(minimumBuildStart: 200001);
+    window.start(afterVsync: 200000);
     window.record(List.generate(11, frame));
     expect(window.count, 0);
     window.record(List.generate(12, (i) => frame(i + 11)));
@@ -40,6 +40,30 @@ void main() {
     expect(window.count, 0);
     expect(window.report(), contains('No post-warmup engine timings'));
   });
+
+  test(
+    'a delayed prior frame cannot consume warmup and expired frames stay out',
+    () {
+      ui.FrameTiming frame(int vsync, {int uiTime = 1000}) => ui.FrameTiming(
+        vsyncStart: vsync,
+        buildStart: vsync + 1,
+        buildFinish: vsync + 1 + uiTime,
+        rasterStart: vsync + 1 + uiTime,
+        rasterFinish: vsync + 2001 + uiTime,
+        rasterFinishWallTime: vsync + 2001 + uiTime,
+      );
+      final window = BudgetTimingWindow()..start(afterVsync: 1000000);
+      window.record([frame(1000000, uiTime: 900000)]);
+      window.record(List.generate(12, (i) => frame(1100000 + i * 20000)));
+      expect(window.count, 0);
+      window.record([frame(1400000)]);
+      expect(window.count, 1);
+      window.record([frame(12000000, uiTime: 900000)]);
+      expect(window.count, 1);
+      expect(window.active, isFalse);
+      expect(window.report(), contains('UI p50/p95: 1.00 / 1.00 ms'));
+    },
+  );
 
   void paintOwner(BudgetResources resources, int index) {
     final recorder = ui.PictureRecorder();

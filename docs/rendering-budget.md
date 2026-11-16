@@ -27,9 +27,12 @@ disposes the old scope and invalidates paint. Disposing one scene leaves another
 scene's resources intact. The three imported sprites also use Flutter's image
 cache; its resources are not counted as texture owners.
 
-The timing window accepts actual engine FrameTiming callbacks, rejects batches
-from before the run, excludes twelve warmup frames, and retains at most 120
-samples. It reports UI and raster p50/p95 separately. UI duration includes build,
+The timing window accepts actual engine FrameTiming callbacks, compares vsync
+boundaries to reject the last pre-run frame even when its callback is delayed,
+excludes twelve fresh warmup frames, and retains at most 120 samples. The first
+eligible post-start vsync anchors an eight-second cutoff, so later unrelated
+frames cannot enter a short or reduced-motion run. It reports UI and raster
+p50/p95 separately. UI duration includes build,
 layout and paint recording; use DevTools' timeline to attribute those stages
 separately. Collecting a timing never schedules another UI update. If the target
 does not provide engine timings, the report says so instead of inventing a

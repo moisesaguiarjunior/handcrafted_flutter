@@ -33,6 +33,11 @@ void main() {
       for (var i = 3; i < data.length; i += 4)
         if (data[i] > 0) i,
     ].length;
+    expect(
+      early[(40 * 100 + 10) * 4 + 3],
+      0,
+      reason: 'Distant paper stays dry before the pigment front reaches it',
+    );
     expect(coverage(early), greaterThan(0));
     expect(coverage(early), lessThan(coverage(middle)));
     expect(coverage(middle), lessThan(coverage(end)));

@@ -194,3 +194,9 @@ text selection boxes and the existing licensed-font test loader. Reused the nati
 popup menu with a wrapping label instead of fixing its selected-field height.
 Browser tests read the canonical font files through the test asset server, with
 a relative symlink instead of duplicated font bytes; runtime assets are unchanged.
+
+For oversized native letterhead, searched the existing paper/texture 2048-axis
+budgets, SeamedSurface and native layout. The example measures decoration with
+a positioned LayoutBuilder behind the unchanged native content; oversized
+content receives a plain background instead of allocating an oversized texture
+or relaxing package guards. No text measurement or second layout engine is added.

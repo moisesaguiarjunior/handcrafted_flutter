@@ -272,6 +272,52 @@ class _PaperDetails extends CustomPainter {
       scale != old.scale;
 }
 
+// Native content owns the size. Only decoration is bounded; a long accessible
+// paragraph must never be shrunk or rejected to fit a texture/outline budget.
+class _LetterheadSurface extends StatelessWidget {
+  const _LetterheadSurface({
+    required this.shape,
+    required this.seed,
+    required this.showSeam,
+    required this.child,
+  });
+  final CraftOutline shape;
+  final int seed;
+  final bool showSeam;
+  final Widget child;
+  @override
+  Widget build(BuildContext context) => Stack(
+    fit: StackFit.passthrough,
+    children: [
+      Positioned.fill(
+        child: ExcludeSemantics(
+          child: IgnorePointer(
+            child: LayoutBuilder(
+              builder: (context, bounds) {
+                if (bounds.maxWidth > 2048 || bounds.maxHeight > 2048) {
+                  return const ColoredBox(
+                    key: ValueKey('letterhead-plain-background'),
+                    color: DemoPalette.paper,
+                  );
+                }
+                return SeamedSurface(
+                  shape: shape,
+                  material: CraftMaterial.paper,
+                  color: DemoPalette.paper,
+                  seed: seed,
+                  showSeam: showSeam,
+                  child: const SizedBox.expand(),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+      child,
+    ],
+  );
+}
+
 /// Native parameter controls plus letterhead composed with real text/actions.
 class PaperPlayground extends StatefulWidget {
   /// Creates the synthetic paper inventory.
@@ -355,15 +401,13 @@ class _PaperPlaygroundState extends State<PaperPlayground> {
         alignment: Alignment.topLeft,
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 480),
-          child: SeamedSurface(
+          child: _LetterheadSurface(
             shape: CraftOutline.paper(
               edge: _edge,
               edgeDepth: _depth,
               seed: _seed,
               padding: 3,
             ),
-            material: CraftMaterial.paper,
-            color: DemoPalette.paper,
             seed: _seed,
             showSeam: MediaQuery.textScalerOf(context).scale(16) < 24,
             child: Padding(

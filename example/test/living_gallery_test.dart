@@ -8,10 +8,45 @@ import 'package:handcrafted_example/gallery_routes.dart';
 import 'package:handcrafted_example/living_materials.dart';
 import 'package:handcrafted_example/main_gallery.dart';
 import 'package:handcrafted_example/motion_studies.dart';
+import 'package:handcrafted_example/paper_studies.dart';
 
 import 'support/fonts.dart';
 
 void main() {
+  testWidgets(
+    'oversized letterhead keeps enlarged native action without decorative allocations',
+    (tester) async {
+      tester.view.physicalSize = const Size(240, 900);
+      tester.view.devicePixelRatio = 1;
+      tester.platformDispatcher.textScaleFactorTestValue = 5;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(24),
+                child: PaperPlayground(),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final background = find.byKey(
+        const ValueKey('letterhead-plain-background'),
+      );
+      expect(background, findsOneWidget);
+      expect(tester.getSize(background).height, greaterThan(2048));
+      await tester.ensureVisible(find.text('Use this paper'));
+      await tester.tap(find.text('Use this paper'));
+      await tester.pumpAndSettle();
+      expect(find.text('Selections 1'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
   testWidgets('mobile study label fits at 250 percent text without shrinking', (
     tester,
   ) async {

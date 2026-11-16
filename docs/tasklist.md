@@ -18,7 +18,7 @@ a passing widget test is not a phone benchmark or visual approval.
 | HC-R01 | Traceable independent reviews | Record added; retrospective audit approved at `7c7225a` |
 | HC-R02 | Remove consumer-specific actor preset | Published in PR #12; final review at `87786ec` |
 | HC-R03 | Dependency/license release audit | 22 license hashes verified; clipper2 0.0.3 BSL-1.0 attribution retained |
-| HC-R04 | Immutable version/tag | Published immutable source tag `v0.1.0` at `87786ec` |
+| HC-R04 | Immutable version/tag | `v0.1.0` at `87786ec` retained; consolidated `v0.2.0` release candidate prepared; exact review/CI/tag tracked by PR/release |
 | HC-P01 | Public clock-free image crop/artboard placement | Shipped in PR #11 at `e420be8`; independent review and CI passed |
 | HC-P02 | Long freehand paths | Source adapter `paintCraftFreehand`: 128 strokes/8192 points and native parity; consumer adoption pending |
 | HC-P03 | Rope, ribbon and embroidery over textures or contours | Published in PR #13 at `086763e`; native/Chrome checks and original compositions |
@@ -61,7 +61,8 @@ foundation items are proposals, not shipped APIs.
   lives in dedicated studies rather than dominating the README.
 
 Additional fabrics, filled embroidery generalization, fountain pen/brush recipes,
-actor/physics extensions and a consolidated source tag remain follow-up work.
+and actor/physics extensions remain follow-up work. The consolidated 0.2.0 source
+release is described in [release notes](releases/0.2.0.md).
 
 Consumer migrations, pixel-parity checks, application visual approvals and phone
 measurements have separate gates. This queue does not mark them completed by a

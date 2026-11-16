@@ -232,3 +232,8 @@ applyBoxFit, the synthetic sprite, themed native controls and capture helpers.
 Extracted example-only lid/base factories shared with ImportedComposition rather
 than copying source geometry. Native layout measures the footer; Wrap topology
 keeps fields stable. No text layout engine, scene clock, manifest or consumer art.
+
+For the 0.2.0 source release, searched the version manifest, lockfiles, Git tags,
+public exports, changelog, compatibility policy and dependency/license inventory.
+Reused the existing release/check/review flow; no parallel publishing tool or
+runtime API is added. Release notes separate package APIs from example recipes.

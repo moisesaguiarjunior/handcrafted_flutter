@@ -85,3 +85,9 @@ and green CI; check Git tags for publication status.
   48 exact first-touch/layer preservation cases and byte-identical GIF passed.
   Stamp/repaint negative controls failed; continuous drag and prop options
   remain example recipes, without a physical-fluid or phone-performance claim.
+
+- PR #25: `e592bb0c8cdb8ef3f87ea6dffa0e7ddfd28f2ca0` independently approved
+  by Astra; 94 package / 89 example checks, eight focused Chrome tests and two
+  independent browser probes passed. Actual-image/native-target mapping was
+  checked at 12 fit/pose combinations; an 8px mapping negative control failed.
+  New real-font captures and the existing imported capture reproduced exactly.

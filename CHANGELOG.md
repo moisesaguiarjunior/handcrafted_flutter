@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+No changes yet.
+
+## 0.2.0
+
+- Migration: `CraftStrokeTool` adds pencil, chalk and wax. Update exhaustive
+  switches when upgrading from 0.1.0. This pre-1.0 minor release remains an
+  experimental Git source dependency, not a pub.dev publication.
+
 - Example-first responsive experience frame: independently fitted art, mapped
   native targets, stable form/focus across reflow, actual-size pinned footer and
   keyboard/SafeArea handling. Reuse shared synthetic crop factories; no new

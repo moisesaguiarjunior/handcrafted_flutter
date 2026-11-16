@@ -2,6 +2,7 @@
 
 - [Live gallery, deployment and generic motion capture](live-gallery.md)
 - [Compatibility and evolution](compatibility.md)
+- [0.2.0 release notes and migration](releases/0.2.0.md)
 - [Runnable examples and capture recipe](showcase.md)
 - [Adoption recipes and evidence-driven extensions](consumer-adoption.md)
 - [Reuse map](reuse.md)

@@ -15,8 +15,9 @@ Text remains text; buttons retain native focus, actions and semantics.
 [![Checks](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml/badge.svg)](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml)
 
 Experimental, licensed under [MIT](LICENSE). Not published on pub.dev.
-Latest tagged baseline: [v0.1.0](https://github.com/moisesaguiarjunior/handcrafted_flutter/releases/tag/v0.1.0);
-examples and APIs below follow the current source branch.
+Latest tagged baseline: [v0.2.0](https://github.com/moisesaguiarjunior/handcrafted_flutter/releases/tag/v0.2.0).
+See [release notes and migration](docs/releases/0.2.0.md); examples below follow
+the current source branch.
 Tested baseline: Flutter 3.47.9 / Dart 3.13.7. See [compatibility](docs/compatibility.md).
 
 ## Watercolor, on paper and in motion
@@ -206,6 +207,19 @@ See [drawing recipes and examples](docs/drawing-strokes.md).
 
 Draw raised bands over textures or follow the actual cut with an optional edge gap.
 [API and runnable playground](docs/cord-ribbon-embroidery.md).
+
+## Use the tagged source
+
+```yaml
+dependencies:
+  handcrafted_flutter:
+    git:
+      url: https://github.com/moisesaguiarjunior/handcrafted_flutter.git
+      ref: v0.2.0
+```
+
+Keep your application's lockfile committed. Existing `v0.1.0` pins are unchanged;
+review the [migration note](docs/releases/0.2.0.md#upgrading-from-010) before updating.
 
 ## Development
 

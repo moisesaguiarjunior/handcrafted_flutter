@@ -10,16 +10,16 @@ No lower SDK support is claimed without testing it.
 | --- | --- | --- |
 | Linux-hosted Flutter tests | CI format, strict analysis, package/example behavior tests | Not a Linux desktop shipping build or phone benchmark |
 | Local Flutter test renderer | Real-font layout checks and deterministic PNG/frame captures | Not interactive browser or native-device approval |
-| Web showcase release compilation | `flutter build web --release --no-web-resources-cdn -t lib/main_showcase.dart` | Browser runtime remains unverified; build emits a CupertinoIcons font warning |
+| Web gallery | Release build/Pages deployment and focused Chrome widget tests | Automated browser behavior is covered; no full manual browser or phone certification; build emits a CupertinoIcons font warning |
 | Android and iOS | No native/device result in this package | Not validated for release, performance or input latency |
 | Windows/macOS/Linux desktop apps | No shipping desktop build matrix | Tests run on a desktop do not establish native app support |
 | Wasm | Build's dry-run output only | No Wasm runtime compatibility claim |
 
 ## API policy before 1.0
 
-Version 0.1.0 is an experimental source release; publish_to remains none. Source
-consumers should pin an immutable reviewed Git SHA. We follow semantic versioning
-when making releases: incompatible API changes advance the pre-1.0 minor version;
+Version 0.2.0 is an experimental source release; publish_to remains none. Source
+consumers should pin a reviewed immutable Git tag/SHA and commit their lockfile.
+We follow semantic versioning when making releases: incompatible API changes advance the pre-1.0 minor version;
 patches document bug fixes, invalid-input handling and corrected layout behavior.
 Avoid silently changing units, seeds, motion semantics or ownership contracts.
 Document deprecations and migration examples before replacing an established API.
@@ -46,6 +46,7 @@ widgets. The example kite now builds its own simple waypoint curve; it is not an
 exported preset or a physics API. This removal is an explicit pre-1.0 breaking
 change; existing immutable pins continue to resolve their original source.
 
-Pencil, chalk and wax extend CraftStrokeTool after v0.1.0. Update exhaustive
-switches when adopting this source. Native solid-pen freehand and the original
-pen/marker/brush branches retain their previous contracts. The tag is unchanged.
+Pencil, chalk and wax extend CraftStrokeTool in v0.2.0. Update exhaustive
+switches when adopting this version. Native solid-pen freehand and the original
+pen/marker/brush branches retain their previous contracts. The v0.1.0 tag is
+unchanged. See [0.2.0 migration](releases/0.2.0.md#upgrading-from-010).

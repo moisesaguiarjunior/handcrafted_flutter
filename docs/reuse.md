@@ -158,3 +158,10 @@ extraction, contour insets and the existing thread painter (extracted unchanged)
 Created only bounded family geometry; the legacy running painter remains pixel
 identical against an isolated old-source raster probe. The six-plate example uses
 actual layout-size cuts, existing materials, native sliders and capture helpers.
+
+For the hosted gallery, searched standalone main entrypoints, study widgets,
+clock activity/disposal, capture loops and web workflows. Reused all existing
+public study widgets behind one native drawer, mounting only the selected page.
+Extracted the existing motion-atlas capture into one shared function, used by
+both dedicated and full-atlas commands. No duplicate renderer, clock, texture
+cache, application router or video-job schema is introduced.

@@ -1,0 +1,53 @@
+name: Gallery
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lib/**'
+      - 'example/**'
+      - 'pubspec.*'
+      - '.github/workflows/gallery.yml'
+  pull_request:
+    paths:
+      - 'lib/**'
+      - 'example/**'
+      - 'pubspec.*'
+      - '.github/workflows/gallery.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: gallery-${{ github.event_name == 'pull_request' && github.ref || 'pages' }}
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.9'
+          channel: stable
+      - run: flutter pub get --enforce-lockfile
+      - run: flutter pub get --enforce-lockfile
+        working-directory: example
+      - run: flutter build web --release --no-web-resources-cdn --base-href /handcrafted_flutter/ -t lib/main_gallery.dart
+        working-directory: example
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        with:
+          path: example/build/web
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy reviewed main gallery
+        id: deployment
+        uses: actions/deploy-pages@v4

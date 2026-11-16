@@ -24,10 +24,10 @@ a passing widget test is not a phone benchmark or visual approval.
 | HC-P03 | Rope, ribbon and embroidery over textures or contours | Published in PR #13 at `086763e`; native/Chrome checks and original compositions |
 | HC-P04 | Gravity/wind and realistic/cartoon response | Published in PR #14 at `46e1518`; numerical/native-action checks and CI passed |
 | HC-P05 | Public rotary-control abstraction | Example only; promote after complete consumer flows demonstrate a stable contract |
-| HC-P06 | Deeper fabrics, stitches, relief and embroidered fills | Six stitch families implemented locally; more fabric algorithms/filled embroidery remain backlog; review/publication tracked by PR |
+| HC-P06 | Deeper fabrics, stitches, relief and embroidered fills | Six stitch families implemented with shared thread paint; more fabrics/filled embroidery remain backlog; see PR/check evidence |
 | HC-P07 | Capillary edges, prepared geometry and shared caches | Conditional; require demonstrated need/profile before new ownership contracts |
 | HC-I01 | Fluvie / Social Studio adapters | [Explicit parameters and supplied progress](integration.md); no second clock or application schema ownership |
-| HC-V01 | Material/motion imagery and interactive gallery | New material cover and distinct relief studies in PR #15; replacement motion captures and hosted gallery remain pending |
+| HC-V01 | Material/motion imagery and interactive gallery | Material cover/relief in PR #15; generic motion captures and hosted gallery workflow implemented; deployment verified separately |
 
 ## Next sequence
 

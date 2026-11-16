@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../example/lib/material_studies.dart';
-import '../example/lib/motion_studies.dart';
+import 'capture_motion.dart' show captureMotionStudies;
 import '../example/test/support/fonts.dart';
 import 'capture_support.dart';
 
@@ -58,26 +58,7 @@ void main() {
         sheet(item.$2, item.$3),
       );
     }
-    await captureExample(
-      tester,
-      'build/atlas/motion.png',
-      const Size(1000, 1000),
-      sheet(
-        'Small movements, separate parts',
-        const MotionAtlas(progress: .37),
-      ),
-    );
-    for (var frame = 0; frame <= 48; frame++) {
-      await captureExample(
-        tester,
-        'build/atlas/motion/frame_${frame.toString().padLeft(3, '0')}.png',
-        const Size(1000, 1000),
-        sheet(
-          'Small movements, separate parts',
-          MotionAtlas(progress: frame / 48),
-        ),
-      );
-    }
+    await captureMotionStudies(tester);
     await tester.pumpWidget(const SizedBox());
     expect(tester.binding.transientCallbackCount, 0);
   });

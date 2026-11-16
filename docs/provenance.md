@@ -58,3 +58,9 @@ example-only licensed fonts. No private screenshot or consumer artwork is used.
 Stitch family geometry and the six-plate comparison are original implementations
 of general sewing patterns. The image uses the real package painters, existing
 licensed fonts and seeded substrates, without copied consumer art or documents.
+
+The replacement motion atlas is captured from the current example-owned generic
+kite and balloon/tether with tool/capture_motion.dart. It uses no historical
+consumer tail coordinates or supplied private art. The hosted gallery wraps
+existing studies and distributes only tracked example assets/fonts. GitHub Pages
+workflow actions are developer tooling; no service credential is bundled.

@@ -3,7 +3,7 @@
 Run the complete gallery from `example/`:
 
 ```sh
-flutter run -d chrome -t lib/main_atlas.dart
+flutter run -d chrome -t lib/main_gallery.dart
 ```
 
 All specimens are synthetic Flutter compositions. The same widgets produce the
@@ -19,7 +19,7 @@ are included. Source: [material studies](../example/lib/material_studies.dart),
 | Five texture algorithms | `CraftMaterial`, `MaterialTextures`, `CraftSurface` | Indigo twill, flax linen, rose felt, drawing paper and wood |
 | Silhouettes | `pigmentOutline`, `CraftOutline` | Organic swatches, native-widget surfaces and circular fabric specimens |
 | Paper recipes | `paperOutline`, `CraftOutline.paper`, `paintPaperFinish`, `paintPaperEdgeFibers` | Six visual stocks, four edges and native letterhead; existing base grain is reused |
-| Sewing | `insetCraftPath`, `runningStitchPath`, `paintRunningStitch` | Polygonal contour-following seams and puncture shading; circular seams retain an exact concentric recipe |
+| Sewing | `insetCraftPath`, `craftStitchPath`, `paintCraftStitch` | Six surface patterns, polygonal contour-following seams and puncture shading |
 | Drawing | `craftCurveThrough`, `trimCraftPath`, `paintCraftStroke` | Continuous, dotted or dashed pen/marker/brush lines and explicit reveal |
 | Watercolor | `paintWatercolor` | Overlapping washes, a botanical painting and a resist/cutout study |
 | Relief | `paintCraftRelief`, `CraftReliefText` | Pressed/raised botanical motifs, reversible light and native lettering |
@@ -28,7 +28,8 @@ are included. Source: [material studies](../example/lib/material_studies.dart),
 
 Colored twill and linen specimens are recipes of existing algorithms, not new
 denim/cotton material implementations. Motion actors are runnable examples;
-the package does not ship a general actor system or physics solver.
+the package does not ship a general actor system. A separate bounded rigid
+pendulum samples constant gravity/wind; flexible rope/cloth remains future work.
 
 ## Fabric and impressions
 
@@ -91,7 +92,9 @@ Changing a seed or palette is explicit; no frame or wall clock changes the grain
 
 ## Independent motion
 
-Updated motion captures await visual review of the example-owned geometry.
+![Generic kite body, tail, combined poses and attached balloon tether](assets/motion-atlas.gif)
+
+The capture uses original example-owned geometry and supplied progress.
 
 The body example moves a parent CraftPart, carrying the attached tail rigidly.
 The tail-only example holds the sail still and deforms the local ribbon. The

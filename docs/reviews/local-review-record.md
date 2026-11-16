@@ -55,3 +55,10 @@ and green CI; check Git tags for publication status.
   65 package / 69 example tests, three freehand Chrome tests, enlarged native
   export parity and atomic-validation probes passed. Three negative controls
   failed as intended; restored stroke/freehand tests passed. CI green, integrated.
+
+- PR #17: `7847f9a7dbbe0bcdeaee09e6f9631b280a686dd8` independently approved
+  after fixing short closed chain/cross subdivision and preflight accounting.
+  Full checks passed 70 package / 70 example tests; seven focused tests passed
+  natively and in Chrome, including 36 old-source legacy raster combinations.
+  Three negative controls failed as intended; the stitch capture matches exactly.
+  Publication status remains in the PR and CI records.

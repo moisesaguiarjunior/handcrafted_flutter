@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Unified web gallery reuses standalone studies, mounts only the visible page
+  and deploys reviewed main through GitHub Pages. Restores generic independent
+  body/tail/tether captures without exporting consumer actor art.
+
 - Six thread families share bounded seam geometry and the original puncture
   painter: running, backstitch, blanket, chain, cross and basting. Adds a native
   parameter playground and actual-contour image without changing legacy pixels.

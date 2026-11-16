@@ -2,6 +2,9 @@
 
 **Give your Flutter widgets a handmade surface.**
 
+[Explore the live gallery](https://moisesaguiarjunior.github.io/handcrafted_flutter/) ·
+[Run locally](docs/live-gallery.md)
+
 ![Sculpted shell relief on twill, watercolor landscape on torn paper, and embroidered cord on linen](docs/assets/material-cover.png)
 
 Seeded paper, linen, twill, felt and wood textures, running stitches, organic
@@ -79,7 +82,9 @@ seeded visual approximation of watercolor.
 
 ## Body, tail and tether
 
-Motion examples use example-owned geometry. Updated captures await visual review.
+![Independent kite body, tail and combined motion plus balloon with attached tether](docs/assets/motion-atlas.gif)
+
+Motion examples use original example-owned geometry and supplied progress.
 
 Move the kite's parent part while its ribbon tail keeps its own progress. Hold
 the body still to animate only the tail, or combine both. The balloon's string
@@ -95,9 +100,10 @@ cd handcrafted_flutter
 flutter pub get --enforce-lockfile
 cd example
 flutter pub get --enforce-lockfile
-flutter run -d chrome -t lib/main_atlas.dart
+flutter run -d chrome -t lib/main_gallery.dart
 ```
 
+- [Live gallery and deployment](docs/live-gallery.md): one navigation shell over existing studies; run `lib/main_gallery.dart`.
 - [Cover and relief gallery](example/lib/main_cover.dart): the real compositions behind the README images.
 - [Cord/ribbon playground](docs/cord-ribbon-embroidery.md): open paths and contour gaps; run `lib/main_trims.dart`.
 - [Gravity/wind comparison](docs/bounded-physics.md): supplied time and realistic/cartoon response; run `lib/main_physics.dart`.
@@ -177,6 +183,8 @@ bash tool/check.sh
 flutter test tool/capture_cover.dart
 flutter test tool/capture_showcase.dart
 bash tool/encode_showcase.sh
+flutter test tool/capture_motion.dart
+bash tool/encode_motion.sh
 flutter test tool/capture_atlas.dart
 bash tool/encode_atlas.sh
 ```

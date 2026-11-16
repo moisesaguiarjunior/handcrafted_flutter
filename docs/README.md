@@ -18,6 +18,7 @@
 - [Paper stock, edges, finishes and native letterhead](paper-recipes.md)
 - [Curved lines, patterns and drawing playground](drawing-strokes.md)
 - [Implemented catalog: materials, relief, watercolor and independent motion](materials-and-motion.md)
+- [Executable consumer video integration](consumer-video-integration.md)
 - [Composition, Fluvie and Social Studio integration](integration.md)
 - [Dependencies](dependencies.md) and [license inventory](dependency-license-audit.md)
 - [Provenance](provenance.md)

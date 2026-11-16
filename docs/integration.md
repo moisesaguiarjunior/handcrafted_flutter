@@ -32,8 +32,9 @@ Let the frame timeline supply progress. Do not mount a second `SceneEntrance`
 clock in captured artwork. The following adapter pattern uses Fluvie's
 experimental `FrameBuilder` API; it belongs in a consumer that depends on both
 packages, not in the core package. The snippet is analyzed against Fluvie 0.3.1;
-its experimental-use warning is acknowledged at the call site. An end-to-end
-video export has not yet been validated here.
+its experimental-use warning is acknowledged at the call site. The
+[consumer integration](consumer-video-integration.md) verifies media discovery
+and a diagnostic CLI export; this snippet alone is not a complete video job.
 
 ```dart
 import 'package:fluvie/fluvie.dart';
@@ -66,26 +67,24 @@ export. Current texture painting supports bounds up to 2048 logical pixels.
 
 ## Social Studio
 
-Use a consumer-owned, versioned template contract. The current desktop-story
-`story-photo-v1` job schema rejects additional properties, so attaching arbitrary
-material arguments to that job is not a supported integration.
-
-A future template can validate an allowlisted material recipe before compiling
-it into `CraftSurface` and an explicit pose. Proposed parameters, not a shipped
-JSON API:
+The consumer now has a versioned crafted desktop template, story-craft-v1 in
+job format 2. Its original format 1 remains strict and rejects additional fields.
+The schema belongs to Social Studio; this core package does not parse jobs or
+serialize arbitrary callbacks/types. The consumer retains content authorization,
+media paths, captions, timing, export profiles and network policy.
 
 | Field | Meaning |
 | --- | --- |
-| `material` | Stable allowlisted substrate identifier |
-| `color` | Explicit color convention; use the consumer's RGB/ARGB parser |
-| `seed` | Integer controlling reproducible texture |
-| `scale`, `strength` | Validated texture units and grain range |
-| `shape` | Allowlisted value recipe and its bounded parameters |
-| `pose` | Translation, rotation and scale in explicit units |
-| `progress` | Supplied by the resolved frame scope, not a new animation clock |
+| material | Allowlisted substrate identifier |
+| color | Consumer color convention, #RRGGBB or #AARRGGBB |
+| seed | Explicit texture/shape seed |
+| grainScale, grainStrength | Validated texture scale and strength |
+| frameInset | Authoring fraction of the shorter canvas side |
+| edge, stitch | Allowlisted cut and thread treatments |
 
-The consumer retains content authorization, captions, timing, export profiles and
-network policy. A layered artwork manifest should carry asset references, pivots
-and hit regions separately from substrate recipes. Do not serialize arbitrary
-callbacks, Dart types or executable code. Preserve one validated contract across
-preview and export rather than maintaining two renderers.
+See [the executable consumer integration](consumer-video-integration.md) for
+JSON, CLI commands, immutable dependency pins and the public Fluvie
+CollectibleChildren contract. Structural media discovery happens before frame
+capture: wrappers expose declared media rather than hiding it in build callbacks.
+The first template reuses the consumer's photo motion and existing export
+transaction. Phone performance and full-size throughput remain unmeasured.

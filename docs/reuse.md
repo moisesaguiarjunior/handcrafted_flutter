@@ -165,3 +165,10 @@ public study widgets behind one native drawer, mounting only the selected page.
 Extracted the existing motion-atlas capture into one shared function, used by
 both dedicated and full-atlas commands. No duplicate renderer, clock, texture
 cache, application router or video-job schema is introduced.
+
+For bilateral video integration, searched the actual Fluvie media walk,
+CollectibleChildren/FrameBuilder and Social Studio's validated jobs, frozen
+snapshots, frame pump and encoder. Existing core primitives were sufficient;
+the consumer adapter declares media and owns its versioned schema. Documented
+that contract rather than adding a JSON parser, peer dependency, media collector
+or second clock to this package. Actual consumer capture/export tests protect it.

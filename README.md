@@ -198,7 +198,8 @@ Follow the [delivery tasklist](docs/tasklist.md) and
 
 See the [material and movement roadmap](docs/roadmap.md) for current/planned
 capabilities and [integration contracts](docs/integration.md) for Fluvie and
-Social Studio adapter boundaries.
+Social Studio adapter boundaries. The [executable consumer integration](docs/consumer-video-integration.md)
+shows versioned material arguments, declared media and the existing video export path.
 
 ## License
 

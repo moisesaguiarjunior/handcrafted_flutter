@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Document the executable consumer video integration: versioned material
+  arguments, structural media discovery and the existing Fluvie export path,
+  without adding a peer dependency or job parser to this core package.
+
 - Unified web gallery reuses standalone studies, mounts only the visible page
   and deploys reviewed main through GitHub Pages. Restores generic independent
   body/tail/tether captures without exporting consumer actor art.

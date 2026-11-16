@@ -26,7 +26,7 @@ a passing widget test is not a phone benchmark or visual approval.
 | HC-P05 | Public rotary-control abstraction | Example only; promote after complete consumer flows demonstrate a stable contract |
 | HC-P06 | Deeper fabrics, stitches, relief and embroidered fills | Six stitch families implemented with shared thread paint; more fabrics/filled embroidery remain backlog; see PR/check evidence |
 | HC-P07 | Capillary edges, prepared geometry and shared caches | Conditional; require demonstrated need/profile before new ownership contracts |
-| HC-I01 | Fluvie / Social Studio adapters | [Explicit parameters and supplied progress](integration.md); no second clock or application schema ownership |
+| HC-I01 | Fluvie / Social Studio adapters | [Versioned consumer template and declared media](consumer-video-integration.md); actual capture/export exercised in consumer; review/publication tracked separately |
 | HC-V01 | Material/motion imagery and interactive gallery | Material cover/relief in PR #15; generic motion captures and hosted gallery workflow implemented; deployment verified separately |
 
 ## Next sequence

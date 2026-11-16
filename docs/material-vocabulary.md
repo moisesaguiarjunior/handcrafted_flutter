@@ -127,6 +127,11 @@ inset and stitch recipe. Material tile lifetime remains with the existing
 CraftSurface owner; there is no global cache or new clock. Colors do not replace
 prepared geometry. Changing the seed replaces the texture owner as before.
 
+The vocabulary study caps its native layout at 800 logical pixels wide so common
+desktop gallery viewports show the same texture/seam as its captured specimens.
+It does not scale down text; tall enlarged content can still use the fallback.
+Other callers retain their own layout policy.
+
 Above 1024 logical pixels on either axis, or when contour/thread preparation
 exhausts existing work budgets, decoration becomes a plain host-colored fill.
 Native content and its state remain. This component budget is deliberately

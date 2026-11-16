@@ -78,7 +78,7 @@ String galleryDescription(GalleryStudy study) => switch (study) {
   GalleryStudy.cover => 'Explore materials, marks and movement. Choose a study to try its controls.',
   GalleryStudy.spreading => 'Pigment travels from a wet center into the paper.',
   GalleryStudy.embroidery =>
-    'A loose strand passes above and below the cloth, then tightens.',
+    'Finish missing stitches, pass a loose strand, or reveal embroidery.',
   GalleryStudy.materials =>
     'Look closely at grain, light and raised or pressed shapes.',
   GalleryStudy.paper =>

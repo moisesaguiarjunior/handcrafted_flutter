@@ -2,7 +2,11 @@
 
 ## Unreleased
 
-No changes yet.
+- Keep the vocabulary demo inside the existing material budget on wide desktop
+  viewports; native text/actions remain unchanged and the package fallback stays.
+  Add a regression through the actual gallery in paper and cloth themes.
+- Clarify paint/thread mode guidance, link directly to the six stitch families,
+  and document the experience frame's space-saving drawer navigation.
 
 ## 0.3.0
 

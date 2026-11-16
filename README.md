@@ -108,10 +108,11 @@ visual recipes; letterhead stays real text over a substrate. See
 ## Thread, six ways
 
 Choose a thread pattern while keeping the same seam, substrate and native controls.
-[Stitch geometry, clearance and playground](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/stitch-families.md).
+[Stitch geometry, clearance and playground](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/stitch-families.md) ·
+[Try the six stitch families](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=stitches).
 A separate [embroidery study](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=embroidery)
-lets a loose strand move above and beneath the cloth, with irregular waves and
-hidden return sections. A separate mode reveals an embroidered botanical sprig.
+covers missing-stitch completion, a loose strand moving above and beneath the
+cloth, and a botanical embroidery reveal. Choose the mode in the study.
 [Explicit-progress paint and thread recipes](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/living-materials.md).
 
 ## Body, tail and tether
@@ -126,7 +127,7 @@ Move the kite's parent part while its ribbon tail keeps its own progress. Hold
 the body still to animate only the tail, or combine both. The balloon's string
 follows its transformed knot. The original showcase also includes hanging
 paper/felt pieces with native controls. These are finite authored examples;
-The new clips stop at their final pose; use the live controls to replay.
+the new clips stop at their final pose; use the live controls to replay.
 
 ## Run the examples
 

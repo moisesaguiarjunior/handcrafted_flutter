@@ -257,3 +257,9 @@ Standard control-flow bracing reuses the analyzer rule and Dart's own targeted
 fixer; existing conditions/expressions remain unchanged. No custom style fixer
 or parallel linter is maintained. The archive probe is a real failure control,
 not a parser pretending to reproduce Pub's inclusion rules.
+
+For the wide vocabulary study, searched the gallery's 1100px layout, the panel's
+1024px decoration guard, existing form identity tests and native ConstrainedBox.
+Constrained only this example to 800px; no painter budget or fallback changed.
+A test exercises the actual gallery at common desktop widths in both themes,
+scoping the primary card's own CraftSurface instead of matching button surfaces.

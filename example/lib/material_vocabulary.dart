@@ -112,7 +112,7 @@ class _MaterialVocabularyStudyState extends State<MaterialVocabularyStudy> {
   @override
   Widget build(BuildContext context) {
     final nativeTheme = Theme.of(context);
-    return Column(
+    final content = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Text(
@@ -210,6 +210,11 @@ class _MaterialVocabularyStudyState extends State<MaterialVocabularyStudy> {
           'Both material themes belong to this example. Your app supplies its own palette, fonts, content and role styles. Large native content keeps a plain background when decorative budgets are exhausted.',
         ),
       ],
+    );
+    // Keep the specimen within the existing decorative budget; never shrink text.
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 800),
+      child: content,
     );
   }
 }

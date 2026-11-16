@@ -1,10 +1,12 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
+
+import 'support/widget_raster.dart';
 
 CraftPanelStyle surface(Color color, {bool cloth = false}) => CraftPanelStyle(
   material: cloth ? CraftMaterial.linen : CraftMaterial.paper,
@@ -12,22 +14,6 @@ CraftPanelStyle surface(Color color, {bool cloth = false}) => CraftPanelStyle(
   shape: const CraftOutline.paper(edge: PaperEdge.deckle, edgePitch: 24),
   seam: CraftSeam(color: const Color(0xFF4B6A62)),
 );
-
-Future<List<int>> _appearance(WidgetTester tester, GlobalKey boundary) async =>
-    (await tester.runAsync(() async {
-      final image =
-          await (boundary.currentContext!.findRenderObject()!
-                  as RenderRepaintBoundary)
-              .toImage();
-      try {
-        final bytes = await image.toByteData(
-          format: ui.ImageByteFormat.rawRgba,
-        );
-        return bytes!.buffer.asUint8List().toList();
-      } finally {
-        image.dispose();
-      }
-    }))!;
 
 void main() {
   testWidgets(
@@ -54,13 +40,13 @@ void main() {
       );
       await tester.pumpWidget(view(false));
       await tester.pumpAndSettle();
-      final unselected = await _appearance(tester, boundary);
+      final unselected = await widgetPixels(tester, boundary);
       await tester.pumpWidget(view(true));
       await tester.pumpAndSettle();
-      expect(await _appearance(tester, boundary), isNot(unselected));
+      expect(await widgetPixels(tester, boundary), isNot(unselected));
       await tester.pumpWidget(view(false));
       await tester.pumpAndSettle();
-      expect(await _appearance(tester, boundary), unselected);
+      expect(await widgetPixels(tester, boundary), unselected);
     },
   );
 
@@ -100,13 +86,13 @@ void main() {
       );
       await tester.pumpWidget(view(false));
       await tester.pumpAndSettle();
-      final paper = await _appearance(tester, boundary);
+      final paper = await widgetPixels(tester, boundary);
       await tester.pumpWidget(view(true));
       await tester.pumpAndSettle();
-      expect(await _appearance(tester, boundary), isNot(paper));
+      expect(await widgetPixels(tester, boundary), isNot(paper));
       await tester.pumpWidget(view(false));
       await tester.pumpAndSettle();
-      expect(await _appearance(tester, boundary), paper);
+      expect(await widgetPixels(tester, boundary), paper);
     },
   );
 

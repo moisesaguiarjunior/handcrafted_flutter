@@ -48,7 +48,8 @@ foundation items are proposals, not shipped APIs.
 
 ## Current visual work
 
-- Paint spreading: elongated brush contact and uneven front, moving-brush and
+- Paint spreading: elongated brush contact and uneven front; dragging now lays
+  one connected wet band, with independent brush visibility/end-fade options, plus
   pink/blue-layer experiments; visual approximations, not a fluid solver.
 - Completing only the chosen missing stitches (1..8), faster bare-tip motion,
   optional loose thread/needle in the full reveal, and a scroll-progress recipe.

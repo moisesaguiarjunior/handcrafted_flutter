@@ -36,6 +36,11 @@ base wetness. Pigment fronts advance unevenly instead of scaling a circular
 wipe. [Try paint spreading](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=spreading).
 These are bounded visual approximations, not a fluid or spectral pigment solver.
 
+![A visible brush dragging a continuous blue watercolor stroke](docs/assets/brush-drag.gif)
+
+**First touch** grows from one contact. **Brush stroke** drags a continuous wash
+along a curve; choose whether the brush is visible and lifts away at the end.
+
 ## One set of controls, your material themes
 
 ![Native note, choice and action in paper and cloth themes](docs/assets/material-vocabulary.png)

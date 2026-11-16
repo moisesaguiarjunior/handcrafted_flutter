@@ -24,7 +24,7 @@ enum WatercolorExperiment {
   /// A wet brush touches paper and lifts away.
   contact,
 
-  /// Deposits continue spreading behind a travelling brush.
+  /// A continuous wash spreads behind a travelling brush.
   stroke,
 
   /// Blue contacts a pink base with adjustable illustrative wetness.
@@ -55,6 +55,8 @@ class LivingMaterialPainter extends CustomPainter {
     this.remainingStitches = 4,
     this.showLooseThread = true,
     this.showNeedle = false,
+    this.showBrush = true,
+    this.fadeBrush = true,
   }) : assert(remainingStitches >= 1 && remainingStitches <= 8);
 
   /// Selected authored study.
@@ -80,6 +82,12 @@ class LivingMaterialPainter extends CustomPainter {
 
   /// Whether the botanical reveal includes optional needle artwork.
   final bool showNeedle;
+
+  /// Include the authored brush prop in contact and moving-stroke studies.
+  final bool showBrush;
+
+  /// Lift/fade the prop after painting; false leaves it resting at the end.
+  final bool fadeBrush;
 
   static final Path _embroideryPath = _embroidery();
   static Path _embroidery() {
@@ -121,7 +129,14 @@ class LivingMaterialPainter extends CustomPainter {
       if (experiment == WatercolorExperiment.botanical) {
         _garden(canvas);
       } else {
-        _paintContact(canvas, progress, wetness, experiment);
+        _paintContact(
+          canvas,
+          progress,
+          wetness,
+          experiment,
+          showBrush: showBrush,
+          fadeBrush: fadeBrush,
+        );
       }
     } else {
       if (threadExperiment == ThreadExperiment.finishing) {
@@ -275,5 +290,7 @@ class LivingMaterialPainter extends CustomPainter {
       old.threadExperiment != threadExperiment ||
       old.remainingStitches != remainingStitches ||
       old.showLooseThread != showLooseThread ||
-      old.showNeedle != showNeedle;
+      old.showNeedle != showNeedle ||
+      old.showBrush != showBrush ||
+      old.fadeBrush != fadeBrush;
 }

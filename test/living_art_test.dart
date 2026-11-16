@@ -1,10 +1,12 @@
-import 'package:flutter/painting.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import '../example/lib/living_material_art.dart';
+import '../example/lib/living_materials.dart' show LivingMaterialArtwork;
 import '../example/lib/motion_studies.dart';
 import 'support/raster.dart';
+import 'support/widget_raster.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +31,7 @@ void main() {
     );
     expect(wet, isNot(await render(1, .2)));
   });
-  test('moving brush deposits change over time without changing earlier recipe inputs', () async {
+  test('moving brush wash changes over time without changing earlier recipe inputs', () async {
     Future<List<int>> render(double p) => pixels(
       (c) => LivingMaterialPainter(
         LivingTechnique.watercolor,
@@ -41,6 +43,101 @@ void main() {
     expect(early, isNot(late));
     expect(early, await render(.2));
   });
+  test(
+    'dragged wash stays on a continuous swept band with an unpainted future',
+    () async {
+      final route = craftCurveThrough(const [
+        Offset(90, 230),
+        Offset(210, 125),
+        Offset(355, 220),
+        Offset(485, 125),
+      ]).computeMetrics().single;
+      final samples = [
+        for (var i = 0; i <= 128; i++)
+          route.getTangentForOffset(route.length * i / 128)!.position,
+      ];
+      Future<List<int>> render(double p, {bool fade = true}) => pixels(
+        (c) => LivingMaterialPainter(
+          LivingTechnique.watercolor,
+          p,
+          experiment: WatercolorExperiment.stroke,
+          wetness: 1,
+          showBrush: false,
+          fadeBrush: fade,
+        ).paint(c, const Size(100, 80)),
+      );
+      final finalInk = await render(1);
+      for (var i = 2; i < 127; i++) {
+        final point = samples[i];
+        expect(
+          finalInk[((point.dy * 80 / 375).floor() * 100 +
+                      (point.dx / 6).floor()) *
+                  4 +
+              3],
+          greaterThan(0),
+          reason: 'Continuous centerline at $i',
+        );
+      }
+      for (var y = 0; y < 80; y++) {
+        for (var x = 0; x < 100; x++) {
+          if (finalInk[(y * 100 + x) * 4 + 3] == 0) continue;
+          final point = Offset((x + .5) * 6, (y + .5) * 375 / 80);
+          final nearest = samples
+              .map((p) => (point - p).distance)
+              .reduce((a, b) => a < b ? a : b);
+          expect(
+            nearest,
+            lessThan(39),
+            reason: 'No separate circular bloom outside the dragged band',
+          );
+        }
+      }
+      final early = await render(.25);
+      expect(
+        early[(26 * 100 + 80) * 4 + 3],
+        0,
+        reason: 'The future endpoint is still dry',
+      );
+      expect(early, await render(.25));
+      expect(
+        finalInk,
+        await render(1, fade: false),
+        reason: 'Prop visibility does not alter pigment',
+      );
+    },
+  );
+  testWidgets(
+    'brush visibility and fade changes repaint at fixed progress without changing the wash',
+    (tester) async {
+      final boundary = GlobalKey();
+      Widget view(bool show, bool fade) => MaterialApp(
+        home: Center(
+          child: RepaintBoundary(
+            key: boundary,
+            child: SizedBox(
+              width: 600,
+              child: LivingMaterialArtwork(
+                technique: LivingTechnique.watercolor,
+                progress: 1,
+                experiment: WatercolorExperiment.stroke,
+                showBrush: show,
+                fadeBrush: fade,
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpWidget(view(true, true));
+      await tester.pumpAndSettle();
+      final hidden = await widgetPixels(tester, boundary);
+      await tester.pumpWidget(view(true, false));
+      await tester.pumpAndSettle();
+      expect(await widgetPixels(tester, boundary), isNot(hidden));
+      await tester.pumpWidget(view(false, false));
+      await tester.pumpAndSettle();
+      expect(await widgetPixels(tester, boundary), hidden);
+    },
+  );
   test('thread passes have nonperiodic motion and never paint the below-cloth connectors', () async {
     Future<List<int>> render(double p) => pixels(
       (c) => LivingMaterialPainter(

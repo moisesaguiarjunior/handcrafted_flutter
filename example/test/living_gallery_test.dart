@@ -14,6 +14,47 @@ import 'support/fonts.dart';
 
 void main() {
   testWidgets(
+    'moving brush restarts at contact and prop switches preserve supplied progress',
+    (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(
+              child: LivingMaterialStudy(technique: LivingTechnique.watercolor),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Brush stroke'));
+      await tester.pumpAndSettle();
+      LivingMaterialArtwork art() => tester.widget<LivingMaterialArtwork>(
+        find.byType(LivingMaterialArtwork),
+      );
+      expect(art().progress, 0);
+      tester
+          .widget<Slider>(find.byKey(const ValueKey('living-progress')))
+          .onChanged!(.4);
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.text('Lift and hide brush'));
+      await tester.tap(find.text('Lift and hide brush'));
+      await tester.pumpAndSettle();
+      expect(art().fadeBrush, isFalse);
+      expect(art().progress, .4);
+      await tester.ensureVisible(find.text('Show brush'));
+      await tester.tap(find.text('Show brush'));
+      await tester.pumpAndSettle();
+      expect(art().showBrush, isFalse);
+      expect(art().progress, .4);
+      await tester.ensureVisible(find.text('Play'));
+      await tester.tap(find.text('Play'));
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 5));
+      expect(art().progress, 1);
+      expect(tester.binding.transientCallbackCount, 0);
+    },
+  );
+  testWidgets(
     'all thread studies remain available with fast configurable completion and reveal props',
     (tester) async {
       await tester.pumpWidget(

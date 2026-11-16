@@ -16,8 +16,8 @@ Validation precedes paint, including endpoints: 32 contours, 8192 arc units and
 There are four fringe strokes and one existing wash renderer; no blur, image,
 clock, simulation grid or unbounded iteration. Same-renderer replay is stable.
 
-The gallery separately explores a lifting brush, sixteen bounded deposits along
-a moving brush, and blue over a pink base. Base wetness controls their authored
+The gallery separately explores a lifting brush, one continuous dragged wash,
+and blue over a pink base. Base wetness controls their authored
 footprint and the extra violet exchange in the overlap. Dry layering preserves
 the underlying wash through transparency. These are example recipes, not a
 public fluid, spectral-mixing or measured-humidity API. The Canson distinction
@@ -26,6 +26,30 @@ between wet-on-dry glazing and flowing wet-on-wet paint informs the visual brief
 No reference image or third-party rendering code is copied.
 
 ![Dry and wet pink bases receiving a blue brush](assets/watercolor-reaction.gif)
+
+### Brush contact versus dragging
+
+**First touch** touches one spot and lets its organic wet edge expand. **Brush
+stroke** moves the tip along a curve, laying down one connected ribbon. Its
+borders widen with local contact age; there are no separate round stamps along
+the route. Fixed arc stations and a single full-stroke watercolor field keep
+pigment anchored as the edges spread. This remains a bounded authored recipe.
+
+![A visible brush drags one continuous watercolor wash, then lifts away](assets/brush-drag.gif)
+
+**Show brush** independently controls the prop. **Lift and hide brush** chooses
+between lifting/fading after contact and leaving the brush resting at the end.
+Both contact/layer studies and the moving stroke support these switches. Hiding
+the prop changes no pigment; the botanical illustration has no brush prop.
+Select a study to reset to its beginning, then press Play; moving-stroke playback
+lasts 6.5 seconds. Pause and reverse by scrubbing use the same supplied progress.
+The widget/painter recipe exposes `showBrush` and `fadeBrush`, both default true.
+These are example options, not new public package APIs. Reduced motion settles
+the final pose; the host activity flag still pauses automatic playback.
+
+Reproduce with `flutter test tool/capture_brush_drag.dart` and
+`bash tool/encode_brush_drag.sh`; the 49-frame GIF plays once.
+
 
 ## Thread moving through the surface
 

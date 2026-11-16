@@ -4,8 +4,10 @@ void _paintContact(
   Canvas canvas,
   double progress,
   double wetness,
-  WatercolorExperiment experiment,
-) {
+  WatercolorExperiment experiment, {
+  required bool showBrush,
+  required bool fadeBrush,
+}) {
   const pink = Color(0xFFC45D8B),
       blue = Color(0xFF326FA9),
       paper = Color(0xFFFFFDF8);
@@ -23,49 +25,19 @@ void _paintContact(
     );
   }
   if (experiment == WatercolorExperiment.stroke) {
-    final route = craftCurveThrough(const [
-      Offset(90, 230),
-      Offset(210, 125),
-      Offset(355, 220),
-      Offset(485, 125),
-    ]);
-    final metric = route.computeMetrics().single;
-    for (var i = 0; i < 16; i++) {
-      final time = i / 15 * .72;
-      final age = Interval(time, 1).transform(progress);
-      if (age == 0) continue;
-      final point = metric
-          .getTangentForOffset(metric.length * i / 15)!
-          .position;
-      final deposit = pigmentOutline(
-        Rect.fromCenter(
-          center: point,
-          width: 60 + wetness * 85,
-          height: 30 + wetness * 65,
-        ),
-        seed: 23 + i,
-      );
-      paintWatercolorSpread(
+    _paintDraggedWash(canvas, progress, wetness);
+    if (showBrush) {
+      final position = _brushMetric.getTangentForOffset(
+        _brushMetric.length * (progress / .72).clamp(0.0, 1.0),
+      )!;
+      final lift = fadeBrush ? ((progress - .72) / .23).clamp(0.0, 1.0) : 0.0;
+      _brushAt(
         canvas,
-        deposit,
-        pigment: blue,
-        paper: Colors.transparent,
-        seed: 23 + i,
-        opacity: .27,
-        origin: point,
-        progress: wetness == 0 ? math.min(1.0, age * 7) : age,
+        position.position + Offset(lift * 15, -lift * 35),
+        .35 + position.angle * .18,
+        1 - lift,
       );
     }
-    final position = metric.getTangentForOffset(
-      metric.length * (progress / .72).clamp(0.0, 1.0),
-    )!;
-    final lift = ((progress - .72) / .23).clamp(0.0, 1.0);
-    _brushAt(
-      canvas,
-      position.position + Offset(lift * 15, -lift * 35),
-      .45,
-      1 - lift,
-    );
     return;
   }
   const contact = Offset(300, 190);
@@ -107,8 +79,10 @@ void _paintContact(
     );
     canvas.restore();
   }
-  final lift = (progress / .25).clamp(0.0, 1.0);
-  _brushAt(canvas, contact + Offset(lift * 12, -lift * 25), .45, 1 - lift);
+  if (showBrush) {
+    final lift = fadeBrush ? (progress / .25).clamp(0.0, 1.0) : 0.0;
+    _brushAt(canvas, contact + Offset(lift * 12, -lift * 25), .45, 1 - lift);
+  }
 }
 
 void _brushAt(Canvas canvas, Offset position, double angle, double opacity) {
@@ -152,4 +126,83 @@ void _brushAt(Canvas canvas, Offset position, double angle, double opacity) {
       ..color = const Color(0xFF925D43).withValues(alpha: opacity),
   );
   canvas.restore();
+}
+
+final _brushRoute = craftCurveThrough(const [
+  Offset(90, 230),
+  Offset(210, 125),
+  Offset(355, 220),
+  Offset(485, 125),
+]);
+final _brushMetric = _brushRoute.computeMetrics().single;
+final _brushEdges = () {
+  final random = math.Random(23);
+  return List.generate(17, (_) => (random.nextDouble(), random.nextDouble()));
+}();
+
+// One connected swept silhouette, not a sequence of round pigment stamps.
+// Fixed stations/seed keep the existing pigment field anchored while its edges
+// widen according to local contact age. This is authored diffusion, not fluid.
+Path _draggedOutline(double progress, double wetness) {
+  if (progress <= 0) return Path();
+  final travel = (progress / .72).clamp(0.0, 1.0);
+  final left = <Offset>[], right = <Offset>[];
+  final stations = <double>[
+    for (var i = 0; i <= (travel * 128).floor(); i++) i / 128,
+    if (travel * 128 != (travel * 128).floor()) travel,
+  ];
+  for (final fraction in stations) {
+    final tangent = _brushMetric.getTangentForOffset(
+      _brushMetric.length * fraction,
+    )!;
+    final normal = Offset(-tangent.vector.dy, tangent.vector.dx);
+    final age = ((progress - fraction * .72) / (1 - fraction * .72)).clamp(
+      0.0,
+      1.0,
+    );
+    final index = (fraction * 16).floor().clamp(0, 15);
+    final local = fraction * 16 - index;
+    final mix = local * local * (3 - 2 * local);
+    final a = _brushEdges[index], b = _brushEdges[index + 1];
+    final edgeLeft = a.$1 * (1 - mix) + b.$1 * mix;
+    final edgeRight = a.$2 * (1 - mix) + b.$2 * mix;
+    final distance = fraction * _brushMetric.length;
+    final endDistance = (1 - fraction) * _brushMetric.length;
+    final taper = (math.min(distance, endDistance) / 22).clamp(0.0, 1.0);
+    final width = (8 + wetness * 22 * math.sqrt(age)) * (.3 + .7 * taper);
+    left.add(tangent.position + normal * width * (.85 + .25 * edgeLeft));
+    right.add(tangent.position - normal * width * (.85 + .25 * edgeRight));
+  }
+  return Path()..addPolygon([...left, ...right.reversed], true);
+}
+
+void _paintDraggedWash(Canvas canvas, double progress, double wetness) {
+  if (progress <= 0) return;
+  const blue = Color(0xFF326FA9);
+  final wet = _draggedOutline(progress, wetness);
+  final finalOutline = _draggedOutline(1, wetness);
+  canvas.save();
+  try {
+    canvas.clipPath(finalOutline);
+    for (var i = 3; i >= 1; i--) {
+      canvas.drawPath(
+        wet,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = i * wetness * 1.2
+          ..color = blue.withValues(alpha: .025),
+      );
+    }
+    canvas.clipPath(wet);
+    paintWatercolor(
+      canvas,
+      finalOutline,
+      pigment: blue,
+      paper: Colors.transparent,
+      seed: 23,
+      opacity: .78,
+    );
+  } finally {
+    canvas.restore();
+  }
 }

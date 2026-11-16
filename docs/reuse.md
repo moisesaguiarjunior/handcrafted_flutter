@@ -217,3 +217,11 @@ native content outside decorative clipping, unlike the existing clipped example
 surface. Its per-owner geometry cache is prepared outside paint. ThemeExtension,
 TextButton/Material/InkWell and native padding/theme interpolation remain canonical.
 No private consumer palette, application state, persistence, font or clock added.
+
+For the dragged brush, searched the contact/stamp recipe, curve metrics, seeded
+watercolor, stroke reveal, prop paint and the finite gallery clock. Reused one
+prepared curve and the existing watercolor renderer, clipped to a bounded swept
+ribbon; removed the per-deposit round washes from the drag only. First-touch
+spreading and pink/blue contact keep their existing pigment recipe. Shared native
+widget pixel reading is extracted from the vocabulary test rather than copied.
+No fluid engine, extra clock, mutable global cache or application art is added.

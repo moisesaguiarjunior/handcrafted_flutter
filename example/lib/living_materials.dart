@@ -35,8 +35,9 @@ class _LivingMaterialStudyState extends State<LivingMaterialStudy> {
   int remainingStitches = 4;
   bool showLooseThread = true;
   bool showNeedle = false;
+  bool showBrush = true, fadeBrush = true;
   int get durationMs => widget.technique == LivingTechnique.watercolor
-      ? 14000
+      ? (experiment == WatercolorExperiment.stroke ? 6500 : 14000)
       : switch (threadExperiment) {
           ThreadExperiment.finishing => remainingStitches * 600,
           ThreadExperiment.passing => 3600,
@@ -76,7 +77,9 @@ class _LivingMaterialStudyState extends State<LivingMaterialStudy> {
           ),
           Text(
             wash
-                ? 'Watch a wet edge travel through the paper. Pause anywhere to look closer.'
+                ? (experiment == WatercolorExperiment.stroke
+                      ? 'Drag the brush along a curve. A continuous wash spreads from the sides of its trail.'
+                      : 'A brush touches one spot, then lifts while the wet edge spreads.')
                 : 'Follow a moving thread tip as it closes the missing stitches, or explore the other thread studies.',
           ),
           const SizedBox(height: 20),
@@ -96,11 +99,30 @@ class _LivingMaterialStudyState extends State<LivingMaterialStudy> {
                     selected: experiment == item.$1,
                     onSelected: (_) => setState(() {
                       experiment = item.$1;
+                      manual = 0;
+                      start = 0;
+                      playing = false;
+                      userScrubbed = false;
+                      replay++;
                     }),
                   ),
               ],
             ),
             const SizedBox(height: 12),
+          ],
+          if (wash && experiment != WatercolorExperiment.botanical) ...[
+            SwitchListTile(
+              title: const Text('Show brush'),
+              value: showBrush,
+              onChanged: (v) => setState(() => showBrush = v),
+            ),
+            SwitchListTile(
+              title: const Text('Lift and hide brush'),
+              value: fadeBrush,
+              onChanged: showBrush
+                  ? (v) => setState(() => fadeBrush = v)
+                  : null,
+            ),
           ],
           if (!wash) ...[
             Wrap(
@@ -234,6 +256,8 @@ class _LivingMaterialStudyState extends State<LivingMaterialStudy> {
                     remainingStitches: remainingStitches,
                     showLooseThread: showLooseThread,
                     showNeedle: showNeedle,
+                    showBrush: showBrush,
+                    fadeBrush: fadeBrush,
                   ),
                 ),
               ),
@@ -275,6 +299,8 @@ class LivingMaterialArtwork extends StatelessWidget {
     this.remainingStitches = 4,
     this.showLooseThread = true,
     this.showNeedle = false,
+    this.showBrush = true,
+    this.fadeBrush = true,
   }) : assert(remainingStitches >= 1 && remainingStitches <= 8);
 
   /// Selected material process.
@@ -300,6 +326,12 @@ class LivingMaterialArtwork extends StatelessWidget {
 
   /// Include an optional needle in the full botanical reveal.
   final bool showNeedle;
+
+  /// Display the example brush in contact/stroke/layer studies.
+  final bool showBrush;
+
+  /// Lift/fade the brush after contact; false keeps it at the final touch.
+  final bool fadeBrush;
   @override
   Widget build(BuildContext context) {
     final wash = technique == LivingTechnique.watercolor;
@@ -333,6 +365,8 @@ class LivingMaterialArtwork extends StatelessWidget {
                   remainingStitches: remainingStitches,
                   showLooseThread: showLooseThread,
                   showNeedle: showNeedle,
+                  showBrush: showBrush,
+                  fadeBrush: fadeBrush,
                 ),
               ),
             )
@@ -358,6 +392,8 @@ class LivingMaterialArtwork extends StatelessWidget {
                       remainingStitches: remainingStitches,
                       showLooseThread: showLooseThread,
                       showNeedle: showNeedle,
+                      showBrush: showBrush,
+                      fadeBrush: fadeBrush,
                     ),
                   ),
                 ),

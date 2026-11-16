@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Replace separate moving-brush dabs with one continuous swept watercolor wash.
+  Add independent brush visibility/end-fade options, clearer mode starts and an
+  actual-widget drag capture; first-touch and layered contact are preserved.
+
 - Host-owned material ThemeExtension and role-based panels/native buttons/choices.
   Native input, focus, selected semantics and minimum targets survive material
   changes; bounded decoration falls back without clipping or shrinking content.

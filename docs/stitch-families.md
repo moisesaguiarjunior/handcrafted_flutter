@@ -39,7 +39,9 @@ substrate or hole topology: prepare the seam from the same silhouette, choose
 the intended side and clip final ink. Reserve depth + four thread widths.
 
 Backstitch, blanket, chain and cross distribute cells evenly along each contour,
-including the closing interval; running/basting use arc-length spans with a
+including the closing interval. Closed chain/cross seams always use at least
+three cells, including on small holes; these cells count toward the preflight
+budget. Running/basting use arc-length spans with a
 possible shorter final span. Empty/zero-length contours paint nothing. Prepare
 outside paint when the seam/parameters remain unchanged; callers own geometry.
 

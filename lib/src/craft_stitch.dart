@@ -33,7 +33,9 @@ enum CraftStitchKind {
 /// reach (1..32). [side] is 1 or -1, selecting the clockwise screen-space normal
 /// for blanket stitches. It does not infer inside/outside from a silhouette.
 /// Chain and cross are centered on the seam. Closed contours distribute cells
-/// evenly to avoid a partial terminal motif; open contours do likewise.
+/// evenly to avoid a partial terminal motif; open contours do likewise. Closed
+/// chain/cross contours use at least three cells, counted in the preflight budget,
+/// so a short closed seam does not collapse a link/cross onto its start point.
 /// Running/basting retain native arc-length spans and their final short span.
 ///
 /// Shared input limits are 32 contours / 8192 arc length, with coordinates within
@@ -68,7 +70,10 @@ Path craftStitchPath(
   ].any((v) => v.abs() > 8192)) {
     throw ArgumentError('Expected seam coordinates within +/-8192');
   }
-  final cells = metrics.fold<int>(0, (n, m) => n + (m.length / pitch).ceil());
+  final cells = metrics.fold<int>(
+    0,
+    (n, m) => n + _cellCount(m.length, m.isClosed, kind, pitch),
+  );
   if (cells > 1024) throw ArgumentError('Stitches exceed 1024 cells');
   if (kind == CraftStitchKind.running || kind == CraftStitchKind.basting) {
     final ratio = kind == CraftStitchKind.basting ? .8 : .55;
@@ -83,7 +88,7 @@ Path craftStitchPath(
   final result = Path();
   for (final metric in metrics) {
     if (metric.length == 0) continue;
-    final count = math.max(1, (metric.length / pitch).ceil());
+    final count = _cellCount(metric.length, metric.isClosed, kind, pitch);
     for (var i = 0; i < count; i++) {
       final start = metric.length * i / count;
       final end = metric.length * (i + 1) / count;
@@ -136,6 +141,15 @@ Path craftStitchPath(
   }
   _checkOutput(result);
   return result;
+}
+
+int _cellCount(double length, bool closed, CraftStitchKind kind, double pitch) {
+  if (length == 0) return 0;
+  final minimum =
+      closed && (kind == CraftStitchKind.chain || kind == CraftStitchKind.cross)
+      ? 3
+      : 1;
+  return math.max(minimum, (length / pitch).ceil());
 }
 
 void _checkOutput(Path result) {

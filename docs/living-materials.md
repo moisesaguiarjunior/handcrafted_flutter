@@ -40,18 +40,84 @@ Prepared budgets are 3072 contours / 32768 arc units and finite bounds within
 has no false puncture at its moving endpoint. paintCraftStitch also accepts
 progress; its default1 preserves existing rendering.
 
-The original botanical example fills satin-like leaves with prepared strands.
-Its thread alternates a visible drawing phase and a hidden return phase per
-strand, without a needle icon. The default loose-thread study uses smooth seeded
-wander, variable slack and fixed entry/exit anchors; below-cloth connectors are
-never drawn. Each loop tightens to its final surface stitch. This is authored choreography, not physical thread/fabric displacement
-or a simulation of the thread behind the cloth.
+The gallery retains three distinct authored uses:
+
+- **Finish stitches** starts with an existing seam and adds only the missing
+  terminal stitches. A bare tip travels above the cloth, its irregular slack
+  tightens, then the connecting transit stays hidden beneath the cloth. The
+  example count is adjustable from 1 to 8, default 4; playback takes 600ms per
+  missing stitch, so the default finishes in 2.4 seconds.
+- **Thread passing** keeps the earlier loose-loop study: smooth seeded wander,
+  variable slack and fixed entry/exit anchors. Below-cloth connectors are never
+  drawn; each loop tightens to its final surface stitch. Playback is 3.6 seconds.
+- **Embroidery reveal** keeps the full botanical sprig, now with 6-second
+  playback. Its **Show loose thread** and **Show needle** switches independently
+  control example artwork around the moving tip; the sewn result stays visible.
+  Both props disappear during underside return phases and at completion. The
+  needle is off by default.
+
+These are example recipes, not new package presets or thread/fabric physics.
+The package still supplies generated spans, owned snapshots and tip position;
+applications own their art and visibility policy.
+
+![A moving tip completes the remaining stitches of an existing seam](assets/thread-finishing.gif)
+
+The previous loose-wave study remains available:
 
 ![Loose strands moving above and beneath linen, then tightening](assets/embroidery-progress.gif)
 
-The separate embroidery-reveal mode retains the completed botanical use case:
+The separate embroidery reveal retains the completed botanical use case:
 
 ![Thread filling a botanical sprig](assets/embroidery-reveal.gif)
+
+### Drive a reveal from scrolling
+
+Use scroll position as the existing 0..1 input, rather than starting another
+animation controller. The following adapter uses the public package painter;
+`prepared` is caller-owned output from `craftStitchPath`. Keep native text and
+controls outside the decorative paint, present from the first frame.
+
+```dart
+AnimatedBuilder(
+  animation: scrollController,
+  builder: (context, child) {
+    // The host chooses an interval in its own scroll coordinates.
+    final offset = scrollController.hasClients ? scrollController.offset : 0.0;
+    final progress = MediaQuery.disableAnimationsOf(context)
+        ? 1.0
+        : ((offset - 120) / 320).clamp(0.0, 1.0);
+    return ExcludeSemantics(
+      child: IgnorePointer(
+        child: CustomPaint(
+          size: const Size(300, 180),
+          painter: ScrollStitchPainter(prepared, progress),
+        ),
+      ),
+    );
+  },
+);
+
+class ScrollStitchPainter extends CustomPainter {
+  ScrollStitchPainter(this.prepared, this.progress);
+  final Path prepared; // Stable, caller-owned geometry; do not mutate in place.
+  final double progress;
+  @override
+  void paint(Canvas canvas, Size size) {
+    CraftStitchFrame.sample(prepared, progress: progress).paint(
+      canvas, thread: const Color(0xFF427B6D), width: 2,
+    );
+  }
+  @override
+  bool shouldRepaint(ScrollStitchPainter old) =>
+      old.prepared != prepared || old.progress != progress;
+}
+```
+
+Scrolling back reverses the same deterministic reveal. This adapter has no
+elapsed-time clock and no offscreen ticker to pause; the host still decides
+which widgets to mount and the reveal interval. A host that uses timed playback
+instead must keep supplying `SceneEntrance.active`. Optional loose strand and
+needle artwork remains caller-owned, as in the runnable gallery recipe.
 
 ## Ownership, accessibility and choreography
 
@@ -72,6 +138,9 @@ clock for the following piece. No new timeline or timer is needed.
 Explicit captures: `flutter test tool/capture_living.dart` and
 `bash tool/encode_living.sh`. Inspect outputs before committing. PNGs/GIFs use
 actual study widgets and synthetic original art; no golden baselines are changed.
-GIFs show 49 supplied samples at 7fps once and hold the final pose. Use the
+The finishing capture uses `flutter test tool/capture_thread_finishing.dart`,
+then `bash tool/encode_thread_finishing.sh` (20fps, `-loop -1`). It shows
+49 samples over approximately 2.4 seconds. The earlier GIFs retain 49 samples
+at 7fps. All play once and hold the final pose. Use the
 live controls to restart; no infinite GIF loop or continuously running solver
 is introduced. Native-device cost remains unmeasured.

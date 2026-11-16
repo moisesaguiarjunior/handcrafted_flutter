@@ -14,6 +14,52 @@ import 'support/fonts.dart';
 
 void main() {
   testWidgets(
+    'all thread studies remain available with fast configurable completion and reveal props',
+    (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(
+              child: LivingMaterialStudy(technique: LivingTechnique.embroidery),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      LivingMaterialArtwork art() => tester.widget<LivingMaterialArtwork>(
+        find.byType(LivingMaterialArtwork),
+      );
+      expect(art().threadExperiment, ThreadExperiment.finishing);
+      expect(art().progress, 0);
+      await tester.ensureVisible(find.text('Play'));
+      await tester.tap(find.text('Play'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 2500));
+      expect(art().progress, 1, reason: 'Four stitches finish in 2.4 seconds');
+      tester
+          .widget<Slider>(find.byKey(const ValueKey('remaining-stitches')))
+          .onChanged!(7);
+      await tester.pumpAndSettle();
+      expect(art().remainingStitches, 7);
+      expect(art().progress, 0);
+      await tester.ensureVisible(find.text('Thread passing'));
+      await tester.tap(find.text('Thread passing'));
+      await tester.pumpAndSettle();
+      expect(art().threadExperiment, ThreadExperiment.passing);
+      await tester.tap(find.text('Embroidery reveal'));
+      await tester.pumpAndSettle();
+      expect(art().threadExperiment, ThreadExperiment.embroidery);
+      await tester.ensureVisible(find.text('Show needle'));
+      await tester.tap(find.text('Show needle'));
+      await tester.ensureVisible(find.text('Show loose thread'));
+      await tester.tap(find.text('Show loose thread'));
+      await tester.pumpAndSettle();
+      expect(art().showNeedle, isTrue);
+      expect(art().showLooseThread, isFalse);
+      expect(tester.binding.transientCallbackCount, 0);
+    },
+  );
+  testWidgets(
     'oversized letterhead keeps enlarged native action without decorative allocations',
     (tester) async {
       tester.view.physicalSize = const Size(240, 900);

@@ -1,5 +1,6 @@
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import '../example/lib/living_material_art.dart';
 import '../example/lib/motion_studies.dart';
@@ -66,6 +67,84 @@ void main() {
       ].any((v) => v > 0),
       isTrue,
     );
+  });
+  test(
+    'finishing preserves existing stitches and adds the chosen count in order',
+    () async {
+      Future<List<int>> render(double p, int remaining) => pixels(
+        (c) => LivingMaterialPainter(
+          LivingTechnique.embroidery,
+          p,
+          threadExperiment: ThreadExperiment.finishing,
+          remainingStitches: remaining,
+        ).paint(c, const Size(100, 80)),
+      );
+      final start = await render(0, 4);
+      expect(
+        start.any((v) => v > 0),
+        isTrue,
+        reason: 'The seam is already mostly sewn',
+      );
+      expect(start, isNot(await render(0, 1)));
+      expect(start, isNot(await render(0, 8)));
+      expect(
+        await render(.25, 4),
+        await render(0, 3),
+        reason: 'Exactly one of the four missing stitches has settled',
+      );
+      expect(await render(.5, 4), await render(0, 2));
+      expect(await render(.75, 4), await render(0, 1));
+      expect(
+        await render(.23, 4),
+        await render(.25, 4),
+        reason: 'The hidden return adds no visible connector',
+      );
+      final moving = await render(.08, 4);
+      expect(moving, isNot(start));
+      expect(moving, isNot(await render(.15, 4)));
+      await render(.8, 8);
+      expect(
+        moving,
+        await render(.08, 4),
+        reason: 'Scroll reversal is deterministic',
+      );
+      expect(await render(1, 1), await render(1, 4));
+      expect(await render(1, 4), await render(1, 8));
+    },
+  );
+  test('loose thread and needle props are independent and hidden below cloth', () async {
+    Future<List<int>> render(double p, bool loose, bool needle) => pixels(
+      (c) => LivingMaterialPainter(
+        LivingTechnique.embroidery,
+        p,
+        threadExperiment: ThreadExperiment.embroidery,
+        showLooseThread: loose,
+        showNeedle: needle,
+      ).paint(c, const Size(100, 80)),
+    );
+    // One strand is underway near the start of the reveal.
+    final plain = await render(.003, false, false);
+    expect(await render(.003, true, false), isNot(plain));
+    expect(await render(.003, false, true), isNot(plain));
+    expect(
+      await render(.003, true, true),
+      isNot(await render(.003, true, false)),
+    );
+    // Every contour uses .72 above-cloth and .28 hidden return. Probe within
+    // the first return interval (the authored sprig currently has >100 spans).
+    final seam = Path()
+      ..moveTo(270, 290)
+      ..cubicTo(275, 230, 330, 160, 310, 65);
+    final total =
+        craftStitchPath(
+          seam,
+          kind: CraftStitchKind.backstitch,
+          pitch: 9,
+        ).computeMetrics().length +
+        100;
+    final below = .9 / total;
+    expect(await render(below, true, true), await render(below, false, false));
+    expect(await render(1, true, true), await render(1, false, false));
   });
   test('balloon and kite have different authored rhythms on the same supplied time', () {
     final kite = studySway(.4), balloon = studyBalloonDrift(.4);

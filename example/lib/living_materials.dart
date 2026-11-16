@@ -26,10 +26,22 @@ class LivingMaterialStudy extends StatefulWidget {
 }
 
 class _LivingMaterialStudyState extends State<LivingMaterialStudy> {
-  double? manual = .48;
+  late double? manual = widget.technique == LivingTechnique.embroidery
+      ? 0
+      : .48;
   WatercolorExperiment experiment = WatercolorExperiment.contact;
   double wetness = .8;
-  ThreadExperiment threadExperiment = ThreadExperiment.passing;
+  ThreadExperiment threadExperiment = ThreadExperiment.finishing;
+  int remainingStitches = 4;
+  bool showLooseThread = true;
+  bool showNeedle = false;
+  int get durationMs => widget.technique == LivingTechnique.watercolor
+      ? 14000
+      : switch (threadExperiment) {
+          ThreadExperiment.finishing => remainingStitches * 600,
+          ThreadExperiment.passing => 3600,
+          ThreadExperiment.embroidery => 6000,
+        };
   double start = 0;
   bool playing = false;
   bool userScrubbed = false;
@@ -46,7 +58,7 @@ class _LivingMaterialStudyState extends State<LivingMaterialStudy> {
   Widget build(BuildContext context) => SceneEntrance(
     key: ValueKey(replay),
     duration: Duration(
-      milliseconds: (14000 * (1 - start)).round().clamp(1, 14000),
+      milliseconds: (durationMs * (1 - start)).round().clamp(1, durationMs),
     ),
     active: widget.active && playing && manual == null,
     startSettled: manual != null,
@@ -65,7 +77,7 @@ class _LivingMaterialStudyState extends State<LivingMaterialStudy> {
           Text(
             wash
                 ? 'Watch a wet edge travel through the paper. Pause anywhere to look closer.'
-                : 'Watch loose loops pass above and below the cloth, then tighten in turn.',
+                : 'Follow a moving thread tip as it closes the missing stitches, or explore the other thread studies.',
           ),
           const SizedBox(height: 20),
           if (wash) ...[
@@ -96,18 +108,56 @@ class _LivingMaterialStudyState extends State<LivingMaterialStudy> {
               runSpacing: 8,
               children: [
                 for (final item in [
+                  (ThreadExperiment.finishing, 'Finish stitches'),
                   (ThreadExperiment.passing, 'Thread passing'),
                   (ThreadExperiment.embroidery, 'Embroidery reveal'),
                 ])
                   ChoiceChip(
                     label: Text(item.$2),
                     selected: threadExperiment == item.$1,
-                    onSelected: (_) =>
-                        setState(() => threadExperiment = item.$1),
+                    onSelected: (_) => setState(() {
+                      threadExperiment = item.$1;
+                      manual = 0;
+                      start = 0;
+                      playing = false;
+                      userScrubbed = false;
+                      replay++;
+                    }),
                   ),
               ],
             ),
             const SizedBox(height: 12),
+          ],
+          if (!wash && threadExperiment == ThreadExperiment.finishing) ...[
+            Text('Remaining stitches $remainingStitches'),
+            Slider(
+              key: const ValueKey('remaining-stitches'),
+              min: 1,
+              max: 8,
+              divisions: 7,
+              value: remainingStitches.toDouble(),
+              label: '$remainingStitches stitches',
+              onChanged: (v) => setState(() {
+                remainingStitches = v.round();
+                manual = 0;
+                start = 0;
+                playing = false;
+                userScrubbed = false;
+                replay++;
+              }),
+            ),
+          ],
+          if (!wash && threadExperiment == ThreadExperiment.embroidery) ...[
+            SwitchListTile(
+              title: const Text('Show loose thread'),
+              value: showLooseThread,
+              onChanged: (v) => setState(() => showLooseThread = v),
+            ),
+            SwitchListTile(
+              title: const Text('Show needle'),
+              value: showNeedle,
+              onChanged: (v) => setState(() => showNeedle = v),
+            ),
           ],
           const SizedBox(height: 16),
           Wrap(
@@ -181,6 +231,9 @@ class _LivingMaterialStudyState extends State<LivingMaterialStudy> {
                     experiment: experiment,
                     wetness: wetness,
                     threadExperiment: threadExperiment,
+                    remainingStitches: remainingStitches,
+                    showLooseThread: showLooseThread,
+                    showNeedle: showNeedle,
                   ),
                 ),
               ),
@@ -219,7 +272,10 @@ class LivingMaterialArtwork extends StatelessWidget {
     this.experiment = WatercolorExperiment.botanical,
     this.wetness = .8,
     this.threadExperiment = ThreadExperiment.passing,
-  });
+    this.remainingStitches = 4,
+    this.showLooseThread = true,
+    this.showNeedle = false,
+  }) : assert(remainingStitches >= 1 && remainingStitches <= 8);
 
   /// Selected material process.
   final LivingTechnique technique;
@@ -233,8 +289,17 @@ class LivingMaterialArtwork extends StatelessWidget {
   /// Art-directed moisture for the example; 0..1.
   final double wetness;
 
-  /// Selects loose thread movement or botanical completion.
+  /// Selects missing stitches, loose waves or botanical completion.
   final ThreadExperiment threadExperiment;
+
+  /// Terminal stitch count in the finishing recipe, 1..8.
+  final int remainingStitches;
+
+  /// Include loose thread in the full botanical reveal.
+  final bool showLooseThread;
+
+  /// Include an optional needle in the full botanical reveal.
+  final bool showNeedle;
   @override
   Widget build(BuildContext context) {
     final wash = technique == LivingTechnique.watercolor;
@@ -265,6 +330,9 @@ class LivingMaterialArtwork extends StatelessWidget {
                   experiment: experiment,
                   wetness: wetness,
                   threadExperiment: threadExperiment,
+                  remainingStitches: remainingStitches,
+                  showLooseThread: showLooseThread,
+                  showNeedle: showNeedle,
                 ),
               ),
             )
@@ -287,6 +355,9 @@ class LivingMaterialArtwork extends StatelessWidget {
                       experiment: experiment,
                       wetness: wetness,
                       threadExperiment: threadExperiment,
+                      remainingStitches: remainingStitches,
+                      showLooseThread: showLooseThread,
+                      showNeedle: showNeedle,
                     ),
                   ),
                 ),

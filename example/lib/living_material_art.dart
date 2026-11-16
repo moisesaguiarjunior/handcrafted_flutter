@@ -5,6 +5,7 @@ import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 part 'wet_contact_art.dart';
 part 'thread_pass_art.dart';
+part 'thread_finish_art.dart';
 
 /// Finite material techniques in the example gallery.
 enum LivingTechnique {
@@ -30,8 +31,11 @@ enum WatercolorExperiment {
   layers,
 }
 
-/// Distinct thread studies: a loose strand or the completed-artwork reveal.
+/// Distinct thread studies: missing stitches, loose waves or a full reveal.
 enum ThreadExperiment {
+  /// An existing seam receives only its remaining stitches.
+  finishing,
+
   /// Loose, nonperiodic loops tighten between fixed above/below-cloth anchors.
   passing,
 
@@ -48,7 +52,10 @@ class LivingMaterialPainter extends CustomPainter {
     this.experiment = WatercolorExperiment.botanical,
     this.wetness = .8,
     this.threadExperiment = ThreadExperiment.passing,
-  });
+    this.remainingStitches = 4,
+    this.showLooseThread = true,
+    this.showNeedle = false,
+  }) : assert(remainingStitches >= 1 && remainingStitches <= 8);
 
   /// Selected authored study.
   final LivingTechnique technique;
@@ -64,6 +71,15 @@ class LivingMaterialPainter extends CustomPainter {
 
   /// Above/below thread or botanical completion.
   final ThreadExperiment threadExperiment;
+
+  /// Number of terminal stitches to add in the finishing recipe, 1..8.
+  final int remainingStitches;
+
+  /// Whether the botanical reveal includes its loose moving strand.
+  final bool showLooseThread;
+
+  /// Whether the botanical reveal includes optional needle artwork.
+  final bool showNeedle;
 
   static final Path _embroideryPath = _embroidery();
   static Path _embroidery() {
@@ -108,7 +124,9 @@ class LivingMaterialPainter extends CustomPainter {
         _paintContact(canvas, progress, wetness, experiment);
       }
     } else {
-      if (threadExperiment == ThreadExperiment.passing) {
+      if (threadExperiment == ThreadExperiment.finishing) {
+        _paintThreadFinish(canvas, progress, remainingStitches);
+      } else if (threadExperiment == ThreadExperiment.passing) {
         _paintThreadPass(canvas, progress);
       } else {
         _sew(canvas);
@@ -237,6 +255,8 @@ class LivingMaterialPainter extends CustomPainter {
         eye.dx + 88,
         eye.dy - 32,
       );
+    if (showNeedle) _paintStudyNeedle(canvas, eye, tip.vector);
+    if (!showLooseThread) return;
     canvas.drawPath(
       loose,
       Paint()
@@ -252,5 +272,8 @@ class LivingMaterialPainter extends CustomPainter {
       old.technique != technique ||
       old.experiment != experiment ||
       old.wetness != wetness ||
-      old.threadExperiment != threadExperiment;
+      old.threadExperiment != threadExperiment ||
+      old.remainingStitches != remainingStitches ||
+      old.showLooseThread != showLooseThread ||
+      old.showNeedle != showNeedle;
 }

@@ -200,3 +200,10 @@ budgets, SeamedSurface and native layout. The example measures decoration with
 a positioned LayoutBuilder behind the unchanged native content; oversized
 content receives a plain background instead of allocating an oversized texture
 or relaxing package guards. No text measurement or second layout engine is added.
+
+For finishing stitches, searched thread stations, CraftStitchFrame, generated
+stitch contours, SceneEntrance, finite progress and reveal-tip artwork. Reused
+all three existing contracts: kept loose-wave and full-sprig modes, added an
+example-only missing-stitch recipe and optional reveal props. Native controls
+configure count; scroll can supply progress without a second clock. No public
+thread physics or application-owned scroll policy is introduced.

@@ -49,6 +49,8 @@ boundaries. These are proposed components, not shipped APIs.
 
 - Paint spreading: elongated brush contact and uneven front, moving-brush and
   pink/blue-layer experiments; visual approximations, not a fluid solver.
+- Completing only the chosen missing stitches (1..8), faster bare-tip motion,
+  optional loose thread/needle in the full reveal, and a scroll-progress recipe.
 - Needle-free thread with nonperiodic waves between fixed entry/exit anchors;
   below-cloth connectors stay hidden. Ordered botanical embroidery reveal is a
   separate example; both reuse caller-owned finite progress.

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Retain loose-wave and full-embroidery studies while adding faster completion
+  of an adjustable number of missing stitches. Full reveal has independent
+  loose-thread/needle props; document scroll-owned progress without another clock.
+
 - Explicit watercolor spreading and owned thread-frame progress with actual
   punctures and a travelling tip. Default static painting remains unchanged.
 - Paint-led gallery with persistent desktop navigation, mobile study selection,

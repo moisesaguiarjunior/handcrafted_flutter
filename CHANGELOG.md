@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Clock-free bounded pendulum sampling with gravity, wind, damping and explicit
+  realistic/cartoon response. Reuses native pose/input mapping; adds a manual
+  time/force playground, not flexible cloth/rope or an indefinite simulator.
+
 - Composable cord/ribbon/embroidered bands over open or closed paths, with bounded
   texture stations, directional shading and nominal contour-gap preparation.
   Adds original material compositions and an accessible parameter playground.

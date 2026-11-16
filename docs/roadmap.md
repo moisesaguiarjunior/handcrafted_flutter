@@ -26,7 +26,10 @@ identity, themes and editorial decisions belong to the application.
 - Public CraftImagePart for a source crop placed in an artboard rectangle with
   optional hinge/pose, shared native hit transform and no new animation clock.
 
-There is no exact Bezier inset, physical cloth, shared wind, water solver or
+A bounded clock-free rigid pendulum now samples constant gravity/wind with
+realistic/cartoon response; flexible and coupled bodies remain unimplemented.
+
+There is no exact Bezier inset, physical cloth, shared wind field, water solver or
 shared texture cache. Pigment and relief are visual approximations; fabrics are
 not physically displaced and wet paint is not simulated over time.
 

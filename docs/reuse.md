@@ -16,6 +16,7 @@
 | Pen, marker and brush patterns | `CraftStrokeStyle`, `paintCraftStroke` |
 | Paint, input and anchor transform | `PartPose`, `CraftPart` |
 | Material behind native widgets | `CraftSurface` |
+| Clock-free rigid gravity/wind response | `CraftPendulum`, `CraftPendulumSample` |
 | Finite entrance clock | `SceneEntrance` |
 | Runnable compositions and captures | `example/lib/use_cases.dart`, `tool/capture_showcase.dart` |
 | Drawing playground and capture | `example/lib/main_strokes.dart`, `tool/capture_strokes.dart` |
@@ -130,3 +131,9 @@ insetCraftPath and CraftSurface. Created only band shading/texture and a nominal
 gap helper; existing running stitches keep their own puncture contract. Example
 plates share the actual substrate silhouette and existing capture/theme helpers.
 No second texture engine, transform, clock or copied application art is added.
+
+For gravity/wind, searched pendulum, gravity, authored sway, PartPose, mapped
+attachments and SceneEntrance. Reused pose/input mapping and the trim renderer
+for the example tether. Authored sway is not a force integrator; created one
+bounded fixed-step point-mass recipe sampled from caller time, without a second
+clock, framework, flexible-rope solver or global simulation owner.

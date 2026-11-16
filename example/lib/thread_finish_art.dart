@@ -61,10 +61,10 @@ void _paintThreadFinish(Canvas canvas, double progress, int remaining) {
 }
 
 // Optional authored prop for the full reveal only; hidden on return phases.
-void _paintStudyNeedle(Canvas canvas, Offset tip, Offset direction) {
+void _paintStudyNeedle(Canvas canvas, Offset eye, Offset direction) {
   final along = direction / direction.distance;
   final across = Offset(-along.dy, along.dx);
-  final eye = tip - along * 18;
+  final tip = eye + along * 18;
   canvas.drawLine(
     eye,
     tip,

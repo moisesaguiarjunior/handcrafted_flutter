@@ -60,3 +60,8 @@ conditional extensions; they add no second renderer or clock.
 `CraftStrokeStyle.join` reuses Flutter's `StrokeJoin` for solid/dashed pen/marker
 painting. The round default is preserved. Native-raster regression checks cover
 miter, round and bevel; the existing style value contract includes the join.
+
+For bounded effects, searched PartPose attachment mapping, seeded material
+ownership and SceneEntrance. Reused those contracts; a fixed-size example-local
+PourRecipe stores authored variations without a global particle list, image
+cache, blur layer or second clock. Empty endpoints perform no effect painting.

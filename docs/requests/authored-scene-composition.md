@@ -59,6 +59,9 @@ API until callers agree on interaction and snapping.
 
 ## C. Bounded pour, droplets and light
 
+The [bounded-effects example](../bounded-effects.md) now demonstrates this recipe.
+It remains authored motion, without a general particle or fluid API.
+
 A recipe for a short pour can accept emitter and destination anchors mapped by
 PartPose plus explicit progress and seed. A light/dust recipe can share that
 external progress, with fixed particle/work limits. These are authored effects,

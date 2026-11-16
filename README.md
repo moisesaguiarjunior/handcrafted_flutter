@@ -79,6 +79,7 @@ flutter run -d chrome -t lib/main_atlas.dart
 - [Original showcase](example/lib/main_showcase.dart): keepsake card, hanging pieces and kite.
 - [Material playground](example/lib/main.dart): seed, scale, grain and lighting.
 - [Shared compositions](example/lib/use_cases.dart): complete runnable widget code.
+- [Bounded effects](docs/bounded-effects.md): a mapped pour, droplets and light; run `lib/main_effects.dart`.
 
 Use a local path dependency during development, or pin an immutable Git commit
 in an application. Keep source-access credentials outside code and URLs.

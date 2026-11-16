@@ -6,6 +6,8 @@ import 'package:flutter/painting.dart';
 
 import 'path_geometry.dart';
 
+part 'dry_stroke.dart';
+
 /// Distribution of ink along the same centerline.
 enum CraftLinePattern {
   /// A continuous completed line, optionally revealed by progress.
@@ -28,6 +30,15 @@ enum CraftStrokeTool {
 
   /// Tapered, seeded variable-width ink with fine bristle highlights.
   brush,
+
+  /// Fine graphite grain, with the substrate visible between deposits.
+  pencil,
+
+  /// Broad, powdery deposits without blur or offscreen layers.
+  chalk,
+
+  /// Dense wax ridges with seeded gaps between deposits.
+  wax,
 }
 
 /// Immutable stroke parameters; color, seed and progress are separate inputs.
@@ -70,7 +81,7 @@ final class CraftStrokeStyle {
   /// remains rounded; miter uses Flutter's default miter limit of 4.
   final StrokeJoin join;
 
-  /// Seeded brush width/texture variation. Does not change the centerline.
+  /// Seeded brush or dry-deposit variation. Does not change the centerline.
   final double variation;
 
   void _validate() {
@@ -150,7 +161,7 @@ Path trimCraftPath(Path source, {required double progress}) {
   return spanPath(spans, preserveClosed: true)..fillType = source.fillType;
 }
 
-/// Draws pen, marker or brush ink on any caller-supplied curved or straight path.
+/// Draws ink or dry instruments on a caller-supplied curved or straight path.
 ///
 /// Progress reveals global arc length; pattern phase restarts per contour and
 /// stays fixed while revealing. Zero progress paints nothing; one completes the
@@ -179,6 +190,14 @@ void paintCraftStroke(
     dash: style.pattern == CraftLinePattern.dashed ? style.dash : null,
     gap: style.gap,
   );
+  if (style.tool == CraftStrokeTool.pencil ||
+      style.tool == CraftStrokeTool.chalk ||
+      style.tool == CraftStrokeTool.wax) {
+    for (final span in spans) {
+      _paintDryStroke(canvas, span, color, style, seed);
+    }
+    return;
+  }
   if (style.pattern == CraftLinePattern.dotted) {
     for (final span in spans) {
       for (var d = 0.0; d < span.end; d += style.width + style.gap) {

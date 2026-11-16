@@ -100,14 +100,14 @@ class _StrokePlaygroundState extends State<StrokePlayground> {
                     ),
                     const SizedBox(height: 28),
                     const Text(
-                      'Three ways to leave a mark',
+                      'Six ways to leave a mark',
                       style: TextStyle(fontFamily: 'Caveat', fontSize: 32),
                     ),
                     const SizedBox(height: 8),
                     const StrokeComparison(),
                     const SizedBox(height: 20),
                     const Text(
-                      'Ink and brush grain are visual approximations. '
+                      'Ink and dry deposits are visual approximations. '
                       'The same path works with your own widgets and frame timeline.',
                     ),
                   ],
@@ -183,6 +183,9 @@ class _StrokePlaygroundState extends State<StrokePlayground> {
             CraftStrokeTool.pen => 3,
             CraftStrokeTool.marker => 14,
             CraftStrokeTool.brush => 12,
+            CraftStrokeTool.pencil => 3,
+            CraftStrokeTool.chalk => 16,
+            CraftStrokeTool.wax => 12,
           };
         }),
       ),
@@ -270,6 +273,9 @@ String _toolLabel(CraftStrokeTool tool) => switch (tool) {
   CraftStrokeTool.pen => 'Pen',
   CraftStrokeTool.marker => 'Broad marker',
   CraftStrokeTool.brush => 'Brush',
+  CraftStrokeTool.pencil => 'Pencil',
+  CraftStrokeTool.chalk => 'Chalk',
+  CraftStrokeTool.wax => 'Wax crayon',
 };
 String _patternLabel(CraftLinePattern pattern) => switch (pattern) {
   CraftLinePattern.solid => 'Continuous',
@@ -277,7 +283,7 @@ String _patternLabel(CraftLinePattern pattern) => switch (pattern) {
   CraftLinePattern.dotted => 'Dotted',
 };
 
-/// Nine static combinations, shared by the playground and explicit captures.
+/// Eighteen static combinations, shared by the playground and explicit captures.
 class StrokeComparison extends StatelessWidget {
   /// Creates a comparison with no clocks or asynchronous resources.
   const StrokeComparison({super.key});
@@ -292,33 +298,63 @@ class StrokeComparison extends StatelessWidget {
             width: constraints.maxWidth < 600
                 ? constraints.maxWidth
                 : (constraints.maxWidth - 40) / 3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _toolLabel(tool),
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-                for (final pattern in CraftLinePattern.values)
-                  SizedBox(
-                    height: 56,
-                    width: double.infinity,
-                    child: CustomPaint(
-                      painter: _StrokePainter(
-                        style: CraftStrokeStyle(
-                          tool: tool,
-                          pattern: pattern,
-                          width: tool == CraftStrokeTool.pen ? 2 : 10,
-                          dash: tool == CraftStrokeTool.pen ? 8 : 16,
-                          gap: tool == CraftStrokeTool.pen ? 6 : 16,
-                        ),
-                        progress: 1,
-                        curvature: .8,
-                        seed: 23,
+            child: CraftSurface(
+              material: tool == CraftStrokeTool.chalk
+                  ? CraftMaterial.felt
+                  : CraftMaterial.paper,
+              color: tool == CraftStrokeTool.chalk
+                  ? const Color(0xFF304E50)
+                  : DemoPalette.paper,
+              seed: 23,
+              child: Padding(
+                padding: const EdgeInsets.all(14),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _toolLabel(tool),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: tool == CraftStrokeTool.chalk
+                            ? DemoPalette.paper
+                            : DemoPalette.ink,
                       ),
                     ),
-                  ),
-              ],
+                    for (final pattern in CraftLinePattern.values)
+                      SizedBox(
+                        height: 56,
+                        width: double.infinity,
+                        child: CustomPaint(
+                          key: ValueKey(
+                            'stroke-sample-${tool.name}-${pattern.name}',
+                          ),
+                          painter: _StrokePainter(
+                            style: CraftStrokeStyle(
+                              tool: tool,
+                              pattern: pattern,
+                              width: switch (tool) {
+                                CraftStrokeTool.pen => 2,
+                                CraftStrokeTool.pencil => 4,
+                                CraftStrokeTool.chalk => 16,
+                                _ => 10,
+                              },
+                              dash: tool == CraftStrokeTool.pen ? 8 : 16,
+                              gap: tool == CraftStrokeTool.pen ? 6 : 16,
+                            ),
+                            progress: 1,
+                            curvature: .8,
+                            seed: 23,
+                            color: tool == CraftStrokeTool.chalk
+                                ? const Color(0xFFF4EBD7)
+                                : tool == CraftStrokeTool.pencil
+                                ? const Color(0xFF4F5558)
+                                : const Color(0xFF994955),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
             ),
           ),
       ],
@@ -333,12 +369,14 @@ class _StrokePainter extends CustomPainter {
     required this.curvature,
     required this.seed,
     this.track = false,
+    this.color = const Color(0xFF79445F),
   });
   final CraftStrokeStyle style;
   final double progress;
   final double curvature;
   final int seed;
   final bool track;
+  final Color color;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -371,7 +409,7 @@ class _StrokePainter extends CustomPainter {
     paintCraftStroke(
       canvas,
       path,
-      color: const Color(0xFF79445F),
+      color: color,
       style: style,
       progress: progress,
       seed: seed,
@@ -384,5 +422,6 @@ class _StrokePainter extends CustomPainter {
       old.progress != progress ||
       old.curvature != curvature ||
       old.seed != seed ||
-      old.track != track;
+      old.track != track ||
+      old.color != color;
 }

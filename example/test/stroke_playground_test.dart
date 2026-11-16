@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 import 'package:handcrafted_example/main_strokes.dart';
 
 void main() {
@@ -16,9 +17,14 @@ void main() {
       expect(tester.binding.transientCallbackCount, 0);
       final swatches = find.descendant(
         of: find.byType(StrokeComparison),
-        matching: find.byType(CustomPaint),
+        matching: find.byWidgetPredicate(
+          (w) =>
+              w is CustomPaint &&
+              w.key is ValueKey<String> &&
+              (w.key! as ValueKey<String>).value.startsWith('stroke-sample-'),
+        ),
       );
-      expect(swatches, findsNWidgets(9));
+      expect(swatches, findsNWidgets(18));
       for (final swatch in swatches.evaluate()) {
         expect(
           tester.getSize(find.byWidget(swatch.widget)).width,
@@ -31,6 +37,15 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Brush on paper'), findsOneWidget);
       expect(find.text('Width 12.0'), findsOneWidget);
+      for (final label in ['Pencil', 'Chalk', 'Wax crayon', 'Brush']) {
+        await tester.tap(find.byType(DropdownButtonFormField<CraftStrokeTool>));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text(label).last);
+        await tester.pumpAndSettle();
+        expect(find.text('$label on paper'), findsOneWidget);
+        expect(tester.binding.transientCallbackCount, 0);
+      }
+
       final progress = tester.widget<Slider>(
         find.byKey(const ValueKey('stroke-progress')),
       );

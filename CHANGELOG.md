@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Pencil, chalk and wax decorate existing paths with seeded bounded deposits.
+  Adds three enum members; exhaustive consumer switches need updating. Patterns,
+  reveal and the existing gallery are reused; long freehand remains solid pen.
+- Reconcile shipped stitches, hosted gallery and bilateral integration in the
+  roadmap; retain candidate fabrics, filled embroidery and movement work.
+
 - Document the executable consumer video integration: versioned material
   arguments, structural media discovery and the existing Fluvie export path,
   without adding a peer dependency or job parser to this core package.

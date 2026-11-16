@@ -45,3 +45,7 @@ Generic integration surfaces remain Path, palette, pose/progress and native
 widgets. The example kite now builds its own simple waypoint curve; it is not an
 exported preset or a physics API. This removal is an explicit pre-1.0 breaking
 change; existing immutable pins continue to resolve their original source.
+
+Pencil, chalk and wax extend CraftStrokeTool after v0.1.0. Update exhaustive
+switches when adopting this source. Native solid-pen freehand and the original
+pen/marker/brush branches retain their previous contracts. The tag is unchanged.

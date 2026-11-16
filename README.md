@@ -7,7 +7,7 @@
 
 ![Sculpted shell relief on twill, watercolor landscape on torn paper, and embroidered cord on linen](docs/assets/material-cover.png)
 
-Seeded paper, linen, twill, felt and wood textures, running stitches, organic
+Seeded paper, linen, twill, felt and wood textures, contour-following stitches, organic
 contours, watercolor pigment, relief, cord/ribbon bands and composable moving
 parts for Flutter.
 Text remains text; buttons retain native focus, actions and semantics.
@@ -132,7 +132,7 @@ in an application. Keep source-access credentials outside code and URLs.
 | `pigmentOutline` | Reproducible organic contours |
 | `CraftOutline` | Value-based rectangle, rounded rectangle and organic recipes |
 | `craftCurveThrough`, `trimCraftPath` | Curved waypoints and explicit arc-length reveal |
-| `CraftStrokeStyle`, `paintCraftStroke` | Continuous, dashed or dotted pen/marker/brush ink |
+| `CraftStrokeStyle`, `paintCraftStroke` | Continuous, dashed or dotted ink and pencil/chalk/wax deposits |
 | `paintCraftFreehand` | Bounded solid-pen input by points/strokes, including long scribbles and taps |
 | `craftStitchPath`, `paintCraftStitch` | Six bounded thread families over a supplied seam |
 | `runningStitchPath`, `paintRunningStitch` | Arc-length stitches and illustrative puncture shading |
@@ -163,7 +163,7 @@ phone performance remains unmeasured.
 
 Build a smooth route through waypoints, or supply your own Flutter `Path`. Choose
 continuous, dashed or dotted ink independently of pen, broad marker or brush
-treatment. Explicit progress reveals the line by distance without creating a
+treatment, or pencil, chalk and wax deposits. Explicit progress reveals the line by distance without creating a
 clock. Paint a quiet track behind a solid prefix to show a completed route.
 
 Run `flutter run -d chrome -t lib/main_strokes.dart` from `example/`.

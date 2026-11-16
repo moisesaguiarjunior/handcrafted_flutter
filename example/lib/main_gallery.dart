@@ -51,7 +51,7 @@ enum GalleryStudy {
   /// Bounded gravity/wind with explicit elapsed time.
   physics,
 
-  /// Curved pen, marker and brush treatments.
+  /// Curves with ink and dry instrument treatments.
   ink,
 
   /// Crops, hinges, masks and native actions.

@@ -14,7 +14,7 @@
 | Closed-silhouette polygonal insets | `insetCraftPath`, using pinned clipper2 union/offset |
 | Paper finish and edge composition | `paintPaperFinish`, `paperOutline`, `paintPaperEdgeFibers`, `CraftOutline.paper` |
 | Curved waypoints and explicit reveal | `craftCurveThrough`, `trimCraftPath` |
-| Pen, marker and brush patterns | `CraftStrokeStyle`, `paintCraftStroke` |
+| Pen, marker, brush and dry instrument patterns | `CraftStrokeStyle`, `paintCraftStroke` |
 | Paint, input and anchor transform | `PartPose`, `CraftPart` |
 | Material behind native widgets | `CraftSurface` |
 | Clock-free rigid gravity/wind response | `CraftPendulum`, `CraftPendulumSample` |
@@ -172,3 +172,11 @@ snapshots, frame pump and encoder. Existing core primitives were sufficient;
 the consumer adapter declares media and owns its versioned schema. Documented
 that contract rather than adding a JSON parser, peer dependency, media collector
 or second clock to this package. Actual consumer capture/export tests protect it.
+
+For dry instruments, searched CraftStrokeTool, pathSpans, brush sampling, native
+ink paint and paintCraftFreehand across source, tests and gallery. Reused checked
+path metrics, validation, patterns, progress and the existing study/capture shell.
+Added only seeded deposit paint in a private part, without another path sampler,
+clock, raster cache, substrate eraser or freehand capture contract. No decisions
+directory exists; the drawing guide records the additive enum migration and work
+bound. Reconciled shipped gallery/stitch/integration items in the public queue.

@@ -20,7 +20,7 @@ are included. Source: [material studies](../example/lib/material_studies.dart),
 | Silhouettes | `pigmentOutline`, `CraftOutline` | Organic swatches, native-widget surfaces and circular fabric specimens |
 | Paper recipes | `paperOutline`, `CraftOutline.paper`, `paintPaperFinish`, `paintPaperEdgeFibers` | Six visual stocks, four edges and native letterhead; existing base grain is reused |
 | Sewing | `insetCraftPath`, `craftStitchPath`, `paintCraftStitch` | Six surface patterns, polygonal contour-following seams and puncture shading |
-| Drawing | `craftCurveThrough`, `trimCraftPath`, `paintCraftStroke` | Continuous, dotted or dashed pen/marker/brush lines and explicit reveal |
+| Drawing | `craftCurveThrough`, `trimCraftPath`, `paintCraftStroke` | Continuous, dotted or dashed pen/marker/brush/pencil/chalk/wax lines and explicit reveal |
 | Watercolor | `paintWatercolor` | Overlapping washes, a botanical painting and a resist/cutout study |
 | Relief | `paintCraftRelief`, `CraftReliefText` | Pressed/raised botanical motifs, reversible light and native lettering |
 | Motion | `PartPose`, `CraftPart`, `SceneEntrance` | Body sway, local tail deformation, both together, balloon/tether and hanging pieces |

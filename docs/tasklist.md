@@ -26,18 +26,20 @@ a passing widget test is not a phone benchmark or visual approval.
 | HC-P05 | Public rotary-control abstraction | Example only; promote after complete consumer flows demonstrate a stable contract |
 | HC-P06 | Deeper fabrics, stitches, relief and embroidered fills | Six stitch families implemented with shared thread paint; more fabrics/filled embroidery remain backlog; see PR/check evidence |
 | HC-P07 | Capillary edges, prepared geometry and shared caches | Conditional; require demonstrated need/profile before new ownership contracts |
-| HC-I01 | Fluvie / Social Studio adapters | [Versioned consumer template and declared media](consumer-video-integration.md); actual capture/export exercised in consumer; review/publication tracked separately |
-| HC-V01 | Material/motion imagery and interactive gallery | Material cover/relief in PR #15; generic motion captures and hosted gallery workflow implemented; deployment verified separately |
+| HC-I01 | Fluvie / Social Studio adapters | Published in PR #19, Social Studio #16 and Fluvie #5; actual diagnostic CLI export and deterministic capture; full-size throughput pending |
+| HC-V01 | Material/motion imagery and interactive gallery | Cover/relief PR #15; motion atlas and twelve-study gallery PR #18; Pages deployment and hosted navigation verified |
+| HC-M01 | Drawing instruments | Pencil/chalk/wax decorative recipes extend the existing ink playground; fountain pen and further brush recipes remain candidates; long freehand stays solid pen |
 
 ## Next sequence
 
-1. Review/publish six stitch families and preserve legacy running pixels.
-2. Restore generic motion captures and host the live gallery with bounded demos.
-3. Validate external-timeline adapters without adding a second clock or adopting
-   application-owned schemas into the core package.
-4. Expand fabrics/instruments in bounded recipes with actual visual examples.
-5. Profile actual consumer scenes, then devices; promote shared caches only when
-   demonstrated by measured workloads.
+1. Expand dry drawing instruments with bounded deposits and actual gallery examples.
+2. Expand representative fabrics and embroidered fills, preserving native content.
+3. Refine relief/layer compositions and fasteners wrapping native controls.
+4. Add independent bird/water/mobile/clothesline recipes before considering coupled solvers.
+5. Measure actual consumer scenes and full-size exports, then devices; introduce
+   shared caches only if measured workloads justify their ownership.
+6. Consolidate a new reviewed source tag for changes after v0.1.0; the existing
+   immutable tag remains unchanged.
 
 Consumer migrations, pixel-parity checks, application visual approvals and phone
 measurements have separate gates. This queue does not mark them completed by a

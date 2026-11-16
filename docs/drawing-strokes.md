@@ -49,11 +49,14 @@ paintCraftStroke(
 | `pen` | Crisp round-ended ink; normally choose a narrow width |
 | `marker` | Translucent ink at 68% of supplied alpha; choose a broad width for a marker |
 | `brush` | Tapered, seeded variable-width ribbon with fine bristle highlights |
+| `pencil` | Thin graphite deposits over a low-alpha continuous trace |
+| `chalk` | Powdery clusters with the substrate visible between deposits |
+| `wax` | Denser base and short wax-like ridges |
 
 Width is explicit: changing the instrument does not silently change application
 layout. Round caps extend into gaps; use `gap > width` for visibly separated
 dashes. The playground supplies suggested widths and spacing for instruments.
-Seed/variation affect brush grain and width, not the centerline. A brush's
+Seed/variation affect brush grain/width and dry deposits, not the centerline. A brush's
 nominal width is its maximum; the ends of open paths taper. These effects are
 illustrative ink, not fluid dynamics, actual pen pressure or wet watercolor.
 
@@ -83,7 +86,7 @@ user-controlled scrubbing can remain explicit.
 
 From `example/`: `flutter run -d chrome -t lib/main_strokes.dart`.
 Try each instrument/pattern, scrub progress, change curvature, switch between
-paper/linen/felt, or replay the finite drawing. The nine static combinations
+paper/linen/felt, or replay the finite drawing. The eighteen static combinations
 below the controls use the same painter. They are arranged continuous, dashed,
 then dotted for each instrument. Native controls retain focus and semantics.
 The example flows down to 320 logical pixels with text scaled up to 250%.
@@ -92,7 +95,7 @@ The example flows down to 320 logical pixels with text scaled up to 250%.
 
 Explicit capture: `flutter test tool/capture_strokes.dart`, then copy
 `build/showcase/stroke-playground.png` to `docs/assets/stroke-playground.png`
-after visual inspection. The capture is 1100x1050 at pixel ratio 1, uses the
+after visual inspection. The capture is 1100x1300 at pixel ratio 1, uses the
 bundled Inter/Caveat fonts and the SDK's Material Icons font, and draws at 62%.
 Ordinary tests do not regenerate images or golden baselines.
 
@@ -106,8 +109,8 @@ approximations. Different Flutter engines need not produce identical pixels.
 
 Cache stable paths outside paint in production compositions. The host owns
 clipping, padding, text labels, actions and hit regions. These are centerline ink
-tools, not a silhouette offset solver: contour-following inset seams remain a
-separate roadmap item. Phone performance remains unmeasured.
+tools, not a silhouette offset solver: use the existing insetCraftPath for
+contour-following seams. Phone performance remains unmeasured.
 
 ### Preserving an existing corner treatment
 
@@ -127,3 +130,24 @@ For recorded point lists rather than authored decorations, use
 [paintCraftFreehand](requests/freehand-capture.md). It validates finite input
 bounds and point/stroke counts without traversing arc length; solid pen only.
 Existing curved, dashed, dotted, brush and reveal APIs retain their own budgets.
+
+## Dry instruments
+
+Pencil, chalk and wax use the same style, path, pattern, seed and progress inputs.
+For example, use CraftStrokeStyle(tool: CraftStrokeTool.chalk, width: 16) over
+felt or a dark paper recipe. The caller supplies the ink color; deposits use its
+alpha, without erasing or drawing substrate-colored holes. No image, blur,
+saveLayer, clock or pressure-capture controller is introduced.
+
+The low-alpha body and distance-anchored deposits are illustrative, not physical
+graphite, powder or wax. Dry bodies use rounded joins; style.join remains the
+native pen/marker contract. Grain variation zero makes seeds equivalent. Reveal
+retains earlier deposits; capped marks may extend past the exact reveal point.
+The existing 32-contour/8192-arc limits bound work to at most 8224 deposits and
+four drawing calls per deposit, including base spans. There is no phone timing
+claim. paintCraftFreehand continues to reject all non-solid-pen tools; these
+instruments do not silently replace an application's editable drawing capture.
+
+This source adds pencil, chalk and wax enum members. Consumers with exhaustive
+switches over CraftStrokeTool must handle them when updating an immutable pin.
+The original pen, marker and brush painting branches remain unchanged.

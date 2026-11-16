@@ -18,7 +18,7 @@ void main() {
       ),
     );
     tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(1100, 1050);
+    tester.view.physicalSize = const Size(1100, 1300);
     addTearDown(tester.view.resetDevicePixelRatio);
     addTearDown(tester.view.resetPhysicalSize);
     await tester.pumpWidget(const StrokePlaygroundApp());

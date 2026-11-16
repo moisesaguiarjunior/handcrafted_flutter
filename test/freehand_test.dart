@@ -96,8 +96,8 @@ void main() {
         expect(actual, blank);
       }
       for (final style in [
-        const CraftStrokeStyle(tool: CraftStrokeTool.brush),
-        const CraftStrokeStyle(tool: CraftStrokeTool.marker),
+        for (final tool in CraftStrokeTool.values)
+          if (tool != CraftStrokeTool.pen) CraftStrokeStyle(tool: tool),
         const CraftStrokeStyle(pattern: CraftLinePattern.dotted),
         const CraftStrokeStyle(pattern: CraftLinePattern.dashed),
         const CraftStrokeStyle(width: double.nan),

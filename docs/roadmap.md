@@ -45,7 +45,8 @@ The [material vocabulary/frame/accessibility request](requests/material-foundati
 is the priority order for becoming a reusable experience foundation. Brand,
 content and policy remain consumer-owned. The first [material vocabulary](material-vocabulary.md)
 slice adds themed panels and native buttons/choices. It is not the full proposed
-vocabulary or the responsive experience frame.
+vocabulary. A [responsive frame recipe](experience-frame.md) now exists in the
+example; package promotion and consumer adoption are separate gates.
 
 ## Material evolution inventory
 

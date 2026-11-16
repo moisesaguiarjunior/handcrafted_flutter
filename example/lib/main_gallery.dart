@@ -8,6 +8,7 @@ import 'gallery_catalog.dart';
 import 'gallery_routes.dart';
 import 'living_materials.dart';
 import 'material_vocabulary.dart';
+import 'experience_study.dart';
 
 export 'gallery_catalog.dart';
 import 'imported_layers.dart';
@@ -133,65 +134,68 @@ class _GalleryPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 8,
-                    ),
-                    child: wide
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                galleryLabel(selected),
-                                style: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(galleryDescription(selected)),
-                            ],
-                          )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              const Text('Explore a study'),
-                              PopupMenuButton<GalleryStudy>(
-                                key: const ValueKey('mobile-study-picker'),
-                                tooltip: 'Explore a study',
-                                initialValue: selected,
-                                onSelected: select,
-                                itemBuilder: (context) => [
-                                  for (final study in galleryOrder)
-                                    PopupMenuItem(
-                                      value: study,
-                                      child: Text(galleryLabel(study)),
-                                    ),
-                                ],
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 12,
+                  if (selected != GalleryStudy.experience)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 8,
+                      ),
+                      child: wide
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  galleryLabel(selected),
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
                                   ),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          galleryLabel(selected),
-                                          key: const ValueKey(
-                                            'mobile-study-label',
-                                          ),
-                                          style: const TextStyle(fontSize: 20),
-                                        ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(galleryDescription(selected)),
+                              ],
+                            )
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const Text('Explore a study'),
+                                PopupMenuButton<GalleryStudy>(
+                                  key: const ValueKey('mobile-study-picker'),
+                                  tooltip: 'Explore a study',
+                                  initialValue: selected,
+                                  onSelected: select,
+                                  itemBuilder: (context) => [
+                                    for (final study in galleryOrder)
+                                      PopupMenuItem(
+                                        value: study,
+                                        child: Text(galleryLabel(study)),
                                       ),
-                                      const Icon(Icons.arrow_drop_down),
-                                    ],
+                                  ],
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 12,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            galleryLabel(selected),
+                                            key: const ValueKey(
+                                              'mobile-study-label',
+                                            ),
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                        ),
+                                        const Icon(Icons.arrow_drop_down),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                  ),
+                              ],
+                            ),
+                    ),
                   Expanded(
                     child: KeyedSubtree(
                       key: ValueKey(selected),
@@ -208,7 +212,9 @@ class _GalleryPage extends StatelessWidget {
   );
   Widget _body() {
     final content = _content();
-    if (selected == GalleryStudy.cover || selected == GalleryStudy.ink)
+    if (selected == GalleryStudy.cover ||
+        selected == GalleryStudy.ink ||
+        selected == GalleryStudy.experience)
       return content;
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
@@ -222,6 +228,7 @@ class _GalleryPage extends StatelessWidget {
   }
 
   Widget _content() => switch (selected) {
+    GalleryStudy.experience => const ExperienceFrameStudy(),
     GalleryStudy.vocabulary => const MaterialVocabularyStudy(),
     GalleryStudy.cover => GalleryWelcome(select: select),
     GalleryStudy.materials => const Column(

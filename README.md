@@ -51,6 +51,13 @@ material without replacing the form or its contents.
 [Try both themes](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=vocabulary)
 · [Use the components](docs/material-vocabulary.md).
 
+## Artwork fits. Words keep their size.
+
+An [experience-frame recipe](docs/experience-frame.md) combines imported crops,
+a mapped 48px lid action, a native form and a pinned footer. Try narrow screens,
+large text and the keyboard in the [live frame](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=experience).
+It is an example-first composition, with application state left to the host.
+
 ## Paper behind a real control
 
 ```dart

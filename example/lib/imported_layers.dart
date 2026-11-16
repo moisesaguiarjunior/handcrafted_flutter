@@ -35,6 +35,41 @@ Path lidHitPath(Size size) {
   );
 }
 
+/// Shared authored lid geometry; no responsive fit or clock is added here.
+CraftImagePart importedLidPart({
+  required double progress,
+  double scale = 1,
+  Widget? child,
+}) {
+  if (!progress.isFinite ||
+      progress < 0 ||
+      progress > 1 ||
+      !scale.isFinite ||
+      scale <= 0) {
+    throw ArgumentError('Expected progress 0..1 and a positive finite scale');
+  }
+  return CraftImagePart(
+    key: const ValueKey('imported-lid'),
+    image: const AssetImage(layerAsset),
+    sourceSize: layerSourceSize,
+    sourceRect: lidSourceRect,
+    sourceHinge: lidSourceHinge,
+    rect: Rect.fromLTWH(54 * scale, 218 * scale, 240 * scale, 120 * scale),
+    pose: PartPose(rotation: -1.15 * progress),
+    sourceClip: lidHitPath(const Size(240, 120)).shift(lidSourceRect.topLeft),
+    child: child,
+  );
+}
+
+/// Shared stationary crop, in the same authored coordinates as the lid.
+CraftImagePart importedBasePart({double scale = 1}) => CraftImagePart(
+  key: const ValueKey('imported-base'),
+  image: const AssetImage(layerAsset),
+  sourceSize: layerSourceSize,
+  sourceRect: baseSourceRect,
+  rect: Rect.fromLTWH(54 * scale, 218 * scale, 240 * scale, 140 * scale),
+);
+
 /// An imported lid and a native action, driven solely by caller-supplied time.
 class ImportedComposition extends StatelessWidget {
   /// Creates a static pose and optional native actions.
@@ -64,17 +99,9 @@ class ImportedComposition extends StatelessWidget {
         final scale = math.min(bounds.maxWidth / 400, 1.0);
         final size = Size(240 * scale, 120 * scale);
         final origin = Offset(54, 218) * scale;
-        final pose = PartPose(rotation: -1.15 * progress);
-        final lid = CraftImagePart(
-          key: const ValueKey('imported-lid'),
-          image: const AssetImage(layerAsset),
-          sourceSize: layerSourceSize,
-          sourceRect: lidSourceRect,
-          sourceHinge: lidSourceHinge,
-          rect: origin & size,
-          pose: pose,
-          sourceClip: lidHitPath(const Size(240, 120))
-              .shift(lidSourceRect.topLeft),
+        final lid = importedLidPart(
+          progress: progress,
+          scale: scale,
           child: TextButton(
             onPressed: onLidPressed,
             style: TextButton.styleFrom(
@@ -96,18 +123,7 @@ class ImportedComposition extends StatelessWidget {
           child: Stack(
             clipBehavior: Clip.none,
             children: [
-              CraftImagePart(
-                key: const ValueKey('imported-base'),
-                image: const AssetImage(layerAsset),
-                sourceSize: layerSourceSize,
-                sourceRect: baseSourceRect,
-                rect: Rect.fromLTWH(
-                  origin.dx,
-                  origin.dy,
-                  size.width,
-                  140 * scale,
-                ),
-              ),
+              importedBasePart(scale: scale),
               // Hidden contents leave input, focus and semantics by being unmounted.
               if (progress >= .85)
                 Positioned(

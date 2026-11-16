@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Example-first responsive experience frame: independently fitted art, mapped
+  native targets, stable form/focus across reflow, actual-size pinned footer and
+  keyboard/SafeArea handling. Reuse shared synthetic crop factories; no new
+  package API or art clock. Add deterministic real-font captures.
+
 - Replace separate moving-brush dabs with one continuous swept watercolor wash.
   Add independent brush visibility/end-fade options, clearer mode starts and an
   actual-widget drag capture; first-touch and layered contact are preserved.

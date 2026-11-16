@@ -74,3 +74,14 @@ and green CI; check Git tags for publication status.
   focused gallery Chrome tests passed. Count/hidden-return negative controls
   failed correctly; actual finishing GIF and optional needle capture inspected.
   All three thread modes retained; host-specific scroll adoption remains pending.
+
+- PR #23: `55af97e9000308637538c898d1645f55025bb174` independently approved
+  by Astra; 92 package / 83 example checks, seven core Chrome tests and focused
+  example/RTL/interpolation/state-and-clock probes passed. Actual capture
+  reproduced byte-identically; theme/choice/target negative controls failed.
+
+- PR #24: `865624514e785cff8f6c20b8c9fa10d31523d886` independently approved
+  by Astra; 94 package / 84 example checks, nine focused gallery Chrome tests,
+  48 exact first-touch/layer preservation cases and byte-identical GIF passed.
+  Stamp/repaint negative controls failed; continuous drag and prop options
+  remain example recipes, without a physical-fluid or phone-performance claim.

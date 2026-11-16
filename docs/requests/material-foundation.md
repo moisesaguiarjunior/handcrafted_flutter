@@ -28,7 +28,8 @@ Keep keyboard insets, SafeArea and native focus behavior intact.
 
 Acceptance: one synthetic composition across wide, narrow and short viewports,
 text scaling and keyboard visibility. Verify pixels, hit regions and semantics.
-This is an example/consumer frame first; it is not an application router.
+The [runnable experience frame](../experience-frame.md) is the example-first
+implementation. It is not a package API or an application router.
 
 ## 3. One art-extraction tool
 

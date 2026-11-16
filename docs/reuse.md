@@ -225,3 +225,10 @@ ribbon; removed the per-deposit round washes from the drag only. First-touch
 spreading and pink/blue contact keep their existing pigment recipe. Shared native
 widget pixel reading is extracted from the vocabulary test rather than copied.
 No fluid engine, extra clock, mutable global cache or application art is added.
+
+For the experience frame, searched keyboard/SafeArea/footer/FittedBox layouts,
+source crops/hinges and native form identity. Reused CraftImagePart/PartPose,
+applyBoxFit, the synthetic sprite, themed native controls and capture helpers.
+Extracted example-only lid/base factories shared with ImportedComposition rather
+than copying source geometry. Native layout measures the footer; Wrap topology
+keeps fields stable. No text layout engine, scene clock, manifest or consumer art.

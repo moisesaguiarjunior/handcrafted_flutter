@@ -39,7 +39,7 @@ foundation items are proposals, not shipped APIs.
 | ID | Priority / request | Next gate |
 | --- | --- | --- |
 | HC-F01 | Material-themed sheet/tag/ribbon/card/tray/heading/button/choice vocabulary | Initial CraftTheme/Panel/Button/Choice slice; two host-owned themes and state/focus/semantics checks; heading/finish/layout recipes still pending |
-| HC-F02 | One accessible artboard experience frame | Reuse crop/pose; short/narrow layouts, enlarged text and fixed footer |
+| HC-F02 | One accessible artboard experience frame | Example-first frame implemented: shared crop/pose, unscaled native form/actions, measured footer; review/publication and consumer adoption tracked separately |
 | HC-F03 | One art extraction pipeline | Private caller audit first; reproducible synthetic/provenance fixtures |
 | HC-F04 | Accessibility contracts and test helpers | Native labels from frame zero, selected state on action, targets/focus/text scaling |
 | HC-F05 | Actual Android/iPhone workload evidence | Real device-class measurements; desktop profiling remains useful separately |

@@ -44,11 +44,15 @@ enum GalleryStudy {
 
   /// Host-themed panels and native choices.
   vocabulary,
+
+  /// Independently fitted art and accessible native form/viewport.
+  experience,
 }
 
 /// Human-readable study title.
 String galleryLabel(GalleryStudy study) => switch (study) {
   GalleryStudy.vocabulary => 'Material vocabulary',
+  GalleryStudy.experience => 'Experience frame',
   GalleryStudy.cover => 'Start exploring',
   GalleryStudy.materials => 'Materials & relief',
   GalleryStudy.paper => 'Paper & edges',
@@ -69,6 +73,8 @@ String galleryLabel(GalleryStudy study) => switch (study) {
 String galleryDescription(GalleryStudy study) => switch (study) {
   GalleryStudy.vocabulary =>
     'Change material themes while keeping native text, focus and selection.',
+  GalleryStudy.experience =>
+    'Fit artwork independently; keep words, touch targets and footer native.',
   GalleryStudy.cover => 'Explore materials, marks and movement. Choose a study to try its controls.',
   GalleryStudy.spreading => 'Pigment travels from a wet center into the paper.',
   GalleryStudy.embroidery =>
@@ -96,6 +102,7 @@ String galleryDescription(GalleryStudy study) => switch (study) {
 const galleryOrder = [
   GalleryStudy.cover,
   GalleryStudy.vocabulary,
+  GalleryStudy.experience,
   GalleryStudy.spreading,
   GalleryStudy.watercolor,
   GalleryStudy.ink,

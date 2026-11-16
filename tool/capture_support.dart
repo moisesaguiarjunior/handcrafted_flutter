@@ -13,13 +13,19 @@ Future<void> captureExample(
   WidgetTester tester,
   String path,
   Size size,
-  Widget child,
-) async {
+  Widget child, {
+  MediaQueryData? mediaQuery,
+  AnimationStyle? themeAnimationStyle,
+}) async {
   tester.view.physicalSize = size;
   final key = GlobalKey();
   await tester.pumpWidget(
     MaterialApp(
       theme: showcaseTheme(),
+      themeAnimationStyle: themeAnimationStyle,
+      builder: mediaQuery == null
+          ? null
+          : (context, content) => MediaQuery(data: mediaQuery, child: content!),
       home: RepaintBoundary(
         key: key,
         child: Scaffold(

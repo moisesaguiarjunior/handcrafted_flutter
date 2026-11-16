@@ -1,13 +1,28 @@
 name: handcrafted_flutter
-description: Experimental tactile materials, composable artwork and finite scene motion.
-version: 0.2.0
-publish_to: none
+description: Composable paper and fabric textures, contour stitches, watercolor, relief and finite motion around native Flutter widgets.
+version: 0.3.0
 repository: https://github.com/moisesaguiarjunior/handcrafted_flutter
+homepage: https://moisesaguiarjunior.github.io/handcrafted_flutter/
+issue_tracker: https://github.com/moisesaguiarjunior/handcrafted_flutter/issues
+documentation: https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/README.md
+topics:
+  - widgets
+  - animation
+  - drawing
+  - painting
+  - materials
+screenshots:
+  - description: Layered watercolor pigment on seeded paper.
+    path: doc/screenshots/watercolor-hero.png
+  - description: Native text, choices and actions in paper and cloth themes.
+    path: doc/screenshots/material-vocabulary.png
+  - description: Raised shell, feather and crescent motifs over woven textures.
+    path: doc/screenshots/relief-objects.png
 environment:
   sdk: '>=3.13.7 <4.0.0'
   flutter: '>=3.47.9'
 dependencies:
-  clipper2: 0.0.3
+  clipper2: ^0.0.3
   flutter:
     sdk: flutter
 dev_dependencies:

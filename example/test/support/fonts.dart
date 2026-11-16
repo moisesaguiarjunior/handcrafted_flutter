@@ -19,8 +19,9 @@ Future<void> loadShowcaseFonts({
   if (materialIcons) {
     if (kIsWeb) throw UnsupportedError('SDK icon captures run natively');
     final sdk = Platform.environment['FLUTTER_ROOT'];
-    if (sdk == null)
+    if (sdk == null) {
       throw StateError('FLUTTER_ROOT is required for icon captures');
+    }
     final bytes = File(
       '$sdk/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf',
     ).readAsBytesSync();

@@ -375,8 +375,9 @@ void paintCraftFreehand(
   var points = 0;
   for (final stroke in strokes) {
     points += stroke.length;
-    if (points > 8192)
+    if (points > 8192) {
       throw ArgumentError('Freehand exceeds 8192 input points');
+    }
     for (final point in stroke) {
       if (!point.dx.isFinite ||
           !point.dy.isFinite ||

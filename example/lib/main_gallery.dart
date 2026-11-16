@@ -114,10 +114,11 @@ class _GalleryPage extends StatelessWidget {
                   fragment: '',
                 );
                 await Clipboard.setData(ClipboardData(text: uri.toString()));
-                if (context.mounted)
+                if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Study link copied')),
                   );
+                }
               },
             ),
           ],
@@ -214,8 +215,9 @@ class _GalleryPage extends StatelessWidget {
     final content = _content();
     if (selected == GalleryStudy.cover ||
         selected == GalleryStudy.ink ||
-        selected == GalleryStudy.experience)
+        selected == GalleryStudy.experience) {
       return content;
+    }
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24),
       child: Center(

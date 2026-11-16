@@ -70,8 +70,9 @@ Path paperOutline(
     for (var i = 0; i < 4; i++)
       math.max(1, ((corners[i + 1] - corners[i]).distance / pitch).floor()),
   ];
-  if (counts.fold<int>(0, (n, count) => n + count) > 1024)
+  if (counts.fold<int>(0, (n, count) => n + count) > 1024) {
     throw ArgumentError('Paper edge exceeds 1024 periods');
+  }
   final random = math.Random(seed);
   final path = Path()..moveTo(bounds.left, bounds.top);
   for (var side = 0; side < 4; side++) {
@@ -132,11 +133,13 @@ void paintPaperEdgeFibers(
       strength > 1 ||
       !length.isFinite ||
       length < 0 ||
-      length > 4)
+      length > 4) {
     throw ArgumentError('Expected strength 0..1 and length 0..4');
+  }
   final metrics = checkedPathMetrics(outline);
-  if (metrics.any((m) => !m.isClosed))
+  if (metrics.any((m) => !m.isClosed)) {
     throw ArgumentError('Expected closed paper contours');
+  }
   if (strength == 0 || length == 0 || fiber.a == 0) return;
   final random = math.Random(seed);
   final paint = Paint()

@@ -1,0 +1,15 @@
+# This overrides .gitignore for the publication archive. Keep generated files out.
+.dart_tool/
+build/
+.flutter-plugins-dependencies
+
+# Local checkpoints are not publication content, even when Git ignores them.
+**/*.local.md
+WORKTREE.local.md
+
+# Full guides and capture tooling remain in the linked source repository.
+/docs/
+/tool/
+/AGENTS.md
+/CONTRIBUTING.md
+/example/test/

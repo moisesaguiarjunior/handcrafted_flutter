@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+No changes yet.
+
+## 0.3.0
+
+- Prepare first pub.dev distribution: curated screenshots/metadata, portable
+  README links, archive exclusions and dry-run/documentation validation in CI.
+  Hosted publication is a separate action; prior Git tags remain unchanged.
+- Enforce standard flow-control bracing; wrap existing branches without changing
+  their conditions, expressions or intended rendering/interaction behavior.
+- Allow the compatible clipper2 ^0.0.3 range; the resolved version and license
+  inventory are unchanged.
+
 - Add native CraftHeading with host-themed CraftReliefStyle over the existing
   glyph renderer. Typography stays in the native theme; heading semantics,
   wrapping/scaling and plain-text fallback remain native. Material themes can

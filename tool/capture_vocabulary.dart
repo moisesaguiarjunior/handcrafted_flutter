@@ -17,7 +17,7 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
       await captureExample(
         tester,
-        'docs/assets/material-vocabulary.png',
+        'doc/screenshots/material-vocabulary.png',
         const Size(1440, 800),
         const Padding(
           padding: EdgeInsets.all(32),

@@ -237,8 +237,9 @@ class _InsetGlyphs extends CustomPainter {
     if (size.isEmpty ||
         size.width > 2048 ||
         size.height > 2048 ||
-        size.width * size.height > 1048576)
+        size.width * size.height > 1048576) {
       return;
+    }
     final current = frame();
     if (current == null) return;
     final paragraph = current.paragraph;

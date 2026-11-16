@@ -245,3 +245,15 @@ the exact glyph renderer/validation and native headlineMedium/Text layout.
 CraftHeading adds semantic heading and theme resolution only; CraftReliefStyle
 stores host lighting without palette/fonts/content. Depth interpolates while
 kind/light switch discretely, avoiding invalid opposing-vector interpolation.
+
+For pub.dev readiness, searched pubspec/lockfiles, .gitignore versus Pub's actual
+file list, existing screenshots/capture targets, README links, CI and dartdoc.
+Reused existing image bytes and runtime/example code. The publication checker
+uses Pub's real dry-run in a disposable Git-source snapshot, seeded only with
+synthetic local/generated probes; it does not implement a second archive engine.
+Full guides/tools stay Git-only; selected images move to the conventional doc
+folder without duplication. No runtime dependency or publisher credential added.
+Standard control-flow bracing reuses the analyzer rule and Dart's own targeted
+fixer; existing conditions/expressions remain unchanged. No custom style fixer
+or parallel linter is maintained. The archive probe is a real failure control,
+not a parser pretending to reproduce Pub's inclusion rules.

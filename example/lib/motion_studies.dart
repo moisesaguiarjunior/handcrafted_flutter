@@ -370,8 +370,9 @@ class MotionStage extends StatelessWidget {
   final double progress;
   @override
   Widget build(BuildContext context) {
-    if (!progress.isFinite || progress < 0 || progress > 1)
+    if (!progress.isFinite || progress < 0 || progress > 1) {
       throw ArgumentError('Expected progress 0..1');
+    }
     final kite = (progress * 1.75).clamp(0.0, 1.0);
     return AspectRatio(
       aspectRatio: 1000 / 420,

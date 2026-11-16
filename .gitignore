@@ -1,3 +1,7 @@
 .dart_tool/
 build/
 .flutter-plugins-dependencies
+
+# Local working-copy checkpoints never belong in source control.
+**/*.local.md
+WORKTREE.local.md

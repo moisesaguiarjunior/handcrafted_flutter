@@ -240,7 +240,7 @@ class _PaperDetails extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final outline = geometry.pathFor(size);
     final finish = _papers[index].$3;
-    if (finish != null)
+    if (finish != null) {
       paintPaperFinish(
         canvas,
         outline,
@@ -251,6 +251,7 @@ class _PaperDetails extends CustomPainter {
         strength: index == 1 ? strength * .6 : strength,
         scale: scale,
       );
+    }
     if (edge == PaperEdge.torn || edge == PaperEdge.deckle) {
       paintPaperEdgeFibers(
         canvas,

@@ -94,7 +94,7 @@ final class CraftOutline {
     }
     final bounds = (Offset.zero & size).deflate(padding);
     if (bounds.isEmpty) {
-      if (_kind == 3)
+      if (_kind == 3) {
         paperOutline(
           Rect.zero,
           edge: edge,
@@ -102,6 +102,7 @@ final class CraftOutline {
           depth: edgeDepth,
           pitch: edgePitch,
         );
+      }
       return Path();
     }
     return switch (_kind) {

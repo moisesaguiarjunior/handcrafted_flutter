@@ -5,7 +5,7 @@ Install `CraftTheme` in `ThemeData.extensions`, or give a component an explicit
 content or application state. The live example supplies separate paper and cloth
 recipes over the same native controls.
 
-![The same native note and choices with paper and cloth themes](assets/material-vocabulary.png)
+![The same native note and choices with paper and cloth themes](../doc/screenshots/material-vocabulary.png)
 
 [Try the material vocabulary](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=vocabulary).
 
@@ -57,8 +57,8 @@ does not add a complete tray, ribbon control or scene.
 ## Native material headings (current source)
 
 `CraftHeading` and `CraftReliefStyle` are additions **after v0.2.0**, available
-from reviewed current source; the v0.2.0 tag does not contain them. Pin the exact
-reviewed source SHA when trying these APIs before a later tagged release.
+from the 0.3.0 publication candidate; the v0.2.0 tag does not contain them. Pin
+the exact reviewed source SHA until the hosted version is published.
 
 The host's `ThemeData.textTheme.headlineMedium` supplies typography and color;
 `style` can override it. Text wraps, follows native scaling, bold-text, locale

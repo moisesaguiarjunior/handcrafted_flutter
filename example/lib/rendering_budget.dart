@@ -58,8 +58,9 @@ class BudgetResources {
   /// Equivalent configuration preserves resources; changed seeds replace them.
   void configure({required int count, required int seed}) {
     if (_closed) throw StateError('Budget resources are disposed');
-    if (count < 1 || count > 24)
+    if (count < 1 || count > 24) {
       throw ArgumentError.value(count, 'count', 'Expected 1..24');
+    }
     if (count == live && seed == _seed) return;
     _revision++;
     if (seed != _seed) {
@@ -159,9 +160,10 @@ class BudgetTimingWindow {
 
   /// Plain, anonymous evidence suitable for copying into a local measurement log.
   String report() {
-    if (count == 0)
+    if (count == 0) {
       return 'No post-warmup engine timings collected. '
           'Use a profile-capable runtime; widget tests and frame export are not benchmarks.';
+    }
     double percentile(List<int> values, double p) {
       values.sort();
       return values[(p * (values.length - 1)).ceil()] / 1000;
@@ -191,8 +193,9 @@ class RenderingBudgetScene extends StatelessWidget {
   final double progress;
   @override
   Widget build(BuildContext context) {
-    if (!progress.isFinite || progress < 0 || progress > 1)
+    if (!progress.isFinite || progress < 0 || progress > 1) {
       throw ArgumentError.value(progress, 'progress');
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -74,7 +74,8 @@ GIFs; no FFmpeg binary or codec library is distributed by this package.
 `flutter test tool/capture_cover.dart` renders the same MaterialCover and
 ReliefObjectsSheet as `example/lib/main_cover.dart`. Outputs are
 `build/cover/material-cover.png` (1200×750) and
-`build/cover/relief-objects.png` (1100×560), copied explicitly to docs/assets/.
+`build/cover/relief-objects.png` (1100×560), copied explicitly to
+`doc/screenshots/relief-objects.png` for the package preview.
 These are new documentation compositions, not updates to golden baselines.
 The fixed poster uses the controlled font/scale capture baseline; the live cover
 scrolls its artboard horizontally, while the separate object studies reflow.

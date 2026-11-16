@@ -114,8 +114,9 @@ class CraftImagePart extends StatelessWidget {
       );
     }
     final clipBounds = sourceClip?.getBounds();
-    if (clipBounds != null && !clipBounds.isFinite)
+    if (clipBounds != null && !clipBounds.isFinite) {
       throw ArgumentError('Expected a finite source clip');
+    }
     return (pivot: pivot, pose: effectivePose, sx: sx, sy: sy);
   }
 
@@ -123,8 +124,9 @@ class CraftImagePart extends StatelessWidget {
   /// Ancestor responsive transforms are intentionally outside this coordinate space.
   Offset mapSourcePoint(Offset point) {
     final geometry = _geometry();
-    if (!point.dx.isFinite || !point.dy.isFinite)
+    if (!point.dx.isFinite || !point.dy.isFinite) {
       throw ArgumentError('Expected a finite attachment');
+    }
     final local = Offset(
       (point.dx - sourceRect.left) * geometry.sx,
       (point.dy - sourceRect.top) * geometry.sy,
@@ -132,8 +134,9 @@ class CraftImagePart extends StatelessWidget {
     final mapped =
         rect.topLeft +
         geometry.pose.mapPoint(local, size: rect.size, pivot: geometry.pivot);
-    if (!mapped.dx.isFinite || !mapped.dy.isFinite)
+    if (!mapped.dx.isFinite || !mapped.dy.isFinite) {
       throw ArgumentError('Mapped attachment overflows');
+    }
     return mapped;
   }
 

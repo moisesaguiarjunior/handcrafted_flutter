@@ -61,8 +61,9 @@ Path insetCraftPath(
     if (metric.length == 0) continue;
     final count = math.max(3, (metric.length / sampleSpacing).ceil());
     samples += count;
-    if (samples > 4096)
+    if (samples > 4096) {
       throw ArgumentError('Inset exceeds 4096 flattening samples');
+    }
     final polygon = <clip.Point64>[];
     for (var i = 0; i < count; i++) {
       final point = metric
@@ -84,8 +85,9 @@ Path insetCraftPath(
         polygon.first.y == polygon.last.y) {
       polygon.removeLast();
     }
-    if (polygon.length < 3)
+    if (polygon.length < 3) {
       throw ArgumentError('Contour is below inset quantization precision');
+    }
     polygons.add(polygon);
   }
   final normalized = clip.Clipper.union(

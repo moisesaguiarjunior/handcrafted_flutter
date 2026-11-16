@@ -11,3 +11,4 @@ linter:
     - avoid_dynamic_calls
     - always_declare_return_types
     - unawaited_futures
+    - curly_braces_in_flow_control_structures

@@ -102,8 +102,9 @@ void paintCraftTrim(
     if (metric.length == 0) continue;
     stations += (metric.length / pitch).ceil() + (metric.isClosed ? 0 : 1);
   }
-  if (stations > 2048)
+  if (stations > 2048) {
     throw ArgumentError('Trim exceeds 2048 texture stations');
+  }
   final band = spanPath(pathSpans(metrics), preserveClosed: true);
   final direction = light / light.distance;
   Paint stroke(Color c, double w) => Paint()

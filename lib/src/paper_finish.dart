@@ -52,8 +52,9 @@ void paintPaperFinish(
       'Expected closed paper with bounds up to 2048 per axis',
     );
   }
-  if (strength == 0 || bounds.isEmpty || (ink.a == 0 && highlight.a == 0))
+  if (strength == 0 || bounds.isEmpty || (ink.a == 0 && highlight.a == 0)) {
     return;
+  }
   final random = math.Random(seed);
   final dark = Paint()
     ..color = ink.withValues(alpha: ink.a * strength * .35)

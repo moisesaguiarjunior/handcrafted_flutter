@@ -282,8 +282,9 @@ void main() {
         (call) async {
           if (call.method == 'Clipboard.setData') {
             final arguments = call.arguments;
-            if (arguments is Map<Object?, Object?>)
+            if (arguments is Map<Object?, Object?>) {
               copied = arguments['text'] as String?;
+            }
           }
           return null;
         },

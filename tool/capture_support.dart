@@ -38,8 +38,9 @@ Future<void> captureExample(
   await tester.pump();
   expect(tester.takeException(), isNull);
   final boundary = key.currentContext?.findRenderObject();
-  if (boundary is! RenderRepaintBoundary)
+  if (boundary is! RenderRepaintBoundary) {
     throw StateError('Missing capture boundary');
+  }
   await writeExampleCapture(tester, boundary, path);
 }
 

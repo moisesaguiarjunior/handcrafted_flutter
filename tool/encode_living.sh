@@ -2,8 +2,8 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 command -v ffmpeg >/dev/null || { echo 'FFmpeg is required.' >&2; exit 1; }
-mkdir -p docs/assets
-cp build/living/watercolor-hero.png docs/assets/watercolor-hero.png
+mkdir -p docs/assets doc/screenshots
+cp build/living/watercolor-hero.png doc/screenshots/watercolor-hero.png
 cp build/living/embroidery.png docs/assets/embroidery-progress.png
 for study in wash stitch motion reaction reveal; do
   case "$study" in

@@ -18,6 +18,7 @@ a passing widget test is not a phone benchmark or visual approval.
 | HC-R01 | Traceable independent reviews | Record added; retrospective audit approved at `7c7225a` |
 | HC-R02 | Remove consumer-specific actor preset | Published in PR #12; final review at `87786ec` |
 | HC-R03 | Dependency/license release audit | 22 license hashes verified; clipper2 0.0.3 BSL-1.0 attribution retained |
+| HC-R05 | Hosted publication readiness | 0.3.0 candidate: metadata/screenshots, archive exclusions and CI dry-run/docs gate; owner account and actual upload remain separate |
 | HC-R04 | Immutable version/tag | `v0.1.0` at `87786ec` retained; consolidated `v0.2.0` release candidate prepared; exact review/CI/tag tracked by PR/release |
 | HC-P01 | Public clock-free image crop/artboard placement | Shipped in PR #11 at `e420be8`; independent review and CI passed |
 | HC-P02 | Long freehand paths | Source adapter `paintCraftFreehand`: 128 strokes/8192 points and native parity; consumer adoption pending |

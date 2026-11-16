@@ -180,3 +180,11 @@ Added only seeded deposit paint in a private part, without another path sampler,
 clock, raster cache, substrate eraser or freehand capture contract. No decisions
 directory exists; the drawing guide records the additive enum migration and work
 bound. Reconciled shipped gallery/stitch/integration items in the public queue.
+
+For living materials, searched watercolor preflight/pigment fields, stitch output
+budgets, shared thread shading, SceneEntrance, native Router/Interval, galleries
+and captures. Reused existing palettes/material ownership and defaults. Added
+only bounded front geometry and owned thread-frame sampling; existing static
+endpoints retain their pixels. Browser history uses Flutter Router instead of a
+parallel JavaScript history layer. Example wet mixing/needle returns stay authored
+recipes. New foundation requests reuse existing native contracts before extraction.

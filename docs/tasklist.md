@@ -30,16 +30,33 @@ a passing widget test is not a phone benchmark or visual approval.
 | HC-V01 | Material/motion imagery and interactive gallery | Cover/relief PR #15; motion atlas and twelve-study gallery PR #18; Pages deployment and hosted navigation verified |
 | HC-M01 | Drawing instruments | Pencil/chalk/wax decorative recipes extend the existing ink playground; fountain pen and further brush recipes remain candidates; long freehand stays solid pen |
 
-## Next sequence
+## Foundation priorities
 
-1. Expand dry drawing instruments with bounded deposits and actual gallery examples.
-2. Expand representative fabrics and embroidered fills, preserving native content.
-3. Refine relief/layer compositions and fasteners wrapping native controls.
-4. Add independent bird/water/mobile/clothesline recipes before considering coupled solvers.
-5. Measure actual consumer scenes and full-size exports, then devices; introduce
-   shared caches only if measured workloads justify their ownership.
-6. Consolidate a new reviewed source tag for changes after v0.1.0; the existing
-   immutable tag remains unchanged.
+The [foundation request](requests/material-foundation.md) specifies acceptance
+boundaries. These are proposed components, not shipped APIs.
+
+| ID | Priority / request | Next gate |
+| --- | --- | --- |
+| HC-F01 | Material-themed sheet/tag/ribbon/card/tray/heading/button/choice vocabulary | Two host-owned themes, native controls, stable identity |
+| HC-F02 | One accessible artboard experience frame | Reuse crop/pose; short/narrow layouts, enlarged text and fixed footer |
+| HC-F03 | One art extraction pipeline | Private caller audit first; reproducible synthetic/provenance fixtures |
+| HC-F04 | Accessibility contracts and test helpers | Native labels from frame zero, selected state on action, targets/focus/text scaling |
+| HC-F05 | Actual Android/iPhone workload evidence | Real device-class measurements; desktop profiling remains useful separately |
+| HC-F06 | Isolated consumer baseline adoption | Inspect pin, separate PR/changelog/licenses and pixel parity |
+| HC-F07 | New-experience recipe book | Canvas to native text, checks and owner approval |
+
+## Current visual work
+
+- Paint spreading: elongated brush contact and uneven front, moving-brush and
+  pink/blue-layer experiments; visual approximations, not a fluid solver.
+- Ordered embroidery reveal with actual anchors, a travelling tip and example
+  above/below-cloth choreography; one caller-owned finite progress.
+- Paint-led gallery discovery, native history/share links, varied material cuts
+  and distinct kite/balloon rhythms. Broad README catalog retained; thread imagery
+  lives in dedicated studies rather than dominating the README.
+
+Additional fabrics, filled embroidery generalization, fountain pen/brush recipes,
+actor/physics extensions and a consolidated source tag remain follow-up work.
 
 Consumer migrations, pixel-parity checks, application visual approvals and phone
 measurements have separate gates. This queue does not mark them completed by a

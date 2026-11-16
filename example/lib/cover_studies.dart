@@ -49,6 +49,31 @@ class ReliefObjectsSheet extends StatelessWidget {
   );
 }
 
+Path _reliefCut(ReliefObject object, Size size) {
+  final w = size.width, h = size.height;
+  return switch (object) {
+    ReliefObject.shell => Path()..addOval(Rect.fromLTWH(8, 8, w - 16, h - 16)),
+    ReliefObject.feather =>
+      Path()
+        ..moveTo(22, 8)
+        ..lineTo(w - 18, 20)
+        ..lineTo(w - 8, h - 54)
+        ..lineTo(w * .43, h - 8)
+        ..lineTo(8, h - 35)
+        ..close(),
+    ReliefObject.crescent =>
+      Path()
+        ..moveTo(w * .5, 8)
+        ..quadraticBezierTo(w * .9, 8, w - 8, h * .26)
+        ..lineTo(w - 8, h * .65)
+        ..quadraticBezierTo(w * .8, h * .92, w * .5, h - 8)
+        ..quadraticBezierTo(w * .2, h * .92, 8, h * .65)
+        ..lineTo(8, h * .26)
+        ..quadraticBezierTo(w * .1, 8, w * .5, 8)
+        ..close(),
+  };
+}
+
 class _ReliefPlate extends StatelessWidget {
   const _ReliefPlate({required this.object});
   final ReliefObject object;
@@ -59,6 +84,7 @@ class _ReliefPlate extends StatelessWidget {
       ReliefObject.feather => _flax,
       ReliefObject.crescent => DemoPalette.rose,
     };
+    Path cut(Size size) => _reliefCut(object, size);
     final surface = CraftSurface(
       material: switch (object) {
         ReliefObject.shell => CraftMaterial.twill,
@@ -68,11 +94,7 @@ class _ReliefPlate extends StatelessWidget {
       color: base,
       seed: 44 + object.index,
       strength: 1,
-      shape: CraftOutline.pigment(
-        seed: 44 + object.index,
-        broad: true,
-        padding: 8,
-      ),
+      outline: cut,
       child: Stack(
         children: [
           Positioned.fill(child: CustomPaint(painter: _ReliefPainter(object))),
@@ -100,14 +122,7 @@ class _ReliefPlate extends StatelessWidget {
         ],
       ),
     );
-    return _Lifted(
-      outline: CraftOutline.pigment(
-        seed: 44 + object.index,
-        broad: true,
-        padding: 8,
-      ).pathFor,
-      child: surface,
-    );
+    return _Lifted(outline: cut, child: surface);
   }
 }
 

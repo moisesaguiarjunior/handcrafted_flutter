@@ -5,7 +5,7 @@
 [Explore the live gallery](https://moisesaguiarjunior.github.io/handcrafted_flutter/) ·
 [Run locally](docs/live-gallery.md)
 
-![Sculpted shell relief on twill, watercolor landscape on torn paper, and embroidered cord on linen](docs/assets/material-cover.png)
+![Layered rose petals and a blue-green wash on textured paper](docs/assets/watercolor-hero.png)
 
 Seeded paper, linen, twill, felt and wood textures, contour-following stitches, organic
 contours, watercolor pigment, relief, cord/ribbon bands and composable moving
@@ -18,6 +18,23 @@ Experimental, licensed under [MIT](LICENSE). Not published on pub.dev.
 Latest tagged baseline: [v0.1.0](https://github.com/moisesaguiarjunior/handcrafted_flutter/releases/tag/v0.1.0);
 examples and APIs below follow the current source branch.
 Tested baseline: Flutter 3.47.9 / Dart 3.13.7. See [compatibility](docs/compatibility.md).
+
+## Watercolor, on paper and in motion
+
+![Overlapping pigment, a botanical painting and a paper cutout](docs/assets/watercolor-atlas.png)
+
+Layer puddles, blooms, drying lines and deposits inside your own closed shape.
+Supply pigment, companion and paper colors; the silhouette and its holes remain
+unchanged. `paintWatercolor` composes with the existing paper grain. This is a
+seeded visual approximation of watercolor.
+
+![A wet blue brush meets a dry or wet pink wash](docs/assets/watercolor-reaction.gif)
+
+Start at the first brush contact, follow a moving brush, or compare blue over a
+pink base. The live study lets you pause, reverse by scrubbing and adjust the
+base wetness. Pigment fronts advance unevenly instead of scaling a circular
+wipe. [Try paint spreading](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=spreading).
+These are bounded visual approximations, not a fluid or spectral pigment solver.
 
 ## Paper behind a real control
 
@@ -42,8 +59,6 @@ cached silhouette for painting, clipping and child hit testing. Prefer a value
 the content padding. `insetCraftPath` derives a bounded polygonal seam from a
 closed silhouette, respecting concavities and holes. See [contour seams](docs/contour-seams.md).
 
-![Contour-following stitches on organic, cutout and narrow-neck materials](docs/assets/contour-seams.png)
-
 ## Materials you can compose
 
 ![Large procedural twill, linen, felt, paper and wood swatches](docs/assets/materials-atlas.png)
@@ -66,31 +81,26 @@ visual recipes; letterhead stays real text over a substrate. See
 
 ## Thread, six ways
 
-![Running, backstitch, blanket, chain, cross and basting following the actual cut](docs/assets/stitch-families.png)
-
 Choose a thread pattern while keeping the same seam, substrate and native controls.
 [Stitch geometry, clearance and playground](docs/stitch-families.md).
-
-## Watercolor on paper
-
-![Overlapping pigment, a botanical painting and a paper cutout](docs/assets/watercolor-atlas.png)
-
-Layer puddles, blooms, drying lines and deposits inside your own closed shape.
-Supply pigment, companion and paper colors; the silhouette and its holes remain
-unchanged. `paintWatercolor` composes with the existing paper grain. This is a
-seeded visual approximation of watercolor.
+A separate [embroidery study](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=embroidery)
+lets a loose strand move above and beneath the cloth, with irregular waves and
+hidden return sections. A separate mode reveals an embroidered botanical sprig.
+[Explicit-progress paint and thread recipes](docs/living-materials.md).
 
 ## Body, tail and tether
 
-![Independent kite body, tail and combined motion plus balloon with attached tether](docs/assets/motion-atlas.gif)
+![A quick paper kite gust settles while a watercolor balloon continues its slower drift](docs/assets/motion-stage.gif)
 
 Motion examples use original example-owned geometry and supplied progress.
+The kite responds to quick gusts; the balloon rises and drifts more slowly,
+with its own rotation and softer tether. The two share a timeline, not a rhythm.
 
 Move the kite's parent part while its ribbon tail keeps its own progress. Hold
 the body still to animate only the tail, or combine both. The balloon's string
 follows its transformed knot. The original showcase also includes hanging
 paper/felt pieces with native controls. These are finite authored examples;
-GIFs loop for replay.
+The new clips stop at their final pose; use the live controls to replay.
 
 ## Run the examples
 
@@ -103,6 +113,7 @@ flutter pub get --enforce-lockfile
 flutter run -d chrome -t lib/main_gallery.dart
 ```
 
+- [Living paint and embroidery](docs/living-materials.md): first touch, moving brush, pink/blue layers and an embroidered sprig.
 - [Live gallery and deployment](docs/live-gallery.md): one navigation shell over existing studies; run `lib/main_gallery.dart`.
 - [Cover and relief gallery](example/lib/main_cover.dart): the real compositions behind the README images.
 - [Cord/ribbon playground](docs/cord-ribbon-embroidery.md): open paths and contour gaps; run `lib/main_trims.dart`.
@@ -127,14 +138,14 @@ in an application. Keep source-access credentials outside code and URLs.
 | --- | --- |
 | `CraftMaterial`, `MaterialTextures` | Five seeded textures and explicitly owned raster resources |
 | `CraftSurface` | Material behind native Flutter widgets |
-| `paintWatercolor` | Layered pigment with explicit colors, seed and granulation |
+| `paintWatercolor`, `paintWatercolorSpread` | Layered pigment and an explicitly progressed organic wet front |
 | `paintCraftRelief`, `CraftReliefText` | Directional motif shading and native raised/inset lettering |
 | `pigmentOutline` | Reproducible organic contours |
 | `CraftOutline` | Value-based rectangle, rounded rectangle and organic recipes |
 | `craftCurveThrough`, `trimCraftPath` | Curved waypoints and explicit arc-length reveal |
 | `CraftStrokeStyle`, `paintCraftStroke` | Continuous, dashed or dotted ink and pencil/chalk/wax deposits |
 | `paintCraftFreehand` | Bounded solid-pen input by points/strokes, including long scribbles and taps |
-| `craftStitchPath`, `paintCraftStitch` | Six bounded thread families over a supplied seam |
+| `craftStitchPath`, `paintCraftStitch`, `CraftStitchFrame` | Prepared thread, visible anchors, explicit progress and a travelling tip |
 | `runningStitchPath`, `paintRunningStitch` | Arc-length stitches and illustrative puncture shading |
 | `insetCraftPath` | Bounded winding-aware polygonal inset of a closed silhouette |
 | `paperOutline`, `CraftOutline.paper` | Clean, torn, handmade and postage silhouettes |
@@ -170,8 +181,6 @@ Run `flutter run -d chrome -t lib/main_strokes.dart` from `example/`.
 See [drawing recipes and examples](docs/drawing-strokes.md).
 
 ### Cord, ribbon and embroidered lines
-
-![Original cord, ribbon and embroidered compositions](docs/assets/trim-studies.png)
 
 Draw raised bands over textures or follow the actual cut with an optional edge gap.
 [API and runnable playground](docs/cord-ribbon-embroidery.md).

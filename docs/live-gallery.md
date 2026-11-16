@@ -54,3 +54,9 @@ those frames. GIF encoding is 12 fps, 128 colors; its repeating loop replays a
 finite authored interval rather than simulating wind or continuous motion.
 The dedicated command does not overwrite material or relief captures.
 The complete atlas capture reuses the same motion capture function.
+
+The paint-led start page links directly to brush contact, wet-layer interaction
+and embroidery. Wide screens expose the study menu; narrow screens keep a native
+study selector visible. Copy study link produces a query URL. Flutter Router
+restores the selected study and handles browser history; only the selected study
+is mounted. Layer/material controls remain native and do not scale down text.

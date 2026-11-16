@@ -24,38 +24,41 @@ void paintThreadGeometry(
   required double width,
   required double compression,
   required Offset light,
+  Iterable<Offset>? punctures,
 }) {
   final direction = light / light.distance;
   if (compression > 0) {
-    for (final metric in stitches.computeMetrics()) {
-      for (final distance in [0.0, metric.length]) {
-        final tangent = metric.getTangentForOffset(distance);
-        if (tangent == null) continue;
-        final center = tangent.position;
-        final radius = width * 2.8;
-        // Dark near the light-facing lip, bright on its opposing inner slope.
-        canvas.drawCircle(
-          center,
-          radius,
-          Paint()
-            ..shader = RadialGradient(
-              colors: [
-                Color.fromRGBO(25, 18, 12, .25 * compression),
-                const Color(0x00000000),
-              ],
-            ).createShader(Rect.fromCircle(center: center, radius: radius)),
+    final anchors =
+        punctures ??
+        stitches.computeMetrics().expand(
+          (metric) => [0.0, metric.length]
+              .map((distance) => metric.getTangentForOffset(distance)?.position)
+              .whereType<Offset>(),
         );
-        canvas.drawCircle(
-          center - direction * width * .35,
-          width * .85,
-          Paint()..color = Color.fromRGBO(255, 255, 255, .5 * compression),
-        );
-        canvas.drawCircle(
-          center,
-          width * .65,
-          Paint()..color = Color.fromRGBO(20, 14, 10, .65 * compression),
-        );
-      }
+    for (final center in anchors) {
+      final radius = width * 2.8;
+      // Dark near the light-facing lip, bright on its opposing inner slope.
+      canvas.drawCircle(
+        center,
+        radius,
+        Paint()
+          ..shader = RadialGradient(
+            colors: [
+              Color.fromRGBO(25, 18, 12, .25 * compression),
+              const Color(0x00000000),
+            ],
+          ).createShader(Rect.fromCircle(center: center, radius: radius)),
+      );
+      canvas.drawCircle(
+        center - direction * width * .35,
+        width * .85,
+        Paint()..color = Color.fromRGBO(255, 255, 255, .5 * compression),
+      );
+      canvas.drawCircle(
+        center,
+        width * .65,
+        Paint()..color = Color.fromRGBO(20, 14, 10, .65 * compression),
+      );
     }
   }
   canvas.drawPath(

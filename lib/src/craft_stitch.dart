@@ -1,10 +1,13 @@
 import 'dart:math' as math;
+import 'dart:ui' show Tangent;
 
 import 'package:flutter/painting.dart';
 
 import 'path_geometry.dart';
 import 'running_stitch.dart';
 import 'thread_paint.dart';
+
+part 'stitch_frame.dart';
 
 /// Surface thread patterns following a caller-prepared seam.
 enum CraftStitchKind {
@@ -168,7 +171,10 @@ void _checkOutput(Path result) {
 /// Parameters and output budgets are checked before any drawing. [compression]
 /// is shading strength, not physical depth. Punctures mark generated contour ends;
 /// closed links meet at their shared anchor. Behind-fabric thread is not modeled.
-/// Caller owns clipping, silhouette clearance and native controls.
+/// Caller owns clipping, silhouette clearance and native controls. [progress]
+/// is 0..1 in generated thread order; partial tips are not new punctures.
+/// The default completes the original static geometry. Use [CraftStitchFrame]
+/// to reuse prepared geometry and obtain a caller-owned needle position.
 void paintCraftStitch(
   Canvas canvas,
   Path seam, {
@@ -180,7 +186,11 @@ void paintCraftStitch(
   double width = 1.5,
   double compression = .6,
   Offset light = const Offset(-1, -1),
+  double progress = 1,
 }) {
+  if (!progress.isFinite || progress < 0 || progress > 1) {
+    throw ArgumentError('Expected progress 0..1');
+  }
   validateThreadPaint(width, compression, light);
   final stitches = craftStitchPath(
     seam,
@@ -189,6 +199,16 @@ void paintCraftStitch(
     depth: depth,
     side: side,
   );
+  if (progress != 1) {
+    CraftStitchFrame.sample(stitches, progress: progress).paint(
+      canvas,
+      thread: thread,
+      width: width,
+      compression: compression,
+      light: light,
+    );
+    return;
+  }
   paintThreadGeometry(
     canvas,
     stitches,

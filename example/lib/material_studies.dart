@@ -279,11 +279,42 @@ class _SpecimenPainter extends CustomPainter {
     if (bounds.isEmpty) return;
     switch (sample.plate) {
       case _Plate.swatch:
-        final shape = pigmentOutline(
-          bounds.deflate(4),
-          seed: sample.seed,
-          broad: true,
-        );
+        final r = bounds.deflate(4);
+        final shape = switch (sample.material) {
+          CraftMaterial.twill =>
+            Path()..addOval(
+              Rect.fromCenter(
+                center: r.center,
+                width: r.width * .9,
+                height: r.height,
+              ),
+            ),
+          CraftMaterial.linen =>
+            Path()
+              ..moveTo(r.left + 12, r.top)
+              ..lineTo(r.right, r.top + 14)
+              ..lineTo(r.right - 14, r.bottom)
+              ..lineTo(r.left, r.bottom - 12)
+              ..close(),
+          CraftMaterial.felt =>
+            Path()
+              ..moveTo(r.center.dx, r.top)
+              ..lineTo(r.right, r.center.dy - 10)
+              ..lineTo(r.right - 24, r.bottom)
+              ..lineTo(r.left + 22, r.bottom)
+              ..lineTo(r.left, r.center.dy - 10)
+              ..close(),
+          CraftMaterial.paper => paperOutline(
+            r,
+            edge: PaperEdge.torn,
+            depth: 4,
+            pitch: 22,
+            seed: sample.seed,
+          ),
+          CraftMaterial.wood =>
+            Path()
+              ..addRRect(RRect.fromRectAndRadius(r, const Radius.circular(26))),
+        };
         canvas.drawShadow(shape, const Color(0x44000000), 3, false);
         textures.paint(
           canvas,

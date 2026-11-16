@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'bounded_effects.dart';
-import 'cover_studies.dart';
+import 'gallery_welcome.dart';
+import 'cover_studies.dart' show ReliefObjectsSheet;
+import 'gallery_catalog.dart';
+import 'gallery_routes.dart';
+import 'living_materials.dart';
+
+export 'gallery_catalog.dart';
 import 'imported_layers.dart';
 import 'main_strokes.dart' show StrokePlayground;
 import 'material_studies.dart';
@@ -25,115 +32,159 @@ void main() {
   );
 }
 
-/// Hosted gallery destinations; only the visible study is mounted.
-enum GalleryStudy {
-  /// Opening compositions and sculpted motifs.
-  cover,
-
-  /// Five existing material algorithms.
-  materials,
-
-  /// Paper stocks, edges and finishes.
-  paper,
-
-  /// Six shared-contour thread patterns.
-  stitches,
-
-  /// Raised cord, ribbon and thread bands.
-  trims,
-
-  /// Layered pigment over supplied shapes.
-  watercolor,
-
-  /// Independently authored body/detail poses.
-  motion,
-
-  /// Bounded gravity/wind with explicit elapsed time.
-  physics,
-
-  /// Curves with ink and dry instrument treatments.
-  ink,
-
-  /// Crops, hinges, masks and native actions.
-  imported,
-
-  /// Native rotary-control recipe.
-  rotary,
-
-  /// Bounded pour, droplets and light recipe.
-  effects,
-}
-
-String _label(GalleryStudy study) => switch (study) {
-  GalleryStudy.cover => 'Start exploring',
-  GalleryStudy.materials => 'Materials & relief',
-  GalleryStudy.paper => 'Paper & edges',
-  GalleryStudy.stitches => 'Stitch families',
-  GalleryStudy.trims => 'Cord & ribbon',
-  GalleryStudy.watercolor => 'Watercolor',
-  GalleryStudy.motion => 'Body, tail & tether',
-  GalleryStudy.physics => 'Gravity & wind',
-  GalleryStudy.ink => 'Curves & ink',
-  GalleryStudy.imported => 'Imported artwork',
-  GalleryStudy.rotary => 'Rotary control',
-  GalleryStudy.effects => 'Pour & light',
-};
-
-/// One native navigation shell over the existing runnable studies.
-class HandcraftedGalleryApp extends StatelessWidget {
-  /// Selects a study explicitly; web startup also accepts ?study=enumName.
+/// A material studio with discoverable navigation and native browser history.
+class HandcraftedGalleryApp extends StatefulWidget {
+  /// Creates the gallery with a query-compatible initial study.
   const HandcraftedGalleryApp({
     super.key,
     this.initialStudy = GalleryStudy.cover,
   });
 
-  /// First study; invalid URL names fall back to the cover before construction.
+  /// Startup study, superseded by a valid native route.
   final GalleryStudy initialStudy;
   @override
-  Widget build(BuildContext context) => MaterialApp(
-    title: 'handcrafted_flutter — material studies',
+  State<HandcraftedGalleryApp> createState() => _HandcraftedGalleryAppState();
+}
+
+class _HandcraftedGalleryAppState extends State<HandcraftedGalleryApp> {
+  late final router = GalleryRouter(
+    widget.initialStudy,
+    (context, study, select) => _GalleryPage(study, select),
+  );
+  late final parser = GalleryRouteParser(widget.initialStudy);
+  @override
+  void dispose() {
+    router.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => MaterialApp.router(
+    title: 'Handcrafted material studio',
     theme: showcaseTheme(),
-    home: _GalleryPage(initialStudy),
+    routerDelegate: router,
+    routeInformationParser: parser,
   );
 }
 
-class _GalleryPage extends StatefulWidget {
-  const _GalleryPage(this.initial);
-  final GalleryStudy initial;
-  @override
-  State<_GalleryPage> createState() => _GalleryPageState();
-}
-
-class _GalleryPageState extends State<_GalleryPage> {
-  late GalleryStudy selected = widget.initial;
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(_label(selected))),
-    drawer: Drawer(
-      child: SafeArea(
-        child: ListView(
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(20),
-              child: Text(
-                'handcrafted_flutter',
-                style: TextStyle(fontWeight: FontWeight.w600),
-              ),
-            ),
-            for (final study in GalleryStudy.values)
-              ListTile(
-                title: Text(_label(study)),
-                selected: selected == study,
-                onTap: () {
-                  Navigator.of(context).pop();
-                  setState(() => selected = study);
-                },
-              ),
-          ],
+class _GalleryPage extends StatelessWidget {
+  const _GalleryPage(this.selected, this.select);
+  final GalleryStudy selected;
+  final ValueChanged<GalleryStudy> select;
+  Widget _menu({bool close = false, required BuildContext context}) => ListView(
+    children: [
+      const Padding(
+        padding: EdgeInsets.all(20),
+        child: Text(
+          'Explore the studio',
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
-    ),
-    body: KeyedSubtree(key: ValueKey(selected), child: _body()),
+      for (final study in galleryOrder)
+        ListTile(
+          title: Text(galleryLabel(study)),
+          selected: selected == study,
+          onTap: () {
+            if (close) Navigator.of(context).pop();
+            select(study);
+          },
+        ),
+    ],
+  );
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, box) {
+      final wide = box.maxWidth >= 1100;
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Handcrafted',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          actions: [
+            IconButton(
+              tooltip: 'Copy study link',
+              icon: const Icon(Icons.link),
+              onPressed: () async {
+                final uri = Uri.base.replace(
+                  queryParameters: {'study': selected.name},
+                  fragment: '',
+                );
+                await Clipboard.setData(ClipboardData(text: uri.toString()));
+                if (context.mounted)
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Study link copied')),
+                  );
+              },
+            ),
+          ],
+        ),
+        drawer: wide
+            ? null
+            : Drawer(
+                child: SafeArea(child: _menu(close: true, context: context)),
+              ),
+        body: Row(
+          children: [
+            if (wide) SizedBox(width: 248, child: _menu(context: context)),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 8,
+                    ),
+                    child: wide
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                galleryLabel(selected),
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(galleryDescription(selected)),
+                            ],
+                          )
+                        : DropdownButtonFormField<GalleryStudy>(
+                            key: ValueKey(selected),
+                            initialValue: selected,
+                            isExpanded: true,
+                            itemHeight: null,
+                            decoration: const InputDecoration(
+                              labelText: 'Explore a study',
+                            ),
+                            items: [
+                              for (final study in galleryOrder)
+                                DropdownMenuItem(
+                                  value: study,
+                                  child: Text(galleryLabel(study)),
+                                ),
+                            ],
+                            onChanged: (study) {
+                              if (study != null) select(study);
+                            },
+                          ),
+                  ),
+                  Expanded(
+                    child: KeyedSubtree(
+                      key: ValueKey(selected),
+                      child: _body(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    },
   );
   Widget _body() {
     final content = _content();
@@ -151,7 +202,7 @@ class _GalleryPageState extends State<_GalleryPage> {
   }
 
   Widget _content() => switch (selected) {
-    GalleryStudy.cover => const CoverGallery(),
+    GalleryStudy.cover => GalleryWelcome(select: select),
     GalleryStudy.materials => const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [MaterialsSheet(), SizedBox(height: 36), ReliefObjectsSheet()],
@@ -160,6 +211,12 @@ class _GalleryPageState extends State<_GalleryPage> {
     GalleryStudy.stitches => const StitchPlayground(),
     GalleryStudy.trims => const TrimPlayground(),
     GalleryStudy.watercolor => const WatercolorsSheet(),
+    GalleryStudy.spreading => const LivingMaterialStudy(
+      technique: LivingTechnique.watercolor,
+    ),
+    GalleryStudy.embroidery => const LivingMaterialStudy(
+      technique: LivingTechnique.embroidery,
+    ),
     GalleryStudy.motion => const MotionPlayground(),
     GalleryStudy.physics => const PendulumPlayground(),
     GalleryStudy.ink => const StrokePlayground(),

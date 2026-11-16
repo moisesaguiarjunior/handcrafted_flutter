@@ -31,6 +31,22 @@ PartPose studySway(double progress) {
   );
 }
 
+/// A slower, buoyant authored drift, deliberately different from the kite.
+PartPose studyBalloonDrift(double progress) {
+  if (!progress.isFinite || progress < 0 || progress > 1) {
+    throw ArgumentError('Expected progress 0..1');
+  }
+  if (progress == 0 || progress == 1) return PartPose();
+  final envelope = math.sin(math.pi * progress);
+  return PartPose(
+    translation: Offset(
+      math.sin(progress * math.pi * 1.2) * 13 * envelope,
+      -34 * envelope,
+    ),
+    rotation: math.sin(progress * math.pi * 1.4) * .065 * envelope,
+  );
+}
+
 /// Decorative artwork at independent body/detail poses, with no internal clock.
 /// Scale only the artwork; captions and controls remain ordinary widgets.
 class MotionSample extends StatelessWidget {
@@ -53,7 +69,9 @@ class MotionSample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pose = studySway(bodyProgress);
+    final pose = subject == MotionSubject.balloon
+        ? studyBalloonDrift(bodyProgress)
+        : studySway(bodyProgress);
     if (!detailProgress.isFinite || detailProgress < 0 || detailProgress > 1) {
       throw ArgumentError('Expected detail progress 0..1');
     }
@@ -121,7 +139,7 @@ class _BalloonPainter extends CustomPainter {
         ) +
         origin;
     final wave =
-        math.sin(detail * math.pi * 6) * math.sin(detail * math.pi) * 22;
+        math.sin(detail * math.pi * 2) * math.sin(detail * math.pi) * 9;
     final tether = Path()
       ..moveTo(tie.dx, tie.dy)
       ..cubicTo(tie.dx + wave, tie.dy + 32, 115 - wave, 251, 146, 304);
@@ -191,7 +209,9 @@ class _MotionPlaygroundState extends State<MotionPlayground> {
   @override
   Widget build(BuildContext context) => SceneEntrance(
     key: ValueKey(_replay),
-    duration: const Duration(milliseconds: 3600),
+    duration: Duration(
+      milliseconds: _subject == MotionSubject.balloon ? 6500 : 3600,
+    ),
     active:
         (_bodyEnabled && _body == null) || (_detailEnabled && _detail == null),
     startSettled: _body != null && _detail != null,
@@ -339,4 +359,54 @@ class MotionAtlas extends StatelessWidget {
       );
     },
   );
+}
+
+/// Two actors on one supplied timeline: a quick gust and a slower drift.
+class MotionStage extends StatelessWidget {
+  /// No clock is created; progress spans seven authored seconds.
+  const MotionStage({super.key, required this.progress});
+
+  /// Explicit finite scene progress.
+  final double progress;
+  @override
+  Widget build(BuildContext context) {
+    if (!progress.isFinite || progress < 0 || progress > 1)
+      throw ArgumentError('Expected progress 0..1');
+    final kite = (progress * 1.75).clamp(0.0, 1.0);
+    return AspectRatio(
+      aspectRatio: 1000 / 420,
+      child: FittedBox(
+        child: SizedBox(
+          width: 1000,
+          height: 420,
+          child: Stack(
+            children: [
+              Positioned(
+                left: 20,
+                top: 35,
+                width: 440,
+                height: 340,
+                child: MotionSample(
+                  subject: MotionSubject.kite,
+                  bodyProgress: kite,
+                  detailProgress: kite,
+                ),
+              ),
+              Positioned(
+                left: 505,
+                top: 30,
+                width: 440,
+                height: 340,
+                child: MotionSample(
+                  subject: MotionSubject.balloon,
+                  bodyProgress: progress,
+                  detailProgress: progress,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

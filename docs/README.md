@@ -28,3 +28,6 @@ belong in this package repository.
 
 - [Delivery tasklist](tasklist.md): implementation, review and publication gates.
 - [Local independent reviews](reviews/local-review-record.md): candidate SHAs and limitations.
+
+- [Living paint and embroidery](living-materials.md): explicit progress, contact/layer examples and captures.
+- [Material foundation request](requests/material-foundation.md): proposed vocabulary, frame and acceptance gates.

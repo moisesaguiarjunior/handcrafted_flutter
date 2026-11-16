@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- Explicit watercolor spreading and owned thread-frame progress with actual
+  punctures and a travelling tip. Default static painting remains unchanged.
+- Paint-led gallery with persistent desktop navigation, mobile study selection,
+  native history/share links and finite play/pause/seek studies. Refresh actual
+  material/motion captures with varied cuts and distinct kite/balloon rhythms.
+- Record material vocabulary, experience frame, extraction, accessibility,
+  device evidence, isolated adoption and recipe-book priorities as proposed work.
+
 - Pencil, chalk and wax decorate existing paths with seeded bounded deposits.
   Adds three enum members; exhaustive consumer switches need updating. Patterns,
   reveal and the existing gallery are reused; long freehand remains solid pen.

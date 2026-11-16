@@ -52,7 +52,15 @@ void main() {
       await tester.tap(find.byTooltip('Open navigation menu'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 300));
-      await tester.tap(find.text('Stitch families'));
+      await tester.scrollUntilVisible(
+        find.widgetWithText(ListTile, 'Stitch families'),
+        350,
+        scrollable: find.descendant(
+          of: find.byType(Drawer),
+          matching: find.byType(Scrollable),
+        ),
+      );
+      await tester.tap(find.widgetWithText(ListTile, 'Stitch families'));
       await tester.pumpAndSettle();
       expect(find.byType(StitchPlayground), findsOneWidget);
       expect(find.byType(MotionPlayground, skipOffstage: false), findsNothing);
@@ -88,8 +96,16 @@ void main() {
     );
     await tester.tap(find.byTooltip('Open navigation menu'));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Cord & ribbon'));
-    await tester.tap(find.text('Cord & ribbon'));
+    await tester.scrollUntilVisible(
+      find.widgetWithText(ListTile, 'Cord & ribbon'),
+      350,
+      scrollable: find.descendant(
+        of: find.byType(Drawer),
+        matching: find.byType(Scrollable),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(ListTile, 'Cord & ribbon'));
     await tester.pumpAndSettle();
     expect(find.byType(TrimPlayground), findsOneWidget);
     await tester.ensureVisible(find.byType(Slider).first);

@@ -39,7 +39,14 @@ There is no exact Bezier inset, physical cloth, shared wind field, water solver 
 shared texture cache. Pigment and relief are visual approximations; fabrics are
 not physically displaced and wet paint is not simulated over time.
 
-## Delivery order
+## Foundation first
+
+The [material vocabulary/frame/accessibility request](requests/material-foundation.md)
+is the priority order for becoming a reusable experience foundation. Brand,
+content and policy remain consumer-owned. Existing primitives and visual studies
+are not yet the proposed full vocabulary or experience frame.
+
+## Material evolution inventory
 
 | Priority | Delivery | Acceptance boundary |
 | --- | --- | --- |

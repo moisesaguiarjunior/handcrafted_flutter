@@ -1,9 +1,12 @@
 import 'dart:math' as math;
+import 'dart:ui' show PathMetric;
 
 import 'package:flutter/painting.dart';
 
 import 'path_geometry.dart';
 import 'pigment_outline.dart';
+
+part 'watercolor_spread.dart';
 
 /// Layered pigment, blooms, tide marks and granular deposits inside [outline].
 ///
@@ -26,21 +29,11 @@ void paintWatercolor(
   double opacity = .55,
   double granulation = .7,
 }) {
-  final metrics = checkedPathMetrics(outline);
-  final bounds = outline.getBounds();
-  if (!opacity.isFinite ||
-      opacity < 0 ||
-      opacity > 1 ||
-      !granulation.isFinite ||
-      granulation < 0 ||
-      granulation > 1 ||
-      bounds.width > 2048 ||
-      bounds.height > 2048 ||
-      metrics.any((m) => !m.isClosed)) {
-    throw ArgumentError(
-      'Expected a closed bounded wash and opacity/granulation 0..1',
-    );
-  }
+  final (:bounds, :metrics) = _validateWatercolor(
+    outline,
+    opacity,
+    granulation,
+  );
   final second = companion ?? pigment;
   final amount = opacity * math.max(pigment.a, second.a);
   if (bounds.isEmpty || metrics.isEmpty || amount == 0) return;
@@ -125,4 +118,28 @@ void paintWatercolor(
   }
   canvas.drawPath(edgeHoles, Paint()..color = exposedPaper(.5 * granulation));
   canvas.restore();
+}
+
+/// Internal shared preflight for static and explicitly spreading washes.
+({Rect bounds, List<PathMetric> metrics}) _validateWatercolor(
+  Path outline,
+  double opacity,
+  double granulation,
+) {
+  final metrics = checkedPathMetrics(outline);
+  final bounds = outline.getBounds();
+  if (!opacity.isFinite ||
+      opacity < 0 ||
+      opacity > 1 ||
+      !granulation.isFinite ||
+      granulation < 0 ||
+      granulation > 1 ||
+      bounds.width > 2048 ||
+      bounds.height > 2048 ||
+      metrics.any((m) => !m.isClosed)) {
+    throw ArgumentError(
+      'Expected a closed bounded wash and opacity/granulation 0..1',
+    );
+  }
+  return (bounds: bounds, metrics: metrics);
 }

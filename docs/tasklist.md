@@ -20,7 +20,7 @@ a passing widget test is not a phone benchmark or visual approval.
 | HC-R03 | Dependency/license release audit | 22 license hashes verified; clipper2 0.0.3 BSL-1.0 attribution retained |
 | HC-R04 | Immutable version/tag | Published immutable source tag `v0.1.0` at `87786ec` |
 | HC-P01 | Public clock-free image crop/artboard placement | Shipped in PR #11 at `e420be8`; independent review and CI passed |
-| HC-P02 | Long freehand paths | [Contract request](requests/freehand-capture.md); point/stroke budget assessment pending, existing decoration guard retained |
+| HC-P02 | Long freehand paths | Minimal solid-pen adapter implemented locally; 128 strokes/8192 points, native parity; independent review/publication pending |
 | HC-P03 | Rope, ribbon and embroidery over textures or contours | Published in PR #13 at `086763e`; native/Chrome checks and original compositions |
 | HC-P04 | Gravity/wind and realistic/cartoon response | Published in PR #14 at `46e1518`; numerical/native-action checks and CI passed |
 | HC-P05 | Public rotary-control abstraction | Example only; promote after complete consumer flows demonstrate a stable contract |

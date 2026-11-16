@@ -98,5 +98,6 @@ existing parts, without creating a manifest API. The next evidence
 task is a repeatable rendering-cost scene. These complement the delivery order;
 neither shared caches nor prepared-geometry APIs are justified without profiling.
 
-- Proposed: [bounded freehand consumer assessment](requests/freehand-capture.md),
-  separate from the current illustrative path limits; no implementation approved.
+- [Bounded solid freehand](requests/freehand-capture.md) now has a minimal
+  point/stroke-budget renderer; independent review/publication tracked separately.
+  Decorative arc limits stay intact; consumer capture adoption is not automatic.

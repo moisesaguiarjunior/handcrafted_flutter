@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Bounded solid-pen freehand renderer preserves native ordered paths, joins and
+  taps with point/stroke budgets, independently of decorative arc-length guards.
+  Capturing, consent, persistence and export policy remain consumer-owned.
+
 - Clock-free bounded pendulum sampling with gravity, wind, damping and explicit
   realistic/cartoon response. Reuses native pose/input mapping; adds a manual
   time/force playground, not flexible cloth/rope or an indefinite simulator.

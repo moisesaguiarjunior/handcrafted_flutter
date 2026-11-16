@@ -120,3 +120,10 @@ actual corner geometry rather than assuming half-width padding is sufficient.
 Compare the consumer's original
 render before changing its join; even thin curves can expose a pixel difference.
 See [adoption recipes](consumer-adoption.md) for migration boundaries.
+
+## Solid freehand input
+
+For recorded point lists rather than authored decorations, use
+[paintCraftFreehand](requests/freehand-capture.md). It validates finite input
+bounds and point/stroke counts without traversing arc length; solid pen only.
+Existing curved, dashed, dotted, brush and reveal APIs retain their own budgets.

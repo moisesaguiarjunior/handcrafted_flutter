@@ -120,6 +120,7 @@ in an application. Keep source-access credentials outside code and URLs.
 | `CraftOutline` | Value-based rectangle, rounded rectangle and organic recipes |
 | `craftCurveThrough`, `trimCraftPath` | Curved waypoints and explicit arc-length reveal |
 | `CraftStrokeStyle`, `paintCraftStroke` | Continuous, dashed or dotted pen/marker/brush ink |
+| `paintCraftFreehand` | Bounded solid-pen input by points/strokes, including long scribbles and taps |
 | `runningStitchPath`, `paintRunningStitch` | Arc-length stitches and illustrative puncture shading |
 | `insetCraftPath` | Bounded winding-aware polygonal inset of a closed silhouette |
 | `paperOutline`, `CraftOutline.paper` | Clean, torn, handmade and postage silhouettes |

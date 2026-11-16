@@ -1,8 +1,8 @@
 # Bounded freehand capture — consumer request
 
-Status: proposal, 2026-11-15. No public API or delivery commitment is accepted
-by this document. Rendering-only scope; capture storage and consent belong to
-the consumer.
+Status: minimal solid-pen renderer implemented in the current source candidate.
+Independent review/publication is tracked in the tasklist. Rendering-only scope;
+capture storage and consent belong to the consumer.
 
 ## Reuse / Create
 
@@ -45,8 +45,12 @@ Acceptance for any proposed adoption:
 - Keep editable controls, accessibility, identity, storage and publish semantics
   outside the package. No reuse of consumer art or private documents.
 
-Until this contract exists, a consumer may retain native `Canvas.drawPath` for
-solid freehand input. That is not an alternate material or animation engine.
+`paintCraftFreehand` now validates point/stroke/coordinate budgets and delegates
+solid pen to native drawPath/drawPoints with the existing stroke style. It accepts
+up to 128 strokes / 8192 points, independent of arc length. Unsupported tools and
+patterns fail explicitly. Input bounds validate centerlines rather than clipping
+ink. Consumer capture should remain unchanged until its own pixel-parity and
+export checks pass; native `Canvas.drawPath` remains valid for that consumer.
 See [current stroke contracts](../drawing-strokes.md) and
 [consumer adoption](../consumer-adoption.md).
 
@@ -58,3 +62,27 @@ accepted it; paintCraftStroke rejected it through the documented arc guard.
 The experiment is not a phone performance measurement. Repository checks passed
 (50 library tests and 66 example tests at `10af430`); this change adds
 documentation only.
+
+## Minimal rendering adapter
+
+```dart
+paintCraftFreehand(canvas, recordedStrokes,
+  bounds: const Rect.fromLTWH(0, 0, 346, 380),
+  color: ink,
+  style: const CraftStrokeStyle(width: 3, join: StrokeJoin.miter),
+);
+```
+
+Points are copied into native paths in their original order; no curves, smoothing
+or truncation are inferred. A single-point tap uses native round drawPoints.
+Bounds may be at most 2048 logical pixels per axis; all coordinates are finite
+within +/-8192 and input bounds (inclusive edges). Stroke width remains 0.5..32.
+Empty strokes paint nothing. All validation completes before the first draw, so
+an invalid later stroke cannot partially paint the input. There is no renderer
+resource owner or separate export implementation: apply the consumer's Canvas
+scale/clip and use this same function for display/export.
+
+The adapter deliberately accepts only solid pen. Marker opacity, brush sampling,
+dash/reveal and dotted patterns continue to use the decorative renderer's
+separate limits. A consumer should not substitute a captured drawing's validity
+with those limits or silently choose another tool for an unsupported request.

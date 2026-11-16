@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui' show PointMode;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
@@ -228,17 +229,7 @@ void paintCraftStroke(
     spans,
     preserveClosed: style.pattern == CraftLinePattern.solid,
   );
-  canvas.drawPath(
-    path,
-    Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = style.width
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = style.join
-      ..color = style.tool == CraftStrokeTool.marker
-          ? color.withValues(alpha: color.a * .68)
-          : color,
-  );
+  canvas.drawPath(path, _inkStrokePaint(color, style));
 }
 
 void _paintBrush(
@@ -306,4 +297,91 @@ void _paintBrush(
           .withValues(alpha: color.a * .28 * style.variation),
   );
   canvas.restore();
+}
+
+Paint _inkStrokePaint(Color color, CraftStrokeStyle style) => Paint()
+  ..style = PaintingStyle.stroke
+  ..strokeWidth = style.width
+  ..strokeCap = StrokeCap.round
+  ..strokeJoin = style.join
+  ..color = style.tool == CraftStrokeTool.marker
+      ? color.withValues(alpha: color.a * .68)
+      : color;
+
+/// Renders bounded solid-pen input without an illustrative arc-length limit.
+///
+/// Accepts at most 128 strokes and 8192 total points. [bounds] is the permitted
+/// input rectangle: finite positive dimensions up to 2048 logical pixels each,
+/// coordinates within +/-8192. Points must be finite and inside its inclusive
+/// edges. These bounds validate input, not clip ink; reserve half-width/miter
+/// clearance or apply the consumer's own canvas clip before painting.
+///
+/// Reuses [CraftStrokeStyle] validation, width and native joins, accepting only
+/// solid pen. Marker, brush, dashed and dotted treatments throw [ArgumentError];
+/// their arc-length sampling budgets remain with [paintCraftStroke].
+///
+/// Preserves ordered points as straight segments, with no smoothing, truncation,
+/// progress or closed-contour inference. Empty strokes paint nothing; one-point
+/// taps draw a round native point. Repeated points keep native drawPath behavior.
+/// All input is validated before painting any stroke. Cost is bounded by points,
+/// not traveled distance. No capture controller, clock, IO, image or cache is
+/// retained. Consumers own editable input, consent, storage and export scaling.
+void paintCraftFreehand(
+  Canvas canvas,
+  List<List<Offset>> strokes, {
+  required Rect bounds,
+  required Color color,
+  CraftStrokeStyle style = const CraftStrokeStyle(),
+}) {
+  style._validate();
+  if (style.tool != CraftStrokeTool.pen ||
+      style.pattern != CraftLinePattern.solid ||
+      strokes.length > 128 ||
+      !bounds.width.isFinite ||
+      !bounds.height.isFinite ||
+      bounds.width <= 0 ||
+      bounds.height <= 0 ||
+      bounds.width > 2048 ||
+      bounds.height > 2048 ||
+      [
+        bounds.left,
+        bounds.top,
+        bounds.right,
+        bounds.bottom,
+      ].any((v) => !v.isFinite || v.abs() > 8192)) {
+    throw ArgumentError(
+      'Expected solid pen, at most 128 strokes and finite bounded input rectangle',
+    );
+  }
+  var points = 0;
+  for (final stroke in strokes) {
+    points += stroke.length;
+    if (points > 8192)
+      throw ArgumentError('Freehand exceeds 8192 input points');
+    for (final point in stroke) {
+      if (!point.dx.isFinite ||
+          !point.dy.isFinite ||
+          point.dx < bounds.left ||
+          point.dx > bounds.right ||
+          point.dy < bounds.top ||
+          point.dy > bounds.bottom) {
+        throw ArgumentError(
+          'Expected finite points inside inclusive input bounds',
+        );
+      }
+    }
+  }
+  final paint = _inkStrokePaint(color, style);
+  for (final stroke in strokes) {
+    if (stroke.isEmpty) continue;
+    if (stroke.length == 1) {
+      canvas.drawPoints(PointMode.points, stroke, paint);
+      continue;
+    }
+    final path = Path()..moveTo(stroke.first.dx, stroke.first.dy);
+    for (final point in stroke.skip(1)) {
+      path.lineTo(point.dx, point.dy);
+    }
+    canvas.drawPath(path, paint);
+  }
 }

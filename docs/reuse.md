@@ -118,7 +118,8 @@ with `craftCurveThrough`; generic clock/pose tests stay in place. No replacement
 actor preset is exported. See the 0.1.0 migration in compatibility.md.
 
 Bounded freehand capture has a [consumer request](requests/freehand-capture.md).
-The illustrative path arc limit remains intact; no new renderer is implemented.
+The illustrative path arc limit remains intact; paintCraftFreehand separately
+bounds solid input by points/strokes and reuses native stroke paint.
 
 For delivery tracking, searched the roadmap, request records, PR descriptions and
 retained local review reports. The tasklist links existing contracts rather than
@@ -143,3 +144,9 @@ layout, textures, native lettering, watercolor, contour trims and PartPose.
 Reused those renderers and fonts; created distinct shell/feather/crescent motifs
 and one shared live/capture composition. No marketing mockup renderer, animation
 clock, new dependency or golden-baseline replacement is introduced.
+
+For long freehand, searched captured-point budgets, CraftStrokeStyle, pen/marker
+paint setup, decorative arc guards and native drawPath/drawPoints. Reused style
+validation and extracted one shared native paint factory. Created only a bounded
+solid-pen rendering adapter, not a capture controller/export service. Ordered
+input, native joins and taps are retained; decorative safeguards are unchanged.

@@ -2,6 +2,9 @@
 
 ## 0.0.1 (unreleased)
 
+- Public CraftImagePart extracts source crop/hinge/artboard placement from the
+  imported-layer example, retaining native paint/input transforms and image cache
+  ownership without a manifest, supplied artwork or additional clock.
 - Composable paper finishes and cut/torn/deckle/postage edge recipes, including
   value-based CraftOutline.paper and separate fiber fringe. Adds six visual stock
   specimens, edge comparison images and native letterhead at enlarged text.

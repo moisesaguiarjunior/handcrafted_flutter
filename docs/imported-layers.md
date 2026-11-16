@@ -6,26 +6,63 @@ consumer's artwork. Its source authoring tool is included for provenance.
 
 ![Imported cabinet at three externally supplied poses](assets/imported-layers.png)
 
-The example's `SourceLayer` records full source dimensions, crop rectangle and
-hinge in source coordinates. Convert the hinge to normalized crop alignment
-once. Convert attachments relative to that same crop using the effective layout
-size, then map them with `PartPose.mapPoint`. Add the positioned layer's origin
-after the pose. Do not subtract the crop origin twice or map against the full
-sprite-sheet dimensions.
+`CraftImagePart` is now the public adapter. It records full source dimensions,
+crop, destination rectangle and optional source-space hinge/PartPose. The old
+example-only SourceLayer and CroppedArtwork implementations have been removed;
+the example uses the same public widget a consumer can import.
+
+```dart
+final lid = CraftImagePart(
+  key: const ValueKey('cabinet-lid'),
+  image: const AssetImage('assets/cabinet.png'),
+  sourceSize: const Size(600, 360),
+  sourceRect: const Rect.fromLTWH(300, 20, 240, 120),
+  rect: const Rect.fromLTWH(54, 218, 240, 120),
+  sourceHinge: const Offset(316, 32),
+  pose: lidPose, // Optional; omitted means identity.
+  child: TextButton(onPressed: openLid, child: const Text('Open')),
+);
+// Put lid directly in the authored artboard's Stack.
+final attachment = lid.mapSourcePoint(const Offset(520, 75));
+```
+
+Source coordinates describe the full image, independently of decoded pixel
+density. The crop must be contained in that positive finite source size. The
+positive finite destination rect is in the parent Stack's logical artboard
+coordinates. A different aspect ratio deliberately stretches the image crop.
+Hinge defaults to crop center and may be outside the crop. All derived scales,
+pivots and mapped coordinates must remain finite or ArgumentError is thrown.
+
+`mapSourcePoint` already includes crop conversion, PartPose and rect origin.
+Do not add that origin or apply the pose a second time. Responsive transforms
+above the Stack are a separate coordinate space. Scale the whole artboard once,
+or pass already scaled rect/pose values consistently. The adapter creates no
+FittedBox or independently timed frame. Its native CraftPart transform handles
+both image painting and inverse hit testing; it does not reproduce that matrix.
 
 `ImportedComposition` calculates the effective art size from the available width.
-Its `CraftPart`, mapped thread attachment and supplied hit silhouette share that
+Its `CraftImagePart`, mapped thread attachment and supplied hit silhouette share that
 size and pose. Only artwork scales; the native content action retains a minimum
 48-logical-pixel target. The parent reserves the complete movement envelope.
 Applications must reserve their own envelope: painting outside a parent does not
 make that area receive taps.
 
-The lid uses a supplied polygon to exclude transparent corners from input.
+The lid uses a supplied source-coordinate polygon to exclude transparent corners from input.
 This is authored shape testing, not automatic alpha-pixel testing. The source
 image, supplied hit shape and attachment must agree. Layer order puts the lid
 above the contents. The consumer defines a conservative reveal threshold; the
 hidden content action is unmounted, removing focus and semantics as well as
 pointer input. This example is a cabinet recipe, not general occlusion detection.
+
+The optional sourceClip clips both visible pixels and the native overlay, not
+only pointer input. It is not an alpha test; use a mask that agrees with the art.
+The optional child fills the crop rectangle above the image, so its internal
+padding cannot shift the crop. Image semantics are excluded unless semanticLabel
+is supplied. An interactive overlay normally supplies its own native label.
+Text, keyboard focus and minimum targets remain the host's responsibility;
+do not scale text controls down with a decorative artboard. Hidden controls must
+still be removed by the host as in this example. ImageProvider and Flutter own
+decoding/cache lifetime; this stateless adapter does not manually dispose images.
 
 Progress is explicit, reversible and ticker-free. A native slider can scrub
 closed, partial and settled poses; an external renderer can supply the same

@@ -22,7 +22,7 @@
 | Shared specimen layouts and visual inventory | `example/lib/material_studies.dart`, `example/lib/main_atlas.dart` |
 | Authored actor examples with independent progress | `example/lib/motion_studies.dart`, `example/lib/kite_art.dart` |
 | Canonical example palette and typography | `example/lib/showcase_theme.dart` |
-| Imported crop, source hinge and attachment recipe | `example/lib/imported_layers.dart`, `example/lib/main_scenes.dart` |
+| Public imported crop, source hinge and placement | `CraftImagePart`; `example/lib/imported_layers.dart` shows the consumer composition |
 | Shared example capture shell and PNG writer | `tool/capture_support.dart` |
 | Format, analysis and behavior checks | `tool/check.sh` |
 
@@ -77,7 +77,7 @@ clock implementation or public dial abstraction.
 
 For imported artwork, searched crop, pivot, matrixFor, mapPoint, clipping and
 native focus through the package and examples. Reused CraftPart/PartPose and
-the capture/font helpers. SourceLayer remains an example adapter; its supplied
+the capture/font helpers. SourceLayer initially remained example-local; its supplied
 PNG, crop and hit shape are original synthetic artwork. No second transform,
 alpha-testing engine, clock or general manifest was added.
 
@@ -94,6 +94,14 @@ instead of a new offset engine. The bounded adapter samples Flutter paths;
 example-local PreparedSeamGeometry is shared by the seam study, card and material
 playground. Equivalent recipes retain the pair; effective size changes replace
 it. Shape, thread, native content and texture ownership remain independent.
+
+For public image placement, searched SourceLayer, CroppedArtwork, FittedBox,
+Positioned, CraftPart and PartPose. Extracted one CraftImagePart widget and removed
+the duplicate example adapter. Reused CraftPart's native paint/input transform
+and PartPose mapping instead of maintaining a second matrix or hit-test engine.
+Source-crop conversion is explicit; attachments already include the artboard rect
+origin. Native overlay layout is independent of the imported image pixels, and
+normal ImageProvider owns decoding/cache lifetime. No manifest or clock is added.
 
 For paper recipes, searched grain, fiber, corrugation, contours, shape value
 equality and existing specimen controls. Retained MaterialTextures.paper as the

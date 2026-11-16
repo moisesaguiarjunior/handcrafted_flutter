@@ -24,6 +24,7 @@ are included. Source: [material studies](../example/lib/material_studies.dart),
 | Watercolor | `paintWatercolor` | Overlapping washes, a botanical painting and a resist/cutout study |
 | Relief | `paintCraftRelief`, `CraftReliefText` | Pressed/raised botanical motifs, reversible light and native lettering |
 | Motion | `PartPose`, `CraftPart`, `SceneEntrance`, `authoredKiteTail` | Body sway, local tail deformation, both together, balloon/tether and hanging pieces |
+| Imported image | `CraftImagePart` | One public crop/hinge/artboard adapter with native overlay, source mask and attachment mapping |
 
 Colored twill and linen specimens are recipes of existing algorithms, not new
 denim/cotton material implementations. Motion actors are runnable examples;

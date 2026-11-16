@@ -23,6 +23,8 @@ identity, themes and editorial decisions belong to the application.
 - Imported crop/hinge/attachment, native rotary-control and bounded pour/light
   recipes, plus a rendering-cost harness with owner-scoped resource bookkeeping.
   Native-device performance results remain pending.
+- Public CraftImagePart for a source crop placed in an artboard rectangle with
+  optional hinge/pose, shared native hit transform and no new animation clock.
 
 There is no exact Bezier inset, physical cloth, shared wind, water solver or
 shared texture cache. Pigment and relief are visual approximations; fabrics are

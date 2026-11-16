@@ -116,6 +116,7 @@ in an application. Keep source-access credentials outside code and URLs.
 | `paperOutline`, `CraftOutline.paper` | Clean, torn, handmade and postage silhouettes |
 | `paintPaperFinish`, `paintPaperEdgeFibers` | Clipped stock finish marks and independent fiber fringe |
 | `PartPose`, `CraftPart` | Shared paint, input and attachment transforms |
+| `CraftImagePart` | Image crop in an artboard rect, optional hinge/pose, native overlay and attachment mapping |
 | `SceneEntrance` | Finite lifecycle-aware entrance progress |
 | `authoredKiteTail` | An artwork preset with bounded authored motion |
 

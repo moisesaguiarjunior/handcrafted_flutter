@@ -15,21 +15,32 @@ void main() {
     for (final scale in [1.0, .5]) {
       final size = Size(240 * scale, 120 * scale);
       final pose = PartPose(rotation: math.pi / 2);
+      final part = CraftImagePart(
+        key: const ValueKey('mapping-probe'),
+        image: const AssetImage(layerAsset),
+        sourceSize: layerSourceSize,
+        sourceRect: lidSourceRect,
+        sourceHinge: lidSourceHinge,
+        rect: Offset.zero & size,
+        pose: pose,
+      );
       expect(
-        lidLayer.mapPoint(const Offset(316, 32), size, pose),
+        part.mapSourcePoint(const Offset(316, 32)),
         offsetMoreOrLessEquals(Offset(16, 12) * scale),
       );
       expect(
-        lidLayer.mapPoint(const Offset(336, 32), size, pose),
+        part.mapSourcePoint(const Offset(336, 32)),
         offsetMoreOrLessEquals(Offset(16, 32) * scale),
       );
     }
     expect(
-      () => SourceLayer(
+      () => const CraftImagePart(
+        key: ValueKey('invalid-crop'),
+        image: AssetImage(layerAsset),
         sourceSize: const Size(10, 10),
-        crop: const Rect.fromLTWH(8, 0, 4, 4),
-        hinge: Offset.zero,
-      ),
+        sourceRect: const Rect.fromLTWH(8, 0, 4, 4),
+        rect: const Rect.fromLTWH(0, 0, 4, 4),
+      ).mapSourcePoint(Offset.zero),
       throwsArgumentError,
     );
   });

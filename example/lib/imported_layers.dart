@@ -5,76 +5,20 @@ import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import 'showcase_theme.dart';
 
-/// Example adapter for an authored crop; source coordinates remain explicit.
-/// This is not a package manifest or an alpha-hit-test implementation.
-@immutable
-class SourceLayer {
-  /// Validates a crop against its complete finite source canvas.
-  SourceLayer({
-    required this.sourceSize,
-    required this.crop,
-    required this.hinge,
-  }) {
-    if (!sourceSize.width.isFinite ||
-        !sourceSize.height.isFinite ||
-        sourceSize.isEmpty ||
-        !crop.isFinite ||
-        crop.isEmpty ||
-        !(Offset.zero & sourceSize).contains(crop.topLeft) ||
-        crop.right > sourceSize.width ||
-        crop.bottom > sourceSize.height ||
-        !hinge.dx.isFinite ||
-        !hinge.dy.isFinite) {
-      throw ArgumentError('Expected finite source dimensions, crop and hinge');
-    }
-  }
-
-  /// Full image dimensions before cropping.
-  final Size sourceSize;
-
-  /// Visible source rectangle.
-  final Rect crop;
-
-  /// Authored hinge in full source coordinates.
-  final Offset hinge;
-
-  /// Hinge normalized to the crop, independent of display size.
-  Alignment get pivot => Alignment(
-    2 * (hinge.dx - crop.left) / crop.width - 1,
-    2 * (hinge.dy - crop.top) / crop.height - 1,
-  );
-
-  /// Converts a source coordinate into the actual laid-out crop.
-  Offset localPoint(Offset sourcePoint, Size effectiveSize) => Offset(
-    (sourcePoint.dx - crop.left) * effectiveSize.width / crop.width,
-    (sourcePoint.dy - crop.top) * effectiveSize.height / crop.height,
-  );
-
-  /// Maps a source attachment through the same pose as its artwork.
-  Offset mapPoint(Offset sourcePoint, Size effectiveSize, PartPose pose) =>
-      pose.mapPoint(
-        localPoint(sourcePoint, effectiveSize),
-        size: effectiveSize,
-        pivot: pivot,
-      );
-}
-
 /// Original synthetic sprite sheet, bundled only with the example.
 const layerAsset = 'assets/layers/cabinet.png';
 
-/// Asymmetric lid crop with an off-center hinge.
-final lidLayer = SourceLayer(
-  sourceSize: const Size(600, 360),
-  crop: const Rect.fromLTWH(300, 20, 240, 120),
-  hinge: const Offset(316, 32),
-);
+/// Complete coordinate size of the original sprite sheet.
+const layerSourceSize = Size(600, 360);
 
-/// Stationary cabinet crop from the same sprite sheet.
-final baseLayer = SourceLayer(
-  sourceSize: const Size(600, 360),
-  crop: const Rect.fromLTWH(20, 170, 240, 140),
-  hinge: const Offset(36, 182),
-);
+/// Crop containing the asymmetrical lid.
+const lidSourceRect = Rect.fromLTWH(300, 20, 240, 120);
+
+/// Authored hinge in the complete source coordinate space.
+const lidSourceHinge = Offset(316, 32);
+
+/// Stationary cabinet crop.
+const baseSourceRect = Rect.fromLTWH(20, 170, 240, 140);
 
 /// Authored hit silhouette, independent of transparent image pixels.
 Path lidHitPath(Size size) {
@@ -88,48 +32,6 @@ Path lidHitPath(Size size) {
     ..close();
   return path.transform(
     Matrix4.diagonal3Values(size.width / 240, size.height / 120, 1).storage,
-  );
-}
-
-class _LidClip extends CustomClipper<Path> {
-  const _LidClip();
-  @override
-  Path getClip(Size size) => lidHitPath(size);
-  @override
-  bool shouldReclip(_LidClip oldClipper) => false;
-}
-
-/// Displays the supplied source pixels; no scene artwork is redrawn at runtime.
-class CroppedArtwork extends StatelessWidget {
-  /// Displays a crop in its parent's finite bounds.
-  const CroppedArtwork({super.key, required this.layer});
-
-  /// Source image crop to display.
-  final SourceLayer layer;
-  @override
-  Widget build(BuildContext context) => LayoutBuilder(
-    builder: (context, bounds) {
-      final sx = bounds.maxWidth / layer.crop.width;
-      final sy = bounds.maxHeight / layer.crop.height;
-      return ClipRect(
-        child: Stack(
-          children: [
-            Positioned(
-              left: -layer.crop.left * sx,
-              top: -layer.crop.top * sy,
-              width: layer.sourceSize.width * sx,
-              height: layer.sourceSize.height * sy,
-              child: Image.asset(
-                layerAsset,
-                fit: BoxFit.fill,
-                excludeFromSemantics: true,
-                filterQuality: FilterQuality.medium,
-              ),
-            ),
-          ],
-        ),
-      );
-    },
   );
 }
 
@@ -163,20 +65,48 @@ class ImportedComposition extends StatelessWidget {
         final size = Size(240 * scale, 120 * scale);
         final origin = Offset(54, 218) * scale;
         final pose = PartPose(rotation: -1.15 * progress);
-        final anchor =
-            origin + lidLayer.mapPoint(const Offset(520, 75), size, pose);
+        final lid = CraftImagePart(
+          key: const ValueKey('imported-lid'),
+          image: const AssetImage(layerAsset),
+          sourceSize: layerSourceSize,
+          sourceRect: lidSourceRect,
+          sourceHinge: lidSourceHinge,
+          rect: origin & size,
+          pose: pose,
+          sourceClip: lidHitPath(const Size(240, 120))
+              .shift(lidSourceRect.topLeft),
+          child: TextButton(
+            onPressed: onLidPressed,
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.zero,
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              shape: const RoundedRectangleBorder(),
+            ),
+            child: Semantics(
+              label: 'Lift or close the lid',
+              child: SizedBox.expand(),
+            ),
+          ),
+        );
+        final anchor = lid.mapSourcePoint(const Offset(520, 75));
         return SizedBox(
           width: 400 * scale,
           height: 440 * scale,
           child: Stack(
             clipBehavior: Clip.none,
             children: [
-              Positioned(
-                left: origin.dx,
-                top: origin.dy,
-                width: size.width,
-                height: 140 * scale,
-                child: CroppedArtwork(layer: baseLayer),
+              CraftImagePart(
+                key: const ValueKey('imported-base'),
+                image: const AssetImage(layerAsset),
+                sourceSize: layerSourceSize,
+                sourceRect: baseSourceRect,
+                rect: Rect.fromLTWH(
+                  origin.dx,
+                  origin.dy,
+                  size.width,
+                  140 * scale,
+                ),
               ),
               // Hidden contents leave input, focus and semantics by being unmounted.
               if (progress >= .85)
@@ -191,34 +121,7 @@ class ImportedComposition extends StatelessWidget {
                     icon: const Icon(Icons.local_florist_outlined),
                   ),
                 ),
-              Positioned(
-                left: origin.dx,
-                top: origin.dy,
-                width: size.width,
-                height: size.height,
-                child: CraftPart(
-                  key: const ValueKey('imported-lid'),
-                  size: size,
-                  pose: pose,
-                  pivot: lidLayer.pivot,
-                  child: ClipPath(
-                    clipper: const _LidClip(),
-                    child: TextButton(
-                      onPressed: onLidPressed,
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        minimumSize: Size.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        shape: const RoundedRectangleBorder(),
-                      ),
-                      child: Semantics(
-                        label: 'Lift or close the lid',
-                        child: CroppedArtwork(layer: lidLayer),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              lid,
               Positioned.fill(
                 child: IgnorePointer(
                   child: CustomPaint(

@@ -30,7 +30,8 @@ text and controls, and avoid adding an animation clock to externally timed scene
 ## A. Imported layers, pivots and anchors (first priority)
 
 The [imported-layer example](../imported-layers.md) now demonstrates this recipe.
-The adapter is example-local; a general manifest remains proposed.
+CraftImagePart now provides the minimal public image adapter; a general manifest
+remains proposed. Route/content/occlusion policy stays with the consumer.
 
 Start with a runnable example and documented adapter: full source size, crop
 rectangle, pivot in source coordinates, logical scale and explicit pose. The

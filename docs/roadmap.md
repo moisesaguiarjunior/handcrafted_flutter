@@ -43,8 +43,9 @@ not physically displaced and wet paint is not simulated over time.
 
 The [material vocabulary/frame/accessibility request](requests/material-foundation.md)
 is the priority order for becoming a reusable experience foundation. Brand,
-content and policy remain consumer-owned. Existing primitives and visual studies
-are not yet the proposed full vocabulary or experience frame.
+content and policy remain consumer-owned. The first [material vocabulary](material-vocabulary.md)
+slice adds themed panels and native buttons/choices. It is not the full proposed
+vocabulary or the responsive experience frame.
 
 ## Material evolution inventory
 

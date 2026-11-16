@@ -1,7 +1,8 @@
 # A material vocabulary for new experiences
 
-This is the prioritized foundation request, not a claim that the components below
-already exist. Applications retain identity, content, illustrations, navigation,
+This is the prioritized foundation request. The initial theme/panel/button/choice
+slice is described in [material vocabulary](../material-vocabulary.md); the other
+items below are not claims of shipped components. Applications retain identity, content, illustrations, navigation,
 authorization and persistence. Private consumer inventories stay with consumers.
 
 ## 1. Vocabulary in the package, identity in the application

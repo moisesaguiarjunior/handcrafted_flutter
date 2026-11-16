@@ -62,3 +62,15 @@ and green CI; check Git tags for publication status.
   natively and in Chrome, including 36 old-source legacy raster combinations.
   Three negative controls failed as intended; the stitch capture matches exactly.
   Publication status remains in the PR and CI records.
+
+- PR #21: `604d23c17e78e03c728350de69c61f50c682826f` approved by two
+  independent local Astra reviews (core/contracts and UI/media). Full 83 package /
+  80 example checks, five core Chrome and ten gallery Chrome tests passed.
+  Advancing-front, oversized-decoration and native-label guards have failing
+  negative controls. Actual captures reproduced; phone evidence remains separate.
+
+- PR #22: `0c9e679cc6eeba130847ea5cd8033040f5f3ea1d` independently approved
+  by Astra; full 85 package / 81 example checks, eleven targeted native and eight
+  focused gallery Chrome tests passed. Count/hidden-return negative controls
+  failed correctly; actual finishing GIF and optional needle capture inspected.
+  All three thread modes retained; host-specific scroll adoption remains pending.

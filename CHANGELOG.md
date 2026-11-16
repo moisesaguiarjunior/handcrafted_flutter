@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Host-owned material ThemeExtension and role-based panels/native buttons/choices.
+  Native input, focus, selected semantics and minimum targets survive material
+  changes; bounded decoration falls back without clipping or shrinking content.
+  Add a two-theme live form and actual-widget capture.
+
 - Retain loose-wave and full-embroidery studies while adding faster completion
   of an adjustable number of missing stitches. Full reveal has independent
   loose-thread/needle props; document scroll-owned progress without another clock.

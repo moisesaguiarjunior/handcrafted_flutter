@@ -33,11 +33,12 @@ a passing widget test is not a phone benchmark or visual approval.
 ## Foundation priorities
 
 The [foundation request](requests/material-foundation.md) specifies acceptance
-boundaries. These are proposed components, not shipped APIs.
+boundaries. The material vocabulary now has an initial implementation; the remaining
+foundation items are proposals, not shipped APIs.
 
 | ID | Priority / request | Next gate |
 | --- | --- | --- |
-| HC-F01 | Material-themed sheet/tag/ribbon/card/tray/heading/button/choice vocabulary | Two host-owned themes, native controls, stable identity |
+| HC-F01 | Material-themed sheet/tag/ribbon/card/tray/heading/button/choice vocabulary | Initial CraftTheme/Panel/Button/Choice slice; two host-owned themes and state/focus/semantics checks; heading/finish/layout recipes still pending |
 | HC-F02 | One accessible artboard experience frame | Reuse crop/pose; short/narrow layouts, enlarged text and fixed footer |
 | HC-F03 | One art extraction pipeline | Private caller audit first; reproducible synthetic/provenance fixtures |
 | HC-F04 | Accessibility contracts and test helpers | Native labels from frame zero, selected state on action, targets/focus/text scaling |

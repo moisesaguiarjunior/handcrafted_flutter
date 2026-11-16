@@ -41,10 +41,14 @@ enum GalleryStudy {
 
   /// Ordered stitches, punctures and a travelling thread tip.
   embroidery,
+
+  /// Host-themed panels and native choices.
+  vocabulary,
 }
 
 /// Human-readable study title.
 String galleryLabel(GalleryStudy study) => switch (study) {
+  GalleryStudy.vocabulary => 'Material vocabulary',
   GalleryStudy.cover => 'Start exploring',
   GalleryStudy.materials => 'Materials & relief',
   GalleryStudy.paper => 'Paper & edges',
@@ -63,6 +67,8 @@ String galleryLabel(GalleryStudy study) => switch (study) {
 
 /// A short orientation before interacting with a study.
 String galleryDescription(GalleryStudy study) => switch (study) {
+  GalleryStudy.vocabulary =>
+    'Change material themes while keeping native text, focus and selection.',
   GalleryStudy.cover => 'Explore materials, marks and movement. Choose a study to try its controls.',
   GalleryStudy.spreading => 'Pigment travels from a wet center into the paper.',
   GalleryStudy.embroidery =>
@@ -89,6 +95,7 @@ String galleryDescription(GalleryStudy study) => switch (study) {
 /// Editorial order: pigment and movement are discoverable before technical studies.
 const galleryOrder = [
   GalleryStudy.cover,
+  GalleryStudy.vocabulary,
   GalleryStudy.spreading,
   GalleryStudy.watercolor,
   GalleryStudy.ink,

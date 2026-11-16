@@ -7,6 +7,7 @@ import 'cover_studies.dart' show ReliefObjectsSheet;
 import 'gallery_catalog.dart';
 import 'gallery_routes.dart';
 import 'living_materials.dart';
+import 'material_vocabulary.dart';
 
 export 'gallery_catalog.dart';
 import 'imported_layers.dart';
@@ -221,6 +222,7 @@ class _GalleryPage extends StatelessWidget {
   }
 
   Widget _content() => switch (selected) {
+    GalleryStudy.vocabulary => const MaterialVocabularyStudy(),
     GalleryStudy.cover => GalleryWelcome(select: select),
     GalleryStudy.materials => const Column(
       crossAxisAlignment: CrossAxisAlignment.start,

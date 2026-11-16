@@ -17,6 +17,7 @@
 | Pen, marker, brush and dry instrument patterns | `CraftStrokeStyle`, `paintCraftStroke` |
 | Paint, input and anchor transform | `PartPose`, `CraftPart` |
 | Material behind native widgets | `CraftSurface` |
+| Host-themed material roles and native actions | `CraftTheme`, `CraftPanel`, `CraftButton`, `CraftChoice` |
 | Clock-free rigid gravity/wind response | `CraftPendulum`, `CraftPendulumSample` |
 | Finite entrance clock | `SceneEntrance` |
 | Runnable compositions and captures | `example/lib/use_cases.dart`, `tool/capture_showcase.dart` |
@@ -207,3 +208,12 @@ all three existing contracts: kept loose-wave and full-sprig modes, added an
 example-only missing-stitch recipe and optional reveal props. Native controls
 configure count; scroll can supply progress without a second clock. No public
 thread physics or application-owned scroll policy is introduced.
+
+For material vocabulary, searched ThemeExtension, native button/focus/semantics,
+PreparedSeamGeometry, value outlines and bounded letterhead fallback. Composed
+CraftSurface, insetCraftPath, craftStitchPath and owned snapshots; no parallel
+texture, inset, thread or interaction renderer. The new panel contract keeps
+native content outside decorative clipping, unlike the existing clipped example
+surface. Its per-owner geometry cache is prepared outside paint. ThemeExtension,
+TextButton/Material/InkWell and native padding/theme interpolation remain canonical.
+No private consumer palette, application state, persistence, font or clock added.

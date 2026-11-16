@@ -20,3 +20,7 @@ export 'src/craft_relief.dart';
 export 'src/craft_trim.dart';
 export 'src/craft_pendulum.dart';
 export 'src/craft_stitch.dart';
+
+export 'src/craft_theme.dart';
+export 'src/craft_panel.dart';
+export 'src/craft_button.dart';

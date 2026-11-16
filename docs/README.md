@@ -31,3 +31,5 @@ belong in this package repository.
 
 - [Living paint and embroidery](living-materials.md): explicit progress, contact/layer examples and captures.
 - [Material foundation request](requests/material-foundation.md): proposed vocabulary, frame and acceptance gates.
+
+- [Host-themed material vocabulary](material-vocabulary.md): panels and native actions with independent host themes.

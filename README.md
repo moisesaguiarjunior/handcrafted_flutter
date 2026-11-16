@@ -36,6 +36,16 @@ base wetness. Pigment fronts advance unevenly instead of scaling a circular
 wipe. [Try paint spreading](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=spreading).
 These are bounded visual approximations, not a fluid or spectral pigment solver.
 
+## One set of controls, your material themes
+
+![Native note, choice and action in paper and cloth themes](docs/assets/material-vocabulary.png)
+
+`CraftTheme` supplies host-owned material roles; `CraftPanel`, `CraftButton` and
+`CraftChoice` keep text, focus, actions and selected state native. Switch the
+material without replacing the form or its contents.
+[Try both themes](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=vocabulary)
+· [Use the components](docs/material-vocabulary.md).
+
 ## Paper behind a real control
 
 ```dart

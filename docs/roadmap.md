@@ -9,6 +9,8 @@ identity, themes and editorial decisions belong to the application.
 - Five seeded textures: paper, linen, twill, felt and wood.
 - Organic contours; value-based rectangle, rounded rectangle and pigment recipes.
 - Running stitches with illustrative puncture shading.
+- Bounded polygonal contour insets respecting holes, concavities and exhausted
+  narrow regions, with a shared-contour showcase and interactive seam study.
 - Curves through waypoints, continuous/dashed/dotted ink, pen/marker/brush
   treatments and arc-length reveal with an interactive drawing playground.
 - Clipped surfaces, shared paint/input/anchor transforms, finite entrance motion.
@@ -19,7 +21,7 @@ identity, themes and editorial decisions belong to the application.
   recipes, plus a rendering-cost harness with owner-scoped resource bookkeeping.
   Native-device performance results remain pending.
 
-There is no general path inset, physical cloth, shared wind, water solver or
+There is no exact Bezier inset, physical cloth, shared wind, water solver or
 shared texture cache. Pigment and relief are visual approximations; fabrics are
 not physically displaced and wet paint is not simulated over time.
 
@@ -27,7 +29,7 @@ not physically displaced and wet paint is not simulated over time.
 
 | Priority | Delivery | Acceptance boundary |
 | --- | --- | --- |
-| 1 | Contour-following seams and corrected showcase | Insets handle concavities, holes and collapsed narrow regions; thread and relief stay inside the substrate |
+| 1 | Refine contour-following seams | Bounded polygonal implementation and corrected showcase exist; preserve clearance and topology within documented approximation/work limits |
 | 2 | Refine watercolor and inset lettering | Bounded visual implementations now exist; preserve semantics/scaling while validating their quality and phone performance |
 | 3 | Material/edge/mark recipes and playground | Parameters have visible effects, deterministic seeds, bounded work and small runnable examples |
 | 4 | Layered artwork manifest | Imported SVG layers retain supplied silhouettes, pivots and hit regions; no procedural redrawing requirement |

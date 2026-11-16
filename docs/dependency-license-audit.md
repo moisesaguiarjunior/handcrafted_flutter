@@ -12,6 +12,7 @@ is resolved by pub rather than vendored in this repository.
 | boolean_selector | 2.1.2 | BSD-3-Clause | `b71519245009a3b8f126196a5408ec031e216e8e0d985085958c6543f82a8a2a` |
 | characters | 1.4.1 | BSD-3-Clause | `0371d1da6a57fb791db29d29b95333429205f51f3cb2eb3a0c12d91838a38744` |
 | clock | 1.1.3 | Apache-2.0 | `58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd` |
+| clipper2 | 0.0.3 | BSL-1.0 | `c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566` |
 | collection | 1.19.1 | BSD-3-Clause | `ff15faa32a2e638107b7789592b14426162a75ba620044ee2340a20ec6ce5e73` |
 | fake_async | 1.3.3 | Apache-2.0 | `58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd` |
 | leak_tracker | 11.0.2 | BSD-3-Clause | `08a004aa8956c3cf3b24f7f69c966247233953e18e6afaa61191ea47b7eb70f6` |

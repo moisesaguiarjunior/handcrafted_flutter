@@ -10,6 +10,7 @@
 - [Native rotary control and retargetable artwork](rotary-control.md)
 - [Imported layers, source pivots and attachments](imported-layers.md)
 - [Rendering-cost harness and resource ownership](rendering-budget.md)
+- [Contour-following seams and approximation limits](contour-seams.md)
 - [Curved lines, patterns and drawing playground](drawing-strokes.md)
 - [Implemented catalog: materials, relief, watercolor and independent motion](materials-and-motion.md)
 - [Composition, Fluvie and Social Studio integration](integration.md)

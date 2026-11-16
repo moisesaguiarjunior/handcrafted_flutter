@@ -33,7 +33,10 @@ CraftSurface(
 Give the surface normal Flutter constraints. An optional `outline` supplies one
 cached silhouette for painting, clipping and child hit testing. Prefer a value
 `shape` recipe to retain the cache across equivalent rebuilds. The host supplies
-the seam path; the package does not yet calculate a general inset contour.
+the content padding. `insetCraftPath` derives a bounded polygonal seam from a
+closed silhouette, respecting concavities and holes. See [contour seams](docs/contour-seams.md).
+
+![Contour-following stitches on organic, cutout and narrow-neck materials](docs/assets/contour-seams.png)
 
 ## Materials you can compose
 
@@ -83,6 +86,7 @@ flutter run -d chrome -t lib/main_atlas.dart
 - [Rotary recipe](docs/rotary-control.md): native stepping and retargetable wooden artwork; run `lib/main_dial.dart`.
 - [Imported artwork recipe](docs/imported-layers.md): source crops, hinges and attached thread; run `lib/main_scenes.dart`.
 - [Rendering budget](docs/rendering-budget.md): bounded stress scene and runtime UI/raster timing; run `lib/main_budget.dart` in profile mode.
+- [Contour seam study](docs/contour-seams.md): holes, concavities and disappearing necks; run `lib/main_seams.dart`.
 
 Use a local path dependency during development, or pin an immutable Git commit
 in an application. Keep source-access credentials outside code and URLs.
@@ -100,6 +104,7 @@ in an application. Keep source-access credentials outside code and URLs.
 | `craftCurveThrough`, `trimCraftPath` | Curved waypoints and explicit arc-length reveal |
 | `CraftStrokeStyle`, `paintCraftStroke` | Continuous, dashed or dotted pen/marker/brush ink |
 | `runningStitchPath`, `paintRunningStitch` | Arc-length stitches and illustrative puncture shading |
+| `insetCraftPath` | Bounded winding-aware polygonal inset of a closed silhouette |
 | `PartPose`, `CraftPart` | Shared paint, input and attachment transforms |
 | `SceneEntrance` | Finite lifecycle-aware entrance progress |
 | `authoredKiteTail` | An artwork preset with bounded authored motion |
@@ -111,8 +116,9 @@ size. Reserve parent space for moving touch targets.
 
 Motion is authored, not a physics solver. Punctures are shading, not displaced
 cloth. Textures are cached per surface.
-General contour insets, additional material/edge/stitch families and physical
-cloth/wind remain future work. Glyph shading uses bounded offscreen layers;
+Additional material/edge/stitch families and physical cloth/wind remain future
+work. Insets approximate curves with polygons and have explicit work limits.
+Glyph shading uses bounded offscreen layers;
 phone performance remains unmeasured.
 
 ## Curves, ink and completed paths
@@ -147,6 +153,7 @@ Social Studio adapter boundaries.
 
 ## License
 
-Code and original documentation/media: [MIT](LICENSE). Example-only Inter and
+Code and original documentation/media: [MIT](LICENSE). Clipper2 retains BSL-1.0.
+Example-only Inter and
 Caveat fonts retain their bundled SIL OFL 1.1 notices. See
 [dependency notices](docs/dependencies.md) and [provenance](docs/provenance.md).

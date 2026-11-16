@@ -10,6 +10,7 @@ export 'src/scene_entrance.dart';
 export 'src/craft_part.dart';
 export 'src/craft_surface.dart';
 export 'src/craft_outline.dart';
+export 'src/contour_inset.dart';
 export 'src/craft_stroke.dart';
 export 'src/watercolor.dart';
 export 'src/craft_relief.dart';

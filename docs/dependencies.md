@@ -1,10 +1,13 @@
 # Dependencies
 
-Only the Flutter SDK and its flutter_test SDK package are direct dependencies
-(BSD-3-Clause Flutter project license). The lockfiles record resolved transitive
+Direct dependencies are Flutter (BSD-3-Clause SDK) and clipper2 0.0.3 (BSL-1.0);
+flutter_test is a developer SDK dependency. The lockfiles record resolved transitive
 dependencies. The locked hosted package LICENSE inventory is recorded in
 [dependency-license-audit.md](dependency-license-audit.md); future lockfile changes
 require rechecking it.
+Clipper2 supplies polygon union/offset geometry; its Boost license remains
+separate from this project's MIT license. Its source is resolved by pub rather
+than vendored. See https://pub.dev/packages/clipper2 and the locked license hash.
 No third-party material, animation or physics package has been added.
 
 ## Example-only assets and developer tools

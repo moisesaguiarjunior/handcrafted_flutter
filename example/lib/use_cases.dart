@@ -5,6 +5,7 @@ import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import 'kite_art.dart';
 import 'showcase_theme.dart';
+import 'seam_studies.dart';
 
 export 'showcase_theme.dart';
 
@@ -110,7 +111,7 @@ class _KeepsakeCard extends StatelessWidget {
           child: RepaintBoundary(
             child: ConstrainedBox(
               constraints: const BoxConstraints(minWidth: 340, minHeight: 250),
-              child: CraftSurface(
+              child: SeamedSurface(
                 material: CraftMaterial.paper,
                 color: DemoPalette.paper,
                 shape: const CraftOutline.pigment(
@@ -118,30 +119,28 @@ class _KeepsakeCard extends StatelessWidget {
                   broad: true,
                   padding: 5,
                 ),
-                child: CustomPaint(
-                  foregroundPainter: const _CardSeam(),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(32, 38, 32, 24),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Little things,\nkept close.',
-                          style: TextStyle(
-                            fontFamily: 'Caveat',
-                            fontSize: 42,
-                            height: 1.05,
-                            color: DemoPalette.ink,
-                          ),
+                inset: 16,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(32, 38, 32, 24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Little things,\nkept close.',
+                        style: TextStyle(
+                          fontFamily: 'Caveat',
+                          fontSize: 42,
+                          height: 1.05,
+                          color: DemoPalette.ink,
                         ),
-                        TextButton(
-                          onPressed: onAction,
-                          child: const Text('Open collection'),
-                        ),
-                      ],
-                    ),
+                      ),
+                      TextButton(
+                        onPressed: onAction,
+                        child: const Text('Open collection'),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -161,6 +160,7 @@ class _KeepsakeCard extends StatelessWidget {
             child: CraftSurface(
               material: CraftMaterial.felt,
               color: DemoPalette.sage,
+              shape: CraftOutline.pigment(seed: 41, broad: true, padding: 2),
               child: Center(
                 child: Text(
                   'Keepsakes',
@@ -177,32 +177,6 @@ class _KeepsakeCard extends StatelessWidget {
       ),
     ],
   );
-}
-
-class _CardSeam extends CustomPainter {
-  const _CardSeam();
-  @override
-  void paint(Canvas canvas, Size size) {
-    final seam = Path()
-      ..addRRect(
-        RRect.fromRectAndRadius(
-          (Offset.zero & size).deflate(21),
-          const Radius.circular(26),
-        ),
-      );
-    paintRunningStitch(
-      canvas,
-      seam,
-      thread: DemoPalette.thread,
-      dash: 5,
-      gap: 4,
-      width: 1.2,
-      compression: .4,
-    );
-  }
-
-  @override
-  bool shouldRepaint(_CardSeam oldDelegate) => false;
 }
 
 class _HangingParts extends StatelessWidget {

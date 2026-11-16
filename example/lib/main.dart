@@ -1,4 +1,5 @@
 import 'hanging_study.dart';
+import 'seam_studies.dart';
 
 import 'package:flutter/material.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
@@ -27,6 +28,7 @@ class _MaterialStudy extends StatefulWidget {
 class _MaterialStudyState extends State<_MaterialStudy> {
   var _seed = 7;
   var _textures = MaterialTextures();
+  late var _geometry = _geometryForSeed(_seed);
   double _grain = 1;
   double _scale = 1;
   double _compression = .7;
@@ -73,6 +75,7 @@ class _MaterialStudyState extends State<_MaterialStudy> {
               onPressed: () => setState(() {
                 _textures.dispose();
                 _textures = MaterialTextures(seed: ++_seed);
+                _geometry = _geometryForSeed(_seed);
               }),
               child: Text('Reseed ($_seed)'),
             ),
@@ -108,7 +111,7 @@ class _MaterialStudyState extends State<_MaterialStudy> {
                           painter: _MaterialPainter(
                             _textures,
                             material,
-                            _seed,
+                            _geometry,
                             _grain,
                             _scale,
                             _compression,
@@ -125,7 +128,7 @@ class _MaterialStudyState extends State<_MaterialStudy> {
         const SizedBox(height: 24),
         const Text(
           'Next: paper recipes (cardstock, kraft, solid/corrugated board) '
-          'and letterhead as printing over a substrate. See docs/materials-map.md.',
+          'and letterhead as printing over a substrate. See docs/roadmap.md.',
         ),
       ],
     ),
@@ -155,11 +158,17 @@ class _MaterialStudyState extends State<_MaterialStudy> {
   );
 }
 
+PreparedSeamGeometry _geometryForSeed(int seed) => PreparedSeamGeometry(
+  (size) =>
+      pigmentOutline((Offset.zero & size).deflate(12), seed: seed, broad: true),
+  12,
+);
+
 class _MaterialPainter extends CustomPainter {
   _MaterialPainter(
     this.textures,
     this.material,
-    this.seed,
+    this.geometry,
     this.grain,
     this.scale,
     this.compression,
@@ -168,7 +177,7 @@ class _MaterialPainter extends CustomPainter {
 
   final MaterialTextures textures;
   final CraftMaterial material;
-  final int seed;
+  final PreparedSeamGeometry geometry;
   final double grain;
   final double scale;
   final double compression;
@@ -176,8 +185,7 @@ class _MaterialPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final bounds = (Offset.zero & size).deflate(12);
-    final outline = pigmentOutline(bounds, seed: seed, broad: true);
+    final outline = geometry.outlineFor(size);
     textures.paint(
       canvas,
       outline,
@@ -186,18 +194,11 @@ class _MaterialPainter extends CustomPainter {
       strength: grain,
       scale: scale,
     );
-    // Scale the same outline around its center for this convex sample.
-    // This is not a general constant-distance inset for concave shapes.
     canvas.save();
     canvas.clipPath(outline);
-    // Transform once for both seam painting and puncture positions.
-    final transform = Matrix4.identity()
-      ..translateByDouble(bounds.center.dx, bounds.center.dy, 0, 1)
-      ..scaleByDouble(.86, .82, 1, 1)
-      ..translateByDouble(-bounds.center.dx, -bounds.center.dy, 0, 1);
     paintRunningStitch(
       canvas,
-      outline.transform(transform.storage),
+      geometry.seamFor(size),
       thread: const Color(0xFF704136),
       compression: compression,
       light: reverseLight ? const Offset(1, 1) : const Offset(-1, -1),
@@ -209,7 +210,7 @@ class _MaterialPainter extends CustomPainter {
   bool shouldRepaint(_MaterialPainter old) =>
       old.textures != textures ||
       old.material != material ||
-      old.seed != seed ||
+      old.geometry != geometry ||
       old.grain != grain ||
       old.scale != scale ||
       old.compression != compression ||

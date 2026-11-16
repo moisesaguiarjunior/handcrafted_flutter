@@ -27,3 +27,8 @@ synthetic examples. They do not reproduce a consumer application's artwork.
 The cabinet sprite sheet is original synthetic artwork authored with Flutter in
 tool/author_layer_asset.dart and distributed under MIT. Its runtime example
 imports the resulting PNG unchanged. No third-party or consumer image is used.
+
+Contour insets use clipper2 0.0.3 as a pub-resolved dependency under BSL-1.0;
+its algorithm/source is not vendored or relicensed as MIT. The bounded Flutter
+path adapter, seam specimens and updated synthetic card captures are authored
+here. Dependency notices and inspected LICENSE hash are recorded separately.

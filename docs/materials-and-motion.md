@@ -18,7 +18,7 @@ are included. Source: [material studies](../example/lib/material_studies.dart),
 | --- | --- | --- |
 | Five texture algorithms | `CraftMaterial`, `MaterialTextures`, `CraftSurface` | Indigo twill, flax linen, rose felt, drawing paper and wood |
 | Silhouettes | `pigmentOutline`, `CraftOutline` | Organic swatches, native-widget surfaces and circular fabric specimens |
-| Sewing | `runningStitchPath`, `paintRunningStitch` | Running stitch and illustrative puncture shading; circular seams have an exact concentric inset |
+| Sewing | `insetCraftPath`, `runningStitchPath`, `paintRunningStitch` | Polygonal contour-following seams and puncture shading; circular seams retain an exact concentric recipe |
 | Drawing | `craftCurveThrough`, `trimCraftPath`, `paintCraftStroke` | Continuous, dotted or dashed pen/marker/brush lines and explicit reveal |
 | Watercolor | `paintWatercolor` | Overlapping washes, a botanical painting and a resist/cutout study |
 | Relief | `paintCraftRelief`, `CraftReliefText` | Pressed/raised botanical motifs, reversible light and native lettering |
@@ -34,7 +34,8 @@ the package does not ship a general actor system or physics solver.
 
 The motifs are original botanical drawings. Cloth is still visible inside the
 impressions. The circular running stitch reserves enough room for thread and
-puncture shading; this does not establish an arbitrary-silhouette inset API.
+puncture shading. Other closed silhouettes can use the bounded polygonal
+[contour inset](contour-seams.md); it approximates curves and may split islands.
 
 ```dart
 paintCraftRelief(canvas, motif,

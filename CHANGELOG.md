@@ -2,6 +2,9 @@
 
 ## 0.0.1 (unreleased)
 
+- Bounded contour insets via pinned clipper2, respecting fill rules, holes and
+  collapsed narrow regions. Adds a seam study and corrects the card/material
+  showcases to follow the actual cut rather than scaled or unrelated contours.
 - Reproducible rendering-cost harness with bounded engine UI/raster samples,
   explicit resource/disposal counts and repeated mixed material workloads.
 - Bounded authored pour/light example with mapped emitter, seeded fixed storage,

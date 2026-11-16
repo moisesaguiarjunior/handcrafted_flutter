@@ -9,6 +9,7 @@
 | Directional motif rims and native lettering | `paintCraftRelief`, `CraftReliefText` |
 | Stitch spans and puncture shading | `runningStitchPath`, `paintRunningStitch` |
 | Shared bounded arc-length geometry | `lib/src/path_geometry.dart` (internal) |
+| Closed-silhouette polygonal insets | `insetCraftPath`, using pinned clipper2 union/offset |
 | Curved waypoints and explicit reveal | `craftCurveThrough`, `trimCraftPath` |
 | Pen, marker and brush patterns | `CraftStrokeStyle`, `paintCraftStroke` |
 | Paint, input and anchor transform | `PartPose`, `CraftPart` |
@@ -84,3 +85,11 @@ imported layers and finite clocks. Reused all actual painters and the imported
 adapter; fixed geometry remains prepared in the example. Explicit per-consumer
 owners retain resources across equal rebuilds. Engine FrameTiming callbacks feed
 a bounded local window without scheduling UI work or adding a global cache.
+
+For contour-following seams, searched inset, seam, outline, Path.combine and
+existing geometry dependencies. Reused checkedPathMetrics, running stitches and
+native surface clipping. Clipper2 supplies winding-aware polygon union/offset
+instead of a new offset engine. The bounded adapter samples Flutter paths;
+example-local PreparedSeamGeometry is shared by the seam study, card and material
+playground. Equivalent recipes retain the pair; effective size changes replace
+it. Shape, thread, native content and texture ownership remain independent.

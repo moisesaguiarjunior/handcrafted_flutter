@@ -4,6 +4,8 @@
 
 - Native rotary-control example with bounded stepping, stable control identity,
   current-pose retargeting and finite, activity-aware decorative movement.
+- Imported-artwork example with source crops, authored hinges, mapped thread,
+  supplied hit shapes and native content actions that leave focus when covered.
 - Explicit pen/marker stroke joins, preserving the round default and allowing
   authored miter/bevel corners. Adds adoption guidance and proposed imported-layer,
   rotary-control and bounded-effect recipes with acceptance criteria.

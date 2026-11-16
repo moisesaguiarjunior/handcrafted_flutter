@@ -59,6 +59,8 @@ only pointer input. It is not an alpha test; use a mask that agrees with the art
 The optional child fills the crop rectangle above the image, so its internal
 padding cannot shift the crop. Image semantics are excluded unless semanticLabel
 is supplied. An interactive overlay normally supplies its own native label.
+Adding or removing a source mask retains the overlay's native state and focus;
+the clipping wrapper remains in the tree in both cases.
 Text, keyboard focus and minimum targets remain the host's responsibility;
 do not scale text controls down with a decorative artboard. Hidden controls must
 still be removed by the host as in this example. ImageProvider and Flutter own

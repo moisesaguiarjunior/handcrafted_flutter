@@ -159,12 +159,16 @@ class CraftImagePart extends StatelessWidget {
         if (child != null) Positioned.fill(child: child!),
       ],
     );
-    if (sourceClip case final clip?) {
-      content = ClipPath(
-        clipper: _SourceClip(Path.from(clip), sourceRect),
-        child: content,
-      );
-    }
+    // Keep wrapper topology stable when an optional mask is added or removed.
+    // Otherwise native editable/focus state in the overlay would be remounted.
+    content = ClipPath(
+      clipper: _SourceClip(
+        sourceClip == null ? null : Path.from(sourceClip!),
+        sourceRect,
+      ),
+      clipBehavior: sourceClip == null ? Clip.hardEdge : Clip.antiAlias,
+      child: content,
+    );
     return Positioned.fromRect(
       rect: rect,
       child: CraftPart(
@@ -180,18 +184,20 @@ class CraftImagePart extends StatelessWidget {
 
 class _SourceClip extends CustomClipper<Path> {
   const _SourceClip(this.source, this.crop);
-  final Path source;
+  final Path? source;
   final Rect crop;
   @override
-  Path getClip(Size size) => source
-      .shift(-crop.topLeft)
-      .transform(
-        Matrix4.diagonal3Values(
-          size.width / crop.width,
-          size.height / crop.height,
-          1,
-        ).storage,
-      );
+  Path getClip(Size size) => source == null
+      ? (Path()..addRect(Offset.zero & size))
+      : source!
+            .shift(-crop.topLeft)
+            .transform(
+              Matrix4.diagonal3Values(
+                size.width / crop.width,
+                size.height / crop.height,
+                1,
+              ).storage,
+            );
   @override
   bool shouldReclip(_SourceClip old) =>
       source != old.source || crop != old.crop;

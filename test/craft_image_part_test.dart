@@ -230,6 +230,57 @@ void main() {
     },
   );
 
+  testWidgets(
+    'mask changes retain child-owned editable state in both directions',
+    (tester) async {
+      Future<void> show(Path? clip) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: SizedBox(
+                width: 400,
+                height: 340,
+                child: Stack(
+                  children: [
+                    CraftImagePart(
+                      key: const ValueKey('editable-image'),
+                      image: provider,
+                      sourceSize: sourceSize,
+                      sourceRect: crop,
+                      rect: const Rect.fromLTWH(40, 60, 240, 100),
+                      sourceClip: clip,
+                      child: const TextField(
+                        decoration: InputDecoration(labelText: 'Note'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+      }
+
+      await show(null);
+      await tester.enterText(find.byType(TextField), 'Keep this note');
+      final editable = tester.element(find.byType(EditableText));
+      for (final clip in [Path()..addRect(crop), null, Path()..addRect(crop)]) {
+        await show(clip);
+        expect(find.text('Keep this note'), findsOneWidget);
+        expect(tester.element(find.byType(EditableText)), same(editable));
+        expect(
+          tester
+              .widget<EditableText>(find.byType(EditableText))
+              .focusNode
+              .hasFocus,
+          isTrue,
+        );
+      }
+      await tester.pumpWidget(const SizedBox());
+    },
+  );
+
   test(
     'identity defaults and invalid source/destination/attachments are explicit',
     () {

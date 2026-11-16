@@ -104,6 +104,7 @@ void paintCraftTrim(
   }
   if (stations > 2048)
     throw ArgumentError('Trim exceeds 2048 texture stations');
+  final band = spanPath(pathSpans(metrics), preserveClosed: true);
   final direction = light / light.distance;
   Paint stroke(Color c, double w) => Paint()
     ..color = c
@@ -113,14 +114,14 @@ void paintCraftTrim(
     ..strokeJoin = StrokeJoin.round;
   if (relief > 0) {
     canvas.drawPath(
-      path.shift(-direction * width * .22),
+      band.shift(-direction * width * .22),
       stroke(Color.fromRGBO(35, 25, 15, .22 * relief * color.a), width * 1.1),
     );
   }
-  canvas.drawPath(path, stroke(color, width));
+  canvas.drawPath(band, stroke(color, width));
   if (relief > 0) {
     canvas.drawPath(
-      path.shift(direction * width * .1),
+      band.shift(direction * width * .1),
       stroke(Color.fromRGBO(255, 255, 255, .32 * relief * color.a), width * .7),
     );
   }

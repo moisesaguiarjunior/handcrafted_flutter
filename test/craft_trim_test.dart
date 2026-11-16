@@ -37,6 +37,21 @@ void main() {
       expect(rope, await render(CraftTrimKind.rope));
     },
   );
+  test(
+    'degenerate contours paint no dot, alone or mixed with a curve',
+    () async {
+      final dot = Path()
+        ..moveTo(40, 40)
+        ..lineTo(40, 40);
+      final mixed = Path.from(curve)..addPath(dot, Offset.zero);
+      Future<List<int>> render(Path path) => pixels(
+        (c) =>
+            paintCraftTrim(c, path, color: const Color(0xFFB09161), width: 12),
+      );
+      expect(await render(dot), await pixels((_) {}));
+      expect(await render(mixed), await render(curve));
+    },
+  );
   test('nominal gap reserves band radius and respects holes', () {
     final outline = Path()
       ..fillType = PathFillType.evenOdd

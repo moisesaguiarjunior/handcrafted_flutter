@@ -104,3 +104,8 @@ Application schemas, chronology, media capture, persistence, navigation and
 authorization are not package responsibilities. Water, wind and cloth simulation
 remain research. These requests must not block consumer features implemented
 with ordinary Flutter composition and existing artwork.
+
+## Related consumer contract
+
+[Bounded freehand capture](freehand-capture.md) records the point-budget versus
+arc-length distinction for solid input; it does not weaken illustrative limits.

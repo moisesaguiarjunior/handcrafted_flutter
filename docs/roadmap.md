@@ -94,3 +94,6 @@ The imported-layer example now demonstrates crops, pivots and anchors using
 existing parts, without creating a manifest API. The next evidence
 task is a repeatable rendering-cost scene. These complement the delivery order;
 neither shared caches nor prepared-geometry APIs are justified without profiling.
+
+- Proposed: [bounded freehand consumer assessment](requests/freehand-capture.md),
+  separate from the current illustrative path limits; no implementation approved.

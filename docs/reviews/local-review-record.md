@@ -45,3 +45,8 @@ and green CI; check Git tags for publication status.
   69 example tests, independent numerical-reference/extreme-force probes and
   60 transformed native taps. Wind-sign, time-limit and reduced-motion negative
   controls failed as intended. CI passed and the candidate was integrated.
+
+- PR #15: `36abe9dbd60051c4bf8de3a43ceb7ce183ed90e9` independently approved;
+  62 package / 69 example tests, byte-identical cover/relief captures, narrow and
+  enlarged-text native-action probes, and web build passed. No privacy/metadata
+  findings. Publication status is recorded by the PR and its CI checks.

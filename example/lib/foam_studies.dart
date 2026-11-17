@@ -186,17 +186,30 @@ class _FoamPlaygroundState extends State<FoamPlayground> {
         'Fine pores, rough cells, color islands and pressed grooves. Stack cuts with their own finish and edge light.',
       ),
       Text('Raised edge ${depth.round()} px'),
-      Slider(
-        key: const ValueKey('foam-depth'),
-        value: depth,
-        max: 8,
-        onChanged: (v) => setState(() => depth = v),
+      MergeSemantics(
+        child: Semantics(
+          label: 'Raised edge',
+          child: Slider(
+            key: const ValueKey('foam-depth'),
+            value: depth,
+            max: 8,
+            semanticFormatterCallback: (v) =>
+                '${v.toStringAsFixed(1)} logical pixels',
+            onChanged: (v) => setState(() => depth = v),
+          ),
+        ),
       ),
       Text('Finish contrast ${(strength * 100).round()}%'),
-      Slider(
-        key: const ValueKey('foam-strength'),
-        value: strength,
-        onChanged: (v) => setState(() => strength = v),
+      MergeSemantics(
+        child: Semantics(
+          label: 'Finish contrast',
+          child: Slider(
+            key: const ValueKey('foam-strength'),
+            value: strength,
+            semanticFormatterCallback: (v) => '${(v * 100).round()} percent',
+            onChanged: (v) => setState(() => strength = v),
+          ),
+        ),
       ),
       FoamStudies(depth: depth, strength: strength),
       const SizedBox(height: 16),

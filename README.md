@@ -7,7 +7,7 @@
 
 ![Layered rose petals and a blue-green wash on textured paper](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/watercolor-hero.png)
 
-Seeded paper, linen, twill, felt and wood textures, contour-following stitches, organic
+Seeded paper, linen, twill, felt, wood and EVA textures, contour-following stitches, organic
 contours, watercolor pigment, relief, cord/ribbon bands and composable moving
 parts for Flutter.
 Text remains text; buttons retain native focus, actions and semantics.

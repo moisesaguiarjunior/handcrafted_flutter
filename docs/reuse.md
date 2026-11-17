@@ -2,6 +2,7 @@
 
 | Need | Canonical implementation |
 | --- | --- |
+| Fine-pore EVA and independent bounded impressions | `CraftMaterial.eva`, `paintFoamFinish` |
 | Seeded perimeter | `pigmentOutline` |
 | Value-based silhouette recipes | `CraftOutline`, `CraftSurface.shape` |
 | Material tiles and owned resources | `MaterialTextures`, `CraftMaterial` |
@@ -281,3 +282,7 @@ single-color rendering are preserved. The examples use original procedural cuts,
 not application assets, manifests or a new clock. Root Flutter pub get already
 resolves/enforces the example; setup now runs it once, backed by a missing-lock
 negative control in an isolated snapshot.
+
+Foam adjustment labels and units merge into the native adjustable node using
+Flutter MergeSemantics/Semantics; the gallery regression inspects the actual
+action-bearing node after real drags, rather than an unlabeled outer container.

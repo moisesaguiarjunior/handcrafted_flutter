@@ -22,6 +22,15 @@ See [release notes and migration](https://github.com/moisesaguiarjunior/handcraf
 the current source branch.
 Tested baseline: Flutter 3.47.9 / Dart 3.13.7. See [compatibility](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/compatibility.md).
 
+## Compose a note you can use
+
+[![An editable watercolor note with contour stitching and native controls](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/painted-note.png)](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=cover)
+
+Write in the note, remove its stitched edge, and try the button in the
+[live composition](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=cover).
+The paper, pigment and pressed heading are decoration; the field, choice and
+action are real Flutter widgets. [See the runnable composition](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/example/lib/painted_note.dart).
+
 ## Watercolor, on paper and in motion
 
 ![Overlapping pigment, a botanical painting and a paper cutout](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/watercolor-atlas.png)
@@ -137,7 +146,6 @@ gh repo clone moisesaguiarjunior/handcrafted_flutter
 cd handcrafted_flutter
 flutter pub get --enforce-lockfile
 cd example
-flutter pub get --enforce-lockfile
 flutter run -d chrome -t lib/main_gallery.dart
 ```
 

@@ -25,3 +25,8 @@ No source lines, exclusions or tests are hidden to raise the percentage.
 
 References: [Codecov Action](https://github.com/codecov/codecov-action),
 [OIDC inputs and permissions](https://github.com/codecov/codecov-action#using-oidc).
+
+The tested Flutter baseline resolves example dependencies from the root get,
+including --enforce-lockfile. Setup runs it once. An isolated negative check with
+the example lockfile removed fails at the root command; separate projects still
+retain their own lockfiles.

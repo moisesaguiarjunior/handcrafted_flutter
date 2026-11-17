@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Compose the welcome and README cover around a real editable watercolor note,
+  with native choice/action and optional contour stitching. Keep the flower and
+  atlases; put study actions before art, label sharing, and show paint wetness
+  before the preview. First touch starts at zero with explicit playback.
+
 - Keep the vocabulary demo inside the existing material budget on wide desktop
   viewports; native text/actions remain unchanged and the package fallback stays.
   Add a regression through the actual gallery in paper and cloth themes.

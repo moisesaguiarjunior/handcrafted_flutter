@@ -12,7 +12,6 @@ jobs:
           flutter-version: '3.47.9'
           channel: stable
       - run: flutter pub get --enforce-lockfile
-      - run: cd example && flutter pub get --enforce-lockfile
       - run: bash tool/check.sh
       - run: python3 tool/check_publication.py
       - uses: actions/upload-artifact@v4

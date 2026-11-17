@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'gallery_catalog.dart';
 import 'living_materials.dart';
 import 'motion_studies.dart';
+import 'painted_note.dart';
 
-/// A painting-led introduction with direct routes to the interactive studies.
+/// A usable note before the individual material and motion studies.
 class GalleryWelcome extends StatelessWidget {
   /// Reuses the gallery's native route selection.
   const GalleryWelcome({super.key, required this.select});
@@ -21,18 +22,11 @@ class GalleryWelcome extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'A little color. A world of texture.',
-              style: TextStyle(fontFamily: 'Caveat', fontSize: 48),
+              'Make something worth keeping.',
+              style: TextStyle(fontFamily: 'Caveat', fontSize: 44),
             ),
-            const Text(
-              'Watch pigment spread, follow a strand, or give your own widgets a handmade surface.',
-            ),
-            const SizedBox(height: 24),
-            const LivingMaterialArtwork(
-              technique: LivingTechnique.watercolor,
-              progress: .84,
-            ),
-            const SizedBox(height: 16),
+            const Text('Paper, pigment and thread. Your words and controls.'),
+            const SizedBox(height: 12),
             Wrap(
               spacing: 12,
               runSpacing: 8,
@@ -50,6 +44,17 @@ class GalleryWelcome extends StatelessWidget {
                   child: const Text('Try the instruments'),
                 ),
               ],
+            ),
+            const SizedBox(height: 20),
+            const Center(child: PaintedNote()),
+            const SizedBox(height: 36),
+            const Text(
+              'Color finds its own edges',
+              style: TextStyle(fontFamily: 'Caveat', fontSize: 34),
+            ),
+            const LivingMaterialArtwork(
+              technique: LivingTechnique.watercolor,
+              progress: .84,
             ),
             const SizedBox(height: 36),
             const Text(

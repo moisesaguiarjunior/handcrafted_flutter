@@ -29,8 +29,6 @@ jobs:
           flutter-version: '3.47.9'
           channel: stable
       - run: flutter pub get --enforce-lockfile
-      - run: flutter pub get --enforce-lockfile
-        working-directory: example
       - run: flutter build web --release --no-web-resources-cdn --base-href /handcrafted_flutter/ -t lib/main_gallery.dart
         working-directory: example
       - uses: actions/upload-pages-artifact@v3

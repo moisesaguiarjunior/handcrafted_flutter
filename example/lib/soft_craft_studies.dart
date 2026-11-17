@@ -5,7 +5,7 @@ import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import 'material_studies.dart';
 
-const _pocketColors = [Color(0xFFDBA34A), Color(0xFF67969F), Color(0xFFC87E79)];
+const _pocketColors = [Color(0xFFF1BD4E), Color(0xFF73B8C7), Color(0xFFF09599)];
 
 /// Original pockets, powdery marks and folded cardstock using public painters.
 class SoftCraftSamples extends StatelessWidget {
@@ -81,7 +81,7 @@ class SoftCraftSamples extends StatelessWidget {
                 width: width,
                 child: _Specimen(
                   'Folded color',
-                  'Satin cardstock · curled blades · no wooden stick',
+                  'Playful card · soft folds · no wooden stick',
                   _SampleArt(
                     4,
                     CraftMaterial.paper,
@@ -171,12 +171,12 @@ class _SoftPainter extends CustomPainter {
       return;
     }
     pocket = Path()
-      ..moveTo(70, 141)
-      ..quadraticBezierTo(150, 162, 230, 141)
-      ..lineTo(224, 245)
-      ..quadraticBezierTo(223, 261, 205, 263)
-      ..quadraticBezierTo(150, 274, 95, 263)
-      ..quadraticBezierTo(77, 261, 76, 245)
+      ..moveTo(83, 145)
+      ..quadraticBezierTo(150, 161, 217, 145)
+      ..lineTo(216, 241)
+      ..quadraticBezierTo(217, 266, 194, 268)
+      ..quadraticBezierTo(150, 276, 106, 268)
+      ..quadraticBezierTo(82, 266, 84, 242)
       ..close();
     final seam = insetCraftPath(pocket, distance: 10);
     prepared = runningStitchPath(
@@ -229,7 +229,7 @@ class _SoftPainter extends CustomPainter {
     double depth = 2,
     double strength = 1,
   }) {
-    canvas.drawShadow(shape, const Color(0x50392A21), depth * 1.8, false);
+    canvas.drawShadow(shape, const Color(0x28392A21), depth * 1.3, false);
     textures.paint(
       canvas,
       shape,
@@ -242,7 +242,7 @@ class _SoftPainter extends CustomPainter {
       shape,
       kind: CraftReliefKind.raised,
       depth: depth,
-      strength: .65,
+      strength: .2,
     );
   }
 
@@ -277,7 +277,7 @@ class _SoftPainter extends CustomPainter {
       width: .9,
       irregularity: irregularity,
       seed: 90 + index,
-      compression: .8,
+      compression: .4,
       pucker: pucker,
     );
     canvas.restore();
@@ -294,14 +294,14 @@ class _SoftPainter extends CustomPainter {
       canvas,
       lining,
       material,
-      Color.lerp(color, const Color(0xFF50382D), .23)!,
+      Color.lerp(color, const Color(0xFF8C6B46), .1)!,
       depth: 1,
     );
     final tag = Path()
-      ..moveTo(108, 127)
-      ..quadraticBezierTo(150, 132, 194, 124)
-      ..lineTo(199, 199)
-      ..lineTo(106, 201)
+      ..moveTo(115, 127)
+      ..quadraticBezierTo(150, 130, 183, 124)
+      ..lineTo(187, 199)
+      ..lineTo(113, 201)
       ..close();
     _surface(
       canvas,
@@ -315,14 +315,24 @@ class _SoftPainter extends CustomPainter {
       3,
       Paint()..color = const Color(0xFF9E7952),
     );
-    _surface(canvas, pocket, material, color, depth: 2.7);
+    _surface(canvas, pocket, material, color, depth: 1.5, strength: .65);
+    // Broad pale cloth light, without a dark outlined rim.
+    canvas.drawPath(
+      pocket,
+      Paint()
+        ..shader = const RadialGradient(
+          center: Alignment(-.3, -.5),
+          radius: 1.2,
+          colors: [Color(0x28FFFFFF), Color(0x00FFFFFF)],
+        ).createShader(pocket.getBounds()),
+    );
     canvas.save();
     canvas.clipPath(pocket);
     CraftStitchFrame.sample(prepared, progress: 1).paint(
       canvas,
       thread: const Color(0xFFFFEED4),
-      width: 1.6,
-      compression: .95,
+      width: 1.5,
+      compression: .5,
       pucker: pucker,
     );
     canvas.restore();
@@ -338,8 +348,8 @@ class _SoftPainter extends CustomPainter {
       canvas,
       sprig,
       kind: CraftReliefKind.inset,
-      depth: 1.2,
-      strength: .6,
+      depth: .65,
+      strength: .2,
     );
   }
 
@@ -435,8 +445,8 @@ class _SoftPainter extends CustomPainter {
       canvas.save();
       canvas.rotate(i * math.pi / 2 + .15);
       final color = i.isEven
-          ? const Color(0xFFF4C257)
-          : const Color(0xFFE98F80);
+          ? const Color(0xFFFFCB48)
+          : const Color(0xFFF68D80);
       final blade = Path()
         ..moveTo(0, 0)
         ..lineTo(-100, -95)
@@ -448,8 +458,8 @@ class _SoftPainter extends CustomPainter {
         blade,
         CraftMaterial.paper,
         color,
-        depth: 2,
-        strength: .22,
+        depth: 1,
+        strength: .15,
       );
       if (satin) {
         paintPaperFinish(
@@ -457,7 +467,7 @@ class _SoftPainter extends CustomPainter {
           blade,
           finish: PaperFinish.satin,
           ink: const Color(0xFF6E392A),
-          strength: .9,
+          strength: .3,
         );
       }
       final curl = Path()
@@ -467,23 +477,14 @@ class _SoftPainter extends CustomPainter {
         ..close();
       canvas.drawPath(
         curl,
-        Paint()
-          ..shader = LinearGradient(
-            colors: [
-              Color.lerp(color, Colors.white, .65)!,
-              color,
-              Color.lerp(color, const Color(0xFF6D362C), .18)!,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ).createShader(curl.getBounds()),
+        Paint()..color = Color.lerp(color, Colors.white, .32)!,
       );
       paintCraftRelief(
         canvas,
         curl,
         kind: CraftReliefKind.raised,
-        depth: .7,
-        strength: .4,
+        depth: .45,
+        strength: .12,
       );
       canvas.restore();
     }
@@ -531,7 +532,6 @@ class _SoftCraftPlaygroundState extends State<SoftCraftPlayground> {
         Text(label),
         Slider(
           key: ValueKey(key),
-          label: label,
           value: value,
           semanticFormatterCallback: (v) => '${(v * 100).round()} percent',
           onChanged: changed,

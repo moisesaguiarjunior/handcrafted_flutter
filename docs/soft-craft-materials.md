@@ -45,12 +45,14 @@ canvas.restore();
 - `irregularity` (0..1) varies stitch length, angle and bow. The seeded path
   remains deterministic; zero retains the original regular path, independent
   of seed. Endpoints stay within the original visible span's arc interval.
-  Curves receive at most 1.5px transverse drift. Irregular output rejects more
+  Curves are sampled at most 0.5px apart, with at most 18432 stations. Normal
+  displacement is at most 1.5px at samples; reserve 1.75px including the
+  polygonal approximation. Irregular output rejects more
   than 1024 stitches before painting; regular paths keep their existing budget.
 - `compression` shades the puncture. `pucker` (0..1) adds a wider soft depression
   and paired short creases, multiplied by compression. It is available on
   running/patterned painting and prepared frames. Zero preserves legacy pixels.
-- Reserve width * 7 around punctures for gathering, plus 1.5px when geometry is
+- Reserve width * 7 around punctures for gathering, plus 1.75px when geometry is
   irregular; inset farther when that footprint must stay away from an edge.
   Explicit clipping prevents shading floating outside cuts or across holes.
 - A partial stitch has no new puncture at its travelling tip. The prepared frame

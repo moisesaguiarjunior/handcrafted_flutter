@@ -12,8 +12,10 @@ import 'thread_paint.dart';
 /// logical pixels with [ArgumentError]. A seam is not automatically inset;
 /// callers derive it from the same outline and reserve thread/relief padding.
 /// Optional [irregularity] 0..1 varies length, angle and bow using [seed], without
-/// bridging gaps. Maximum transverse drift is 1.5 pixels; reserve this clearance
-/// too. Irregular output is limited to 1024 stitches. Zero preserves legacy paths.
+/// bridging gaps. Original arcs are sampled at most 0.5px apart (at most 18432
+/// stations including endpoints); normal drift is at most 1.5px at stations.
+/// Reserve 1.75px including the polygonal approximation, in addition to ink
+/// and relief clearance. Irregular output is limited to 1024 stitches. Zero preserves legacy paths.
 Path runningStitchPath(
   Path source, {
   required double dash,
@@ -35,23 +37,30 @@ Path runningStitchPath(
   for (final span in spans) {
     // Stay inside each original span so neighboring stitches never bridge a gap.
     final inset = math.min(span.end - span.start, gap) * .18 * irregularity;
-    final a = span.metric.getTangentForOffset(
-      span.start + random.nextDouble() * inset,
-    )!;
-    final b = span.metric.getTangentForOffset(
-      span.end - random.nextDouble() * inset,
-    )!;
-    final mid = span.metric.getTangentForOffset((span.start + span.end) / 2)!;
-    Offset displaced(Offset p, Offset tangent) =>
-        p +
-        Offset(-tangent.dy, tangent.dx) *
-            ((random.nextDouble() * 2 - 1) * drift);
-    final start = displaced(a.position, a.vector);
-    final end = displaced(b.position, b.vector);
-    final control = displaced(mid.position, mid.vector);
-    result
-      ..moveTo(start.dx, start.dy)
-      ..quadraticBezierTo(control.dx, control.dy, end.dx, end.dy);
+    final start = span.start + random.nextDouble() * inset;
+    final end = span.end - random.nextDouble() * inset;
+    final offsets = List.generate(
+      3,
+      (_) => (random.nextDouble() * 2 - 1) * drift,
+    );
+    final count = math.max(1, ((end - start) / .5).ceil());
+    for (var i = 0; i <= count; i++) {
+      final t = i / count;
+      final tangent = span.metric.getTangentForOffset(
+        start + (end - start) * t,
+      )!;
+      final normal = Offset(-tangent.vector.dy, tangent.vector.dx);
+      final offset =
+          offsets[0] * (1 - t) * (1 - t) +
+          2 * offsets[1] * t * (1 - t) +
+          offsets[2] * t * t;
+      final point = tangent.position + normal * offset;
+      if (i == 0) {
+        result.moveTo(point.dx, point.dy);
+      } else {
+        result.lineTo(point.dx, point.dy);
+      }
+    }
   }
   return result;
 }

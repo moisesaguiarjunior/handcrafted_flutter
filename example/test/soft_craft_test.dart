@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handcrafted_example/soft_craft_studies.dart';
 
@@ -57,4 +58,48 @@ void main() {
       expect(tester.takeException(), isNull);
     },
   );
+  testWidgets('sewing sliders announce one purpose with percent and actions', (
+    tester,
+  ) async {
+    final handle = tester.ensureSemantics();
+    try {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(child: SoftCraftPlayground()),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      for (final (key, label) in [
+        ('soft-irregularity', 'Sewing irregularity'),
+        ('soft-pucker', 'Cloth gathering'),
+      ]) {
+        final finder = find.byKey(ValueKey(key));
+        final parent = find
+            .ancestor(of: finder, matching: find.byType(MergeSemantics))
+            .first;
+        final nodes = <SemanticsData>[];
+        void visit(SemanticsNode node) {
+          final data = node.getSemanticsData();
+          if (!node.isMergedIntoParent &&
+              data.hasAction(SemanticsAction.increase)) {
+            nodes.add(data);
+          }
+          node.visitChildren((child) {
+            visit(child);
+            return true;
+          });
+        }
+
+        visit(tester.getSemantics(parent));
+        expect(nodes, hasLength(1));
+        expect(nodes.single.label, label);
+        expect(nodes.single.value, contains('percent'));
+        expect(nodes.single.hasAction(SemanticsAction.decrease), isTrue);
+      }
+    } finally {
+      handle.dispose();
+    }
+  });
 }

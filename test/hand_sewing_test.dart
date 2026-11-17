@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'dart:math' as math;
 
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -51,6 +52,28 @@ void main() {
       await render(prepare(irregularity: 0, seed: 900)),
     );
   });
+
+  test(
+    'small irregularity follows the full original curve without shortcuts',
+    () {
+      const center = Offset(50, 40);
+      final source = Path()
+        ..addOval(Rect.fromCircle(center: center, radius: 30));
+      final result = runningStitchPath(
+        source,
+        dash: 300,
+        gap: 4,
+        irregularity: .001,
+        seed: 83,
+      );
+      final metric = result.computeMetrics().single;
+      expect(metric.length, closeTo(2 * math.pi * 30, .05));
+      for (var d = 0.0; d < metric.length; d += .25) {
+        final point = metric.getTangentForOffset(d)!.position;
+        expect(((point - center).distance - 30).abs(), lessThan(.02));
+      }
+    },
+  );
 
   test(
     'gathering shades cloth beyond the hole and never invents a tip hole',

@@ -54,7 +54,7 @@ void paintThreadGeometry(
           Paint()
             ..shader = RadialGradient(
               colors: [
-                Color.fromRGBO(30, 20, 15, .18 * strength),
+                Color.fromRGBO(30, 20, 15, .065 * strength),
                 const Color(0x00000000),
               ],
               stops: const [0, 1],
@@ -79,7 +79,7 @@ void paintThreadGeometry(
               ..strokeWidth = width * .6
               ..shader = RadialGradient(
                 colors: [
-                  Color.fromRGBO(35, 22, 15, .18 * strength),
+                  Color.fromRGBO(35, 22, 15, .065 * strength),
                   const Color(0x00000000),
                 ],
               ).createShader(bounds),
@@ -91,7 +91,7 @@ void paintThreadGeometry(
               ..strokeWidth = width * .5
               ..shader = RadialGradient(
                 colors: [
-                  Color.fromRGBO(255, 255, 255, .28 * strength),
+                  Color.fromRGBO(255, 255, 255, .18 * strength),
                   const Color(0x00FFFFFF),
                 ],
               ).createShader(bounds),

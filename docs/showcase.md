@@ -86,3 +86,15 @@ in the documentation presentation. The cover combines real textured substrates,
 contour-matched cord, embroidered sprig, torn paper, layered pigment and a native
 button. Cast shadows follow each actual cut; they do not imply displaced fabric.
 The poster has no animation clock. Existing motion captures remain separate.
+
+## Composed note cover
+
+`flutter test tool/capture_painted_note.dart` renders PaintedNote from the actual
+welcome page into `doc/screenshots/painted-note.png` (920×680). It also captures
+the welcome and full gallery at narrow/desktop sizes under ignored build/ output.
+The note contains a native editable field, a selected choice that removes its
+contour seam, and a working in-memory action. No note is persisted. Materials,
+watercolor and heading reuse the public painters/components, with original seeded
+wash geometry. Capture fonts and theme are the existing licensed example assets.
+The flower remains the first README image by owner preference; this note follows
+as a runnable composition. Its visual approval is separate from technical review.

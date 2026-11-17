@@ -15,7 +15,7 @@ shared .gitignore and .pubignore now exclude local notes; Pub uses its own
 explicit exclusions even when source control ignores the same file.
 
 Full guides, capture tools and large visual atlases remain in the source
-repository. Three existing, byte-identical images live in `doc/screenshots/` and
+repository. Curated images live in `doc/screenshots/` and
 are declared in pubspec metadata; no duplicate image bytes are maintained.
 The library, core tests, runnable example and its licensed font/sprite assets
 remain in the archive. Example-only fonts do not become runtime library assets.
@@ -61,7 +61,7 @@ Flutter 3.47.9 / Dart 3.13.7 remains the declared/tested minimum. Broader SDK
 support requires an actual compatibility matrix, not only lower constraints.
 The clipper2 range is ^0.0.3; locked hosted versions and license hashes remain
 unchanged. Metadata adds a gallery homepage, documentation, issue tracker,
-relevant topics and three small screenshots. Platform compatibility detected
+relevant topics and curated screenshots. Platform compatibility detected
 from imports is distinct from physical-device behavior/performance evidence.
 
 ## First hosted release
@@ -84,3 +84,27 @@ References: [Dart publishing guide](https://dart.dev/tools/pub/publishing),
 [pubspec metadata](https://dart.dev/tools/pub/pubspec),
 [package pages](https://dart.dev/tools/pub/writing-package-pages) and
 [pub points](https://pub.dev/help/scoring).
+
+## Remaining owner steps for the first upload
+
+The package lookup returned HTTP 404 on 2026-11-16; this is not a reservation of
+`handcrafted_flutter`. Check again immediately before the first upload. There
+is no application form or manual popularity threshold: the documented flow is
+a validated package upload authenticated by its responsible Google account.
+
+1. Approve the secondary composed screenshot against the runnable note. The
+   flower stays first in the README and screenshot metadata by owner preference. The
+   earlier Pana 160/160 result describes the reviewed source at that time; rerun
+   archive/API checks on the final reviewed candidate. It is not a hosted score.
+2. Choose the Google account that will own the first upload. A verified domain
+   publisher is optional. If used, publish initially through the Google account,
+   then transfer after domain verification; this is distinct from GitHub access.
+3. Consolidate the candidate changelog, approve/tag the exact 0.3.0 source and
+   run the interactive upload. Do not publish from a dirty or newer working tree.
+4. Verify hosted installation in a fresh consumer, the README/screenshots/API
+   pages and the server analysis. Only then advertise `^0.3.0` as available and
+   consider GitHub trusted publishing for later versions.
+
+The preparation requires no credentials in source, popularity evidence,
+physical-device benchmark or automatic publisher workflow. Performance claims
+still need their own measurements; Flutter's tested minimum remains explicit.

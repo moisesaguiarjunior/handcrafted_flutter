@@ -97,6 +97,9 @@ class _GalleryPage extends StatelessWidget {
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, box) {
       final wide = box.maxWidth >= 1100;
+      final labelLink =
+          box.maxWidth >= 360 &&
+          MediaQuery.textScalerOf(context).scale(14) <= 21;
       return Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -105,20 +108,32 @@ class _GalleryPage extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           actions: [
-            IconButton(
-              tooltip: 'Copy study link',
-              icon: const Icon(Icons.link),
-              onPressed: () async {
-                final uri = Uri.base.replace(
-                  queryParameters: {'study': selected.name},
-                  fragment: '',
-                );
-                await Clipboard.setData(ClipboardData(text: uri.toString()));
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Study link copied')),
+            Builder(
+              builder: (context) {
+                Future<void> copyLink() async {
+                  final uri = Uri.base.replace(
+                    queryParameters: {'study': selected.name},
+                    fragment: '',
                   );
+                  await Clipboard.setData(ClipboardData(text: uri.toString()));
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Study link copied')),
+                    );
+                  }
                 }
+
+                return labelLink
+                    ? TextButton.icon(
+                        icon: const Icon(Icons.link),
+                        label: const Text('Copy link'),
+                        onPressed: copyLink,
+                      )
+                    : IconButton(
+                        tooltip: 'Copy study link',
+                        icon: const Icon(Icons.link),
+                        onPressed: copyLink,
+                      );
               },
             ),
           ],

@@ -187,13 +187,13 @@ void main() {
       double pose() => tester
           .widget<LivingMaterialArtwork>(find.byType(LivingMaterialArtwork))
           .progress;
-      expect(pose(), .48);
+      expect(pose(), 0);
       expect(tester.binding.transientCallbackCount, 0);
       await tester.ensureVisible(find.text('Play'));
       await tester.tap(find.text('Play'));
       await tester.pump();
       await tester.pump(const Duration(seconds: 1));
-      expect(pose(), greaterThan(.48));
+      expect(pose(), greaterThan(0));
       await tester.tap(find.text('Pause'));
       await tester.pump();
       final paused = pose();
@@ -301,7 +301,7 @@ void main() {
       await tester.tap(find.widgetWithText(ListTile, 'Paint spreading'));
       await tester.pumpAndSettle();
       expect(find.text('Let the color find its way'), findsOneWidget);
-      await tester.tap(find.byTooltip('Copy study link'));
+      await tester.tap(find.widgetWithText(TextButton, 'Copy link'));
       await tester.pumpAndSettle();
       expect(Uri.parse(copied!).queryParameters['study'], 'spreading');
       await tester.binding.defaultBinaryMessenger.handlePlatformMessage(

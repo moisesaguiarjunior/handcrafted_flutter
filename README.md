@@ -13,6 +13,7 @@ parts for Flutter.
 Text remains text; buttons retain native focus, actions and semantics.
 
 [![Checks](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml/badge.svg)](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml)
+[![Library coverage](https://codecov.io/gh/moisesaguiarjunior/handcrafted_flutter/branch/main/graph/badge.svg)](https://codecov.io/gh/moisesaguiarjunior/handcrafted_flutter)
 
 Experimental, licensed under [MIT](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/LICENSE).
 See [publication status and process](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/publishing.md).

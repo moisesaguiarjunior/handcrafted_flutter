@@ -1,6 +1,7 @@
 # This overrides .gitignore for the publication archive. Keep generated files out.
 .dart_tool/
 build/
+coverage/
 .flutter-plugins-dependencies
 
 # Local checkpoints are not publication content, even when Git ignores them.

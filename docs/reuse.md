@@ -263,3 +263,8 @@ For the wide vocabulary study, searched the gallery's 1100px layout, the panel's
 Constrained only this example to 800px; no painter budget or fallback changed.
 A test exercises the actual gallery at common desktop widths in both themes,
 scoping the primary card's own CraftSurface instead of matching button surfaces.
+
+For coverage, searched the existing check script, test suites, CI and archive
+rules. Reused the root Flutter test invocation with --coverage, retaining the
+example gate. A separate OIDC job uploads the actual explicit LCOV artifact;
+no parallel test suite, upload token or source exclusion was introduced.

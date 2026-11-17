@@ -43,6 +43,7 @@ def main() -> None:
             "WORKTREE.local.md",
             "example/publication-probe.local.md",
             "build/generated-publication-probe.txt",
+            "coverage/generated-coverage-probe.info",
         ]
         for name in probes:
             target = directory / name

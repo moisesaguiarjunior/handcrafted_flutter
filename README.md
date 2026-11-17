@@ -145,7 +145,6 @@ gh repo clone moisesaguiarjunior/handcrafted_flutter
 cd handcrafted_flutter
 flutter pub get --enforce-lockfile
 cd example
-flutter pub get --enforce-lockfile
 flutter run -d chrome -t lib/main_gallery.dart
 ```
 

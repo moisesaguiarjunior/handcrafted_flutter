@@ -16,7 +16,7 @@ are included. Source: [material studies](../example/lib/material_studies.dart),
 
 | Area | Package API | Example coverage |
 | --- | --- | --- |
-| Five texture algorithms | `CraftMaterial`, `MaterialTextures`, `CraftSurface` | Indigo twill, flax linen, rose felt, drawing paper and wood |
+| Seeded texture families | `CraftMaterial`, `MaterialTextures`, `CraftSurface` | Indigo twill, flax linen, rose felt, drawing paper and wood |
 | Silhouettes | `pigmentOutline`, `CraftOutline` | Organic swatches, native-widget surfaces and circular fabric specimens |
 | Paper recipes | `paperOutline`, `CraftOutline.paper`, `paintPaperFinish`, `paintPaperEdgeFibers` | Six visual stocks, four edges and native letterhead; existing base grain is reused |
 | Sewing | `insetCraftPath`, `craftStitchPath`, `paintCraftStitch` | Six surface patterns, polygonal contour-following seams and puncture shading |
@@ -140,3 +140,9 @@ centered glyph alignment, independent body/tail pixels, reduced motion and all
 gallery sections at 320 logical pixels with real-font scaling up to 250%.
 See [roadmap](roadmap.md) for remaining work rather than treating images as a
 promise of unimplemented material families or physical behavior.
+
+
+[Soft craft recipes](soft-craft-materials.md) add compact cotton, velvety nap,
+optional seeded irregular running stitches and broader puncture gathering.
+Satin paper sheen is independent from the example's folded blade geometry.
+Dry chalk/pencil/wax coverage reuses the existing stroke renderer.

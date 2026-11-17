@@ -68,20 +68,24 @@ final class CraftStitchFrame {
 
   /// Paints the same thread shading as [paintCraftStitch], with actual anchors.
   /// The moving tip is not painted as a new puncture at each sampled frame.
+  /// [pucker] 0..1 adds broader crease shading at actual holes, multiplied by
+  /// compression. Reserve width * 7 and clip to the substrate. No displacement.
   void paint(
     Canvas canvas, {
     required Color thread,
     double width = 1.5,
     double compression = .6,
+    double pucker = 0,
     Offset light = const Offset(-1, -1),
   }) {
-    validateThreadPaint(width, compression, light);
+    validateThreadPaint(width, compression, light, pucker: pucker);
     paintThreadGeometry(
       canvas,
       _path,
       thread: thread,
       width: width,
       compression: compression,
+      pucker: pucker,
       light: light,
       punctures: _punctures,
     );

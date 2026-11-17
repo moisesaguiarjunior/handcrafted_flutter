@@ -169,7 +169,8 @@ void _checkOutput(Path result) {
 /// Paints a patterned seam with the same thread/illustrative punctures as running.
 ///
 /// Parameters and output budgets are checked before any drawing. [compression]
-/// is shading strength, not physical depth. Punctures mark generated contour ends;
+/// is shading strength, not physical depth. [pucker] 0..1 adds local gathering
+/// shading multiplied by compression; reserve width * 7 and clip to cloth. Punctures mark generated contour ends;
 /// closed links meet at their shared anchor. Behind-fabric thread is not modeled.
 /// Caller owns clipping, silhouette clearance and native controls. [progress]
 /// is 0..1 in generated thread order; partial tips are not new punctures.
@@ -185,13 +186,14 @@ void paintCraftStitch(
   int side = 1,
   double width = 1.5,
   double compression = .6,
+  double pucker = 0,
   Offset light = const Offset(-1, -1),
   double progress = 1,
 }) {
   if (!progress.isFinite || progress < 0 || progress > 1) {
     throw ArgumentError('Expected progress 0..1');
   }
-  validateThreadPaint(width, compression, light);
+  validateThreadPaint(width, compression, light, pucker: pucker);
   final stitches = craftStitchPath(
     seam,
     kind: kind,
@@ -205,6 +207,7 @@ void paintCraftStitch(
       thread: thread,
       width: width,
       compression: compression,
+      pucker: pucker,
       light: light,
     );
     return;
@@ -215,6 +218,7 @@ void paintCraftStitch(
     thread: thread,
     width: width,
     compression: compression,
+    pucker: pucker,
     light: light,
   );
 }

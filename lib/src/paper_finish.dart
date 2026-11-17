@@ -17,6 +17,9 @@ enum PaperFinish {
 
   /// Small irregular pits suggesting watercolor-paper tooth.
   coldPress,
+
+  /// Broad soft sheen for coated cardstock; direction follows the bounds.
+  satin,
 }
 
 /// Paints a bounded seeded paper finish without replacing its substrate.
@@ -68,6 +71,22 @@ void paintPaperFinish(
   try {
     canvas.clipPath(outline);
     switch (finish) {
+      case PaperFinish.satin:
+        canvas.drawRect(
+          bounds,
+          Paint()
+            ..shader = LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                highlight.withValues(alpha: highlight.a * strength * .5),
+                highlight.withValues(alpha: 0),
+                ink.withValues(alpha: ink.a * strength * .15),
+                highlight.withValues(alpha: highlight.a * strength * .22),
+              ],
+              stops: const [0, .44, .7, 1],
+            ).createShader(bounds),
+        );
       case PaperFinish.laid:
         for (var i = 0; i < (bounds.height / (4 * scale)).ceil(); i++) {
           final y = bounds.top + (2 + i * 4) * scale;

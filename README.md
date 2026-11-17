@@ -7,7 +7,7 @@
 
 ![Layered rose petals and a blue-green wash on textured paper](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/watercolor-hero.png)
 
-Seeded paper, linen, twill, felt and wood textures, contour-following stitches, organic
+Seeded paper, linen, twill, felt, wood and EVA textures, contour-following stitches, organic
 contours, watercolor pigment, relief, cord/ribbon bands and composable moving
 parts for Flutter.
 Text remains text; buttons retain native focus, actions and semantics.
@@ -99,7 +99,12 @@ closed silhouette, respecting concavities and holes. See [contour seams](https:/
 
 ![Large procedural twill, linen, felt, paper and wood swatches](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/materials-atlas.png)
 
-Five material algorithms, with explicit colors, grain scale and seed.
+Five classic material algorithms, with explicit colors, grain scale and seed.
+EVA adds fine-pore foam with independently composable finishes and raised edges.
+Fine cotton and velvety cloth compose with optional irregular sewing and local
+puncture gathering. Chalk can leave a denser broken mark; satin paper catches
+light on folded shapes. [Soft craft recipes](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/soft-craft-materials.md)
+· [Try cloth, chalk & folds](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=softCraft).
 
 ![Distinct shell, feather and crescent relief on twill, linen and felt](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/relief-objects.png)
 
@@ -114,6 +119,15 @@ Compose the existing paper grain with fiber, fluted, pitted or laid finishes,
 then choose clean, torn, handmade or postage edges independently. These are
 visual recipes; letterhead stays real text over a substrate. See
 [paper recipes and controls](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/paper-recipes.md).
+
+## Cut EVA, different impressions
+
+![Pebbled, mottled, grooved and crosshatched original foam cuts](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/foam-finishes.png)
+
+Keep the substrate, finish and layer lighting independent. Use fine-pore EVA
+with seeded impressions, then compose raised cuts around native content.
+[Foam recipes](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/eva-foam.md) ·
+[Try the finishes](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=foam).
 
 ## Thread, six ways
 
@@ -172,7 +186,7 @@ in an application. Keep source-access credentials outside code and URLs.
 
 | API | Responsibility |
 | --- | --- |
-| `CraftMaterial`, `MaterialTextures` | Five seeded textures and explicitly owned raster resources |
+| `CraftMaterial`, `MaterialTextures` | Seeded material tiles and explicitly owned raster resources |
 | `CraftSurface` | Material behind native Flutter widgets |
 | `paintWatercolor`, `paintWatercolorSpread` | Layered pigment and an explicitly progressed organic wet front |
 | `paintCraftRelief`, `CraftReliefText` | Directional motif shading and native raised/inset lettering |

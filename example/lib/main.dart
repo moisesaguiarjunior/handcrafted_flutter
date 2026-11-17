@@ -47,7 +47,7 @@ class _MaterialStudyState extends State<_MaterialStudy> {
       padding: const EdgeInsets.all(24),
       children: [
         const Text(
-          'Five extracted textures. One shared contour. Running stitch.',
+          'Seeded material textures. One shared contour. Running stitch.',
         ),
         const Text(
           'Puncture relief is shading only; the weave is not deformed.',

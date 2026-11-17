@@ -78,3 +78,29 @@ Sharing has a visible Copy link label. Flower and material atlases remain.
 The flower stays first in the README and pub.dev images by owner preference.
 The note capture requires owner visual approval before public promotion. Browser
 URL canonicalization, phone profiling and consumer adoption remain separate.
+
+## Foam and colored cord candidate
+
+Optional twisted color strands retain open/contour paths and nominal gaps. EVA
+grain, four finishes and existing raised-layer lighting are independent. Public
+examples use original procedural cuts; no application atlas is extracted.
+Owner accepted the exact synthetic previews. Independent technical review and
+CI precede promotion; physical-device evidence remains separate.
+
+## Colored cord refinement
+
+Owner accepted foam but found the first colored cord too stripe-like. A local
+candidate replaces palette bands with interlaced yarn geometry and volume.
+A new crossing-order raster regression requires cyclic over/under ownership;
+transparent palette and open backing gaps are protected. Owner accepted the revised close-up preview. Independent technical review
+and CI are required before promoting these images.
+Foam, the flower cover and deferred Codecov setup are unchanged.
+
+## Soft cloth, chalk and folded card candidate
+
+Original pocket/flag, chalk garden and curled-blade specimens compose cotton,
+velvety nap, felt, irregular running stitches, local puncture gathering and satin
+paper. More body for chalk reuses the dry renderer through explicit coverage.
+Legacy defaults remain; exact independent review and owner visual acceptance
+precede public promotion. These are geometry/light recipes, not cloth physics.
+[Recipes and limits](soft-craft-materials.md).

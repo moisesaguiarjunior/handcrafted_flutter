@@ -2,6 +2,7 @@
 
 | Need | Canonical implementation |
 | --- | --- |
+| Fine-pore EVA and independent bounded impressions | `CraftMaterial.eva`, `paintFoamFinish` |
 | Seeded perimeter | `pigmentOutline` |
 | Value-based silhouette recipes | `CraftOutline`, `CraftSurface.shape` |
 | Material tiles and owned resources | `MaterialTextures`, `CraftMaterial` |
@@ -276,3 +277,42 @@ For coverage, searched the existing check script, test suites, CI and archive
 rules. Reused the root Flutter test invocation with --coverage, retaining the
 example gate. A separate OIDC job uploads the actual explicit LCOV artifact;
 no parallel test suite, upload token or source exclusion was introduced.
+
+For multicolor cord and EVA, searched craft_trim, contourTrimPath, texture cache
+ownership, paper finishes, path validation, relief and SpecimenRow/captures.
+Reused validated centerlines, normal/tangent samples, seeded tile ownership and
+raised relief. Added only optional front-facing strand colors and a fine-pore
+material with independent bounded finishes. Existing material enum indices and
+single-color rendering are preserved. The examples use original procedural cuts,
+not application assets, manifests or a new clock. Root Flutter pub get already
+resolves/enforces the example; setup now runs it once, backed by a missing-lock
+negative control in an isolated snapshot.
+
+Foam adjustment labels and units merge into the native adjustable node using
+Flutter MergeSemantics/Semantics; the gallery regression inspects the actual
+action-bearing node after real drags, rather than an unlabeled outer container.
+
+For the cord correction, searched paintCraftTrim, contourTrimPath, path metrics,
+strand palettes and capture/live callers. Reused their validation and nominal
+placement contract. Replaced only palette rendering with locally depth-ordered
+individual yarn segments and strand-aligned filaments; the single-color/ribbon/
+embroidery branches remain unchanged. One private sampling plan enforces the
+existing 8192-sample ceiling before paint. Close-ups reuse the actual painter,
+not an image mockup or a second clock. Foam is unchanged.
+
+The first stroke-segment prototype accumulated fractional alpha. Colored yarns
+now reuse that sampling plan as shared-edge strips in one temporary Flutter
+Vertices mesh; color, edge light and fiber variation are vertex colors, not
+repeated alpha coats. Native vertices are disposed after recording, with no image,
+layer or global cache. A regression keeps one alpha-64 yarn at alpha 64 across
+three sampling pitches and rejects the overlapping-stroke prototype.
+
+For soft-cloth studies, searched material tiles, felt/linen/twill grain, chalk
+and dry deposits, inset seams, running spans, thread punctures and prepared
+frames. Reused cache ownership, geometry limits, native gradients, capture shell
+and actual gallery specimens. Added cotton/velvety nap tiles to the existing
+cache; satin sheen to the paper finish; optional seeded irregular running spans
+and gathering to shared puncture paint; dry coverage to the existing dry stroke
+renderer. Zero defaults preserve earlier behavior. One original example composes
+these contracts; no parallel texture/drawing engine, object preset, clock or
+consumer artwork is introduced. See [soft craft recipes](soft-craft-materials.md).

@@ -1,9 +1,13 @@
 import 'dart:math' as math;
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/painting.dart';
 
 import 'contour_inset.dart';
 import 'path_geometry.dart';
+
+part 'cord_braid.dart';
 
 /// Illustrative raised bands; none simulates strand tension or displaced cloth.
 enum CraftTrimKind {
@@ -58,6 +62,16 @@ Path contourTrimPath(
 /// Shading is illustrative: reserve [width] around the centerline for the cast
 /// shadow, or clip the whole composition. Use [contourTrimPath] to place bands at
 /// a nominal edge gap; this painter does not infer the substrate from its path.
+/// Optional [strandColors] adds 2..6 individually shaded strands to rope only, independently
+/// of grain [texture]. Colored work is additionally limited to 8192 samples.
+/// Closed contours use whole turns so the color phase meets at the seam.
+/// Palette mode paints only its strands (no flat [color] backing). Local depth
+/// orders crossings; two colors twist, while three or more form a braid.
+/// Fine filaments follow each strand, not the whole band. A shared-edge mesh
+/// shades each yarn once, retaining fractional alpha independently of sampling.
+/// Nine profile vertices per sample produce 48 mesh vertices per adjacent pair,
+/// plus bounded end caps. One temporary native mesh is disposed after recording;
+/// ground shadows are painted once per strand. No tension/physical fiber solver.
 void paintCraftTrim(
   Canvas canvas,
   Path path, {
@@ -68,6 +82,7 @@ void paintCraftTrim(
   double relief = .7,
   double texture = .75,
   Offset light = const Offset(-1, -1),
+  List<Color>? strandColors,
 }) {
   if (!width.isFinite ||
       width < 1 ||
@@ -87,6 +102,15 @@ void paintCraftTrim(
       light.distance == 0) {
     throw ArgumentError('Invalid trim width, pitch, relief, texture or light');
   }
+  final strands = strandColors == null
+      ? null
+      : List<Color>.unmodifiable(strandColors);
+  if (strands != null &&
+      (kind != CraftTrimKind.rope ||
+          strands.length < 2 ||
+          strands.length > 6)) {
+    throw ArgumentError('Expected 2..6 strand colors for rope only');
+  }
   final metrics = checkedPathMetrics(path);
   final bounds = path.getBounds();
   if ([
@@ -105,8 +129,32 @@ void paintCraftTrim(
   if (stations > 2048) {
     throw ArgumentError('Trim exceeds 2048 texture stations');
   }
-  final band = spanPath(pathSpans(metrics), preserveClosed: true);
+  if (strands != null &&
+      metrics.fold<int>(
+            0,
+            (sum, metric) =>
+                sum +
+                _braidPlan(metric, width, pitch, strands.length).samples *
+                    strands.length,
+          ) >
+          8192) {
+    throw ArgumentError('Colored rope exceeds 8192 strand samples');
+  }
   final direction = light / light.distance;
+  if (strands != null) {
+    _paintBraidedCord(
+      canvas,
+      metrics,
+      strands,
+      width: width,
+      pitch: pitch,
+      relief: relief,
+      texture: texture,
+      light: direction,
+    );
+    return;
+  }
+  final band = spanPath(pathSpans(metrics), preserveClosed: true);
   Paint stroke(Color c, double w) => Paint()
     ..color = c
     ..style = PaintingStyle.stroke
@@ -120,6 +168,7 @@ void paintCraftTrim(
     );
   }
   canvas.drawPath(band, stroke(color, width));
+
   if (relief > 0) {
     canvas.drawPath(
       band.shift(direction * width * .1),

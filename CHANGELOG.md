@@ -2,6 +2,23 @@
 
 ## Unreleased
 
+- Add cotton and velvety nap material tiles, satin paper sheen, optional seeded
+  irregular running stitches and local puncture gathering. Add dry instrument
+  coverage and a shared cloth/chalk/folded-card study; preserve legacy defaults.
+
+- Correct colored rope to interlaced yarns with local crossing depth, individual
+  volume and longitudinal filaments. Remove flat backing/cross-band hatching in
+  palette mode; keep legacy single-color, ribbon and embroidered output.
+  Add live/capture close-ups for two/three strands and natural cotton tones.
+  Shared-edge yarn geometry preserves fractional alpha across sampling densities.
+
+- Add optional 2..6 color twisted rope strands over existing paths and nominal
+  contour gaps; omit the palette to retain legacy rendering. Colored work has
+  an explicit 8192-sample cap, independent of the grain strength.
+- Append CraftMaterial.eva; update exhaustive material switches. Add seeded
+  pebbled/mottled/grooved/crosshatched FoamFinish overlays and a layered-cut
+  gallery using the existing raised relief, without imported application art.
+
 - Compose the welcome and README cover around a real editable watercolor note,
   with native choice/action and optional contour stitching. Keep the flower and
   atlases; put study actions before art, label sharing, and show paint wetness

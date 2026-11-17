@@ -11,6 +11,8 @@ class TrimStudies extends StatelessWidget {
     this.width = 10,
     this.gap = 10,
     this.relief = .8,
+    this.multicolor = false,
+    this.followContour = false,
   });
 
   /// Band width in logical pixels.
@@ -21,6 +23,12 @@ class TrimStudies extends StatelessWidget {
 
   /// Illustrative shading strength.
   final double relief;
+
+  /// Compose three example-owned strand colors.
+  final bool multicolor;
+
+  /// Place rope on the substrate contour instead of the open curve.
+  final bool followContour;
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(
@@ -51,8 +59,10 @@ class TrimStudies extends StatelessWidget {
                       : DemoPalette.paper,
                   seed: 31,
                   strength: .8,
-                  outline: kind == CraftTrimKind.rope ? null : _trimOutline,
-                  shape: kind == CraftTrimKind.rope
+                  outline: kind == CraftTrimKind.rope && !followContour
+                      ? null
+                      : _trimOutline,
+                  shape: kind == CraftTrimKind.rope && !followContour
                       ? const CraftOutline.pigment(
                           seed: 31,
                           broad: true,
@@ -63,13 +73,20 @@ class TrimStudies extends StatelessWidget {
                     width: double.infinity,
                     height: 220,
                     child: CustomPaint(
-                      painter: _TrimPlate(kind, width, gap, relief),
+                      painter: _TrimPlate(
+                        kind,
+                        width,
+                        gap,
+                        relief,
+                        multicolor,
+                        followContour,
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  kind == CraftTrimKind.rope
+                  kind == CraftTrimKind.rope && !followContour
                       ? 'An open looping cord; no motion clock.'
                       : 'A shaped border with $gap px nominal clearance.',
                 ),
@@ -93,7 +110,14 @@ Path _trimOutline(Size size) {
 }
 
 class _TrimPlate extends CustomPainter {
-  _TrimPlate(this.kind, this.width, this.gap, this.relief) {
+  _TrimPlate(
+    this.kind,
+    this.width,
+    this.gap,
+    this.relief,
+    this.multicolor,
+    this.followContour,
+  ) {
     outline = _trimOutline(const Size(300, 220));
     border = contourTrimPath(outline, width: width, gap: gap, sampleSpacing: 1);
     cord = craftCurveThrough(const [
@@ -119,6 +143,7 @@ class _TrimPlate extends CustomPainter {
   final double width;
   final double gap;
   final double relief;
+  final bool multicolor, followContour;
   late final Path outline;
   late final Path border;
   late final Path cord;
@@ -128,10 +153,13 @@ class _TrimPlate extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.save();
     canvas.scale(size.width / 300, size.height / 220);
-    if (kind != CraftTrimKind.rope) canvas.clipPath(outline);
+    if (kind != CraftTrimKind.rope || followContour) canvas.clipPath(outline);
     paintCraftTrim(
       canvas,
-      kind == CraftTrimKind.rope ? cord : border,
+      kind == CraftTrimKind.rope && !followContour ? cord : border,
+      strandColors: kind == CraftTrimKind.rope && multicolor
+          ? const [Color(0xFFB76994), Color(0xFF87CBD9), Color(0xFFF3DEB8)]
+          : null,
       color: kind == CraftTrimKind.ribbon
           ? DemoPalette.thread
           : DemoPalette.wood,
@@ -159,7 +187,9 @@ class _TrimPlate extends CustomPainter {
       old.kind != kind ||
       old.width != width ||
       old.gap != gap ||
-      old.relief != relief;
+      old.relief != relief ||
+      old.multicolor != multicolor ||
+      old.followContour != followContour;
 }
 
 /// Native controls remain independent of the painted plates.
@@ -174,6 +204,7 @@ class _TrimPlaygroundState extends State<TrimPlayground> {
   double width = 10;
   double gap = 10;
   double relief = .8;
+  bool multicolor = true, followContour = true;
   @override
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,6 +216,16 @@ class _TrimPlaygroundState extends State<TrimPlayground> {
       const SizedBox(height: 12),
       const Text(
         'Cord, ribbon and stitched sprigs over real material recipes.',
+      ),
+      SwitchListTile(
+        title: const Text('Multicolor strands'),
+        value: multicolor,
+        onChanged: (v) => setState(() => multicolor = v),
+      ),
+      SwitchListTile(
+        title: const Text('Cord follows the cut'),
+        value: followContour,
+        onChanged: (v) => setState(() => followContour = v),
       ),
       Text('Band width: ${width.round()} px'),
       Slider(
@@ -206,7 +247,13 @@ class _TrimPlaygroundState extends State<TrimPlayground> {
       Text('Illustrative relief: ${(relief * 100).round()}%'),
       Slider(value: relief, onChanged: (v) => setState(() => relief = v)),
       const SizedBox(height: 20),
-      TrimStudies(width: width, gap: gap, relief: relief),
+      TrimStudies(
+        width: width,
+        gap: gap,
+        relief: relief,
+        multicolor: multicolor,
+        followContour: followContour,
+      ),
     ],
   );
 }

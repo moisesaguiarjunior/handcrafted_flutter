@@ -14,6 +14,7 @@ export 'src/craft_outline.dart';
 export 'src/contour_inset.dart';
 export 'src/paper_edge.dart';
 export 'src/paper_finish.dart';
+export 'src/foam_finish.dart';
 export 'src/craft_stroke.dart';
 export 'src/watercolor.dart';
 export 'src/craft_relief.dart';

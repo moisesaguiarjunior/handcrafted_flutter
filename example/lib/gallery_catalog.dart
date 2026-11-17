@@ -47,6 +47,9 @@ enum GalleryStudy {
 
   /// Independently fitted art and accessible native form/viewport.
   experience,
+
+  /// Cut EVA with independent grain, finish and raised edges.
+  foam,
 }
 
 /// Human-readable study title.
@@ -54,6 +57,7 @@ String galleryLabel(GalleryStudy study) => switch (study) {
   GalleryStudy.vocabulary => 'Material vocabulary',
   GalleryStudy.experience => 'Experience frame',
   GalleryStudy.cover => 'Start exploring',
+  GalleryStudy.foam => 'EVA foam & layers',
   GalleryStudy.materials => 'Materials & relief',
   GalleryStudy.paper => 'Paper & edges',
   GalleryStudy.stitches => 'Stitch families',
@@ -76,6 +80,8 @@ String galleryDescription(GalleryStudy study) => switch (study) {
   GalleryStudy.experience =>
     'Fit artwork independently; keep words, touch targets and footer native.',
   GalleryStudy.cover => 'Explore materials, marks and movement. Choose a study to try its controls.',
+  GalleryStudy.foam =>
+    'Compare fine-pore foam, surface impressions and raised cuts.',
   GalleryStudy.spreading => 'Pigment travels from a wet center into the paper.',
   GalleryStudy.embroidery =>
     'Finish missing stitches, pass a loose strand, or reveal embroidery.',
@@ -107,6 +113,7 @@ const galleryOrder = [
   GalleryStudy.watercolor,
   GalleryStudy.ink,
   GalleryStudy.paper,
+  GalleryStudy.foam,
   GalleryStudy.materials,
   GalleryStudy.embroidery,
   GalleryStudy.motion,

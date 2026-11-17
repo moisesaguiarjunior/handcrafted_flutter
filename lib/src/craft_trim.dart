@@ -58,6 +58,9 @@ Path contourTrimPath(
 /// Shading is illustrative: reserve [width] around the centerline for the cast
 /// shadow, or clip the whole composition. Use [contourTrimPath] to place bands at
 /// a nominal edge gap; this painter does not infer the substrate from its path.
+/// Optional [strandColors] adds 2..6 twisted strands to rope only, independently
+/// of grain [texture]. Colored work is additionally limited to 8192 samples.
+/// Closed contours use whole turns so the color phase meets at the seam.
 void paintCraftTrim(
   Canvas canvas,
   Path path, {
@@ -68,6 +71,7 @@ void paintCraftTrim(
   double relief = .7,
   double texture = .75,
   Offset light = const Offset(-1, -1),
+  List<Color>? strandColors,
 }) {
   if (!width.isFinite ||
       width < 1 ||
@@ -87,6 +91,15 @@ void paintCraftTrim(
       light.distance == 0) {
     throw ArgumentError('Invalid trim width, pitch, relief, texture or light');
   }
+  final strands = strandColors == null
+      ? null
+      : List<Color>.unmodifiable(strandColors);
+  if (strands != null &&
+      (kind != CraftTrimKind.rope ||
+          strands.length < 2 ||
+          strands.length > 6)) {
+    throw ArgumentError('Expected 2..6 strand colors for rope only');
+  }
   final metrics = checkedPathMetrics(path);
   final bounds = path.getBounds();
   if ([
@@ -105,6 +118,16 @@ void paintCraftTrim(
   if (stations > 2048) {
     throw ArgumentError('Trim exceeds 2048 texture stations');
   }
+  if (strands != null &&
+      metrics.fold<int>(
+            0,
+            (sum, metric) =>
+                sum +
+                ((metric.length / (pitch / 4)).ceil() + 1) * strands.length,
+          ) >
+          8192) {
+    throw ArgumentError('Colored rope exceeds 8192 strand samples');
+  }
   final band = spanPath(pathSpans(metrics), preserveClosed: true);
   final direction = light / light.distance;
   Paint stroke(Color c, double w) => Paint()
@@ -120,6 +143,49 @@ void paintCraftTrim(
     );
   }
   canvas.drawPath(band, stroke(color, width));
+  if (strands != null) {
+    for (final metric in metrics) {
+      if (metric.length == 0) continue;
+      final count = (metric.length / (pitch / 4)).ceil();
+      final turns = metric.isClosed
+          ? (metric.length / (pitch * strands.length)).round().clamp(1, 4096)
+          : metric.length / (pitch * strands.length);
+      final strandWidth = width * math.min(.55, 1.3 / strands.length);
+      for (var strand = 0; strand < strands.length; strand++) {
+        var segment = Path();
+        var started = false;
+        void flush() {
+          if (started) {
+            canvas.drawPath(segment, stroke(strands[strand], strandWidth));
+          }
+          segment = Path();
+          started = false;
+        }
+
+        for (var i = 0; i <= count; i++) {
+          final phase =
+              math.pi * 2 * (turns * i / count + strand / strands.length);
+          if (math.cos(phase) < 0) {
+            flush();
+            continue;
+          }
+          final tangent = metric.getTangentForOffset(metric.length * i / count);
+          if (tangent == null) continue;
+          final normal = Offset(-tangent.vector.dy, tangent.vector.dx);
+          final p =
+              tangent.position +
+              normal * math.sin(phase) * (width - strandWidth) / 2;
+          if (started) {
+            segment.lineTo(p.dx, p.dy);
+          } else {
+            segment.moveTo(p.dx, p.dy);
+            started = true;
+          }
+        }
+        flush();
+      }
+    }
+  }
   if (relief > 0) {
     canvas.drawPath(
       band.shift(direction * width * .1),

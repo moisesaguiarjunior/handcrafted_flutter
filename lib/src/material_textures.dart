@@ -20,9 +20,12 @@ enum CraftMaterial {
 
   /// Long wavy grain.
   wood,
+
+  /// Fine closed-cell pores, without cloth fibers or directional paper creases.
+  eva,
 }
 
-/// Owner-scoped cache of five static raster tiles, one per material.
+/// Owner-scoped cache of static raster tiles, one per material.
 ///
 /// Create outside paint; reuse for a scene and call [dispose] when it ends.
 /// Seed is stable for the cache lifetime. Color and scale do not create entries.
@@ -228,6 +231,13 @@ class MaterialTextures {
                   ? const Color(0x22000000)
                   : const Color(0x18FFFFFF),
           );
+        }
+      case CraftMaterial.eva:
+        for (var i = 0; i < 720; i++) {
+          final p = Offset(random.nextDouble() * s, random.nextDouble() * s);
+          final radius = .25 + random.nextDouble() * .65;
+          canvas.drawCircle(p + const Offset(.3, .4), radius, light);
+          canvas.drawCircle(p, radius * .8, dark);
         }
     }
     final picture = recorder.endRecording();

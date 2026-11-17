@@ -78,3 +78,10 @@ Sharing has a visible Copy link label. Flower and material atlases remain.
 The flower stays first in the README and pub.dev images by owner preference.
 The note capture requires owner visual approval before public promotion. Browser
 URL canonicalization, phone profiling and consumer adoption remain separate.
+
+## Foam and colored cord candidate
+
+Optional twisted color strands retain open/contour paths and nominal gaps. EVA
+grain, four finishes and existing raised-layer lighting are independent. Public
+examples use original procedural cuts; no application atlas is extracted.
+Technical review and owner acceptance of the new visual studies remain gates.

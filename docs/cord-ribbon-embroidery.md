@@ -61,3 +61,29 @@ not approval to change an existing application's visual design.
 Reproduce its image with `flutter test tool/capture_trims.dart`; output is
 `build/trims/trim-studies.png`. The tracked documentation image is an explicit
 capture of these widgets, not a golden baseline or performance result.
+
+## Twisted color strands
+
+![Original multicolor contour cord and separate ribbon/thread studies](assets/colored-cord.png)
+
+Supply `strandColors` (2..6 host-owned colors) with the existing rope kind:
+
+```dart
+paintCraftTrim(canvas, centerline,
+  color: baseColor, width: 14, pitch: 6,
+  strandColors: [rose, blue, cream]);
+```
+
+Each front-facing strand samples the existing centerline and its normal;
+hidden return halves are omitted. Color is independent of grain strength, so
+texture zero keeps colored strands. Closed contours use whole turns for a
+matching phase at the seam. This is illustrative twist, not rope physics.
+Omitting the palette keeps legacy single-color output. Other trim kinds reject
+strand colors rather than silently ignoring them.
+
+The existing contour helper still supplies the nominal border gap. The live
+study can switch between an open curve and the substrate contour, retaining
+width/gap/relief controls. In addition to the existing path/station limits,
+colored rope caps work at 8192 strand samples, checked before drawing. Denser or
+longer paths may need a larger pitch; this decoration guard is not a validity
+rule for a user's freehand drawing.

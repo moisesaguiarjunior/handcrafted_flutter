@@ -10,6 +10,68 @@ void main() {
     ..moveTo(12, 55)
     ..cubicTo(25, 3, 65, 70, 87, 20);
   test(
+    'twisted strand colors survive zero grain and respond to palette order',
+    () async {
+      const colors = [Color(0xFFE274A7), Color(0xFF73D6E0), Color(0xFFF5D698)];
+      Future<List<int>> render(List<Color>? strands) => pixels(
+        (c) => paintCraftTrim(
+          c,
+          curve,
+          color: const Color(0xFF999999),
+          width: 14,
+          pitch: 6,
+          texture: 0,
+          strandColors: strands,
+        ),
+      );
+      final actual = await render(colors);
+      expect(actual, await render(colors));
+      expect(actual, isNot(await render(null)));
+      expect(actual, isNot(await render(colors.reversed.toList())));
+      final blank = await pixels((_) {});
+      final rejected = await pixels((c) {
+        for (final palette in [
+          <Color>[],
+          [colors.first],
+          List.filled(7, colors.first),
+        ]) {
+          expect(
+            () => paintCraftTrim(
+              c,
+              curve,
+              color: colors.first,
+              strandColors: palette,
+            ),
+            throwsArgumentError,
+          );
+        }
+        expect(
+          () => paintCraftTrim(
+            c,
+            curve,
+            color: colors.first,
+            kind: CraftTrimKind.ribbon,
+            strandColors: colors,
+          ),
+          throwsArgumentError,
+        );
+        expect(
+          () => paintCraftTrim(
+            c,
+            Path()
+              ..moveTo(0, 0)
+              ..lineTo(2000, 0),
+            color: colors.first,
+            pitch: 2,
+            strandColors: colors,
+          ),
+          throwsArgumentError,
+        );
+      });
+      expect(rejected, blank);
+    },
+  );
+  test(
     'open cord, ribbon and embroidered texture change actual pixels',
     () async {
       Future<List<int>> render(

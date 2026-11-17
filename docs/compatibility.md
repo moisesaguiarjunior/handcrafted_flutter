@@ -51,3 +51,7 @@ Pencil, chalk and wax extend CraftStrokeTool in v0.2.0. Update exhaustive
 switches when adopting this version. Native solid-pen freehand and the original
 pen/marker/brush branches retain their previous contracts. The v0.1.0 tag is
 unchanged. See [0.2.0 migration](releases/0.2.0.md#upgrading-from-010).
+
+The upcoming 0.3.0 candidate appends CraftMaterial.eva. Exhaustive material
+switches need a new case; previous material indices and seeded output stay
+stable. Rope strandColors is optional and single-color behavior is unchanged.

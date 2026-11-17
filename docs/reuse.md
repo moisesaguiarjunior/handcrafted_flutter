@@ -271,3 +271,13 @@ it adds no public component, dependency, texture engine or clock. The README
 capture uses the same widget as the live welcome. Desktop actions precede art;
 paint wetness precedes its preview, and first contact starts at zero. Native
 router behavior remains unchanged; URL canonicalization is separate work.
+
+For multicolor cord and EVA, searched craft_trim, contourTrimPath, texture cache
+ownership, paper finishes, path validation, relief and SpecimenRow/captures.
+Reused validated centerlines, normal/tangent samples, seeded tile ownership and
+raised relief. Added only optional front-facing strand colors and a fine-pore
+material with independent bounded finishes. Existing material enum indices and
+single-color rendering are preserved. The examples use original procedural cuts,
+not application assets, manifests or a new clock. Root Flutter pub get already
+resolves/enforces the example; setup now runs it once, backed by a missing-lock
+negative control in an isolated snapshot.

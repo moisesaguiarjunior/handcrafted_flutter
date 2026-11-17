@@ -98,7 +98,8 @@ closed silhouette, respecting concavities and holes. See [contour seams](https:/
 
 ![Large procedural twill, linen, felt, paper and wood swatches](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/materials-atlas.png)
 
-Five material algorithms, with explicit colors, grain scale and seed.
+Five classic material algorithms, with explicit colors, grain scale and seed.
+EVA adds fine-pore foam with independently composable finishes and raised edges.
 
 ![Distinct shell, feather and crescent relief on twill, linen and felt](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/relief-objects.png)
 
@@ -113,6 +114,15 @@ Compose the existing paper grain with fiber, fluted, pitted or laid finishes,
 then choose clean, torn, handmade or postage edges independently. These are
 visual recipes; letterhead stays real text over a substrate. See
 [paper recipes and controls](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/paper-recipes.md).
+
+## Cut EVA, different impressions
+
+![Pebbled, mottled, grooved and crosshatched original foam cuts](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/foam-finishes.png)
+
+Keep the substrate, finish and layer lighting independent. Use fine-pore EVA
+with seeded impressions, then compose raised cuts around native content.
+[Foam recipes](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/eva-foam.md) ·
+[Try the finishes](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=foam).
 
 ## Thread, six ways
 

@@ -76,6 +76,7 @@ class MaterialsSheet extends StatelessWidget {
               CraftMaterial.felt => 'Dense, short, matted fibers',
               CraftMaterial.paper => 'Fine paired creases',
               CraftMaterial.wood => 'Long, wavy grain',
+              CraftMaterial.eva => 'Fine closed-cell pores',
             }),
           ],
         ),
@@ -311,6 +312,7 @@ class _SpecimenPainter extends CustomPainter {
             pitch: 22,
             seed: sample.seed,
           ),
+          CraftMaterial.eva => pigmentOutline(r, seed: sample.seed),
           CraftMaterial.wood =>
             Path()
               ..addRRect(RRect.fromRectAndRadius(r, const Radius.circular(26))),

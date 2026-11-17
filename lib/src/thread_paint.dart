@@ -1,5 +1,7 @@
 import 'package:flutter/painting.dart';
 
+import 'craft_relief.dart';
+
 /// Shared pre-paint validation for existing and patterned thread.
 void validateThreadPaint(
   double width,
@@ -34,8 +36,37 @@ void paintThreadGeometry(
   required Offset light,
   Iterable<Offset>? punctures,
   double pucker = 0,
+  CraftReliefKind relief = CraftReliefKind.raised,
 }) {
   final direction = light / light.distance;
+  if (relief == CraftReliefKind.inset) {
+    // Pressed marks have lit lips, not raised thread or needle punctures.
+    // Reuse prepared geometry; no broad shadow is drawn around the seam.
+    final stroke = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+    if (compression > 0 && thread.a > 0) {
+      canvas.drawPath(
+        stitches.shift(-direction * width * .23),
+        stroke
+          ..strokeWidth = width
+          ..color = Color.fromRGBO(255, 255, 255, .5 * compression * thread.a),
+      );
+      canvas.drawPath(
+        stitches.shift(direction * width * .2),
+        stroke
+          ..strokeWidth = width
+          ..color = Color.fromRGBO(50, 31, 20, .18 * compression * thread.a),
+      );
+    }
+    canvas.drawPath(
+      stitches,
+      stroke
+        ..strokeWidth = width * .78
+        ..color = thread,
+    );
+    return;
+  }
   if (compression > 0) {
     final anchors =
         punctures ??

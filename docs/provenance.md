@@ -71,3 +71,8 @@ procedural example geometry. Cotton and velvety nap are seeded tile algorithms;
 satin is native gradient light; optional seam irregularity and gathering extend
 the existing thread renderer. No reference image, consumer scene, coordinates or
 third-party artwork is bundled by these additions.
+
+
+The layered-foam and pressed-mark comparison uses original scalloped strips and
+leaf silhouettes built from Flutter paths. It reuses the public material and
+thread renderers; no supplied reference image or consumer geometry is bundled.

@@ -104,3 +104,12 @@ paper. More body for chalk reuses the dry renderer through explicit coverage.
 Legacy defaults remain; exact independent review and owner visual acceptance
 precede public promotion. These are geometry/light recipes, not cloth physics.
 [Recipes and limits](soft-craft-materials.md).
+
+## Pressed foam marks
+
+Optional `CraftReliefKind.inset` paints existing stitch geometry as pressed marks,
+separate from raised yarn and cloth gathering. Original layered foam specimens
+reuse the existing page, native controls and capture helpers. Shared geometry,
+legacy defaults and explicit progress remain; this is light, not displacement.
+[API and sample](eva-foam.md#raised-yarn-and-pressed-marks). Exact independent
+review and CI precede public promotion; device measurements remain separate.

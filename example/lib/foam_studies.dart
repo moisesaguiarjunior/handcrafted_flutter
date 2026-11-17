@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import 'material_studies.dart';
+import 'foam_sewing_studies.dart';
 import 'showcase_theme.dart';
 
 /// Original generic foam specimens; no application artwork is imported.
@@ -212,6 +213,8 @@ class _FoamPlaygroundState extends State<FoamPlayground> {
         ),
       ),
       FoamStudies(depth: depth, strength: strength),
+      const SizedBox(height: 28),
+      FoamSewingStudies(depth: depth, strength: strength),
       const SizedBox(height: 16),
       const Text(
         'Illustrative grain and beveled light, not simulated foam deformation. Text and controls stay native.',

@@ -316,3 +316,11 @@ and gathering to shared puncture paint; dry coverage to the existing dry stroke
 renderer. Zero defaults preserve earlier behavior. One original example composes
 these contracts; no parallel texture/drawing engine, object preset, clock or
 consumer artwork is introduced. See [soft craft recipes](soft-craft-materials.md).
+
+For pressed foam marks, searched the thread painter, running/patterned geometry,
+prepared stitch frames, CraftReliefKind and foam studies/captures. Reused the
+existing relief enum, path preparation/limits, progress, contour insets, resource
+owner and actual gallery/capture shell. Added only optional inset stroke lighting
+to canonical thread paint; raised defaults remain intact. Original foam layers
+and leaf motifs compare narrow pressed lips with raised cream yarn inside the
+existing foam study, not a new renderer, scene preset, cache or clock.

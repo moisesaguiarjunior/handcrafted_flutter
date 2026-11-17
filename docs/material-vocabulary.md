@@ -5,7 +5,7 @@ Install `CraftTheme` in `ThemeData.extensions`, or give a component an explicit
 content or application state. The live example supplies separate paper and cloth
 recipes over the same native controls.
 
-![The same native note and choices with paper and cloth themes](../doc/screenshots/material-vocabulary.png)
+![The same picnic invitation and reply form in paper and cloth themes](../doc/screenshots/material-vocabulary.png)
 
 [Try the material vocabulary](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=vocabulary).
 
@@ -33,14 +33,14 @@ CraftPanel(
   child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const CraftHeading('Make room for small wonders'),
-      TextField(controller: titleController),
+      const CraftHeading('Picnic for Grandma’s birthday'),
+      TextField(controller: guestsController),
       CraftChoice(
-        selected: selected,
-        onSelected: (value) => setState(() => selected = value),
-        child: const Text('Keep this note'),
+        selected: attending,
+        onSelected: (value) => setState(() => attending = value),
+        child: const Text('We’ll be there'),
       ),
-      CraftButton(onPressed: save, child: const Text('Save note')),
+      CraftButton(onPressed: sendReply, child: const Text('Send reply')),
     ],
   ),
 );
@@ -101,8 +101,9 @@ to raised cloth lettering while retaining the same form/controller/focus.
   hover, focus, pressed feedback and keyboard activation remain native. It keeps
   a 48-by-48 minimum target despite compact button themes; parents must allow it.
   The target is rectangular, including transparent corners of the decorative cut.
-- `CraftChoice` keeps a native selected outline even without role overrides,
-  so selection is visible beyond a color change. It is controlled by the host.
+- `CraftChoice` shows a native check mark before its label when selected, even
+  without role overrides, so selection is visible beyond a color change and
+  does not draw a fixed outline over the decorative cut. It is controlled by the host.
   Selected state and activation share
   the same merged semantics node, including a disabled-but-selected choice.
 - Replacing CraftTheme updates decoration without replacing the child subtree.

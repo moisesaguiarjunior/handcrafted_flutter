@@ -34,9 +34,9 @@ void main() {
     for (final item in [
       (
         'materials',
-        'Five materials, many possibilities',
+        'Nine materials, one surface',
         const MaterialsSheet(),
-        const Size(1100, 850),
+        const Size(1100, 1140),
       ),
       (
         'impressions',

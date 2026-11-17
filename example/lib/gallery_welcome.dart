@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'brand_mark.dart';
 import 'gallery_catalog.dart';
 import 'living_materials.dart';
 import 'motion_studies.dart';
@@ -21,6 +22,13 @@ class GalleryWelcome extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 150),
+              child: const AspectRatio(
+                aspectRatio: 3,
+                child: LeatherBrandMark(),
+              ),
+            ),
             const Text(
               'Make something worth keeping.',
               style: TextStyle(fontFamily: 'Caveat', fontSize: 44),

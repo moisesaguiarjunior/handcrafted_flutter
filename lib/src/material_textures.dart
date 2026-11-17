@@ -29,6 +29,9 @@ enum CraftMaterial {
 
   /// Short, soft directional nap; an illustrative velvety cloth surface.
   suede,
+
+  /// Pebbled hide grain: rounded cells separated by fine creases, with pores.
+  leather,
 }
 
 /// Owner-scoped cache of static raster tiles, one per material.
@@ -287,12 +290,138 @@ class MaterialTextures {
           canvas.drawCircle(p + const Offset(.3, .4), radius, light);
           canvas.drawCircle(p, radius * .8, dark);
         }
+      case CraftMaterial.leather:
+        _leather(canvas, random);
     }
     final picture = recorder.endRecording();
     try {
       return picture.toImageSync(_size, _size);
     } finally {
       picture.dispose();
+    }
+  }
+
+  /// Pebbled grain from a jittered cell field that wraps at the tile edge.
+  /// A smooth height (distance to the nearest cell border) gives each
+  /// pebble a rounded top; its slope is lit from the upper left and the
+  /// valleys between cells darken. Fixed 96x96 work, batched by tone.
+  static void _leather(Canvas canvas, math.Random random) {
+    const cells = 16;
+    const cell = _size / cells;
+    final centers = List.generate(
+      cells * cells,
+      (_) => Offset(
+        (.06 + random.nextDouble() * .88) * cell,
+        (.06 + random.nextDouble() * .88) * cell,
+      ),
+    );
+    final height = Float64List(_size * _size);
+    for (var y = 0; y < _size; y++) {
+      for (var x = 0; x < _size; x++) {
+        final p = Offset(x + .5, y + .5);
+        final gx = x ~/ cell, gy = y ~/ cell;
+        var nearest = double.infinity, second = double.infinity;
+        for (var dy = -1; dy <= 1; dy++) {
+          for (var dx = -1; dx <= 1; dx++) {
+            final cx = gx + dx, cy = gy + dy;
+            final origin = Offset(cx * cell, cy * cell);
+            final c = origin + centers[(cy % cells) * cells + (cx % cells)];
+            final d = (p - c).distance;
+            if (d < nearest) {
+              second = nearest;
+              nearest = d;
+            } else if (d < second) {
+              second = d;
+            }
+          }
+        }
+        final t = math.min(1.0, (second - nearest) / 2.6);
+        height[y * _size + x] = t * t * (3 - 2 * t);
+      }
+    }
+    // Tones are quantized finely across the small alpha range actually used.
+    const buckets = 24;
+    const maxAlpha = .3;
+    final darkPoints = List.generate(buckets, (_) => <double>[]);
+    final lightPoints = List.generate(buckets, (_) => <double>[]);
+    void add(List<List<double>> target, double alpha, int x, int y) {
+      final bucket = (alpha / maxAlpha * buckets).round();
+      if (bucket <= 0) return;
+      target[math.min(bucket, buckets) - 1].addAll([x + .5, y + .5]);
+    }
+
+    double at(int x, int y) => height[(y % _size) * _size + (x % _size)];
+    for (var y = 0; y < _size; y++) {
+      for (var x = 0; x < _size; x++) {
+        final h = at(x, y);
+        // Rising toward the lower right means the slope faces the light.
+        final slope = at(x + 1, y + 1) - at(x - 1, y - 1);
+        add(darkPoints, (1 - h) * .17 + math.max(0, -slope) * .16, x, y);
+        add(lightPoints, math.max(0, slope) * .2, x, y);
+      }
+    }
+    for (var i = 0; i < buckets; i++) {
+      final alpha = (i + 1) / buckets * maxAlpha;
+      for (final (points, base) in [
+        (darkPoints[i], const Color(0xFF000000)),
+        (lightPoints[i], const Color(0xFFFFFFFF)),
+      ]) {
+        if (points.isEmpty) continue;
+        canvas.drawRawPoints(
+          ui.PointMode.points,
+          Float32List.fromList(points),
+          Paint()
+            ..color = base.withValues(alpha: alpha)
+            ..strokeWidth = 1
+            ..strokeCap = StrokeCap.square,
+        );
+      }
+    }
+    // Sparse pores and a few long, faint wrinkles break the regular cell rhythm.
+    for (var i = 0; i < 140; i++) {
+      final p = Offset(
+        random.nextDouble() * _size,
+        random.nextDouble() * _size,
+      );
+      canvas.drawCircle(
+        p,
+        .3 + random.nextDouble() * .35,
+        Paint()..color = const Color(0x1C000000),
+      );
+    }
+    for (var i = 0; i < 5; i++) {
+      final start = Offset(
+        random.nextDouble() * _size,
+        random.nextDouble() * _size,
+      );
+      final angle = random.nextDouble() * math.pi;
+      final length = 18 + random.nextDouble() * 26;
+      final direction = Offset(math.cos(angle), math.sin(angle));
+      final bend =
+          Offset(-direction.dy, direction.dx) * (random.nextDouble() * 6 - 3);
+      final end = start + direction * length;
+      final wrinkle = Path()
+        ..moveTo(start.dx, start.dy)
+        ..quadraticBezierTo(
+          (start.dx + end.dx) / 2 + bend.dx,
+          (start.dy + end.dy) / 2 + bend.dy,
+          end.dx,
+          end.dy,
+        );
+      canvas.drawPath(
+        wrinkle,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = .7
+          ..color = const Color(0x12000000),
+      );
+      canvas.drawPath(
+        wrinkle.shift(const Offset(.6, .7)),
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = .6
+          ..color = const Color(0x10FFFFFF),
+      );
     }
   }
 

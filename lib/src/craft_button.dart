@@ -57,16 +57,6 @@ class CraftButton extends StatelessWidget {
             autofocus: autofocus,
             style: TextButton.styleFrom(
               backgroundColor: Colors.transparent,
-              side: selected == null
-                  ? null
-                  : selected!
-                  ? BorderSide(
-                      color: onPressed == null
-                          ? Theme.of(context).disabledColor
-                          : Theme.of(context).colorScheme.primary,
-                      width: 2,
-                    )
-                  : BorderSide.none,
               minimumSize: const Size(48, 48),
               maximumSize: Size.infinite,
               fixedSize: Size.infinite,
@@ -74,7 +64,18 @@ class CraftButton extends StatelessWidget {
               visualDensity: VisualDensity.standard,
               tapTargetSize: MaterialTapTargetSize.padded,
             ),
-            child: child,
+            // Selection is shown by a native check mark, not color alone and
+            // not a fixed outline that would fight the decorative cut.
+            child: selected == true
+                ? Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const _CheckMark(),
+                      const SizedBox(width: 6),
+                      Flexible(child: child),
+                    ],
+                  )
+                : child,
           ),
         ),
       ),
@@ -121,4 +122,45 @@ class CraftChoice extends StatelessWidget {
     autofocus: autofocus,
     child: child,
   );
+}
+
+/// A drawn check in the button's foreground color; needs no icon font.
+class _CheckMark extends StatelessWidget {
+  const _CheckMark();
+  @override
+  Widget build(BuildContext context) {
+    final color =
+        IconTheme.of(context).color ??
+        DefaultTextStyle.of(context).style.color ??
+        const Color(0xFF000000);
+    final size = MediaQuery.textScalerOf(context).scale(16);
+    return SizedBox.square(
+      dimension: size,
+      child: CustomPaint(painter: _CheckPainter(color)),
+    );
+  }
+}
+
+class _CheckPainter extends CustomPainter {
+  const _CheckPainter(this.color);
+  final Color color;
+  @override
+  void paint(Canvas canvas, Size size) {
+    final s = size.shortestSide;
+    canvas.drawPath(
+      Path()
+        ..moveTo(s * .14, s * .54)
+        ..lineTo(s * .4, s * .78)
+        ..lineTo(s * .88, s * .24),
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = s * .14
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round
+        ..color = color,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_CheckPainter old) => old.color != color;
 }

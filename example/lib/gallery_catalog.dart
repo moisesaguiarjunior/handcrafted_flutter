@@ -3,7 +3,7 @@ enum GalleryStudy {
   /// Opening compositions and sculpted motifs.
   cover,
 
-  /// Five existing material algorithms.
+  /// Every material texture family.
   materials,
 
   /// Paper stocks, edges and finishes.

@@ -48,13 +48,10 @@ class StitchStudies extends StatelessWidget {
                     distance: depth + width * 4 + 2,
                     sampleSpacing: 1,
                   );
+                  final pair = _pairs[kind]!;
                   return CraftSurface(
-                    material: kind.index.isEven
-                        ? CraftMaterial.felt
-                        : CraftMaterial.linen,
-                    color: kind.index.isEven
-                        ? DemoPalette.sage
-                        : DemoPalette.paper,
+                    material: pair.material,
+                    color: pair.cloth,
                     seed: 52,
                     shape: shape,
                     child: SizedBox.expand(
@@ -63,6 +60,7 @@ class StitchStudies extends StatelessWidget {
                           outline,
                           seam,
                           kind,
+                          pair.thread,
                           pitch,
                           depth,
                           width,
@@ -93,11 +91,47 @@ class StitchStudies extends StatelessWidget {
   );
 }
 
+/// Cloth and thread pairs chosen as one palette, so each sample contrasts
+/// clearly while the six read as a set.
+const _pairs = {
+  CraftStitchKind.running: (
+    material: CraftMaterial.felt,
+    cloth: DemoPalette.sage,
+    thread: DemoPalette.cream,
+  ),
+  CraftStitchKind.backstitch: (
+    material: CraftMaterial.linen,
+    cloth: Color(0xFFE6D6B4),
+    thread: DemoPalette.indigo,
+  ),
+  CraftStitchKind.blanket: (
+    material: CraftMaterial.felt,
+    cloth: DemoPalette.rose,
+    thread: DemoPalette.cream,
+  ),
+  CraftStitchKind.chain: (
+    material: CraftMaterial.cotton,
+    cloth: DemoPalette.paper,
+    thread: DemoPalette.terracotta,
+  ),
+  CraftStitchKind.cross: (
+    material: CraftMaterial.twill,
+    cloth: DemoPalette.indigo,
+    thread: DemoPalette.ochre,
+  ),
+  CraftStitchKind.basting: (
+    material: CraftMaterial.leather,
+    cloth: DemoPalette.cognac,
+    thread: DemoPalette.cream,
+  ),
+};
+
 class _StitchPainter extends CustomPainter {
   const _StitchPainter(
     this.outline,
     this.seam,
     this.kind,
+    this.thread,
     this.pitch,
     this.depth,
     this.width,
@@ -105,6 +139,7 @@ class _StitchPainter extends CustomPainter {
   );
   final Path outline, seam;
   final CraftStitchKind kind;
+  final Color thread;
   final double pitch, depth, width, compression;
   @override
   void paint(Canvas canvas, Size size) {
@@ -113,7 +148,7 @@ class _StitchPainter extends CustomPainter {
     paintCraftStitch(
       canvas,
       seam,
-      thread: DemoPalette.ink,
+      thread: thread,
       kind: kind,
       pitch: pitch,
       depth: depth,
@@ -127,6 +162,7 @@ class _StitchPainter extends CustomPainter {
   bool shouldRepaint(_StitchPainter old) =>
       old.seam != seam ||
       old.kind != kind ||
+      old.thread != thread ||
       old.pitch != pitch ||
       old.depth != depth ||
       old.width != width ||

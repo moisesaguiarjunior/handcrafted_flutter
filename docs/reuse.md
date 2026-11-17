@@ -27,6 +27,7 @@
 | Shared specimen layouts and visual inventory | `example/lib/material_studies.dart`, `example/lib/main_atlas.dart` |
 | Authored actor examples with independent progress | `example/lib/motion_studies.dart`, `example/lib/kite_art.dart` |
 | Canonical example palette and typography | `example/lib/showcase_theme.dart` |
+| Project mark composition and capture | `example/lib/brand_mark.dart`, `tool/capture_brand.dart` |
 | Public imported crop, source hinge and placement | `CraftImagePart`; `example/lib/imported_layers.dart` shows the consumer composition |
 | Shared example capture shell and PNG writer | `tool/capture_support.dart` |
 | Format, analysis and behavior checks | `tool/check.sh` |
@@ -316,3 +317,11 @@ and gathering to shared puncture paint; dry coverage to the existing dry stroke
 renderer. Zero defaults preserve earlier behavior. One original example composes
 these contracts; no parallel texture/drawing engine, object preset, clock or
 consumer artwork is introduced. See [soft craft recipes](soft-craft-materials.md).
+
+For the leather material and project mark, searched `CraftMaterial`, suede, EVA,
+pebbled `FoamFinish`, relief, trims, running stitches and capture helpers. The
+pebbled foam finish is an overlay for EVA, not a hide grain, so leather is a new
+tile in the existing `MaterialTextures` cache rather than a parallel renderer.
+The mark reuses `insetCraftPath`, `paintRunningStitch`, `paintCraftRelief`,
+`paintCraftTrim`, `CraftReliefText` and `captureExample`; only the tag outline,
+eyelet and fiber ends are example-local. The palette stays example-owned.

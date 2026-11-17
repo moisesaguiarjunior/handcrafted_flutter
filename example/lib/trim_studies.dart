@@ -159,7 +159,11 @@ class _TrimPlate extends CustomPainter {
       canvas,
       kind == CraftTrimKind.rope && !followContour ? cord : border,
       strandColors: kind == CraftTrimKind.rope && multicolor
-          ? const [Color(0xFFB76994), Color(0xFF87CBD9), Color(0xFFF3DEB8)]
+          ? const [
+              DemoPalette.terracotta,
+              DemoPalette.cream,
+              DemoPalette.indigo,
+            ]
           : null,
       color: kind == CraftTrimKind.ribbon
           ? DemoPalette.thread

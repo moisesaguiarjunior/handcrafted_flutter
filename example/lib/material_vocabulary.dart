@@ -5,13 +5,15 @@ import 'showcase_theme.dart';
 
 /// Two palettes supplied entirely by the example, not by the package.
 CraftTheme exampleMaterialTheme({required bool cloth}) {
-  final ink = cloth ? const Color(0xFF355B55) : const Color(0xFF66513F);
+  final ink = cloth ? const Color(0xFF3F5E55) : const Color(0xFF8A5A3C);
   CraftPanelStyle recipe(
     CraftMaterial material,
     Color color, {
     CraftOutline? shape,
     CraftStitchKind kind = CraftStitchKind.running,
     EdgeInsetsGeometry? padding,
+    bool sewn = true,
+    double seamInset = 14,
   }) => CraftPanelStyle(
     material: material,
     color: color,
@@ -33,24 +35,29 @@ CraftTheme exampleMaterialTheme({required bool cloth}) {
                 padding: 4,
               )),
     padding: padding ?? const EdgeInsets.all(28),
-    seam: CraftSeam(
-      color: ink.withValues(alpha: .75),
-      kind: kind,
-      pitch: 14,
-      inset: 14,
-      depth: 4,
-    ),
+    // Thread marks the card and the main action only; quieter chips and
+    // choices keep the form readable.
+    seam: sewn
+        ? CraftSeam(
+            color: ink.withValues(alpha: .75),
+            kind: kind,
+            pitch: 14,
+            inset: seamInset,
+            depth: 4,
+          )
+        : null,
   );
   final base = recipe(
     cloth ? CraftMaterial.linen : CraftMaterial.paper,
-    cloth ? const Color(0xFFE0E9DD) : const Color(0xFFFFF1D7),
+    cloth ? const Color(0xFFE2E9DD) : const Color(0xFFFBF3E4),
     kind: cloth ? CraftStitchKind.blanket : CraftStitchKind.running,
   );
   final button = recipe(
     cloth ? CraftMaterial.felt : CraftMaterial.paper,
-    cloth ? const Color(0xFFC6D9CA) : const Color(0xFFE9C99E),
+    cloth ? const Color(0xFFBCD3C2) : const Color(0xFFEFCB8C),
     kind: cloth ? CraftStitchKind.blanket : CraftStitchKind.running,
-    padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
+    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 26),
+    seamInset: 8,
   );
   return CraftTheme(
     surface: base,
@@ -62,25 +69,28 @@ CraftTheme exampleMaterialTheme({required bool cloth}) {
       CraftRole.button: button,
       CraftRole.choice: recipe(
         cloth ? CraftMaterial.twill : CraftMaterial.paper,
-        cloth ? const Color(0xFFEADDD1) : const Color(0xFFF2E4D1),
-        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
+        cloth ? const Color(0xFFEDE4D6) : const Color(0xFFF4E8D6),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        sewn: false,
       ),
       CraftRole.selectedChoice: recipe(
         cloth ? CraftMaterial.felt : CraftMaterial.paper,
-        cloth ? const Color(0xFFB7D2C2) : const Color(0xFFE7C299),
-        kind: CraftStitchKind.backstitch,
-        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
+        cloth ? const Color(0xFFC9DCCB) : const Color(0xFFF2DDB8),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        sewn: false,
       ),
       CraftRole.tag: recipe(
         cloth ? CraftMaterial.felt : CraftMaterial.paper,
-        cloth ? const Color(0xFFE2C8C1) : const Color(0xFFF0DABC),
+        cloth ? const Color(0xFFEBC6B8) : const Color(0xFFF1CDBE),
         shape: const CraftOutline.pigment(seed: 73, broad: true, padding: 3),
-        padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 26),
+        padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 14),
+        sewn: false,
       ),
       CraftRole.ribbon: recipe(
         cloth ? CraftMaterial.twill : CraftMaterial.paper,
-        cloth ? const Color(0xFFC5D9DB) : const Color(0xFFE1D4B8),
-        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 26),
+        cloth ? const Color(0xFFC9D8E0) : const Color(0xFFDCE5D3),
+        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+        sewn: false,
       ),
     },
   );
@@ -100,14 +110,19 @@ class MaterialVocabularyStudy extends StatefulWidget {
 
 class _MaterialVocabularyStudyState extends State<MaterialVocabularyStudy> {
   late bool cloth = widget.initialCloth;
-  bool selected = true;
-  int actions = 0;
-  final title = TextEditingController(text: 'A feather beside the garden path');
+  bool attending = true;
+  bool sent = false;
+  final name = TextEditingController(text: 'Ana, Leo and the kids');
   @override
   void dispose() {
-    title.dispose();
+    name.dispose();
     super.dispose();
   }
+
+  void _choose(bool value) => setState(() {
+    attending = value;
+    sent = false;
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -116,11 +131,11 @@ class _MaterialVocabularyStudyState extends State<MaterialVocabularyStudy> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Text(
-          'The same note, two materials',
+          'One invitation, two materials',
           style: TextStyle(fontFamily: 'Caveat', fontSize: 38),
         ),
         const Text(
-          'Change the material, then keep writing. Text, focus, choices and actions stay native.',
+          'Switch the material while you reply. Text, focus, choices and actions stay native.',
         ),
         SwitchListTile(
           key: const ValueKey('material-theme'),
@@ -147,60 +162,78 @@ class _MaterialVocabularyStudyState extends State<MaterialVocabularyStudy> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const Wrap(
+                      spacing: 12,
+                      runSpacing: 12,
+                      children: [
+                        CraftPanel(
+                          role: CraftRole.tag,
+                          child: Text('SUNDAY · 4 PM'),
+                        ),
+                        CraftPanel(
+                          role: CraftRole.ribbon,
+                          child: Text('BY THE LAKE'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
                     const CraftHeading(
-                      'Make room for small wonders',
+                      'Picnic for Grandma’s birthday',
                       style: TextStyle(
                         fontFamily: 'Caveat',
-                        fontSize: 34,
+                        fontSize: 36,
+                        height: 1.1,
                         color: DemoPalette.ink,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const Text('Bring a blanket. We’ll bring the cake.'),
+                    const SizedBox(height: 18),
                     TextField(
                       key: const ValueKey('material-note-title'),
-                      controller: title,
+                      controller: name,
                       minLines: 1,
                       maxLines: null,
+                      onChanged: (_) {
+                        if (sent) setState(() => sent = false);
+                      },
                       decoration: const InputDecoration(
-                        labelText: 'Note title',
+                        labelText: 'Who is coming',
                         border: OutlineInputBorder(),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 18),
                     Wrap(
                       spacing: 12,
                       runSpacing: 12,
                       children: [
                         CraftChoice(
-                          selected: selected,
-                          onSelected: (v) => setState(() => selected = v),
-                          child: const Text('Keep this note'),
+                          key: const ValueKey('rsvp-yes'),
+                          selected: attending,
+                          onSelected: (_) => _choose(true),
+                          child: const Text('We’ll be there'),
+                        ),
+                        CraftChoice(
+                          key: const ValueKey('rsvp-no'),
+                          selected: !attending,
+                          onSelected: (_) => _choose(false),
+                          child: const Text('Can’t make it'),
                         ),
                         CraftButton(
-                          onPressed: () => setState(() => actions++),
-                          child: const Text('Try the action'),
+                          onPressed: () => setState(() => sent = true),
+                          child: const Text('Send reply'),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
-                    Text('Activations $actions'),
+                    const SizedBox(height: 14),
+                    Text(
+                      sent
+                          ? (attending
+                                ? 'Reply sent: see you Sunday.'
+                                : 'Reply sent: we’ll miss you.')
+                          : 'Your reply stays in this demo.',
+                    ),
                   ],
                 ),
-              ),
-              const SizedBox(height: 24),
-              Wrap(
-                spacing: 16,
-                runSpacing: 16,
-                children: [
-                  const CraftPanel(
-                    role: CraftRole.tag,
-                    child: Text('FIELD NOTE'),
-                  ),
-                  const CraftPanel(
-                    role: CraftRole.ribbon,
-                    child: Text('A LITTLE WONDER'),
-                  ),
-                ],
               ),
             ],
           ),

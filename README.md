@@ -1,5 +1,7 @@
 # handcrafted_flutter
 
+![A stitched cognac leather tag pressed with the word handcrafted, tied with a twisted cord](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/leather-mark.png)
+
 **Give your Flutter widgets a handmade surface.**
 
 [Explore the live gallery](https://moisesaguiarjunior.github.io/handcrafted_flutter/) ·
@@ -7,9 +9,12 @@
 
 ![Layered rose petals and a blue-green wash on textured paper](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/watercolor-hero.png)
 
-Seeded paper, linen, twill, felt, wood and EVA textures, contour-following stitches, organic
-contours, watercolor pigment, relief, cord/ribbon bands and composable moving
-parts for Flutter.
+Seeded paper, linen, twill, felt, wood, cotton, velvety nap, leather and EVA
+textures, six contour-following stitch families, organic contours, watercolor
+pigment, relief, cord/ribbon bands and composable moving parts for Flutter.
+The leather tag above is itself a composition of those parts: leather grain, a
+contour seam with recessed punctures, a raised edge, a twisted cord and native
+pressed lettering. [See how it is built](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/example/lib/brand_mark.dart).
 Text remains text; buttons retain native focus, actions and semantics.
 
 [![Checks](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml/badge.svg)](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml)
@@ -22,14 +27,33 @@ See [release notes and migration](https://github.com/moisesaguiarjunior/handcraf
 the current source branch.
 Tested baseline: Flutter 3.47.9 / Dart 3.13.7. See [compatibility](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/compatibility.md).
 
-## Compose a note you can use
+## Write a postcard you can send
 
-[![An editable watercolor note with contour stitching and native controls](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/painted-note.png)](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=cover)
+[![An editable watercolor postcard with a stamp, postmark, contour stitching and native controls](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/painted-note.png)](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=cover)
 
-Write in the note, remove its stitched edge, and try the button in the
-[live composition](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=cover).
-The paper, pigment and pressed heading are decoration; the field, choice and
-action are real Flutter widgets. [See the runnable composition](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/example/lib/painted_note.dart).
+Write the message, change who it goes to, remove the stitched edge and send it
+in the [live composition](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=cover).
+The paper, coastal watercolor, stamp, postmark and pressed heading are
+decoration; the fields, choice and action are real Flutter widgets. [See the runnable composition](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/example/lib/painted_note.dart).
+
+## Stitched by hand
+
+![Running, back, blanket, chain, cross and basting stitches, each on its own cloth](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/stitch-families.png)
+
+Choose a thread pattern while keeping the same seam, substrate and native controls.
+`insetCraftPath` follows the real cut — concavities, holes and narrow necks
+included — and `paintCraftStitch` lays running, back, blanket, chain, cross or
+basting stitches along it with illustrative puncture shading. Running stitches
+can be seeded slightly irregular, like work done by hand.
+[Stitch geometry, clearance and playground](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/stitch-families.md) ·
+[Try the six stitch families](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=stitches).
+
+![Satin-stitched leaves filling in, stitch by stitch, inside a wooden hoop](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/embroidery-reveal.gif)
+
+Drive any thread with explicit progress: a botanical sprig fills in stitch by
+stitch, a missing stitch completes, or a loose strand passes above and beneath
+the cloth. [Try the embroidery study](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=embroidery) ·
+[Explicit-progress paint and thread recipes](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/living-materials.md).
 
 ## Watercolor, on paper and in motion
 
@@ -55,11 +79,13 @@ along a curve; choose whether the brush is visible and lifts away at the end.
 
 ## One set of controls, your material themes
 
-![Native note, choice and action in paper and cloth themes](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/material-vocabulary.png)
+![The same picnic invitation and reply form in paper and cloth themes](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/material-vocabulary.png)
 
 `CraftTheme` supplies host-owned material roles; `CraftPanel`, `CraftButton` and
 `CraftChoice` keep text, focus, actions and selected state native. Switch the
-material without replacing the form or its contents.
+material without replacing the form or its contents: the reply you are typing,
+your choice and its focus survive the switch. Selected choices show a drawn
+check mark, so selection never depends on color alone.
 [Try both themes](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=vocabulary)
 · [Use the components](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/material-vocabulary.md).
 Version 0.3.0 adds `CraftHeading` with themed raised/inset lettering and
@@ -95,20 +121,26 @@ cached silhouette for painting, clipping and child hit testing. Prefer a value
 the content padding. `insetCraftPath` derives a bounded polygonal seam from a
 closed silhouette, respecting concavities and holes. See [contour seams](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/contour-seams.md).
 
-## Materials you can compose
+## Nine materials you can compose
 
-![Large procedural twill, linen, felt, paper and wood swatches](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/materials-atlas.png)
+![Twill, linen, felt, paper, wood, leather, EVA foam, cotton and velvety nap swatches](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/materials-atlas.png)
 
-Five classic material algorithms, with explicit colors, grain scale and seed.
-EVA adds fine-pore foam with independently composable finishes and raised edges.
+Every material takes an explicit color, grain scale and seed, and is rasterized
+once into an owner-scoped tile. Pebbled leather, fine-pore EVA, compact cotton
+and velvety nap join the classic paper, linen, twill, felt and wood.
+
+![Cotton, velvety and felt pockets sewn with irregular running stitches, a chalk garden and a folded paper pinwheel](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/soft-craft-materials.png)
+
 Fine cotton and velvety cloth compose with optional irregular sewing and local
 puncture gathering. Chalk can leave a denser broken mark; satin paper catches
 light on folded shapes. [Soft craft recipes](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/soft-craft-materials.md)
 · [Try cloth, chalk & folds](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=softCraft).
 
-![Distinct shell, feather and crescent relief on twill, linen and felt](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/relief-objects.png)
+![A leather journal with a pressed ginkgo leaf, a raised balloon on twill and a letterpress thank-you card](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/relief-objects.png)
 
-Each relief has its own shape and edge lighting. Substrate grain stays visible;
+Layered motifs press into or rise from the material: a tooled leather journal
+with a stitched border, a raised balloon whose seams are pressed, and debossed
+letterpress peaks. Each relief has its own shape and edge lighting. Substrate grain stays visible;
 pressed lettering uses native `CraftReliefText`. These are shading approximations.
 See the [implemented catalog](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/materials-and-motion.md) for API/examples and
 what remains planned.
@@ -128,16 +160,6 @@ Keep the substrate, finish and layer lighting independent. Use fine-pore EVA
 with seeded impressions, then compose raised cuts around native content.
 [Foam recipes](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/eva-foam.md) ·
 [Try the finishes](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=foam).
-
-## Thread, six ways
-
-Choose a thread pattern while keeping the same seam, substrate and native controls.
-[Stitch geometry, clearance and playground](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/stitch-families.md) ·
-[Try the six stitch families](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=stitches).
-A separate [embroidery study](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=embroidery)
-covers missing-stitch completion, a loose strand moving above and beneath the
-cloth, and a botanical embroidery reveal. Choose the mode in the study.
-[Explicit-progress paint and thread recipes](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/living-materials.md).
 
 ## Body, tail and tether
 
@@ -232,7 +254,14 @@ See [drawing recipes and examples](https://github.com/moisesaguiarjunior/handcra
 
 ### Cord, ribbon and embroidered lines
 
+![A braided three-color cord, a ribbon and an embroidered border, each following its cut](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/colored-cord.png)
+
 Draw raised bands over textures or follow the actual cut with an optional edge gap.
+Give a rope two to six strand colors: two twist, three or more braid, and each
+yarn keeps its own volume and crossing depth.
+
+![Two twisted strands, three braided strands and natural cotton tones](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/braided-cord-detail.png)
+
 [API and runnable playground](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/cord-ribbon-embroidery.md).
 
 ## Installation
@@ -268,6 +297,7 @@ archive retains the library, runnable example and selected screenshots.
 ```sh
 bash tool/check.sh
 python3 tool/check_publication.py
+flutter test tool/capture_brand.dart
 flutter test tool/capture_cover.dart
 flutter test tool/capture_showcase.dart
 bash tool/encode_showcase.sh

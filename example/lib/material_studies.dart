@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
+import 'relief_motifs.dart';
 import 'showcase_theme.dart';
 
 /// Parallel specimen layout shared by live pages and documentation captures.
@@ -33,12 +34,12 @@ class SpecimenRow extends StatelessWidget {
 }
 
 const _fabrics = [
-  ('Indigo twill', CraftMaterial.twill, Color(0xFF36566A), 'Bloom'),
-  ('Flax linen', CraftMaterial.linen, Color(0xFFD8C9A7), 'Gather'),
-  ('Rose felt', CraftMaterial.felt, Color(0xFFB17E8A), 'Wonder'),
+  ('Indigo twill', CraftMaterial.twill, DemoPalette.indigo, 'Sea'),
+  ('Flax linen', CraftMaterial.linen, Color(0xFFE2D2AE), 'Home'),
+  ('Clay felt', CraftMaterial.felt, DemoPalette.rose, 'Slowly'),
 ];
 
-/// Five existing texture algorithms shown as large colored organic swatches.
+/// Every material family shown as large swatches from one shared palette.
 class MaterialsSheet extends StatelessWidget {
   /// Creates a texture collection with an explicit grain seed.
   const MaterialsSheet({super.key, this.seed = 23});
@@ -50,8 +51,12 @@ class MaterialsSheet extends StatelessWidget {
     children: [
       for (final sample in [
         ..._fabrics.map((f) => (f.$1, f.$2, f.$3)),
-        ('Drawing paper', CraftMaterial.paper, const Color(0xFFEEE5D3)),
-        ('Honey wood', CraftMaterial.wood, const Color(0xFFC7A47B)),
+        ('Drawing paper', CraftMaterial.paper, const Color(0xFFF3EBDC)),
+        ('Honey wood', CraftMaterial.wood, DemoPalette.wood),
+        ('Cognac leather', CraftMaterial.leather, DemoPalette.cognac),
+        ('Ochre EVA foam', CraftMaterial.eva, DemoPalette.ochre),
+        ('Sage cotton', CraftMaterial.cotton, DemoPalette.sage),
+        ('Terracotta nap', CraftMaterial.suede, DemoPalette.terracotta),
       ])
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,6 +84,7 @@ class MaterialsSheet extends StatelessWidget {
               CraftMaterial.eva => 'Fine closed-cell pores',
               CraftMaterial.cotton => 'Compact plain weave',
               CraftMaterial.suede => 'Soft, short nap',
+              CraftMaterial.leather => 'Pebbled grain and fine creases',
             }),
           ],
         ),
@@ -316,7 +322,8 @@ class _SpecimenPainter extends CustomPainter {
           ),
           CraftMaterial.eva ||
           CraftMaterial.cotton ||
-          CraftMaterial.suede => pigmentOutline(r, seed: sample.seed),
+          CraftMaterial.suede ||
+          CraftMaterial.leather => pigmentOutline(r, seed: sample.seed),
           CraftMaterial.wood =>
             Path()
               ..addRRect(RRect.fromRectAndRadius(r, const Radius.circular(26))),
@@ -371,16 +378,19 @@ class _SpecimenPainter extends CustomPainter {
           compression: .65,
         );
         final motifBounds = Rect.fromCenter(
-          center: center - Offset(0, radius * .2),
-          width: radius * 1.05,
-          height: radius * 1.1,
+          center: center - Offset(0, radius * .16),
+          width: radius * 1.3,
+          height: radius * 1.2,
         );
-        final motif = _botanical(motifBounds, sample.variant);
-        paintCraftRelief(
+        paintReliefMotif(
           canvas,
-          motif,
-          depth: 2.5,
-          strength: .9,
+          const [
+            ReliefMotif.whale,
+            ReliefMotif.house,
+            ReliefMotif.snail,
+          ][sample.variant % 3],
+          motifBounds,
+          strength: .95,
           kind: sample.raised ? CraftReliefKind.raised : CraftReliefKind.inset,
           light: sample.reverseLight
               ? const Offset(1, 1)

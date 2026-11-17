@@ -81,20 +81,40 @@ The fixed poster uses the controlled font/scale capture baseline; the live cover
 scrolls its artboard horizontally, while the separate object studies reflow.
 Application layouts must be validated separately at their own text scales.
 
-A raised shell, pressed feather and crescent replace repeated botanical motifs
-in the documentation presentation. The cover combines real textured substrates,
-contour-matched cord, embroidered sprig, torn paper, layered pigment and a native
-button. Cast shadows follow each actual cut; they do not imply displaced fabric.
+The relief sheet presents purposeful objects: a leather journal with a pressed
+ginkgo leaf and running-stitch border, a twill card with a raised balloon, and a
+letterpress thank-you card. Their layered motifs live in
+`example/lib/relief_motifs.dart` and are shared with the fabric impressions
+(whale, house and snail). Body cuts carry a light or shaded tone so edges that
+run parallel to the light stay readable. The cover combines the leather journal,
+contour-matched cord, an embroidered "Chapter one" bookmark, torn paper, layered
+pigment and a native "Save to album" button. Cast shadows follow each actual cut; they do not imply displaced fabric.
 The poster has no animation clock. Existing motion captures remain separate.
 
-## Composed note cover
+## Composed postcard cover
 
-`flutter test tool/capture_painted_note.dart` renders PaintedNote from the actual
-welcome page into `doc/screenshots/painted-note.png` (920×680). It also captures
-the welcome and full gallery at narrow/desktop sizes under ignored build/ output.
-The note contains a native editable field, a selected choice that removes its
-contour seam, and a working in-memory action. No note is persisted. Materials,
+`flutter test tool/capture_painted_note.dart` renders PaintedNote, a postcard,
+from the actual welcome page into `doc/screenshots/painted-note.png` (920×680).
+It also captures the welcome and full gallery at narrow/desktop sizes under
+ignored build/ output. The postcard contains native message and recipient
+fields, a selected choice that removes its contour seam, and a working in-memory
+send action. The stamp, postmark and coastal wash are example-local paint over
+public watercolor and paper-edge renderers. Nothing is sent or persisted. Materials,
 watercolor and heading reuse the public painters/components, with original seeded
 wash geometry. Capture fonts and theme are the existing licensed example assets.
 The flower remains the first README image by owner preference; this note follows
 as a runnable composition. Its visual approval is separate from technical review.
+
+## Leather mark
+
+`flutter test tool/capture_brand.dart` renders `LeatherBrandMark` from
+`example/lib/brand_mark.dart` into `build/brand/leather-mark.png` (1200×400),
+copied explicitly to `docs/assets/leather-mark.png` for the README header. The
+tag composes the leather tile, `insetCraftPath`, an irregular recessed running
+stitch, raised edge relief, a two-strand `paintCraftTrim` cord and native
+`CraftReliefText`. The eyelet and loose fibers are example-local strokes. It is
+original synthetic artwork, not a trademark registration.
+
+Captures that load bundled example assets (`capture_imported_layers.dart`,
+`capture_experience_frame.dart`) must run from `example/` as
+`flutter test ../tool/<capture>.dart`; their output lands in `example/build/`.

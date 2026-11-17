@@ -6,7 +6,8 @@ identity, themes and editorial decisions belong to the application.
 
 ## Current implementation
 
-- Five seeded textures: paper, linen, twill, felt and wood.
+- Nine seeded textures: paper, linen, twill, felt, wood, EVA, cotton, velvety
+  nap and pebbled leather.
 - Organic contours; value-based rectangle, rounded rectangle and pigment recipes.
 - Six stitch families with illustrative puncture shading: running, backstitch,
   blanket, chain, cross and basting.

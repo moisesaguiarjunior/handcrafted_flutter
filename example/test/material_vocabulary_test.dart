@@ -49,9 +49,9 @@ void main() {
         expect(tester.takeException(), isNull);
       }
     }
-    await tester.tap(find.text('Try the action'));
+    await tester.tap(find.text('Send reply'));
     await tester.pumpAndSettle();
-    expect(find.text('Activations 1'), findsOneWidget);
+    expect(find.text('Reply sent: see you Sunday.'), findsOneWidget);
     await tester.pumpWidget(const SizedBox());
   });
 
@@ -80,7 +80,7 @@ void main() {
         );
         await tester.pumpAndSettle();
         final input = find.byKey(const ValueKey('material-note-title'));
-        await tester.enterText(input, 'A new little wonder');
+        await tester.enterText(input, 'The whole Silva family');
         final element = tester.element(input);
         final focus = tester
             .widget<EditableText>(find.byType(EditableText))
@@ -92,23 +92,21 @@ void main() {
             .onChanged!(true);
         await tester.pumpAndSettle();
         expect(tester.element(input), same(element));
-        expect(find.text('A new little wonder'), findsOneWidget);
+        expect(find.text('The whole Silva family'), findsOneWidget);
         expect(focus.hasFocus, isTrue);
-        expect(
-          tester.widget<CraftChoice>(find.byType(CraftChoice)).selected,
-          isTrue,
-        );
-        await tester.ensureVisible(find.text('Keep this note'));
-        await tester.tap(find.text('Keep this note'));
+        bool selected(String key) =>
+            tester.widget<CraftChoice>(find.byKey(ValueKey(key))).selected;
+        expect(selected('rsvp-yes'), isTrue);
+        expect(selected('rsvp-no'), isFalse);
+        await tester.ensureVisible(find.text('Can’t make it'));
+        await tester.tap(find.text('Can’t make it'));
         await tester.pumpAndSettle();
-        expect(
-          tester.widget<CraftChoice>(find.byType(CraftChoice)).selected,
-          isFalse,
-        );
-        await tester.ensureVisible(find.text('Try the action'));
-        await tester.tap(find.text('Try the action'));
+        expect(selected('rsvp-yes'), isFalse);
+        expect(selected('rsvp-no'), isTrue);
+        await tester.ensureVisible(find.text('Send reply'));
+        await tester.tap(find.text('Send reply'));
         await tester.pumpAndSettle();
-        expect(find.text('Activations 1'), findsOneWidget);
+        expect(find.text('Reply sent: we’ll miss you.'), findsOneWidget);
         expect(tester.takeException(), isNull);
         await tester.pumpWidget(const SizedBox());
       },

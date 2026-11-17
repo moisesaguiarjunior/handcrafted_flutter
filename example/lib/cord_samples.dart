@@ -23,10 +23,10 @@ class CordSamples extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           for (final sample in const [
-            ('Two twisted strands', [Color(0xFF587D91), Color(0xFFEBD4AD)]),
+            ('Two twisted strands', [DemoPalette.indigo, DemoPalette.cream]),
             (
               'Three braided strands',
-              [Color(0xFFB76994), Color(0xFF87CBD9), Color(0xFFF3DEB8)],
+              [DemoPalette.terracotta, DemoPalette.cream, DemoPalette.indigo],
             ),
             (
               'Natural cotton tones',

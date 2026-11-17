@@ -120,7 +120,7 @@ void main() {
       expect(find.text('Honey wood'), findsOneWidget);
       await tester.tap(find.text('Impressions'));
       await tester.pumpAndSettle();
-      expect(find.text('Bloom'), findsOneWidget);
+      expect(find.text('Sea'), findsOneWidget);
       await tester.tap(find.text('Raised impression'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Reverse impression light'));

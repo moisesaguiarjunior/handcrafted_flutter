@@ -17,7 +17,7 @@ CraftPanelStyle surface(Color color, {bool cloth = false}) => CraftPanelStyle(
 
 void main() {
   testWidgets(
-    'selection has a visible native outline even without role overrides',
+    'selection has a visible native check mark even without role overrides',
     (tester) async {
       final boundary = GlobalKey();
       final theme = ThemeData(

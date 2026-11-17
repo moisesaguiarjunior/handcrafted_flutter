@@ -2,27 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import 'material_studies.dart';
+import 'relief_motifs.dart';
 import 'showcase_theme.dart';
 
-/// Distinct original sculptural motifs, without repeating botanical stamps.
+/// Three purposeful objects whose motifs are pressed or raised into material.
 enum ReliefObject {
-  /// A scalloped shell with directional ribs.
-  shell,
+  /// A leather journal cover with a pressed ginkgo leaf and a stitched border.
+  journal,
 
-  /// A feather with separated barbs.
-  feather,
+  /// A twill travel card with a raised hot-air balloon.
+  voyage,
 
-  /// A crescent with small star-shaped impressions.
-  crescent,
+  /// A letterpress thank-you card with pressed mountains.
+  thanks,
 }
 
-const _navy = Color(0xFF36566A);
+const _navy = DemoPalette.indigo;
 const _flax = Color(0xFFD8C9A7);
-const _rose = Color(0xFFB77584);
+const _rose = DemoPalette.terracotta;
 
 /// Three real-material relief studies shared by the live gallery and captures.
 class ReliefObjectsSheet extends StatelessWidget {
-  /// Creates original shell, feather and crescent studies.
+  /// Creates the journal, travel card and letterpress studies.
   const ReliefObjectsSheet({super.key});
   @override
   Widget build(BuildContext context) => SpecimenRow(
@@ -34,15 +35,15 @@ class ReliefObjectsSheet extends StatelessWidget {
             SizedBox(height: 340, child: _ReliefPlate(object: object)),
             const SizedBox(height: 12),
             Text(switch (object) {
-              ReliefObject.shell => 'Sculpted shell on twill',
-              ReliefObject.feather => 'A pressed feather in flax',
-              ReliefObject.crescent => 'Moonlight on felt',
+              ReliefObject.journal => 'A tooled leather journal',
+              ReliefObject.voyage => 'A raised balloon on twill',
+              ReliefObject.thanks => 'Letterpress on cotton paper',
             }, style: const TextStyle(fontWeight: FontWeight.w600)),
-            Text(
-              object == ReliefObject.feather
-                  ? 'Inset barbs, native pressed lettering'
-                  : 'Raised rims, visible substrate grain',
-            ),
+            Text(switch (object) {
+              ReliefObject.journal => 'Pressed leaf, saddle-style seam',
+              ReliefObject.voyage => 'Raised panels, pressed seams',
+              ReliefObject.thanks => 'Debossed peaks, native lettering',
+            }),
           ],
         ),
     ],
@@ -52,25 +53,33 @@ class ReliefObjectsSheet extends StatelessWidget {
 Path _reliefCut(ReliefObject object, Size size) {
   final w = size.width, h = size.height;
   return switch (object) {
-    ReliefObject.shell => Path()..addOval(Rect.fromLTWH(8, 8, w - 16, h - 16)),
-    ReliefObject.feather =>
+    ReliefObject.journal =>
+      Path()..addRRect(
+        RRect.fromRectAndCorners(
+          Rect.fromLTWH(10, 8, w - 20, h - 16),
+          topLeft: const Radius.circular(6),
+          bottomLeft: const Radius.circular(6),
+          topRight: const Radius.circular(22),
+          bottomRight: const Radius.circular(22),
+        ),
+      ),
+    ReliefObject.voyage =>
       Path()
-        ..moveTo(22, 8)
-        ..lineTo(w - 18, 20)
-        ..lineTo(w - 8, h - 54)
-        ..lineTo(w * .43, h - 8)
-        ..lineTo(8, h - 35)
+        ..moveTo(10, h - 8)
+        ..lineTo(10, w / 2 + 4)
+        ..arcToPoint(
+          Offset(w - 10, w / 2 + 4),
+          radius: Radius.circular(w / 2 - 10),
+        )
+        ..lineTo(w - 10, h - 8)
         ..close(),
-    ReliefObject.crescent =>
-      Path()
-        ..moveTo(w * .5, 8)
-        ..quadraticBezierTo(w * .9, 8, w - 8, h * .26)
-        ..lineTo(w - 8, h * .65)
-        ..quadraticBezierTo(w * .8, h * .92, w * .5, h - 8)
-        ..quadraticBezierTo(w * .2, h * .92, 8, h * .65)
-        ..lineTo(8, h * .26)
-        ..quadraticBezierTo(w * .1, 8, w * .5, 8)
-        ..close(),
+    ReliefObject.thanks => paperOutline(
+      Rect.fromLTWH(12, 14, w - 24, h - 28),
+      edge: PaperEdge.deckle,
+      depth: 3,
+      pitch: 18,
+      seed: 61,
+    ),
   };
 }
 
@@ -79,19 +88,18 @@ class _ReliefPlate extends StatelessWidget {
   final ReliefObject object;
   @override
   Widget build(BuildContext context) {
-    final base = switch (object) {
-      ReliefObject.shell => _navy,
-      ReliefObject.feather => _flax,
-      ReliefObject.crescent => DemoPalette.rose,
-    };
     Path cut(Size size) => _reliefCut(object, size);
     final surface = CraftSurface(
       material: switch (object) {
-        ReliefObject.shell => CraftMaterial.twill,
-        ReliefObject.feather => CraftMaterial.linen,
-        ReliefObject.crescent => CraftMaterial.felt,
+        ReliefObject.journal => CraftMaterial.leather,
+        ReliefObject.voyage => CraftMaterial.twill,
+        ReliefObject.thanks => CraftMaterial.paper,
       },
-      color: base,
+      color: switch (object) {
+        ReliefObject.journal => DemoPalette.cognac,
+        ReliefObject.voyage => DemoPalette.indigo,
+        ReliefObject.thanks => const Color(0xFFF6EFE2),
+      },
       seed: 44 + object.index,
       strength: 1,
       outline: cut,
@@ -99,23 +107,29 @@ class _ReliefPlate extends StatelessWidget {
         children: [
           Positioned.fill(child: CustomPaint(painter: _ReliefPainter(object))),
           Positioned(
-            left: 20,
-            right: 20,
-            bottom: 29,
+            left: 24,
+            right: 24,
+            bottom: object == ReliefObject.thanks ? 34 : 30,
             child: CraftReliefText(
               switch (object) {
-                ReliefObject.shell => 'Cove',
-                ReliefObject.feather => 'Drift',
-                ReliefObject.crescent => 'Nightfall',
+                ReliefObject.journal => 'Field journal',
+                ReliefObject.voyage => 'Bon voyage',
+                ReliefObject.thanks => 'Thank you',
               },
               textAlign: TextAlign.center,
+              kind: object == ReliefObject.voyage
+                  ? CraftReliefKind.raised
+                  : CraftReliefKind.inset,
               depth: 1.7,
               style: TextStyle(
                 fontFamily: 'Caveat',
-                fontSize: 44,
-                color: object == ReliefObject.feather
-                    ? const Color(0xFF79674C)
-                    : const Color(0xFFF3E8DB),
+                fontWeight: FontWeight.w700,
+                fontSize: 40,
+                color: switch (object) {
+                  ReliefObject.journal => const Color(0xFF5A321B),
+                  ReliefObject.voyage => DemoPalette.cream,
+                  ReliefObject.thanks => const Color(0xFF55705F),
+                },
               ),
             ),
           ),
@@ -131,122 +145,60 @@ class _ReliefPainter extends CustomPainter {
   final ReliefObject object;
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.save();
-    canvas.scale(size.width / 320, size.height / 340);
-    void sculpt(
-      Path shape, {
-      bool inset = false,
-      Color? fill,
-      double depth = 3,
-    }) => paintCraftRelief(
-      canvas,
-      shape,
-      kind: inset ? CraftReliefKind.inset : CraftReliefKind.raised,
-      depth: depth,
-      strength: 1,
-      fill: fill,
+    final art = Rect.fromLTWH(
+      size.width * .14,
+      size.height * .08,
+      size.width * .72,
+      size.height * .66,
     );
     switch (object) {
-      case ReliefObject.shell:
-        final shell = Path()
-          ..moveTo(160, 230)
-          ..cubicTo(90, 225, 28, 167, 35, 110)
-          ..cubicTo(38, 86, 54, 66, 78, 68)
-          ..cubicTo(85, 40, 115, 34, 137, 49)
-          ..cubicTo(151, 20, 180, 24, 193, 49)
-          ..cubicTo(220, 30, 249, 47, 253, 72)
-          ..cubicTo(287, 67, 300, 95, 291, 128)
-          ..cubicTo(281, 177, 216, 224, 160, 230)
-          ..close();
-        sculpt(shell, fill: Colors.white.withValues(alpha: .16));
-        for (final tip in const [
-          Offset(52, 108),
-          Offset(85, 81),
-          Offset(116, 60),
-          Offset(161, 44),
-          Offset(204, 64),
-          Offset(245, 89),
-          Offset(275, 121),
-        ]) {
-          final rib = Path()
-            ..moveTo(158, 216)
-            ..quadraticBezierTo((tip.dx + 160) / 2 - 9, 145, tip.dx, tip.dy)
-            ..quadraticBezierTo((tip.dx + 160) / 2, 149, 163, 216)
-            ..close();
-          sculpt(rib, inset: true, depth: 2.2);
-        }
-      case ReliefObject.feather:
-        final feather = Path()
-          ..moveTo(78, 239)
-          ..cubicTo(40, 126, 135, 58, 248, 38)
-          ..cubicTo(250, 145, 195, 242, 78, 239)
-          ..close();
-        sculpt(feather, inset: true, depth: 3.5);
-        canvas.save();
-        canvas.clipPath(feather);
-        for (var i = 0; i < 9; i++) {
-          final t = i / 9;
-          final center = Offset(86 + t * 136, 224 - t * 165);
-          final vane = Path()
-            ..moveTo(center.dx, center.dy)
-            ..quadraticBezierTo(
-              center.dx - 44,
-              center.dy + 8,
-              center.dx - 32,
-              center.dy - 24,
-            )
-            ..quadraticBezierTo(
-              center.dx - 10,
-              center.dy - 8,
-              center.dx + 3,
-              center.dy - 4,
-            )
-            ..close();
-          sculpt(vane, inset: true, depth: 1.4);
-          final other = Path()
-            ..moveTo(center.dx + 4, center.dy)
-            ..quadraticBezierTo(
-              center.dx + 57,
-              center.dy + 12,
-              center.dx + 48,
-              center.dy - 22,
-            )
-            ..quadraticBezierTo(
-              center.dx + 23,
-              center.dy - 5,
-              center.dx + 7,
-              center.dy - 4,
-            )
-            ..close();
-          sculpt(other, inset: true, depth: 1.2);
-        }
-        canvas.restore();
-      case ReliefObject.crescent:
-        final moon = Path.combine(
-          PathOperation.difference,
-          Path()..addOval(const Rect.fromLTWH(59, 48, 188, 188)),
-          Path()..addOval(const Rect.fromLTWH(115, 24, 177, 177)),
+      case ReliefObject.journal:
+        final seam = insetCraftPath(
+          _reliefCut(object, size),
+          distance: 15,
+          sampleSpacing: 1,
         );
-        sculpt(moon, fill: Colors.white.withValues(alpha: .18), depth: 4);
-        for (final p in const [
-          Offset(226, 90),
-          Offset(268, 158),
-          Offset(215, 204),
-        ]) {
-          final star = Path()
-            ..moveTo(p.dx, p.dy - 10)
-            ..lineTo(p.dx + 3, p.dy - 3)
-            ..lineTo(p.dx + 10, p.dy)
-            ..lineTo(p.dx + 3, p.dy + 3)
-            ..lineTo(p.dx, p.dy + 10)
-            ..lineTo(p.dx - 3, p.dy + 3)
-            ..lineTo(p.dx - 10, p.dy)
-            ..lineTo(p.dx - 3, p.dy - 3)
-            ..close();
-          sculpt(star, inset: true, depth: 1.8);
-        }
+        paintRunningStitch(
+          canvas,
+          seam,
+          thread: DemoPalette.cream,
+          dash: 9,
+          gap: 5,
+          width: 2.4,
+          compression: .6,
+          irregularity: .3,
+          seed: 12,
+        );
+        // A spine band pressed along the binding edge.
+        paintCraftRelief(
+          canvas,
+          Path()..addRect(Rect.fromLTWH(30, 26, 6, size.height - 52)),
+          depth: 1.6,
+        );
+        paintReliefMotif(
+          canvas,
+          ReliefMotif.ginkgo,
+          art,
+          depthScale: 1.2,
+          strength: 1,
+        );
+      case ReliefObject.voyage:
+        paintReliefMotif(
+          canvas,
+          ReliefMotif.balloon,
+          art,
+          kind: CraftReliefKind.raised,
+          strength: 1,
+        );
+      case ReliefObject.thanks:
+        paintReliefMotif(
+          canvas,
+          ReliefMotif.mountains,
+          art.deflate(6),
+          strength: .85,
+          depthScale: .9,
+        );
     }
-    canvas.restore();
   }
 
   @override
@@ -290,10 +242,10 @@ class MaterialCover extends StatelessWidget {
           left: 45,
           top: 206,
           child: CraftPart(
-            key: const ValueKey('cover-shell'),
+            key: const ValueKey('cover-journal'),
             size: const Size(352, 370),
             pose: PartPose(rotation: -.055),
-            child: const _ReliefPlate(object: ReliefObject.shell),
+            child: const _ReliefPlate(object: ReliefObject.journal),
           ),
         ),
         Positioned(
@@ -333,7 +285,7 @@ class MaterialCover extends StatelessWidget {
                       child: TextButton(
                         onPressed: onPressed,
                         child: const Text(
-                          'Keep creating',
+                          'Save to album',
                           style: TextStyle(fontSize: 19),
                         ),
                       ),
@@ -368,7 +320,7 @@ class MaterialCover extends StatelessWidget {
                       right: 40,
                       top: 98,
                       child: CraftReliefText(
-                        'Stay curious',
+                        'Chapter one',
                         textAlign: TextAlign.center,
                         depth: 1.4,
                         style: TextStyle(
@@ -388,8 +340,8 @@ class MaterialCover extends StatelessWidget {
           left: 53,
           top: 608,
           child: _Caption(
-            'Sculpted relief',
-            'Visible weave. Native lettering.',
+            'Tooled leather',
+            'A pressed leaf. Native lettering.',
           ),
         ),
         const Positioned(

@@ -64,10 +64,10 @@ void main() {
         tester.widget<TextField>(field).controller!.text,
         'A blue feather',
       );
-      await tester.ensureVisible(find.text('Keep this note'));
-      await tester.tap(find.text('Keep this note'));
+      await tester.ensureVisible(find.text('Send postcard'));
+      await tester.tap(find.text('Send postcard'));
       await tester.pumpAndSettle();
-      expect(find.text('Kept here until you leave this demo.'), findsOneWidget);
+      expect(find.text('Sent! It stays in this demo.'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
       expect(tester.binding.transientCallbackCount, 0);

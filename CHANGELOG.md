@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+- Append CraftMaterial.leather: a pebbled hide grain with rounded, top-left lit
+  cells, darker valleys, sparse pores and faint wrinkles in the same cached
+  96px tile contract. Update exhaustive material switches.
+- Harmonize the example palette (warm oat board, clay, ochre, cognac, sage and
+  indigo) and recapture documentation media. Add an original leather-tag mark
+  composed from public renderers, recompose the EVA studies as layered cuts,
+  pair each stitch family with its own cloth/thread and show all nine materials.
+  The watercolor flower painting is unchanged apart from its surrounding board.
+- CraftChoice marks selection with a drawn check mark before its label instead
+  of a stadium outline over the decorative cut; it needs no icon font.
+- Recompose the examples around purposeful objects: a sendable postcard, a
+  picnic RSVP in paper and cloth themes, a tooled leather journal, a raised
+  balloon card and letterpress thank-you card, and pastel EVA cuts. Layered
+  relief motifs are example-owned in relief_motifs.dart.
+
 - Add cotton and velvety nap material tiles, satin paper sheen, optional seeded
   irregular running stitches and local puncture gathering. Add dry instrument
   coverage and a shared cloth/chalk/folded-card study; preserve legacy defaults.

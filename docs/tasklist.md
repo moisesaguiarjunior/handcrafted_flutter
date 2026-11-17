@@ -86,3 +86,12 @@ grain, four finishes and existing raised-layer lighting are independent. Public
 examples use original procedural cuts; no application atlas is extracted.
 Owner accepted the exact synthetic previews. Independent technical review and
 CI precede promotion; physical-device evidence remains separate.
+
+## Colored cord refinement
+
+Owner accepted foam but found the first colored cord too stripe-like. A local
+candidate replaces palette bands with interlaced yarn geometry and volume.
+A new crossing-order raster regression requires cyclic over/under ownership;
+transparent palette and open backing gaps are protected. Owner accepted the revised close-up preview. Independent technical review
+and CI are required before promoting these images.
+Foam, the flower cover and deferred Codecov setup are unchanged.

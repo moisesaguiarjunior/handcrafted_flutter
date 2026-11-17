@@ -286,3 +286,11 @@ negative control in an isolated snapshot.
 Foam adjustment labels and units merge into the native adjustable node using
 Flutter MergeSemantics/Semantics; the gallery regression inspects the actual
 action-bearing node after real drags, rather than an unlabeled outer container.
+
+For the cord correction, searched paintCraftTrim, contourTrimPath, path metrics,
+strand palettes and capture/live callers. Reused their validation and nominal
+placement contract. Replaced only palette rendering with locally depth-ordered
+individual yarn segments and strand-aligned filaments; the single-color/ribbon/
+embroidery branches remain unchanged. One private sampling plan enforces the
+existing 8192-sample ceiling before paint. Close-ups reuse the actual painter,
+not an image mockup or a second clock. Foam is unchanged.

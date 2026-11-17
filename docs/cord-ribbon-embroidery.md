@@ -74,12 +74,26 @@ paintCraftTrim(canvas, centerline,
   strandColors: [rose, blue, cream]);
 ```
 
-Each front-facing strand samples the existing centerline and its normal;
-hidden return halves are omitted. Color is independent of grain strength, so
-texture zero keeps colored strands. Closed contours use whole turns for a
-matching phase at the seam. This is illustrative twist, not rope physics.
-Omitting the palette keeps legacy single-color output. Other trim kinds reject
-strand colors rather than silently ignoring them.
+Each yarn follows its own continuous path across the centerline. Crossing
+segments are ordered by local depth, so the strand on top changes along the
+braid. Two colors form a twist; three or more form an interlaced braid. Each
+strand has its own cylindrical light and fine longitudinal filaments. There is
+no flat color backing or cross-band hatch in palette mode. Ground shadows are
+painted once per strand, avoiding density-dependent dark buildup.
+
+![Two twisted yarns, a three-color braid and natural cotton tones](assets/braided-cord-detail.png)
+
+The fixed close-ups in the live study use this same painter at 26 logical pixels.
+The preceding contour/open samples follow the width/gap/relief controls. Run
+`flutter test tool/capture_cord_detail.dart` to reproduce the close-up image.
+
+Color remains independent of grain strength; texture zero keeps the braid.
+Closed contours use whole repeats so their phase meets at the seam. The repeat
+length is at least 4.4 band widths or twice pitch × strand count. This is an
+illustrative construction, not rope tension or physical fibers. Omitting the
+palette keeps legacy single-color output. Other trim kinds reject strand colors.
+The base color is for legacy single-color painting; a palette defines the actual
+yarn colors and alpha, including transparent strands without an opaque backing.
 
 The existing contour helper still supplies the nominal border gap. The live
 study can switch between an open curve and the substrate contour, retaining
@@ -87,3 +101,8 @@ width/gap/relief controls. In addition to the existing path/station limits,
 colored rope caps work at 8192 strand samples, checked before drawing. Denser or
 longer paths may need a larger pitch; this decoration guard is not a validity
 rule for a user's freehand drawing.
+
+Budget validation uses the exact sampling plan before painting. At most 8192
+strand samples are allocated; each adjacent pair emits up to six short strokes,
+plus one continuous ground-shadow stroke per strand/contour. Stable depth ties
+retain arc order. This is a work bound, not measured mobile frame throughput.

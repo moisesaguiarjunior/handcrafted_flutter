@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import 'showcase_theme.dart';
+import 'cord_samples.dart';
 
 /// Original compositions sharing the public trim renderer and real substrates.
 class TrimStudies extends StatelessWidget {
@@ -254,6 +255,16 @@ class _TrimPlaygroundState extends State<TrimPlayground> {
         multicolor: multicolor,
         followContour: followContour,
       ),
+      if (multicolor) ...[
+        const SizedBox(height: 32),
+        const Text(
+          'A closer look at the strands',
+          style: TextStyle(fontFamily: 'Caveat', fontSize: 34),
+        ),
+        const Text('Fixed close-up samples, with two and three strands.'),
+        const SizedBox(height: 12),
+        const CordSamples(),
+      ],
     ],
   );
 }

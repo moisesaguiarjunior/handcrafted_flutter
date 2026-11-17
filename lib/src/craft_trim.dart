@@ -1,9 +1,12 @@
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:flutter/painting.dart';
 
 import 'contour_inset.dart';
 import 'path_geometry.dart';
+
+part 'cord_braid.dart';
 
 /// Illustrative raised bands; none simulates strand tension or displaced cloth.
 enum CraftTrimKind {
@@ -58,9 +61,14 @@ Path contourTrimPath(
 /// Shading is illustrative: reserve [width] around the centerline for the cast
 /// shadow, or clip the whole composition. Use [contourTrimPath] to place bands at
 /// a nominal edge gap; this painter does not infer the substrate from its path.
-/// Optional [strandColors] adds 2..6 twisted strands to rope only, independently
+/// Optional [strandColors] adds 2..6 individually shaded strands to rope only, independently
 /// of grain [texture]. Colored work is additionally limited to 8192 samples.
 /// Closed contours use whole turns so the color phase meets at the seam.
+/// Palette mode paints only its strands (no flat [color] backing). Local depth
+/// orders crossings; two colors twist, while three or more form a braid.
+/// Fine filaments follow each strand, not the whole band. At most six short
+/// strokes per adjacent strand sample plus one ground shadow per strand;
+/// this bounded approximation is not a tension/physical fiber solver.
 void paintCraftTrim(
   Canvas canvas,
   Path path, {
@@ -123,13 +131,27 @@ void paintCraftTrim(
             0,
             (sum, metric) =>
                 sum +
-                ((metric.length / (pitch / 4)).ceil() + 1) * strands.length,
+                _braidPlan(metric, width, pitch, strands.length).samples *
+                    strands.length,
           ) >
           8192) {
     throw ArgumentError('Colored rope exceeds 8192 strand samples');
   }
-  final band = spanPath(pathSpans(metrics), preserveClosed: true);
   final direction = light / light.distance;
+  if (strands != null) {
+    _paintBraidedCord(
+      canvas,
+      metrics,
+      strands,
+      width: width,
+      pitch: pitch,
+      relief: relief,
+      texture: texture,
+      light: direction,
+    );
+    return;
+  }
+  final band = spanPath(pathSpans(metrics), preserveClosed: true);
   Paint stroke(Color c, double w) => Paint()
     ..color = c
     ..style = PaintingStyle.stroke
@@ -143,49 +165,7 @@ void paintCraftTrim(
     );
   }
   canvas.drawPath(band, stroke(color, width));
-  if (strands != null) {
-    for (final metric in metrics) {
-      if (metric.length == 0) continue;
-      final count = (metric.length / (pitch / 4)).ceil();
-      final turns = metric.isClosed
-          ? (metric.length / (pitch * strands.length)).round().clamp(1, 4096)
-          : metric.length / (pitch * strands.length);
-      final strandWidth = width * math.min(.55, 1.3 / strands.length);
-      for (var strand = 0; strand < strands.length; strand++) {
-        var segment = Path();
-        var started = false;
-        void flush() {
-          if (started) {
-            canvas.drawPath(segment, stroke(strands[strand], strandWidth));
-          }
-          segment = Path();
-          started = false;
-        }
 
-        for (var i = 0; i <= count; i++) {
-          final phase =
-              math.pi * 2 * (turns * i / count + strand / strands.length);
-          if (math.cos(phase) < 0) {
-            flush();
-            continue;
-          }
-          final tangent = metric.getTangentForOffset(metric.length * i / count);
-          if (tangent == null) continue;
-          final normal = Offset(-tangent.vector.dy, tangent.vector.dx);
-          final p =
-              tangent.position +
-              normal * math.sin(phase) * (width - strandWidth) / 2;
-          if (started) {
-            segment.lineTo(p.dx, p.dy);
-          } else {
-            segment.moveTo(p.dx, p.dy);
-            started = true;
-          }
-        }
-        flush();
-      }
-    }
-  }
   if (relief > 0) {
     canvas.drawPath(
       band.shift(direction * width * .1),

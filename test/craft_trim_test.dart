@@ -10,6 +10,41 @@ void main() {
     ..moveTo(12, 55)
     ..cubicTo(25, 3, 65, 70, 87, 20);
   test(
+    'one translucent yarn keeps its alpha as sampling density changes',
+    () async {
+      final path = Path()
+        ..moveTo(8, 40)
+        ..lineTo(96, 40);
+      for (final pitch in [2.0, 6.0, 16.0]) {
+        final image = await pixels(
+          (c) => paintCraftTrim(
+            c,
+            path,
+            color: const Color(0xFFFFFFFF),
+            width: 32,
+            pitch: pitch,
+            relief: 0,
+            texture: 0,
+            strandColors: const [
+              Color(0x400000FF),
+              Color(0x00000000),
+              Color(0x00000000),
+            ],
+          ),
+        );
+        var maxAlpha = 0;
+        for (var i = 3; i < image.length; i += 4) {
+          if (image[i] > maxAlpha) maxAlpha = image[i];
+        }
+        expect(
+          maxAlpha,
+          inInclusiveRange(63, 65),
+          reason: 'Alpha-64 yarn, pitch $pitch',
+        );
+      }
+    },
+  );
+  test(
     'three strands alternate the visible owner at successive crossings',
     () async {
       const colors = [Color(0xFFDD3311), Color(0xFF22BB55), Color(0xFF3355DD)];

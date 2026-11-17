@@ -6,6 +6,7 @@
   volume and longitudinal filaments. Remove flat backing/cross-band hatching in
   palette mode; keep legacy single-color, ribbon and embroidered output.
   Add live/capture close-ups for two/three strands and natural cotton tones.
+  Shared-edge yarn geometry preserves fractional alpha across sampling densities.
 
 - Add optional 2..6 color twisted rope strands over existing paths and nominal
   contour gaps; omit the palette to retain legacy rendering. Colored work has

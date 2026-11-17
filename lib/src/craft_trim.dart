@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/painting.dart';
@@ -66,9 +67,11 @@ Path contourTrimPath(
 /// Closed contours use whole turns so the color phase meets at the seam.
 /// Palette mode paints only its strands (no flat [color] backing). Local depth
 /// orders crossings; two colors twist, while three or more form a braid.
-/// Fine filaments follow each strand, not the whole band. At most six short
-/// strokes per adjacent strand sample plus one ground shadow per strand;
-/// this bounded approximation is not a tension/physical fiber solver.
+/// Fine filaments follow each strand, not the whole band. A shared-edge mesh
+/// shades each yarn once, retaining fractional alpha independently of sampling.
+/// Nine profile vertices per sample produce 48 mesh vertices per adjacent pair,
+/// plus bounded end caps. One temporary native mesh is disposed after recording;
+/// ground shadows are painted once per strand. No tension/physical fiber solver.
 void paintCraftTrim(
   Canvas canvas,
   Path path, {

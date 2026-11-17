@@ -103,6 +103,10 @@ longer paths may need a larger pitch; this decoration guard is not a validity
 rule for a user's freehand drawing.
 
 Budget validation uses the exact sampling plan before painting. At most 8192
-strand samples are allocated; each adjacent pair emits up to six short strokes,
-plus one continuous ground-shadow stroke per strand/contour. Stable depth ties
-retain arc order. This is a work bound, not measured mobile frame throughput.
+strand samples are prepared. Nine cross-width profile vertices encode shading
+and fine filaments without additional alpha coats. Shared-edge strips generate
+48 vertices per adjacent pair, with bounded semicircular end caps on open paths.
+One temporary native mesh is recorded and disposed; ground shadows are painted
+once per strand. Depth ties retain arc order. The limit is a work bound, not a
+measured mobile frame rate. Fractional yarn alpha stays independent of sampling;
+separate crossing yarns still composite normally.

@@ -294,3 +294,10 @@ individual yarn segments and strand-aligned filaments; the single-color/ribbon/
 embroidery branches remain unchanged. One private sampling plan enforces the
 existing 8192-sample ceiling before paint. Close-ups reuse the actual painter,
 not an image mockup or a second clock. Foam is unchanged.
+
+The first stroke-segment prototype accumulated fractional alpha. Colored yarns
+now reuse that sampling plan as shared-edge strips in one temporary Flutter
+Vertices mesh; color, edge light and fiber variation are vertex colors, not
+repeated alpha coats. Native vertices are disposed after recording, with no image,
+layer or global cache. A regression keeps one alpha-64 yarn at alpha 64 across
+three sampling pitches and rejects the overlapping-stroke prototype.

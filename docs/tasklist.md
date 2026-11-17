@@ -95,3 +95,12 @@ A new crossing-order raster regression requires cyclic over/under ownership;
 transparent palette and open backing gaps are protected. Owner accepted the revised close-up preview. Independent technical review
 and CI are required before promoting these images.
 Foam, the flower cover and deferred Codecov setup are unchanged.
+
+## Soft cloth, chalk and folded card candidate
+
+Original pocket/flag, chalk garden and curled-blade specimens compose cotton,
+velvety nap, felt, irregular running stitches, local puncture gathering and satin
+paper. More body for chalk reuses the dry renderer through explicit coverage.
+Legacy defaults remain; exact independent review and owner visual acceptance
+precede public promotion. These are geometry/light recipes, not cloth physics.
+[Recipes and limits](soft-craft-materials.md).

@@ -146,4 +146,54 @@ void main() {
       expect(actual, blank);
     }
   });
+  test(
+    'dense chalk increases deposited grain without filling a solid stripe',
+    () async {
+      final path = Path()
+        ..moveTo(10, 40)
+        ..lineTo(90, 40);
+      Future<Uint8List> render(double coverage) => pixels(
+        (c) => paintCraftStroke(
+          c,
+          path,
+          color: const Color(0xFF336677),
+          style: CraftStrokeStyle(
+            tool: CraftStrokeTool.chalk,
+            width: 8,
+            dryCoverage: coverage,
+          ),
+          seed: 23,
+        ),
+      );
+      final sparse = await render(0), dense = await render(1);
+      expect(dense, await render(1));
+      int alphaSum(Uint8List image) =>
+          [for (var i = 3; i < image.length; i += 4) image[i]]
+              .fold(0, (a, b) => a + b);
+      expect(alphaSum(dense), greaterThan(alphaSum(sparse) * 1.5));
+      expect(
+        [for (var x = 15; x < 85; x++) dense[(40 * 100 + x) * 4 + 3]]
+            .toSet()
+            .length,
+        greaterThan(10),
+      );
+      final blank = await pixels((c) {
+        for (final bad in [-1.0, 1.1, double.nan]) {
+          expect(
+            () => paintCraftStroke(
+              c,
+              path,
+              color: const Color(0xFFFFFFFF),
+              style: CraftStrokeStyle(
+                tool: CraftStrokeTool.chalk,
+                dryCoverage: bad,
+              ),
+            ),
+            throwsArgumentError,
+          );
+        }
+      });
+      expect(blank.every((v) => v == 0), isTrue);
+    },
+  );
 }

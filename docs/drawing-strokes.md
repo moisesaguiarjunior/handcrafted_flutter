@@ -151,3 +151,8 @@ instruments do not silently replace an application's editable drawing capture.
 This source adds pencil, chalk and wax enum members. Consumers with exhaustive
 switches over CraftStrokeTool must handle them when updating an immutable pin.
 The original pen, marker and brush painting branches remain unchanged.
+
+
+`CraftStrokeStyle.dryCoverage` (0..1) adds denser overlapping grain for dry tools;
+zero preserves the earlier rendering. It is inactive for pen, marker and brush.
+See [chalk on light paper](soft-craft-materials.md#chalk-with-more-body).

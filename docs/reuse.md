@@ -301,3 +301,13 @@ Vertices mesh; color, edge light and fiber variation are vertex colors, not
 repeated alpha coats. Native vertices are disposed after recording, with no image,
 layer or global cache. A regression keeps one alpha-64 yarn at alpha 64 across
 three sampling pitches and rejects the overlapping-stroke prototype.
+
+For soft-cloth studies, searched material tiles, felt/linen/twill grain, chalk
+and dry deposits, inset seams, running spans, thread punctures and prepared
+frames. Reused cache ownership, geometry limits, native gradients, capture shell
+and actual gallery specimens. Added cotton/velvety nap tiles to the existing
+cache; satin sheen to the paper finish; optional seeded irregular running spans
+and gathering to shared puncture paint; dry coverage to the existing dry stroke
+renderer. Zero defaults preserve earlier behavior. One original example composes
+these contracts; no parallel texture/drawing engine, object preset, clock or
+consumer artwork is introduced. See [soft craft recipes](soft-craft-materials.md).

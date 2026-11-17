@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Add cotton and velvety nap material tiles, satin paper sheen, optional seeded
+  irregular running stitches and local puncture gathering. Add dry instrument
+  coverage and a shared cloth/chalk/folded-card study; preserve legacy defaults.
+
 - Correct colored rope to interlaced yarns with local crossing depth, individual
   volume and longitudinal filaments. Remove flat backing/cross-band hatching in
   palette mode; keep legacy single-color, ribbon and embroidered output.

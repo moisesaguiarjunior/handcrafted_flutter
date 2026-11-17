@@ -39,3 +39,6 @@ belong in this package repository.
 - [Responsive experience frame](experience-frame.md): authored pixels, native form and a fixed footer.
 
 - [EVA foam and independent finishes](eva-foam.md)
+
+- [Soft cloth, hand sewing, chalk and folded card](soft-craft-materials.md):
+  compact weave, velvety nap, optional irregular/recessed sewing and satin light.

@@ -57,6 +57,7 @@ final class CraftStrokeStyle {
     this.gap = 6,
     this.variation = .35,
     this.join = StrokeJoin.round,
+    this.dryCoverage = 0,
   });
 
   /// Instrument treatment.
@@ -84,6 +85,12 @@ final class CraftStrokeStyle {
   /// Seeded brush or dry-deposit variation. Does not change the centerline.
   final double variation;
 
+  /// Extra overlapping grain for pencil/chalk/wax, in 0..1. Zero preserves the
+  /// original sparse deposits; one produces a denser hand-rubbed mark. Ignored
+  /// by wet tools; all values are validated. Work stays bounded to eight marks
+  /// per distance station, at most 8224 stations over the shared path budget.
+  final double dryCoverage;
+
   void _validate() {
     if (!width.isFinite ||
         width < .5 ||
@@ -92,10 +99,15 @@ final class CraftStrokeStyle {
         dash < .5 ||
         !gap.isFinite ||
         gap < .5 ||
+        !dryCoverage.isFinite ||
+        dryCoverage < 0 ||
+        dryCoverage > 1 ||
         !variation.isFinite ||
         variation < 0 ||
         variation > 1) {
-      throw ArgumentError('Invalid stroke width, dash, gap or variation');
+      throw ArgumentError(
+        'Invalid stroke width, dash, gap, variation or dry coverage',
+      );
     }
   }
 
@@ -108,10 +120,19 @@ final class CraftStrokeStyle {
       dash == other.dash &&
       gap == other.gap &&
       variation == other.variation &&
-      join == other.join;
+      join == other.join &&
+      dryCoverage == other.dryCoverage;
   @override
-  int get hashCode =>
-      Object.hash(tool, pattern, width, dash, gap, variation, join);
+  int get hashCode => Object.hash(
+    tool,
+    pattern,
+    width,
+    dash,
+    gap,
+    variation,
+    join,
+    dryCoverage,
+  );
 }
 
 /// A smooth open cubic path through 2..64 caller-supplied waypoints.

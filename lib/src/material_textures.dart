@@ -23,6 +23,12 @@ enum CraftMaterial {
 
   /// Fine closed-cell pores, without cloth fibers or directional paper creases.
   eva,
+
+  /// Fine, compact plain weave, with subtle thread crossings.
+  cotton,
+
+  /// Short, soft directional nap; an illustrative velvety cloth surface.
+  suede,
 }
 
 /// Owner-scoped cache of static raster tiles, one per material.
@@ -230,6 +236,48 @@ class MaterialTextures {
               ..color = random.nextBool()
                   ? const Color(0x22000000)
                   : const Color(0x18FFFFFF),
+          );
+        }
+      case CraftMaterial.cotton:
+        for (var y = 0; y < 48; y++) {
+          for (var x = 0; x < 48; x++) {
+            final center = Offset(x * 2.0 + .5, y * 2.0 + .5);
+            final horizontal = (x + y).isEven;
+            final delta = horizontal
+                ? const Offset(.7, 0)
+                : const Offset(0, .7);
+            final alpha = .035 + random.nextDouble() * .055;
+            canvas.drawLine(
+              center - delta,
+              center + delta,
+              Paint()
+                ..strokeCap = StrokeCap.round
+                ..strokeWidth = .8
+                ..color = Color.fromRGBO(255, 255, 255, alpha),
+            );
+            canvas.drawLine(
+              center + const Offset(.4, .5) - delta,
+              center + const Offset(.4, .5) + delta,
+              Paint()
+                ..strokeWidth = .35
+                ..color = Color.fromRGBO(35, 25, 20, alpha * .7),
+            );
+          }
+        }
+      case CraftMaterial.suede:
+        for (var i = 0; i < 2600; i++) {
+          final p = Offset(random.nextDouble() * s, random.nextDouble() * s);
+          final angle = -.8 + random.nextDouble() * 1.6;
+          final length = .35 + random.nextDouble() * .95;
+          canvas.drawLine(
+            p,
+            p + Offset(math.cos(angle), math.sin(angle)) * length,
+            Paint()
+              ..strokeCap = StrokeCap.round
+              ..strokeWidth = .35 + random.nextDouble() * .4
+              ..color = random.nextBool()
+                  ? const Color(0x22FFFFFF)
+                  : const Color(0x18000000),
           );
         }
       case CraftMaterial.eva:

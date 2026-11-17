@@ -64,3 +64,10 @@ kite and balloon/tether with tool/capture_motion.dart. It uses no historical
 consumer tail coordinates or supplied private art. The hosted gallery wraps
 existing studies and distributes only tracked example assets/fonts. GitHub Pages
 workflow actions are developer tooling; no service credential is bundled.
+
+
+The soft craft study's pockets, sprig, chalk garden and folded blades are original
+procedural example geometry. Cotton and velvety nap are seeded tile algorithms;
+satin is native gradient light; optional seam irregularity and gathering extend
+the existing thread renderer. No reference image, consumer scene, coordinates or
+third-party artwork is bundled by these additions.

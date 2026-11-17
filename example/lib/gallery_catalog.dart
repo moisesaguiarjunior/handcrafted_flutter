@@ -50,6 +50,9 @@ enum GalleryStudy {
 
   /// Cut EVA with independent grain, finish and raised edges.
   foam,
+
+  /// Soft pockets, recessed thread, chalk and satin folded paper.
+  softCraft,
 }
 
 /// Human-readable study title.
@@ -58,6 +61,7 @@ String galleryLabel(GalleryStudy study) => switch (study) {
   GalleryStudy.experience => 'Experience frame',
   GalleryStudy.cover => 'Start exploring',
   GalleryStudy.foam => 'EVA foam & layers',
+  GalleryStudy.softCraft => 'Cloth, chalk & folds',
   GalleryStudy.materials => 'Materials & relief',
   GalleryStudy.paper => 'Paper & edges',
   GalleryStudy.stitches => 'Stitch families',
@@ -80,6 +84,8 @@ String galleryDescription(GalleryStudy study) => switch (study) {
   GalleryStudy.experience =>
     'Fit artwork independently; keep words, touch targets and footer native.',
   GalleryStudy.cover => 'Explore materials, marks and movement. Choose a study to try its controls.',
+  GalleryStudy.softCraft =>
+    'Try soft cloth, irregular sewing, chalk and folded paper.',
   GalleryStudy.foam =>
     'Compare fine-pore foam, surface impressions and raised cuts.',
   GalleryStudy.spreading => 'Pigment travels from a wet center into the paper.',
@@ -114,6 +120,7 @@ const galleryOrder = [
   GalleryStudy.ink,
   GalleryStudy.paper,
   GalleryStudy.foam,
+  GalleryStudy.softCraft,
   GalleryStudy.materials,
   GalleryStudy.embroidery,
   GalleryStudy.motion,

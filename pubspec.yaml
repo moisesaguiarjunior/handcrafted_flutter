@@ -12,10 +12,10 @@ topics:
   - painting
   - materials
 screenshots:
-  - description: An editable watercolor note with stitched paper and native controls.
-    path: doc/screenshots/painted-note.png
   - description: Layered watercolor pigment on seeded paper.
     path: doc/screenshots/watercolor-hero.png
+  - description: An editable watercolor note with stitched paper and native controls.
+    path: doc/screenshots/painted-note.png
   - description: Native text, choices and actions in paper and cloth themes.
     path: doc/screenshots/material-vocabulary.png
   - description: Raised shell, feather and crescent motifs over woven textures.

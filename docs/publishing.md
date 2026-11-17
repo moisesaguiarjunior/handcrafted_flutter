@@ -92,7 +92,8 @@ The package lookup returned HTTP 404 on 2026-11-16; this is not a reservation of
 is no application form or manual popularity threshold: the documented flow is
 a validated package upload authenticated by its responsible Google account.
 
-1. Approve the new composed README screenshot against the runnable note. The
+1. Approve the secondary composed screenshot against the runnable note. The
+   flower stays first in the README and screenshot metadata by owner preference. The
    earlier Pana 160/160 result describes the reviewed source at that time; rerun
    archive/API checks on the final reviewed candidate. It is not a hosted score.
 2. Choose the Google account that will own the first upload. A verified domain

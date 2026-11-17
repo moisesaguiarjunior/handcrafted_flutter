@@ -75,5 +75,6 @@ The next welcome/README candidate adds an editable watercolor note using the
 existing public material components. Desktop study actions precede the art;
 paint starts at first contact and wetness controls sit before the preview.
 Sharing has a visible Copy link label. Flower and material atlases remain.
-The new capture requires owner visual approval before public promotion. Browser
+The flower stays first in the README and pub.dev images by owner preference.
+The note capture requires owner visual approval before public promotion. Browser
 URL canonicalization, phone profiling and consumer adoption remain separate.

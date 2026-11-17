@@ -96,5 +96,5 @@ The note contains a native editable field, a selected choice that removes its
 contour seam, and a working in-memory action. No note is persisted. Materials,
 watercolor and heading reuse the public painters/components, with original seeded
 wash geometry. Capture fonts and theme are the existing licensed example assets.
-This is a proposed replacement for the first README image, subject to owner
-visual approval; the flower remains in the watercolor section.
+The flower remains the first README image by owner preference; this note follows
+as a runnable composition. Its visual approval is separate from technical review.

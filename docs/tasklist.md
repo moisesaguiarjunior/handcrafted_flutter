@@ -68,3 +68,12 @@ release is described in [release notes](releases/0.2.0.md).
 Consumer migrations, pixel-parity checks, application visual approvals and phone
 measurements have separate gates. This queue does not mark them completed by a
 package merge. No full cloth, fluid or flexible-rope solver is claimed.
+
+## Composed welcome candidate
+
+The next welcome/README candidate adds an editable watercolor note using the
+existing public material components. Desktop study actions precede the art;
+paint starts at first contact and wetness controls sit before the preview.
+Sharing has a visible Copy link label. Flower and material atlases remain.
+The new capture requires owner visual approval before public promotion. Browser
+URL canonicalization, phone profiling and consumer adoption remain separate.

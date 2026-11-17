@@ -26,9 +26,7 @@ class LivingMaterialStudy extends StatefulWidget {
 }
 
 class _LivingMaterialStudyState extends State<LivingMaterialStudy> {
-  late double? manual = widget.technique == LivingTechnique.embroidery
-      ? 0
-      : .48;
+  double? manual = 0;
   WatercolorExperiment experiment = WatercolorExperiment.contact;
   double wetness = .8;
   ThreadExperiment threadExperiment = ThreadExperiment.finishing;
@@ -246,6 +244,16 @@ class _LivingMaterialStudyState extends State<LivingMaterialStudy> {
             ],
           ),
           const SizedBox(height: 12),
+          if (wash && experiment != WatercolorExperiment.botanical) ...[
+            Text('Base wetness ${(wetness * 100).round()}%'),
+            Slider(
+              key: const ValueKey('base-wetness'),
+              value: wetness,
+              semanticFormatterCallback: (v) =>
+                  '${(v * 100).round()} percent wet',
+              onChanged: (v) => setState(() => wetness = v),
+            ),
+          ],
           ExcludeSemantics(
             child: IgnorePointer(
               child: Center(
@@ -267,17 +275,6 @@ class _LivingMaterialStudyState extends State<LivingMaterialStudy> {
               ),
             ),
           ),
-          if (wash && experiment != WatercolorExperiment.botanical) ...[
-            const SizedBox(height: 12),
-            Text('Base wetness ${(wetness * 100).round()}%'),
-            Slider(
-              key: const ValueKey('base-wetness'),
-              value: wetness,
-              semanticFormatterCallback: (v) =>
-                  '${(v * 100).round()} percent wet',
-              onChanged: (v) => setState(() => wetness = v),
-            ),
-          ],
           Text(
             wash
                 ? 'Seeded pigment and a soft wet front. An illustrative approximation, without fluid simulation.'

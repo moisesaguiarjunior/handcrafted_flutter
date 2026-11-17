@@ -263,3 +263,11 @@ For the wide vocabulary study, searched the gallery's 1100px layout, the panel's
 Constrained only this example to 800px; no painter budget or fallback changed.
 A test exercises the actual gallery at common desktop widths in both themes,
 scoping the primary card's own CraftSurface instead of matching button surfaces.
+
+For the composed welcome, searched GalleryWelcome, MaterialVocabularyStudy,
+CraftPanel/Theme/Heading/Choice/Button, watercolor, contour seams, gallery routes
+and capture helpers. PaintedNote composes those APIs around one native form;
+it adds no public component, dependency, texture engine or clock. The README
+capture uses the same widget as the live welcome. Desktop actions precede art;
+paint wetness precedes its preview, and first contact starts at zero. Native
+router behavior remains unchanged; URL canonicalization is separate work.

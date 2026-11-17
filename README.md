@@ -4,8 +4,12 @@
 
 **Give your Flutter widgets a handmade surface.**
 
+[![Checks](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml/badge.svg)](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml)
+[![Library coverage](https://codecov.io/gh/moisesaguiarjunior/handcrafted_flutter/branch/main/graph/badge.svg)](https://codecov.io/gh/moisesaguiarjunior/handcrafted_flutter)
+
 [Explore the live gallery](https://moisesaguiarjunior.github.io/handcrafted_flutter/) ·
-[Run locally](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/live-gallery.md)
+[Run locally](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/live-gallery.md) ·
+[Building blocks](#building-blocks)
 
 ![Layered rose petals and a blue-green wash on textured paper](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/watercolor-hero.png)
 
@@ -15,17 +19,13 @@ pigment, relief, cord/ribbon bands and composable moving parts for Flutter.
 The leather tag above is itself a composition of those parts: leather grain, a
 contour seam with recessed punctures, a raised edge, a twisted cord and native
 pressed lettering. [See how it is built](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/example/lib/brand_mark.dart).
-Text remains text; buttons retain native focus, actions and semantics.
 
-[![Checks](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml/badge.svg)](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml)
-[![Library coverage](https://codecov.io/gh/moisesaguiarjunior/handcrafted_flutter/branch/main/graph/badge.svg)](https://codecov.io/gh/moisesaguiarjunior/handcrafted_flutter)
+**Text remains text.** Buttons, fields and choices keep native focus, actions,
+semantics and text scaling; the material is painted around them.
+[How accessibility is preserved](#accessible-by-construction).
 
-Experimental, licensed under [MIT](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/LICENSE).
-See [publication status and process](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/publishing.md).
-Git source baseline: [v0.2.0](https://github.com/moisesaguiarjunior/handcrafted_flutter/releases/tag/v0.2.0).
-See [release notes and migration](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/releases/0.2.0.md); examples below follow
-the current source branch.
-Tested baseline: Flutter 3.47.9 / Dart 3.13.7. See [compatibility](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/compatibility.md).
+Experimental, [MIT](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/LICENSE)-licensed and tested on Flutter 3.47.9 / Dart 3.13.7
+([compatibility](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/compatibility.md) · [installation](#installation)).
 
 ## Write a postcard you can send
 
@@ -77,51 +77,7 @@ These are bounded visual approximations, not a fluid or spectral pigment solver.
 **First touch** grows from one contact. **Brush stroke** drags a continuous wash
 along a curve; choose whether the brush is visible and lifts away at the end.
 
-## One set of controls, your material themes
-
-![The same picnic invitation and reply form in paper and cloth themes](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/material-vocabulary.png)
-
-`CraftTheme` supplies host-owned material roles; `CraftPanel`, `CraftButton` and
-`CraftChoice` keep text, focus, actions and selected state native. Switch the
-material without replacing the form or its contents: the reply you are typing,
-your choice and its focus survive the switch. Selected choices show a drawn
-check mark, so selection never depends on color alone.
-[Try both themes](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=vocabulary)
-· [Use the components](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/material-vocabulary.md).
-Version 0.3.0 adds `CraftHeading` with themed raised/inset lettering and
-native heading semantics; this addition is not in the v0.2.0 tag.
-
-## Artwork fits. Words keep their size.
-
-An [experience-frame recipe](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/experience-frame.md) combines imported crops,
-a mapped 48px lid action, a native form and a pinned footer. Try narrow screens,
-large text and the keyboard in the [live frame](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=experience).
-It is an example-first composition, with application state left to the host.
-
-## Paper behind a real control
-
-```dart
-import 'package:flutter/material.dart';
-import 'package:handcrafted_flutter/handcrafted_flutter.dart';
-
-CraftSurface(
-  material: CraftMaterial.paper,
-  color: const Color(0xFFFFFDF8),
-  shape: const CraftOutline.pigment(seed: 23, broad: true),
-  child: TextButton(
-    onPressed: openCollection,
-    child: const Text('Open collection'),
-  ),
-)
-```
-
-Give the surface normal Flutter constraints. An optional `outline` supplies one
-cached silhouette for painting, clipping and child hit testing. Prefer a value
-`shape` recipe to retain the cache across equivalent rebuilds. The host supplies
-the content padding. `insetCraftPath` derives a bounded polygonal seam from a
-closed silhouette, respecting concavities and holes. See [contour seams](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/contour-seams.md).
-
-## Nine materials you can compose
+## Nine materials, pressed and raised
 
 ![Twill, linen, felt, paper, wood, leather, EVA foam, cotton and velvety nap swatches](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/materials-atlas.png)
 
@@ -135,6 +91,8 @@ Fine cotton and velvety cloth compose with optional irregular sewing and local
 puncture gathering. Chalk can leave a denser broken mark; satin paper catches
 light on folded shapes. [Soft craft recipes](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/soft-craft-materials.md)
 · [Try cloth, chalk & folds](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=softCraft).
+
+![A whale, a house and a snail pressed into indigo twill, flax linen and clay felt](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/impressions-atlas.png)
 
 ![A leather journal with a pressed ginkgo leaf, a raised balloon on twill and a letterpress thank-you card](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/relief-objects.png)
 
@@ -161,6 +119,30 @@ with seeded impressions, then compose raised cuts around native content.
 [Foam recipes](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/eva-foam.md) ·
 [Try the finishes](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=foam).
 
+## Cord, ribbon and embroidered lines
+
+![A braided three-color cord, a ribbon and an embroidered border, each following its cut](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/colored-cord.png)
+
+Draw raised bands over textures or follow the actual cut with an optional edge gap.
+Give a rope two to six strand colors: two twist, three or more braid, and each
+yarn keeps its own volume and crossing depth.
+
+![Two twisted strands, three braided strands and natural cotton tones](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/braided-cord-detail.png)
+
+[API and runnable playground](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/cord-ribbon-embroidery.md).
+
+## Curves, ink and completed paths
+
+![Curved line playground with native controls](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/stroke-playground.png)
+
+Build a smooth route through waypoints, or supply your own Flutter `Path`. Choose
+continuous, dashed or dotted ink independently of pen, broad marker or brush
+treatment, or pencil, chalk and wax deposits. Explicit progress reveals the line by distance without creating a
+clock. Paint a quiet track behind a solid prefix to show a completed route.
+
+Run `flutter run -d chrome -t lib/main_strokes.dart` from `example/`.
+See [drawing recipes and examples](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/drawing-strokes.md).
+
 ## Body, tail and tether
 
 ![A quick paper kite gust settles while a watercolor balloon continues its slower drift](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/motion-stage.gif)
@@ -175,7 +157,63 @@ follows its transformed knot. The original showcase also includes hanging
 paper/felt pieces with native controls. These are finite authored examples;
 the new clips stop at their final pose; use the live controls to replay.
 
+## One set of controls, your material themes
+
+![The same picnic invitation and reply form in paper and cloth themes](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/doc/screenshots/material-vocabulary.png)
+
+`CraftTheme` supplies host-owned material roles; `CraftPanel`, `CraftButton` and
+`CraftChoice` keep text, focus, actions and selected state native. Switch the
+material without replacing the form or its contents: the reply you are typing,
+your choice and its focus survive the switch. Selected choices show a drawn
+check mark, so selection never depends on color alone.
+[Try both themes](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=vocabulary)
+· [Use the components](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/material-vocabulary.md).
+`CraftHeading` adds themed raised/inset lettering with native heading semantics.
+
+## Paper behind a real control
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:handcrafted_flutter/handcrafted_flutter.dart';
+
+CraftSurface(
+  material: CraftMaterial.paper,
+  color: const Color(0xFFFFFDF8),
+  shape: const CraftOutline.pigment(seed: 23, broad: true),
+  child: TextButton(
+    onPressed: openCollection,
+    child: const Text('Open collection'),
+  ),
+)
+```
+
+Give the surface normal Flutter constraints. An optional `outline` supplies one
+cached silhouette for painting, clipping and child hit testing. Prefer a value
+`shape` recipe to retain the cache across equivalent rebuilds. The host supplies
+the content padding. `insetCraftPath` derives a bounded polygonal seam from a
+closed silhouette, respecting concavities and holes. See [contour seams](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/contour-seams.md).
+
+## Accessible by construction
+
+- **Native widgets stay native.** Materials paint behind or around real Flutter
+  widgets; labels, fields, focus order and semantics are not baked into images.
+- **Selection is not color alone.** `CraftChoice` draws a check mark beside the
+  label, without depending on an icon font.
+- **Words keep their size.** The example compositions reflow at large text scales instead of
+  shrinking text to fit an illustration.
+- **Motion is finite and respectful.** `SceneEntrance` settles immediately when
+  the platform asks for reduced motion and pauses in the background.
+
+An [experience-frame recipe](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/experience-frame.md) combines imported crops,
+a mapped 48px lid action, a native form and a pinned footer. Try narrow screens,
+large text and the keyboard in the [live frame](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=experience).
+It is an example-first composition, with application state left to the host.
+
 ## Run the examples
+
+![A tooled leather journal, a watercolor card with a native button and an embroidered bookmark](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/material-cover.png)
+
+Every image in this README is captured from a runnable composition.
 
 ```sh
 gh repo clone moisesaguiarjunior/handcrafted_flutter
@@ -210,6 +248,8 @@ in an application. Keep source-access credentials outside code and URLs.
 | --- | --- |
 | `CraftMaterial`, `MaterialTextures` | Seeded material tiles and explicitly owned raster resources |
 | `CraftSurface` | Material behind native Flutter widgets |
+| `CraftTheme`, `CraftPanel`, `CraftButton`, `CraftChoice`, `CraftHeading` | Themed material roles around native panels, actions, choices and headings |
+| `paintFoamFinish`, `FoamFinish` | Pebbled, mottled, grooved and crosshatched EVA impressions |
 | `paintWatercolor`, `paintWatercolorSpread` | Layered pigment and an explicitly progressed organic wet front |
 | `paintCraftRelief`, `CraftReliefText` | Directional motif shading and native raised/inset lettering |
 | `pigmentOutline` | Reproducible organic contours |
@@ -240,30 +280,6 @@ per surface. Insets approximate curves with polygons and have explicit work limi
 Glyph shading uses bounded offscreen layers;
 phone performance remains unmeasured.
 
-## Curves, ink and completed paths
-
-![Curved line playground with native controls](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/stroke-playground.png)
-
-Build a smooth route through waypoints, or supply your own Flutter `Path`. Choose
-continuous, dashed or dotted ink independently of pen, broad marker or brush
-treatment, or pencil, chalk and wax deposits. Explicit progress reveals the line by distance without creating a
-clock. Paint a quiet track behind a solid prefix to show a completed route.
-
-Run `flutter run -d chrome -t lib/main_strokes.dart` from `example/`.
-See [drawing recipes and examples](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/drawing-strokes.md).
-
-### Cord, ribbon and embroidered lines
-
-![A braided three-color cord, a ribbon and an embroidered border, each following its cut](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/colored-cord.png)
-
-Draw raised bands over textures or follow the actual cut with an optional edge gap.
-Give a rope two to six strand colors: two twist, three or more braid, and each
-yarn keeps its own volume and crossing depth.
-
-![Two twisted strands, three braided strands and natural cotton tones](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/braided-cord-detail.png)
-
-[API and runnable playground](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/cord-ribbon-embroidery.md).
-
 ## Installation
 
 Once a hosted version is available on [pub.dev](https://pub.dev/packages/handcrafted_flutter), add it with:
@@ -271,6 +287,11 @@ Once a hosted version is available on [pub.dev](https://pub.dev/packages/handcra
 ```sh
 flutter pub add handcrafted_flutter
 ```
+
+Git source baseline: [v0.2.0](https://github.com/moisesaguiarjunior/handcrafted_flutter/releases/tag/v0.2.0)
+([release notes and migration](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/releases/0.2.0.md)); the examples in this
+README follow the current source branch (0.3.0). See
+[publication status and process](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/publishing.md).
 
 For source distribution, use an immutable reviewed tag or SHA. The v0.2.0 tag
 below is the previous source baseline; 0.3.0 additions require their reviewed

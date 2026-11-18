@@ -167,8 +167,9 @@ class _SpatialLightStudyState extends State<SpatialLightStudy> {
         builder: (context, constraints) {
           final width = constraints.maxWidth.clamp(0.0, 900.0);
           final scale = width / 640;
-          if (width < 48 || width * 360 / 640 < 48)
+          if (width < 48 || width * 360 / 640 < 48) {
             return const SizedBox.shrink();
+          }
           return SizedBox(
             width: width,
             height: width * 360 / 640,

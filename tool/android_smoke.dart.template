@@ -1,0 +1,32 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+
+import 'package:handcrafted_android_probe/main_gallery.dart';
+import 'package:handcrafted_android_probe/spatial_light_study.dart';
+
+// Copied into a disposable Android host by check_android.py, never a core test.
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  testWidgets('Android light, paint and thread smoke', (tester) async {
+    for (final study in [GalleryStudy.light, GalleryStudy.spreading, GalleryStudy.embroidery]) {
+      await tester.pumpWidget(HandcraftedGalleryApp(key: ValueKey(study), initialStudy: study));
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      if (study == GalleryStudy.light) {
+        final gesture = await tester.startGesture(tester.getCenter(find.byKey(const ValueKey('studio-lamp'))));
+        for (var i = 0; i < 4; i++) {
+          await gesture.moveBy(const Offset(25, 0)); await tester.pump();
+        }
+        await gesture.up(); await tester.pumpAndSettle();
+        final paint = tester.widget<CustomPaint>(find.byKey(const ValueKey('studio-board'))).painter! as StudioPainter;
+        expect(paint.lamp.position.dx, greaterThan(210));
+        await tester.ensureVisible(find.byKey(const ValueKey('studio-shape')));
+        await tester.tap(find.byKey(const ValueKey('studio-shape'))); await tester.pump();
+        final changed = tester.widget<CustomPaint>(find.byKey(const ValueKey('studio-board'))).painter! as StudioPainter;
+        expect(changed.shapes, [1, 0, 0]);
+        expect(tester.takeException(), isNull);
+      }
+    }
+  });
+}

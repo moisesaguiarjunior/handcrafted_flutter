@@ -3,6 +3,9 @@ enum GalleryStudy {
   /// Opening compositions and sculpted motifs.
   cover,
 
+  /// Three substrates under a draggable world-space lamp.
+  light,
+
   /// Every material texture family.
   materials,
 
@@ -66,6 +69,7 @@ String galleryLabel(GalleryStudy study) => switch (study) {
   GalleryStudy.foam => 'EVA foam & layers',
   GalleryStudy.softCraft => 'Cloth, chalk & folds',
   GalleryStudy.volume => 'Local light & volume',
+  GalleryStudy.light => 'Light studio',
   GalleryStudy.materials => 'Materials & relief',
   GalleryStudy.paper => 'Paper & edges',
   GalleryStudy.stitches => 'Stitch families',
@@ -88,6 +92,7 @@ String galleryDescription(GalleryStudy study) => switch (study) {
   GalleryStudy.experience =>
     'Fit artwork independently; keep words, touch targets and footer native.',
   GalleryStudy.cover => 'Explore materials, marks and movement. Choose a study to try its controls.',
+  GalleryStudy.light => 'Move one lamp over clay, EVA and paper; turn a piece under the same light.',
   GalleryStudy.volume =>
     'Compare local volume before sharing light across a scene.',
   GalleryStudy.softCraft =>
@@ -119,6 +124,7 @@ String galleryDescription(GalleryStudy study) => switch (study) {
 /// Editorial order: pigment and movement are discoverable before technical studies.
 const galleryOrder = [
   GalleryStudy.cover,
+  GalleryStudy.light,
   GalleryStudy.vocabulary,
   GalleryStudy.experience,
   GalleryStudy.spreading,

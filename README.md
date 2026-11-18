@@ -36,6 +36,15 @@ in the [live composition](https://moisesaguiarjunior.github.io/handcrafted_flutt
 The paper, coastal watercolor, stamp, postmark and pressed heading are
 decoration; the fields, choice and action are real Flutter widgets. [See the runnable composition](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/example/lib/painted_note.dart).
 
+## Move one light over three materials
+
+[![Clay-like rounded volume, a matte EVA cut and thin paper under a shared draggable lamp](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/light-studio.png)](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=light)
+
+Drag the lamp, bring it closer, change a silhouette and turn a piece. The light
+stays in the scene while each substrate keeps its own grain and profile.
+[Try the light studio](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=light) ·
+[Recipe and approximation limits](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/light-studio.md).
+
 ## Stitched by hand
 
 ![Running, back, blanket, chain, cross and basting stitches, each on its own cloth](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/stitch-families.png)
@@ -332,14 +341,13 @@ Once a hosted version is available on [pub.dev](https://pub.dev/packages/handcra
 flutter pub add handcrafted_flutter
 ```
 
-Git source baseline: [v0.2.0](https://github.com/moisesaguiarjunior/handcrafted_flutter/releases/tag/v0.2.0)
-([release notes and migration](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/releases/0.2.0.md)); the examples in this
+Git source baseline: [v0.3.0](https://github.com/moisesaguiarjunior/handcrafted_flutter/releases/tag/v0.3.0)
+([release notes and migration](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/releases/0.3.0.md)); the examples in this
 README follow the current source branch (0.3.0). See
 [publication status and process](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/publishing.md).
 
-For source distribution, use an immutable reviewed tag or SHA. The v0.2.0 tag
-below is the previous source baseline; 0.3.0 additions require their reviewed
-source until the hosted release is available.
+For source distribution, use an immutable reviewed tag or SHA. The v0.3.0 tag
+below is the reviewed 0.3.0 source release; hosted publication remains separate.
 
 ### Use the tagged source
 
@@ -348,7 +356,7 @@ dependencies:
   handcrafted_flutter:
     git:
       url: https://github.com/moisesaguiarjunior/handcrafted_flutter.git
-      ref: v0.2.0
+      ref: v0.3.0
 ```
 
 Keep your application's lockfile committed. Existing `v0.1.0` pins are unchanged;

@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import 'craft_part.dart';
+import 'craft_placement.dart';
 
 /// Places an image crop in an authored artboard rectangle, without a clock.
 ///
@@ -32,6 +33,30 @@ class CraftImagePart extends StatelessWidget {
     this.semanticLabel,
     this.filterQuality = FilterQuality.medium,
   });
+
+  /// Reuses a source/visible-contour placement for the existing image adapter.
+  factory CraftImagePart.placed({
+    required Key? key,
+    required ImageProvider<Object> image,
+    required Size sourceSize,
+    required CraftPlacement placement,
+    Path? sourceClip,
+    Widget? child,
+    String? semanticLabel,
+    FilterQuality filterQuality = FilterQuality.medium,
+  }) => CraftImagePart(
+    key: key,
+    image: image,
+    sourceSize: sourceSize,
+    sourceRect: placement.sourceRect,
+    rect: placement.rect,
+    sourceHinge: placement.sourceHinge,
+    pose: placement.pose,
+    sourceClip: sourceClip,
+    child: child,
+    semanticLabel: semanticLabel,
+    filterQuality: filterQuality,
+  );
 
   /// Any normal Flutter image provider, retaining Flutter's cache/lifecycle.
   final ImageProvider<Object> image;
@@ -69,7 +94,7 @@ class CraftImagePart extends StatelessWidget {
   /// Native image sampling quality.
   final FilterQuality filterQuality;
 
-  ({Alignment pivot, PartPose pose, double sx, double sy}) _geometry() {
+  CraftPlacement _geometry() {
     if (!sourceSize.width.isFinite ||
         !sourceSize.height.isFinite ||
         sourceSize.isEmpty ||
@@ -85,30 +110,18 @@ class CraftImagePart extends StatelessWidget {
         'Expected finite positive source/crop/destination and a contained crop',
       );
     }
-    final hinge = sourceHinge ?? sourceRect.center;
-    final sx = rect.width / sourceRect.width,
-        sy = rect.height / sourceRect.height;
-    final pivot = Alignment(
-      2 * (hinge.dx - sourceRect.left) / sourceRect.width - 1,
-      2 * (hinge.dy - sourceRect.top) / sourceRect.height - 1,
+    final placement = CraftPlacement(
+      sourceRect: sourceRect,
+      rect: rect,
+      sourceHinge: sourceHinge,
+      pose: pose,
     );
-    final effectivePose = pose ?? PartPose();
     if (![
-          hinge.dx,
-          hinge.dy,
-          sx,
-          sy,
-          pivot.x,
-          pivot.y,
-          sourceSize.width * sx,
-          sourceSize.height * sy,
-          sourceRect.left * sx,
-          sourceRect.top * sy,
-        ].every((v) => v.isFinite) ||
-        !effectivePose
-            .matrixFor(rect.size, pivot)
-            .storage
-            .every((v) => v.isFinite)) {
+      sourceSize.width * placement.scaleX,
+      sourceSize.height * placement.scaleY,
+      sourceRect.left * placement.scaleX,
+      sourceRect.top * placement.scaleY,
+    ].every((v) => v.isFinite)) {
       throw ArgumentError(
         'Image placement overflows finite transform coordinates',
       );
@@ -117,28 +130,12 @@ class CraftImagePart extends StatelessWidget {
     if (clipBounds != null && !clipBounds.isFinite) {
       throw ArgumentError('Expected a finite source clip');
     }
-    return (pivot: pivot, pose: effectivePose, sx: sx, sy: sy);
+    return placement;
   }
 
   /// Maps an attachment from full source coordinates into the parent artboard.
   /// Ancestor responsive transforms are intentionally outside this coordinate space.
-  Offset mapSourcePoint(Offset point) {
-    final geometry = _geometry();
-    if (!point.dx.isFinite || !point.dy.isFinite) {
-      throw ArgumentError('Expected a finite attachment');
-    }
-    final local = Offset(
-      (point.dx - sourceRect.left) * geometry.sx,
-      (point.dy - sourceRect.top) * geometry.sy,
-    );
-    final mapped =
-        rect.topLeft +
-        geometry.pose.mapPoint(local, size: rect.size, pivot: geometry.pivot);
-    if (!mapped.dx.isFinite || !mapped.dy.isFinite) {
-      throw ArgumentError('Mapped attachment overflows');
-    }
-    return mapped;
-  }
+  Offset mapSourcePoint(Offset point) => _geometry().mapSourcePoint(point);
 
   @override
   Widget build(BuildContext context) {
@@ -147,10 +144,10 @@ class CraftImagePart extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         Positioned(
-          left: -sourceRect.left * geometry.sx,
-          top: -sourceRect.top * geometry.sy,
-          width: sourceSize.width * geometry.sx,
-          height: sourceSize.height * geometry.sy,
+          left: -sourceRect.left * geometry.scaleX,
+          top: -sourceRect.top * geometry.scaleY,
+          width: sourceSize.width * geometry.scaleX,
+          height: sourceSize.height * geometry.scaleY,
           child: Image(
             image: image,
             fit: BoxFit.fill,

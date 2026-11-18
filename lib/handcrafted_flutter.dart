@@ -30,3 +30,5 @@ export 'src/craft_heading.dart';
 export 'src/craft_volume.dart';
 
 export 'src/craft_nap.dart';
+
+export 'src/craft_placement.dart';

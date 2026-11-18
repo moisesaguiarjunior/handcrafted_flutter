@@ -4,6 +4,7 @@ import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 import 'material_studies.dart';
 import 'mixed_volume_study.dart';
 import 'fabric_composition.dart';
+import 'profiled_band_study.dart';
 
 const _coral = Color(0xFFEFA07C);
 
@@ -326,6 +327,9 @@ class _LocalVolumePlaygroundState extends State<LocalVolumePlayground> {
           'percent',
         ),
         FabricComposition(light: light, insertion: insertion),
+        const SizedBox(height: 24),
+        const Text('Paper ribbons with independently shaped edges'),
+        ProfiledBandStudy(light: light),
         const SizedBox(height: 24),
         VolumeStudies(light: light),
         const SizedBox(height: 24),

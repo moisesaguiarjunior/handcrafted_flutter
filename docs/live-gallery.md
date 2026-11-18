@@ -65,6 +65,6 @@ reachable. Flutter Router
 restores the selected study and handles browser history; only the selected study
 is mounted. Layer/material controls remain native and do not scale down text.
 
-The `?study=volume` experiment compares existing relief with example-only thin
-and rounded height profiles. Native controls relight prepared geometry and a
-rotated mixed composition. [Recipe, scope and limits](local-volume.md).
+The `?study=volume` study compares existing relief with prepared thin
+and rounded height profiles. Native controls relight prepared geometry, a
+rotated mixed composition, folded pockets and independently shaped paper bands. [Recipe, scope and limits](local-volume.md).

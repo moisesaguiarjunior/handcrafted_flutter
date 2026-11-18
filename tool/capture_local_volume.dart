@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../example/lib/volume_studies.dart';
 import '../example/lib/mixed_volume_study.dart';
 import '../example/lib/fabric_composition.dart';
+import '../example/lib/profiled_band_study.dart';
 import '../example/test/support/fonts.dart';
 import 'capture_support.dart';
 
@@ -36,6 +37,20 @@ void main() {
       const Size(1000, 660),
       const Padding(padding: EdgeInsets.all(24), child: FabricComposition()),
     );
+    await captureExample(
+      tester,
+      'build/local-volume/profiled-bands.png',
+      const Size(1000, 710),
+      const Padding(padding: EdgeInsets.all(24), child: ProfiledBandStudy()),
+    );
+    for (final width in [320.0, 390.0, 428.0]) {
+      await captureExample(
+        tester,
+        'build/local-volume/bands-at-${width.round()}.png',
+        Size(width, 420),
+        const Padding(padding: EdgeInsets.all(12), child: ProfiledBandStudy()),
+      );
+    }
     for (final width in [320.0, 390.0]) {
       await captureExample(
         tester,

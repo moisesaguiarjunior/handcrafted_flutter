@@ -409,7 +409,11 @@ void _paintVolumeShadow(
   CraftLight light, {
   Path? receiver,
   double lift = 0,
+  double softness = 1,
 }) {
+  if (!softness.isFinite || softness < .25 || softness > 4) {
+    throw ArgumentError('Expected shadow softness .25..4');
+  }
   if (!lift.isFinite || lift < 0 || lift > 24) {
     throw ArgumentError('Expected lift 0..24');
   }
@@ -425,7 +429,7 @@ void _paintVolumeShadow(
         ..color = const Color(0xFF3F2A1E).withValues(
           alpha: .14 * (light.ambient + light.direct).clamp(0.0, 1.0),
         )
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.1),
+        ..maskFilter = MaskFilter.blur(BlurStyle.normal, 1.1 * softness),
     );
     canvas.drawPath(
       outline.shift(offset * (thickness * .5 + lift)),
@@ -433,7 +437,10 @@ void _paintVolumeShadow(
         ..color = const Color(0xFF4B3528).withValues(
           alpha: .24 * light.direct / (light.ambient + light.direct + 1e-9),
         )
-        ..maskFilter = MaskFilter.blur(BlurStyle.normal, 2.5 + lift * .3),
+        ..maskFilter = MaskFilter.blur(
+          BlurStyle.normal,
+          (2.5 + lift * .3) * softness,
+        ),
     );
   } finally {
     canvas.restore();

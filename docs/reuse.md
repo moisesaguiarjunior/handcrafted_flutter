@@ -370,3 +370,13 @@ proof tests moved to package tests instead of being duplicated in the example.
 Complete seams in the folded-pocket example are prepared once with the band/cut,
 then reused across colors, relighting and insertion. This keeps static thread
 sampling outside paint, matching the prepared geometry ownership contract.
+
+For independently shaped paper bands, searched CraftBand rails, prepared volume
+meshes, shadow lift, contour insets and original ribbon callers. Reused one
+bounded centerline and the shared shader/shadow painter. Arc-length width keys
+now feed the same cut, border rails, mesh and shadow, including smooth closed
+joins. Thickness, ground lift and shadow blur stay separate. No second outline,
+lighting engine, stitch path, random source or clock was added. Synthetic examples
+and small-screen captures do not contain consumer shapes or artwork.
+The placement follow-up distinguishes current crop/pose, pocket-layer and stroke
+contracts from proposed extraction; see [fidelity requests](requests/material-placement-fidelity.md).

@@ -389,3 +389,15 @@ batched into four tonal paths. It reuses path validation and ordinary clipped
 Flutter paint; the existing material enum/cache are unchanged. Layered foam
 reuses mottled finish, grain, CraftVolume/CraftLight and prepared inset sewing.
 All comparison cuts are original synthetic geometry; no consumer art is included.
+
+For visible-contour placement and decorative footprint measurement, searched
+CraftImagePart source crop/hinge, CraftPart/PartPose matrices, brush/dry deposit
+sampling, stroke joins, and pocket paint/caches. Extracted one CraftPlacement
+from the existing image geometry; its fit keeps full paint and declared visible
+windows separate. Existing image placement/touch and native overlay topology
+remain shared. craftStrokeBounds uses the same extracted dry step/offset/width/
+length helpers and native miter constant as painting, without another sampler.
+The pocket's independent controls stay in its original example recipe, with
+paint-only changes retaining prepared geometry. Synthetic authoring/capture and
+frozen-renderer parity use existing native resource/font ownership. No private
+art, second matrix, hit-test engine, clock or global cache was introduced.

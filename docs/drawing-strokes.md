@@ -156,3 +156,8 @@ The original pen, marker and brush painting branches remain unchanged.
 `CraftStrokeStyle.dryCoverage` (0..1) adds denser overlapping grain for dry tools;
 zero preserves the earlier rendering. It is inactive for pen, marker and brush.
 See [chalk on light paper](soft-craft-materials.md#chalk-with-more-body).
+
+`craftStrokeBounds` now supplies a conservative decorative envelope using the
+same instrument/span formulas. It includes dry dispersion and native miter
+clearance, with default2 local raster padding; transformed output-pixel clearance
+remains caller-owned. See [measurement and downscaling limits](visible-fit-and-stroke-bounds.md#conservative-decorative-stroke-bounds).

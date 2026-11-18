@@ -144,10 +144,10 @@ for acceptance boundaries and existing contracts.
   shadow geometry, continuous smooth closed joins and separate thickness/lift/
   shadow-softness parameters. Synthetic ribbon/loop/lift study; exact review,
   checks and publication are recorded separately.
-- Visible-contour placement, independently parameterized pocket construction and
-  conservative dry-mark visual bounds remain requests. Existing CraftImagePart
-  handles explicit crop/placement/pivot; the pocket is still an example recipe;
-  stroke padding remains caller-owned. Do not infer these APIs from the band work.
+- Visible-contour placement and conservative decorative stroke envelopes now
+  have CraftPlacement.fit/CraftImagePart.placed and craftStrokeBounds candidates.
+  Independent pocket controls remain an example recipe. [Proofs and limits](visible-fit-and-stroke-bounds.md);
+  exact review/CI/publication remain separate from implementation and adoption.
 - Android/iPhone measurement remains an external evidence gate.
 - Short matte nap and layered EVA: CraftNap finish and 40..100px synthetic
   comparison now implemented, with independent fiber controls and receiver-clipped

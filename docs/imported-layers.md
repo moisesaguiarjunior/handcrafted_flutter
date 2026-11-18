@@ -87,3 +87,7 @@ flutter test ../tool/capture_imported_layers.dart
 
 The capture is written to `example/build/scenes/`; inspect it before copying it
 to `docs/assets/`. Ordinary checks do not regenerate assets or visual references.
+
+For contour-driven replacement, use CraftPlacement.fit to align declared visible
+bounds while retaining a larger source painting window, then CraftImagePart.placed.
+[Source windows, native input and proofs](visible-fit-and-stroke-bounds.md).

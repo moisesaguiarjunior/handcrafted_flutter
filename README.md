@@ -280,6 +280,10 @@ in an application. Keep source-access credentials outside code and URLs.
 
 ## Building blocks
 
+Visible-contour fitting, conservative chalk clearance and independently configured
+pocket folds have [runnable recipes and pixel/interaction proofs](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/visible-fit-and-stroke-bounds.md).
+They reuse the existing part/image and material contracts.
+
 | API | Responsibility |
 | --- | --- |
 | `CraftMaterial`, `MaterialTextures` | Seeded material tiles and explicitly owned raster resources |
@@ -287,6 +291,8 @@ in an application. Keep source-access credentials outside code and URLs.
 | `CraftTheme`, `CraftPanel`, `CraftButton`, `CraftChoice`, `CraftHeading` | Themed material roles around native panels, actions, choices and headings |
 | `paintFoamFinish`, `FoamFinish` | Pebbled, mottled, grooved and crosshatched EVA impressions |
 | `paintWatercolor`, `paintWatercolorSpread` | Layered pigment and an explicitly progressed organic wet front |
+| `CraftPlacement`, `CraftImagePart.placed` | Fit visible contours while retaining padding/shadows and native pose/input |
+| `craftStrokeBounds` | Conservative decorative ink/chalk clearance, including dispersion and joins |
 | `CraftNap` | Prepared short-fiber finish, independent geometry and paint contrast |
 | `CraftLight`, `CraftVolume`, `CraftBand` | Prepared sheet/rounded volume, shared light and curved ribbon rails |
 | `paintCraftRelief`, `CraftReliefText` | Directional motif shading and native raised/inset lettering |

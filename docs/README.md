@@ -42,3 +42,7 @@ belong in this package repository.
 
 - [Soft cloth, hand sewing, chalk and folded card](soft-craft-materials.md):
   compact weave, velvety nap, optional irregular/recessed sewing and satin light.
+
+- [Visible-contour fit, conservative stroke clearance and pocket controls](visible-fit-and-stroke-bounds.md):
+  retained paint margins, one native pose/input transform, frozen-renderer proofs.
+- [Short matte nap and layered foam](short-nap.md): independent fibers and receiver-clipped layers.

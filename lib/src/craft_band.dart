@@ -51,7 +51,10 @@ class CraftBand {
         _metric.getTangentForOffset(_metric.length * i / count)!,
     ];
     _outline = _offsetPath(width / 2);
-    final other = _offsetPath(-width / 2).computeMetrics().single;
+    final other = _offsetPath(-width / 2).computeMetrics().toList();
+    if (other.length != 1 || other.single.length == 0) {
+      throw ArgumentError('Degenerate band rail');
+    }
     // Reverse the opposite rail so the body is a single closed cut.
     for (var i = _points.length - 1; i >= 0; i--) {
       final tangent = _points[i];
@@ -60,10 +63,6 @@ class CraftBand {
       _outline.lineTo(p.dx, p.dy);
     }
     _outline.close();
-    // Force the prepared rail to remain nonempty before allocating the mesh.
-    if (other.length == 0) {
-      throw ArgumentError('Degenerate band rail');
-    }
     const cross = 9;
     _positions = Float32List(_points.length * cross * 2);
     _normals = Float32List(_points.length * cross * 3);

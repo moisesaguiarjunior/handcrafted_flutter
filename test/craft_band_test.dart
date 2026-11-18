@@ -23,6 +23,16 @@ void main() {
       final a = await render(band, CraftLight(x: -1, y: -1));
       final b = await render(band, CraftLight(x: 1, y: 1));
       expect(a, isNot(b));
+      for (final progress in [.2, .8]) {
+        final t = band.at(progress), n = Offset(-t.vector.dy, t.vector.dx);
+        final point = t.position + n * 7;
+        final i = (point.dy.floor() * 100 + point.dx.floor()) * 4;
+        expect(
+          (a[i] - b[i]).abs(),
+          greaterThan(2),
+          reason: 'station $progress',
+        );
+      }
       expect(await render(band, CraftLight(x: -1, y: -1)), a);
     },
   );

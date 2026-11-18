@@ -42,6 +42,10 @@ Flutter cannot hit-test outside an ancestor. The default hinge is the visible
 center; an explicit source hinge can be external. Alignment must be finite in
 [-1,1]. The source and visible rectangles must be finite, positive and contained;
 underflow/overflow that prevents a positive finite transform is rejected.
+A retained margin that loses fitted-contour precision is rejected too: unposed
+visible corners and center must map back within1e-7 times each fitted axis
+extent (with a1px extent floor). Correcting anchors alone would leave painting
+misaligned, so the whole placement fails. Collapsed decorative areas skip painting.
 
 `CraftPlacement(sourceRect: ..., rect: ...)` retains explicit stretching for
 existing callers. `CraftImagePart` delegates its geometry and attachment mapping

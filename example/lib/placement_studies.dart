@@ -96,15 +96,18 @@ class _VisibleFitComparisonState extends State<VisibleFitComparison> {
       throw ArgumentError('Expected progress0..1');
     }
     final model = artwork; // Prepare before either painter is constructed.
-    return Column(
-      children: [
-        SizedBox(
-          height: 220,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final w = constraints.maxWidth,
-                  visibleWidth = math.min(150.0, w * .25);
-              return Stack(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final w = constraints.maxWidth;
+        if (w <= 0) {
+          return const SizedBox.shrink();
+        }
+        final visibleWidth = math.min(150.0, w * .25);
+        return Column(
+          children: [
+            SizedBox(
+              height: 220,
+              child: Stack(
                 clipBehavior: Clip.none,
                 children: [
                   for (var i = 0; i < 2; i++)
@@ -129,17 +132,21 @@ class _VisibleFitComparisonState extends State<VisibleFitComparison> {
                       ),
                     ),
                 ],
-              );
-            },
-          ),
-        ),
-        const Row(
-          children: [
-            Expanded(child: Text('Imported PNG', textAlign: TextAlign.center)),
-            Expanded(child: Text('Procedural', textAlign: TextAlign.center)),
+              ),
+            ),
+            const Row(
+              children: [
+                Expanded(
+                  child: Text('Imported PNG', textAlign: TextAlign.center),
+                ),
+                Expanded(
+                  child: Text('Procedural', textAlign: TextAlign.center),
+                ),
+              ],
+            ),
           ],
-        ),
-      ],
+        );
+      },
     );
   }
 
@@ -234,6 +241,10 @@ class _ClearancePainter extends CustomPainter {
   const _ClearancePainter();
   @override
   void paint(Canvas canvas, Size size) {
+    final target = (Offset.zero & size).deflate(8);
+    if (target.isEmpty) {
+      return;
+    }
     final path = Path()
       ..moveTo(12, 60)
       ..cubicTo(35, 2, 70, 115, 108, 44)
@@ -247,10 +258,7 @@ class _ClearancePainter extends CustomPainter {
     final bounds = craftStrokeBounds(path, style: style);
     // An output-pixel gutter remains outside the mapped envelope, even when the
     // parent scales the mark down. The helper itself is in source coordinates.
-    final fit = CraftPlacement.fit(
-      sourceRect: bounds,
-      target: (Offset.zero & size).deflate(8),
-    );
+    final fit = CraftPlacement.fit(sourceRect: bounds, target: target);
     canvas.save();
     try {
       canvas.translate(fit.rect.left, fit.rect.top);

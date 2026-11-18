@@ -5,6 +5,25 @@ import 'package:handcrafted_example/placement_studies.dart';
 import 'support/fonts.dart';
 
 void main() {
+  testWidgets('collapsed decorative areas do not attempt invalid fits', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: Column(
+            children: [
+              SizedBox(width: 12, child: StrokeClearanceStudy()),
+              SizedBox(width: 0, child: VisibleFitComparison()),
+            ],
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+    await tester.pumpWidget(const SizedBox());
+  });
   for (final width in [320.0, 390.0, 428.0]) {
     testWidgets(
       'native placed selection at $width with large text and pose seeking',

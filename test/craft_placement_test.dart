@@ -58,6 +58,30 @@ void main() {
       const Offset(-20, -30),
     );
   });
+  test('unrepresentable retained margins fail while coherent large origins remain usable', () {
+    for (final pose in [PartPose(), PartPose(rotation: .4)]) {
+      expect(
+        () => CraftPlacement.fit(
+          sourceRect: const Rect.fromLTRB(-1e18, 0, 128, 64),
+          visibleBounds: const Rect.fromLTWH(0, 0, 64, 64),
+          target: const Rect.fromLTWH(10, 20, 64, 64),
+          pose: pose,
+        ),
+        throwsArgumentError,
+      );
+    }
+    final translated = CraftPlacement.fit(
+      sourceRect: const Rect.fromLTWH(-1e12, 1e12, 200, 140),
+      visibleBounds: const Rect.fromLTWH(-1e12 + 40, 1e12 + 30, 100, 80),
+      target: const Rect.fromLTWH(10, 20, 150, 160),
+    );
+    expect(
+      (translated.mapSourcePoint(const Offset(-1e12 + 90, 1e12 + 70)) -
+              const Offset(85, 100))
+          .distance,
+      lessThan(1e-6),
+    );
+  });
   test('bad bounds, underflow and nonfinite results fail before paint', () {
     const valid = Rect.fromLTWH(0, 0, 100, 100);
     for (final bad in [

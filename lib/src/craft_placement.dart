@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/widgets.dart';
 
 import 'craft_part.dart';
@@ -97,12 +99,33 @@ final class CraftPlacement {
       sourceRect.width * scale,
       sourceRect.height * scale,
     );
-    return CraftPlacement(
+    final placement = CraftPlacement(
       sourceRect: sourceRect,
       rect: rect,
       sourceHinge: sourceHinge ?? visible.center,
       pose: pose,
     );
+    final tx = math.max(1.0, fitted.width) * 1e-7;
+    final ty = math.max(1.0, fitted.height) * 1e-7;
+    for (final (point, expected) in [
+      (visible.topLeft, fitted.topLeft),
+      (visible.topRight, fitted.topRight),
+      (visible.bottomLeft, fitted.bottomLeft),
+      (visible.bottomRight, fitted.bottomRight),
+      (visible.center, fitted.center),
+    ]) {
+      // Validate the actual retained window, not just an independently corrected
+      // anchor mapper: painting uses this same source-to-local layout.
+      final mapped =
+          placement.rect.topLeft + placement._localSourcePoint(point);
+      if (!mapped.dx.isFinite ||
+          !mapped.dy.isFinite ||
+          (mapped.dx - expected.dx).abs() > tx ||
+          (mapped.dy - expected.dy).abs() > ty) {
+        throw ArgumentError('Retained margin loses fitted-contour precision');
+      }
+    }
+    return placement;
   }
 
   /// Full painting window in source coordinates, including retained margins.
@@ -126,16 +149,18 @@ final class CraftPlacement {
   /// Normalized source hinge for the existing CraftPart transform.
   late final Alignment pivot;
 
+  Offset _localSourcePoint(Offset point) => Offset(
+    (point.dx - sourceRect.left) * scaleX,
+    (point.dy - sourceRect.top) * scaleY,
+  );
+
   /// Maps a source anchor through the same PartPose used by CraftPart.
   /// Ancestor artboard transforms are outside this local coordinate contract.
   Offset mapSourcePoint(Offset point) {
     if (!point.dx.isFinite || !point.dy.isFinite) {
       throw ArgumentError('Expected a finite attachment');
     }
-    final local = Offset(
-      (point.dx - sourceRect.left) * scaleX,
-      (point.dy - sourceRect.top) * scaleY,
-    );
+    final local = _localSourcePoint(point);
     final mapped =
         rect.topLeft + pose.mapPoint(local, size: rect.size, pivot: pivot);
     if (!mapped.dx.isFinite || !mapped.dy.isFinite) {

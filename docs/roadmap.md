@@ -125,7 +125,9 @@ paper under a draggable scene lamp. Position and height are independent;
 shape/rotation retain the world source and prepared geometry. Lighting is sampled
 at piece centers, without per-pixel point lighting or mutual occlusion.
 
-Close the 0.3.0 source release with consolidated changes, an immutable reviewed
-tag, Android-emulator smoke, browser visit and publication gates. Hosted pub.dev
-upload/account ownership remains separate. Physical Android/iPhone performance
+The 0.3.0 source release has consolidated changes, an immutable reviewed tag,
+Android-emulator smoke and publication gates. Its first pub.dev upload completed
+on 2026-11-18; hosted resolution and a native-action smoke passed in a fresh
+consumer. The interactive browser visit remains incomplete after a connection
+failure. Physical Android/iPhone performance
 measurements and assistive-technology sessions are still pending.

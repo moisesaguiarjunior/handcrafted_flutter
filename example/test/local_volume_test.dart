@@ -5,7 +5,7 @@ import 'package:handcrafted_example/volume_studies.dart';
 import 'support/fonts.dart';
 
 void main() {
-  for (final width in [320.0, 390.0]) {
+  for (final width in [320.0, 390.0, 428.0]) {
     testWidgets('native volume controls at $width and enlarged text', (
       tester,
     ) async {
@@ -41,6 +41,9 @@ void main() {
       await tester.ensureVisible(
         find.text('At screen size: the same three cuts together'),
       );
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      await tester.ensureVisible(find.text('Paper in three forms'));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
       final insertion = find.byKey(const ValueKey('fabric-insertion'));

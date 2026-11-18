@@ -126,6 +126,13 @@ Compose an open pocket from back, lining, note, face and folded lip. Move the
 note behind the face with explicit progress; apply the same light to a curved
 paper ribbon with contour-following seams. [Construction and cost limits](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/local-volume.md#curved-ribbon-and-pocket-construction).
 
+![Unstitched asymmetric paper ribbon, continuous loop and lifted strip under shared light](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/profiled-paper-bands.png)
+
+Shape each edge independently with arc-length width keys. Paint paper inside the
+same contour used by the lighting mesh and shadow; closed smooth curves join
+without end caps. Thickness, ground lift and shadow softness are independent.
+[Paper band recipe and limits](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/local-volume.md#independently-shaped-paper-bands).
+
 ## Cut EVA, different impressions
 
 ![Pebbled, mottled, grooved and crosshatched original foam cuts](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/foam-finishes.png)

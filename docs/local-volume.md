@@ -108,8 +108,8 @@ Use `trimCraftPath(band.centerline, progress: progress)` for an explicit reveal.
 
 A band supports width 4..96, apparent height .5..8 and sampling interval 1..6,
 with at most 2048 intervals / 18441 cross-section vertices. Rails are sampled
-normal offsets, not a polygon-offset guarantee. Keep bend radius above half the
-width; self-crossings or very sharp corners can overlap. Flat end cuts are useful
+normal offsets, not a polygon-offset guarantee. Keep bend radius above the inward-side distance (or conservatively the larger
+side distance); self-crossings or very sharp corners can overlap. Flat end cuts are useful
 for consumer-owned joins. The package does not place a bridge, route or doorstep.
 Substrate painting still observes MaterialTextures' own 2048-axis limit; split
 a larger scene into separately prepared cuts rather than raising a global guard.
@@ -125,3 +125,54 @@ CraftVolume accepts independent height .5..24 and bevel1..32. Both prepared type
 return copies of paths; their mesh buffers remain private. Relighting uses one
 shared mesh painter and shared contact/projection logic. Preparation is still
 explicitly owned by the consumer, without a global cache or viewport detector.
+
+## Independently shaped paper bands
+
+![Unstitched asymmetric paper ribbon, a continuous pink loop and a lifted blue strip](assets/profiled-paper-bands.png)
+
+Width keys are **distances on each side**, in logical pixels, at normalized arc
+length. They interpolate linearly; supply seeded keys if an irregular edge is
+wanted. The package reads no random global state. Every key is included in the
+prepared stations, so the cut, edge rails, mesh and shadow share those widths.
+The centerline controls the curvature; no sewing is added implicitly.
+
+```dart
+final band = CraftBand(curve, height: 1, widthProfile: const [
+  CraftBandWidth(progress: 0, positive: 14, negative: 18),
+  CraftBandWidth(progress: .5, positive: 24, negative: 13),
+  CraftBandWidth(progress: 1, positive: 16, negative: 20),
+]);
+// Prepared before paint; use the returned outline for the substrate too.
+final cut = band.outline;
+final attachmentRail = band.edge(positive: false, inset: 3);
+// In paint: shadow, opaque substrate using cut, then shade.
+band.shadow(canvas, light, lift: 9, softness: 1.4);
+```
+
+An absent/empty `widthProfile` retains the original constant-width rendering.
+`width` is the fallback width, not a multiplier for authored keys. Supply 2..128
+strictly increasing keys with endpoints 0 and 1. Each side must be at least 2px,
+their sum at most 96px. Their positions are copied into an immutable list.
+The existing 2048-interval budget includes inserted key stations. Keys beyond
+this budget fail during preparation, before any painting or native mesh creation.
+
+`edge(positive: true/false, inset: ...)` follows each actual border. `rail(offset)`
+remains an absolute normal offset and must fit the narrowest station on that
+side. Positive is the canvas normal `(-tangent.dy, tangent.dx)`. Path getters
+return copies. A single closed **smooth** centerline now produces a continuous
+ring with an unpainted hole. Widths at 0 and 1 must agree on each side; the final
+station reuses the first frame/normal. For an open band there are still flat caps.
+Make a multi-curve join in one continuous source path to share its mesh; separate
+band objects are not automatically welded. Sharp cusps, overlapping offset edges
+and self-crossings are not solved. Keep bend radii larger than the local width
+on the inside of the bend. Explicit input knots are not smoothed automatically.
+
+`height` is apparent material thickness (.5..8), `shadow(... lift:)` is ground
+separation (0..24), and `shadow(... softness:)` scales blur (.25..4). Changing
+lift/softness does not rebuild or alter the shaded surface. This remains a
+2D lighting approximation: the cut is not displaced by a physical simulation.
+`CraftLight.softness` separately affects diffuse surface illumination. Defaults
+preserve previous contact/projection shadows. The example keeps the note/pocket
+recipe and adds three original unstitched paper cuts under the same light.
+Captures include 320/390/428px layouts; these are desktop raster evidence, not
+phone measurements.

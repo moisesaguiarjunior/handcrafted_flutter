@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add independently authored CraftBandWidth keys, profile-following edge rails
+  and smooth closed bands with continuous joins. Cut, mesh and shadow use the
+  same bounded stations. Shadow blur is independent of thickness and ground lift;
+  constant-width open defaults remain unchanged. Add unstitched paper examples.
+
 - Add prepared CraftLight/CraftVolume/CraftBand for bounded opaque-substrate volume, shared directional light and curved ribbon rails; original folded-pocket recipe and native insertion control. Existing relief defaults remain unchanged.
 
 - Preserve stateful choice labels when selection changes and postcard editor

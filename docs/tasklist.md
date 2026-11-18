@@ -134,3 +134,21 @@ Native controls provide finite insertion progress. Generic source and synthetic
 media only. Exact review/CI precede publication; consumer adoption and Android /
 iPhone measurement remain separately reported. Stop before physical-device
 measurement for this delivery.
+
+## Shaped band follow-up
+
+See [material fidelity and placement](requests/material-placement-fidelity.md)
+for acceptance boundaries and existing contracts.
+
+- Profiled paper bands: independent arc-length edge distances, common cut/mesh/
+  shadow geometry, continuous smooth closed joins and separate thickness/lift/
+  shadow-softness parameters. Synthetic ribbon/loop/lift study; exact review,
+  checks and publication are recorded separately.
+- Visible-contour placement, independently parameterized pocket construction and
+  conservative dry-mark visual bounds remain requests. Existing CraftImagePart
+  handles explicit crop/placement/pivot; the pocket is still an example recipe;
+  stroke padding remains caller-owned. Do not infer these APIs from the band work.
+- Android/iPhone measurement remains an external evidence gate.
+- Short matte nap and layered EVA: requested 40..100px synthetic comparison with
+  independent grain controls and receiver-clipped layer shadows; not implemented
+  by the shaped-band work. See the fidelity request above.

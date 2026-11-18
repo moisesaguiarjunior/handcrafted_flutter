@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handcrafted_example/main_gallery.dart';
+import 'package:handcrafted_example/foam_sewing_studies.dart';
 
 void main() {
   testWidgets(
@@ -45,9 +46,21 @@ void main() {
 
           await tester.ensureVisible(finder);
           final before = control();
+          final beforeArt = tester.widget<FoamSewingStudies>(
+            find.byType(FoamSewingStudies),
+          );
           await tester.drag(finder, const Offset(40, 0));
           await tester.pumpAndSettle();
           final after = control();
+          final afterArt = tester.widget<FoamSewingStudies>(
+            find.byType(FoamSewingStudies),
+          );
+          expect(
+            item.$1 == 'foam-depth' ? afterArt.depth : afterArt.strength,
+            isNot(
+              item.$1 == 'foam-depth' ? beforeArt.depth : beforeArt.strength,
+            ),
+          );
           expect(after.label, item.$2);
           expect(after.value, contains(item.$3));
           expect(after.value, isNot(before.value));

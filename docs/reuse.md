@@ -325,3 +325,11 @@ tile in the existing `MaterialTextures` cache rather than a parallel renderer.
 The mark reuses `insetCraftPath`, `paintRunningStitch`, `paintCraftRelief`,
 `paintCraftTrim`, `CraftReliefText` and `captureExample`; only the tag outline,
 eyelet and fiber ends are example-local. The palette stays example-owned.
+
+For pressed foam marks, searched the thread painter, running/patterned geometry,
+prepared stitch frames, CraftReliefKind and foam studies/captures. Reused the
+existing relief enum, path preparation/limits, progress, contour insets, resource
+owner and actual gallery/capture shell. Added only optional inset stroke lighting
+to canonical thread paint; raised defaults remain intact. Original foam layers
+and leaf motifs compare narrow pressed lips with raised cream yarn inside the
+existing foam study, not a new renderer, scene preset, cache or clock.

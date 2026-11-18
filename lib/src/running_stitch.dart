@@ -3,6 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter/painting.dart';
 
 import 'path_geometry.dart';
+
+import 'craft_relief.dart';
 import 'thread_paint.dart';
 
 /// Extracts visible running-stitch spans from a caller-supplied seam.
@@ -74,6 +76,11 @@ Path runningStitchPath(
 /// logical pixels; [light] is a finite nonzero direction, normalized internally.
 /// The caller owns clipping and must reserve width * 4 padding for relief.
 /// Invalid parameters throw [ArgumentError] before any painting occurs.
+/// [relief] defaults to raised thread. Inset instead paints pressed marks:
+/// [compression] controls their narrow lip lighting, without punctures or
+/// gathering ([pucker] is validated but inactive). All existing geometry and
+/// clipping limits apply. Inset zero-alpha ink paints nothing. It is illustrative
+/// shading, not material displacement; no extra layer or cache is allocated.
 void paintRunningStitch(
   Canvas canvas,
   Path seam, {
@@ -85,6 +92,7 @@ void paintRunningStitch(
   double irregularity = 0,
   int seed = 7,
   double pucker = 0,
+  CraftReliefKind relief = CraftReliefKind.raised,
   Offset light = const Offset(-1, -1),
 }) {
   validateThreadPaint(width, compression, light, pucker: pucker);
@@ -102,6 +110,7 @@ void paintRunningStitch(
     width: width,
     compression: compression,
     pucker: pucker,
+    relief: relief,
     light: light,
   );
 }

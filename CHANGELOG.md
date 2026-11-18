@@ -17,6 +17,10 @@
   balloon card and letterpress thank-you card, and pastel EVA cuts. Layered
   relief motifs are example-owned in relief_motifs.dart.
 
+- Add optional inset relief to existing running/patterned/prepared stitch paint:
+  narrow lips suggest pressed marks without raised yarn, holes or seam halos.
+  Original layered EVA specimens reuse the foam page; raised defaults remain.
+
 - Add cotton and velvety nap material tiles, satin paper sheen, optional seeded
   irregular running stitches and local puncture gathering. Add dry instrument
   coverage and a shared cloth/chalk/folded-card study; preserve legacy defaults.

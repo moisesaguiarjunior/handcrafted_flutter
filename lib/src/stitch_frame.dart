@@ -70,12 +70,15 @@ final class CraftStitchFrame {
   /// The moving tip is not painted as a new puncture at each sampled frame.
   /// [pucker] 0..1 adds broader crease shading at actual holes, multiplied by
   /// compression. Reserve width * 7 and clip to the substrate. No displacement.
+  /// Inset [relief] paints the visible geometry as pressed marks, without
+  /// punctures or gathering; compression controls their narrow lip contrast.
   void paint(
     Canvas canvas, {
     required Color thread,
     double width = 1.5,
     double compression = .6,
     double pucker = 0,
+    CraftReliefKind relief = CraftReliefKind.raised,
     Offset light = const Offset(-1, -1),
   }) {
     validateThreadPaint(width, compression, light, pucker: pucker);
@@ -86,6 +89,7 @@ final class CraftStitchFrame {
       width: width,
       compression: compression,
       pucker: pucker,
+      relief: relief,
       light: light,
       punctures: _punctures,
     );

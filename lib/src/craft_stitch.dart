@@ -4,6 +4,8 @@ import 'dart:ui' show Tangent;
 import 'package:flutter/painting.dart';
 
 import 'path_geometry.dart';
+
+import 'craft_relief.dart';
 import 'running_stitch.dart';
 import 'thread_paint.dart';
 
@@ -176,6 +178,11 @@ void _checkOutput(Path result) {
 /// is 0..1 in generated thread order; partial tips are not new punctures.
 /// The default completes the original static geometry. Use [CraftStitchFrame]
 /// to reuse prepared geometry and obtain a caller-owned thread-tip position.
+/// [relief] defaults to raised thread. Inset instead paints pressed marks:
+/// [compression] controls their narrow lip lighting, without punctures or
+/// gathering ([pucker] is validated but inactive). All existing geometry and
+/// clipping limits apply. Inset zero-alpha ink paints nothing. It is illustrative
+/// shading, not material displacement; no extra layer or cache is allocated.
 void paintCraftStitch(
   Canvas canvas,
   Path seam, {
@@ -187,6 +194,7 @@ void paintCraftStitch(
   double width = 1.5,
   double compression = .6,
   double pucker = 0,
+  CraftReliefKind relief = CraftReliefKind.raised,
   Offset light = const Offset(-1, -1),
   double progress = 1,
 }) {
@@ -208,6 +216,7 @@ void paintCraftStitch(
       width: width,
       compression: compression,
       pucker: pucker,
+      relief: relief,
       light: light,
     );
     return;
@@ -219,6 +228,7 @@ void paintCraftStitch(
     width: width,
     compression: compression,
     pucker: pucker,
+    relief: relief,
     light: light,
   );
 }

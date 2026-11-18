@@ -116,6 +116,8 @@ visual recipes; letterhead stays real text over a substrate. See
 
 Keep the substrate, finish and layer lighting independent. Use fine-pore EVA
 with seeded impressions, then compose raised cuts around native content.
+The study also compares raised cream yarn with pressed ochre marks on layered
+foam, using the same seam geometry.
 [Foam recipes](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/eva-foam.md) ·
 [Try the finishes](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=foam).
 

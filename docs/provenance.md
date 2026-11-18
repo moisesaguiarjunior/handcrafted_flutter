@@ -81,3 +81,8 @@ The short-nap finish uses original seeded curved fibers in four tonal path
 batches. Its comparison cuts and layered leaf badge are original procedural
 geometry, rendered by the actual package/example painters. No reference image,
 consumer contour, imported art or new third-party algorithm is distributed.
+
+The visible-fit pebble is original procedural paper geometry authored at 2x
+raster density by tool/author_placement_asset.dart. The same model paints its live
+counterpart; neither the source window nor contour comes from a consumer scene.
+The chalk clearance mark and configurable pocket cuts are original example art.

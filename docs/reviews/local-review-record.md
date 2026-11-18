@@ -147,3 +147,22 @@ raster assertions. Actual small-artboard captures and the layered foam badge
 reuse the gallery painters. Physical-device measurements, native assistive-tech
 sessions and tactile fidelity remain unverified; placement/pocket/bounds requests
 are not completed by this finish.
+
+## Visible-contour fit and conservative stroke envelopes
+
+Independent Astra review required corrections at `19a6339` and `eaf4ce0`, then
+approved exact `9a445235ce37a6f147c07ef628a863ee0b69d71b`. Retained paint windows
+are rejected when unposed or posed visible anchors lose target-local precision;
+relative vectors prevent a common large translation from hiding lost precision.
+The independent 42px/64px hinge-displacement probes now fail construction instead
+of accepting an unreliable fit. Collapsed decorative plots skip empty targets.
+
+Full checks passed 149 package / 114 example tests, plus nine core Chrome tests.
+432 exact raster cases match immutable stroke renderer `6800c59`; the shared
+instrument extraction and default pocket capture retain earlier pixels. Six
+negative controls fail when protected behavior is removed. Actual raster/vector
+native input, retained outside paint and enlarged controls cover 320/390/428px.
+The new synthetic PNG uses source-over relief suitable for transparent export;
+it does not export opaque-substrate volume shading as a sprite. Performance on
+phones, native assistive-tech sessions and promotion of a public pocket preset
+are outside this review/delivery.

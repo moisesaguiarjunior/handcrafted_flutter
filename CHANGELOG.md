@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Add CraftPlacement.fit and CraftImagePart.placed: align declared visible bounds
+  while retaining the full painting window, source hinge and native pose/input.
+- Add conservative craftStrokeBounds sharing the actual dry-deposit primitives
+  and native miter constant. Preserve earlier stroke pixels with frozen parity.
+- Add independent opening/fold/front-height and paint-only seam-pressure controls
+  to the pocket recipe. Keep default imagery and original image adapter topology.
+
 - Add CraftNap: prepared short matte fiber finish with independent scale,
   density, direction and paint contrast, bounded to8192 candidates in four tonal
   paths. Existing cotton/suede tiles remain unchanged. Add real-size comparison

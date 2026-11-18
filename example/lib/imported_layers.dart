@@ -1,3 +1,5 @@
+import 'placement_studies.dart';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -249,6 +251,8 @@ class _ImportedLayerPlaygroundState extends State<ImportedLayerPlayground> {
         'Only artwork scales. The native action retains its touch size. '
         'Closed contents leave focus and semantics; progress creates no clock.',
       ),
+      const SizedBox(height: 28),
+      const VisibleFitPlayground(),
     ],
   );
 }

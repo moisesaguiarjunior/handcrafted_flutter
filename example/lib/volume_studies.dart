@@ -217,7 +217,11 @@ class _LocalVolumePlaygroundState extends State<LocalVolumePlayground> {
       ambient = .65,
       softness = .25,
       warmth = .4,
-      insertion = .25;
+      insertion = .25,
+      pocketOpening = 1,
+      foldDepth = 7,
+      surfaceHeight = 4,
+      seamCompression = .2;
   Widget _slider(
     String label,
     String key,
@@ -236,9 +240,9 @@ class _LocalVolumePlaygroundState extends State<LocalVolumePlayground> {
           value: value,
           min: min,
           max: max,
-          semanticFormatterCallback: (v) => unit == 'relative units'
-              ? '${v.toStringAsFixed(2)} $unit'
-              : '${(v * 100).round()} $unit',
+          semanticFormatterCallback: (v) => unit == 'percent'
+              ? '${(v * 100).round()} $unit'
+              : '${v.toStringAsFixed(2)} $unit',
           onChanged: set,
         ),
       ],
@@ -326,7 +330,50 @@ class _LocalVolumePlaygroundState extends State<LocalVolumePlayground> {
           (v) => setState(() => insertion = v),
           'percent',
         ),
-        FabricComposition(light: light, insertion: insertion),
+        _slider(
+          'Pocket opening',
+          'pocket-opening',
+          pocketOpening,
+          0,
+          1,
+          (v) => setState(() => pocketOpening = v),
+          'percent',
+        ),
+        _slider(
+          'Fold depth',
+          'pocket-fold',
+          foldDepth,
+          1,
+          14,
+          (v) => setState(() => foldDepth = v),
+          'artboard units',
+        ),
+        _slider(
+          'Front material height',
+          'pocket-height',
+          surfaceHeight,
+          .5,
+          8,
+          (v) => setState(() => surfaceHeight = v),
+          'artboard units',
+        ),
+        _slider(
+          'Pressed seam contrast',
+          'pocket-seam',
+          seamCompression,
+          0,
+          1,
+          (v) => setState(() => seamCompression = v),
+          'percent',
+        ),
+        FabricComposition(
+          light: light,
+          insertion: insertion,
+          pocketOpening: pocketOpening,
+          foldDepth: foldDepth,
+          surfaceHeight: surfaceHeight,
+          seamCompression: seamCompression,
+        ),
         const SizedBox(height: 24),
         const Text('Paper ribbons with independently shaped edges'),
         ProfiledBandStudy(light: light),

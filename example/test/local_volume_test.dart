@@ -52,6 +52,24 @@ void main() {
       await tester.drag(insertion, const Offset(70, 0));
       await tester.pumpAndSettle();
       expect(tester.widget<Slider>(insertion).value, greaterThan(oldInsertion));
+      for (final key in [
+        'pocket-opening',
+        'pocket-fold',
+        'pocket-height',
+        'pocket-seam',
+      ]) {
+        final finder = find.byKey(ValueKey(key));
+        await tester.ensureVisible(finder);
+        final before = tester.widget<Slider>(finder).value;
+        final rect = tester.getRect(finder);
+        final destination = key == 'pocket-opening'
+            ? rect.centerLeft + const Offset(32, 0)
+            : rect.centerRight - const Offset(32, 0);
+        await tester.tapAt(destination);
+        await tester.pumpAndSettle();
+        expect(tester.widget<Slider>(finder).value, isNot(before));
+        expect(tester.takeException(), isNull);
+      }
       final compact = find.byWidgetPredicate(
         (w) => w is VolumeStudies && w.compact,
       );

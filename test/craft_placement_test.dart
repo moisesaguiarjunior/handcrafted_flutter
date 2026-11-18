@@ -70,6 +70,23 @@ void main() {
         throwsArgumentError,
       );
     }
+    expect(
+      () => CraftPlacement.fit(
+        sourceRect: const Rect.fromLTRB(-1e18, 0, 512, 256),
+        visibleBounds: const Rect.fromLTWH(0, 0, 256, 256),
+        target: const Rect.fromLTWH(0, 0, 256, 256),
+        pose: PartPose(rotation: .47),
+      ),
+      throwsArgumentError,
+    );
+    expect(
+      () => CraftPlacement.fit(
+        sourceRect: const Rect.fromLTWH(0, 0, 128, 128),
+        target: const Rect.fromLTWH(0, 0, 128, 128),
+        pose: PartPose(translation: const Offset(1e18, 0)),
+      ),
+      throwsArgumentError,
+    );
     final translated = CraftPlacement.fit(
       sourceRect: const Rect.fromLTWH(-1e12, 1e12, 200, 140),
       visibleBounds: const Rect.fromLTWH(-1e12 + 40, 1e12 + 30, 100, 80),

@@ -44,14 +44,17 @@ center; an explicit source hinge can be external. Alignment must be finite in
 underflow/overflow that prevents a positive finite transform is rejected.
 A retained margin that loses fitted-contour precision is rejected too: unposed
 visible corners and center must map back within1e-7 times each fitted axis
-extent (with a1px extent floor). Correcting anchors alone would leave painting
-misaligned, so the whole placement fails. Collapsed decorative areas skip painting.
+extent (with a1px extent floor). Posed corners, center and explicit hinge also
+match a canonical target-local PartPose reference, including relative vectors
+so a common large translation cannot hide lost precision. Correcting anchors
+alone would leave painting misaligned, so the whole placement fails. Collapsed decorative areas skip painting.
 
 `CraftPlacement(sourceRect: ..., rect: ...)` retains explicit stretching for
 existing callers. `CraftImagePart` delegates its geometry and attachment mapping
 to this same object, keeping its existing constructor and wrapper topology.
 Painting/input still use CraftPart/PartPose's single native transform; the helper
-does not create a second pose matrix or a clock.
+does not introduce a second pose implementation or a clock; numerical validation
+also reuses PartPose at a stable target-local origin.
 
 For procedural content, compose `Positioned.fromRect(rect: placement.rect)` and
 CraftPart with `placement.pose`, `placement.pivot` and `placement.rect.size`.

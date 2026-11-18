@@ -125,6 +125,40 @@ final class CraftPlacement {
         throw ArgumentError('Retained margin loses fitted-contour precision');
       }
     }
+    // Validation only: use the canonical pose around a stable target-local
+    // origin instead of reproducing the retained window's large cancellation.
+    final linear = PartPose(
+      rotation: placement.pose.rotation,
+      scale: placement.pose.scale,
+    ).matrixFor(Size.zero, Alignment.topLeft);
+    final hingeLocal = Offset(
+      (placement.sourceHinge.dx - visible.left) * scale,
+      (placement.sourceHinge.dy - visible.top) * scale,
+    );
+    final pivotWorld = fitted.topLeft + hingeLocal + placement.pose.translation;
+    final actualOrigin = placement.mapSourcePoint(visible.topLeft);
+    for (final point in [
+      visible.topLeft,
+      visible.topRight,
+      visible.bottomLeft,
+      visible.bottomRight,
+      visible.center,
+      placement.sourceHinge,
+    ]) {
+      final local = Offset(
+        (point.dx - visible.left) * scale,
+        (point.dy - visible.top) * scale,
+      );
+      final expected =
+          pivotWorld + MatrixUtils.transformPoint(linear, local - hingeLocal);
+      final actual = placement.mapSourcePoint(point);
+      final expectedDelta = MatrixUtils.transformPoint(linear, local);
+      final actualDelta = actual - actualOrigin;
+      if (!_withinPlacementPrecision(actual, expected, tx, ty) ||
+          !_withinPlacementPrecision(actualDelta, expectedDelta, tx, ty)) {
+        throw ArgumentError('Supplied pose loses fitted-contour precision');
+      }
+    }
     return placement;
   }
 
@@ -175,3 +209,16 @@ bool _positiveFiniteRect(Rect rect) =>
     !rect.isEmpty &&
     rect.width.isFinite &&
     rect.height.isFinite;
+
+bool _withinPlacementPrecision(
+  Offset actual,
+  Offset expected,
+  double tx,
+  double ty,
+) =>
+    actual.dx.isFinite &&
+    actual.dy.isFinite &&
+    expected.dx.isFinite &&
+    expected.dy.isFinite &&
+    (actual.dx - expected.dx).abs() <= tx &&
+    (actual.dy - expected.dy).abs() <= ty;

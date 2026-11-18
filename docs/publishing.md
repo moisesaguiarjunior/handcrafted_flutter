@@ -1,9 +1,9 @@
 # Hosted publication readiness
 
-The 0.3.0 manifest is a **publication candidate**, not an uploaded pub.dev
-release. The v0.1.0 and v0.2.0 Git tags remain unchanged. Account/publisher
-ownership and the first upload are separate decisions; this preparation does
-not authenticate an account or configure automatic uploads.
+[Version 0.3.0 is published on pub.dev](https://pub.dev/packages/handcrafted_flutter),
+following owner-authorized Google authentication on 2026-11-18. The hosted archive
+matches the immutable v0.3.0 source tag. Previous tags remain unchanged. No
+automatic publishing or domain-publisher transfer was configured.
 
 ## Archive, screenshots and source
 
@@ -85,36 +85,26 @@ References: [Dart publishing guide](https://dart.dev/tools/pub/publishing),
 [package pages](https://dart.dev/tools/pub/writing-package-pages) and
 [pub points](https://pub.dev/help/scoring).
 
-## Remaining owner steps for the first upload
+## First hosted publication receipt
 
-The package lookup returned HTTP 404 on 2026-11-16; this is not a reservation of
-`handcrafted_flutter`. Check again immediately before the first upload. There
-is no application form or manual popularity threshold: the documented flow is
-a validated package upload authenticated by its responsible Google account.
+The exact v0.3.0 source was uploaded after the publication checker again passed
+with a 2 MB compressed archive, zero publication warnings and zero Dartdoc
+warnings/errors. The server accepted version 0.3.0. A fresh consumer resolved it
+from `https://pub.dev`, without Git/path overrides, and exercised a native action
+inside the published EVA surface. The downloaded archive hash was verified and all 139 archived files matched
+the tagged source byte for byte. No credential or private product asset was
+added to source or evidence.
 
-1. Approve the secondary composed screenshot against the runnable note. The
-   flower stays first in the README and screenshot metadata by owner preference. The
-   earlier Pana 160/160 result describes the reviewed source at that time; rerun
-   archive/API checks on the final reviewed candidate. It is not a hosted score.
-2. Choose the Google account that will own the first upload. A verified domain
-   publisher is optional. If used, publish initially through the Google account,
-   then transfer after domain verification; this is distinct from GitHub access.
-3. Consolidate the candidate changelog, approve/tag the exact 0.3.0 source and
-   run the interactive upload. Do not publish from a dirty or newer working tree.
-4. Verify hosted installation in a fresh consumer, the README/screenshots/API
-   pages and the server analysis. Only then advertise `^0.3.0` as available and
-   consider GitHub trusted publishing for later versions.
+The server generates hosted API documentation and package analysis asynchronously.
+Their processing status is separate from successful upload, archive verification
+and consumer installation; local scores are not advertised as hosted scores.
 
-The preparation requires no credentials in source, popularity evidence,
-physical-device benchmark or automatic publisher workflow. Performance claims
-still need their own measurements; Flutter's tested minimum remains explicit.
+For subsequent releases, prepare and independently review a new immutable source
+version, repeat these gates, then perform the authorized upload. Published version
+bytes cannot be edited; documentation changes on main do not replace the hosted
+0.3.0 archive. A verified publisher or trusted publishing can be a separate change.
 
-## 0.3.0 source release closure
-
-The 0.3.0 Git source release consolidates the candidate and later materials,
-volume, contour-fit and light-studio deliveries. The hosted upload has not been
-performed. The Android debug smoke is reproducible with `tool/check_android.py`;
-it does not measure phone performance. Independent source review is recorded in
-[the local review index](reviews/local-review-record.md). The interactive hosted
-browser visit remains a separate incomplete launch check after a browser-control
-connection failure; successful builds and widget tests do not replace that visit.
+The Android debug smoke remains reproducible with `tool/check_android.py`; it
+does not measure phone performance. The interactive hosted-browser visit remains
+incomplete after the browser-control connection failed; successful builds, HTTP
+and Chrome widget tests do not replace that visit.

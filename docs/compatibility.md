@@ -18,9 +18,10 @@ No lower SDK support is claimed without testing it.
 
 ## API policy before 1.0
 
-Version 0.3.0 is prepared for the first hosted publication; upload has not yet
-been performed. The v0.1.0/v0.2.0 tags remain unchanged; v0.3.0 is a source release. Until hosted publication,
-source consumers should pin a reviewed immutable Git tag/SHA and commit their lockfile.
+Version 0.3.0 was published to pub.dev on 2026-11-18 and verified in a fresh
+hosted consumer. Its archive matches the immutable v0.3.0 source tag; older tags
+remain unchanged. Commit the application lockfile; Git consumers should retain
+immutable tags or SHAs.
 We follow semantic versioning when making releases: incompatible API changes advance the pre-1.0 minor version;
 patches document bug fixes, invalid-input handling and corrected layout behavior.
 Avoid silently changing units, seeds, motion semantics or ownership contracts.

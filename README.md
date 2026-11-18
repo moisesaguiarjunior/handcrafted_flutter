@@ -5,6 +5,7 @@
 **Give your Flutter widgets a handmade surface.**
 
 [![Checks](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml/badge.svg)](https://github.com/moisesaguiarjunior/handcrafted_flutter/actions/workflows/check.yml)
+[![pub.dev](https://img.shields.io/pub/v/handcrafted_flutter.svg)](https://pub.dev/packages/handcrafted_flutter)
 [![Library coverage](https://codecov.io/gh/moisesaguiarjunior/handcrafted_flutter/branch/main/graph/badge.svg)](https://codecov.io/gh/moisesaguiarjunior/handcrafted_flutter)
 
 [Explore the live gallery](https://moisesaguiarjunior.github.io/handcrafted_flutter/) ·
@@ -335,7 +336,7 @@ phone performance remains unmeasured.
 
 ## Installation
 
-Once a hosted version is available on [pub.dev](https://pub.dev/packages/handcrafted_flutter), add it with:
+[Version 0.3.0 is available on pub.dev](https://pub.dev/packages/handcrafted_flutter). Add it with:
 
 ```sh
 flutter pub add handcrafted_flutter
@@ -347,7 +348,7 @@ README follow the current source branch (0.3.0). See
 [publication status and process](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/publishing.md).
 
 For source distribution, use an immutable reviewed tag or SHA. The v0.3.0 tag
-below is the reviewed 0.3.0 source release; hosted publication remains separate.
+below matches the first hosted 0.3.0 release.
 
 ### Use the tagged source
 

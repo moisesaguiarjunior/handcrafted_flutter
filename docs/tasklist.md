@@ -164,3 +164,11 @@ for acceptance boundaries and existing contracts.
   emulator execution separately from physical-device performance.
 - Consolidate 0.3.0 changes and tag the independently reviewed source; verify
   hosted gallery and retain pub.dev upload as an explicit owner action.
+
+## Hosted publication completed
+
+Version 0.3.0 uploaded to pub.dev on 2026-11-18 after explicit owner authorization.
+The hosted archive matches v0.3.0; fresh hosted dependency resolution and a native
+button inside EVA passed without Git/path overrides. No publisher transfer or
+automated upload was configured. Hosted API/score generation is asynchronous;
+interactive hosted-browser approval and phone performance remain separate.

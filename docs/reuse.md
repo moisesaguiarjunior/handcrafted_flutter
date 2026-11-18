@@ -410,3 +410,9 @@ then converts that directional sample to the piece frame. Native sliders/chips
 provide keyboard and assistive access alongside the drag handle. No point-light
 API, physics solver, global cache or extra clock is exported. The Android smoke
 uses a temporary generated host and copies the actual example unchanged.
+
+For first hosted publication, reused the reviewed v0.3.0 source, real Pub archive
+validator, native surface/action contract and immutable tag. Compared hosted
+archive files with Git objects and installed the hosted version in a disposable
+consumer without overrides. Only publication status and installation guidance
+change in main; no runtime implementation, credential or publisher automation.

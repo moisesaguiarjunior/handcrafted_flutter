@@ -115,3 +115,19 @@ and green CI; check Git tags for publication status.
   observation skipped on web; publication0warnings. Three behavioral mutations
   failed as intended. Original comparison/mixed captures remain byte-identical.
   No private consumer artwork or on-phone evidence is included.
+
+## Profiled paper bands
+
+Independent Astra review required changes at `1d72e71` and approved exact
+`27708f61e3b89f2a844909c2c610c35fbf1ab8e8` after bounded input-copy and
+asymmetric-radius documentation corrections. An adversarial oversized list is
+rejected before any element read. Constant-width preparation avoids the temporary
+profile-height buffer. The same width stations drive cut, mesh, edge and shadow;
+smooth closed rings preserve their holes and join frames.
+
+Full checks passed 135 package / 103 example tests; nine focused band tests passed
+in Chrome. Two negative controls failed at their intended assertions. The old
+fabric capture remains byte-identical; new synthetic captures cover 320/390/428px.
+The clean package publication dry-run reported zero warnings. These checks do not
+claim physical-device performance or completion of the separate placement,
+pocket-parameter and dry-mark-bounds requests.

@@ -12,12 +12,7 @@ void _paintDryStroke(
   int seed,
 ) {
   final dotted = style.pattern == CraftLinePattern.dotted;
-  final step = dotted
-      ? style.width + style.gap
-      : math.max(
-          1.0,
-          math.max(2.0, style.width * .2) * (1 - style.dryCoverage * .5),
-        );
+  final step = _dryStep(style);
   final baseAlpha = switch (style.tool) {
     CraftStrokeTool.pencil => .12,
     CraftStrokeTool.chalk => .08,
@@ -28,7 +23,7 @@ void _paintDryStroke(
   paint
     ..strokeCap = StrokeCap.round
     ..strokeJoin = StrokeJoin.round
-    ..strokeWidth = style.width * .65
+    ..strokeWidth = style.width * _dryBodyWidth
     ..color = color.withValues(
       alpha: color.a * (baseAlpha + style.dryCoverage * .1),
     );
@@ -44,10 +39,10 @@ void _paintDryStroke(
     final forward = tangent.vector;
     final normal = Offset(-forward.dy, forward.dx);
     final center = tangent.position;
-    final length = math.min(style.width * .3, step * .7);
+    final length = _dryLength(style, step);
     if (dotted) {
       paint
-        ..strokeWidth = style.width * .65
+        ..strokeWidth = style.width * _dryBodyWidth
         ..color = color.withValues(
           alpha: color.a * (baseAlpha + style.dryCoverage * .1),
         );
@@ -64,26 +59,22 @@ void _paintDryStroke(
       final b = _dryNoise(index + 53, grainSeed);
       final jitter = (a - .5) * style.variation;
       final across = style.dryCoverage == 0
-          ? ((lane - 1) * .2 + jitter * .6).clamp(-.33, .33)
-          : ((lane / (lanes - 1) - .5) * .7 + jitter * .3).clamp(-.45, .45);
+          ? ((lane - 1) * .2 + jitter * .6).clamp(
+              -_dryAcrossLimit(style),
+              _dryAcrossLimit(style),
+            )
+          : ((lane / (lanes - 1) - .5) * .7 + jitter * .3).clamp(
+              -_dryAcrossLimit(style),
+              _dryAcrossLimit(style),
+            );
       final start =
           center +
           normal * (style.width * across) +
-          forward * ((a - .5) * step * .8 * style.dryCoverage);
-      final grainWidth = switch (style.tool) {
-        CraftStrokeTool.pencil => style.width * .075,
-        CraftStrokeTool.chalk =>
-          style.width * (.03 + b * .055 + style.dryCoverage * .04),
-        _ => style.width * .13,
-      };
-      final grainLength = switch (style.tool) {
-        CraftStrokeTool.pencil => length * (.65 + jitter * .3),
-        CraftStrokeTool.chalk =>
-          length * (.12 + a * .25 + style.dryCoverage * (1 + a) * .8),
-        _ => length * (.8 + jitter * .3),
-      };
+          forward * _dryForwardOffset(style, step, a);
+      final grainWidth = _dryGrainWidth(style, b);
+      final grainLength = _dryGrainLength(style, length, a, jitter);
       paint
-        ..strokeWidth = math.max(.12, grainWidth)
+        ..strokeWidth = grainWidth
         ..color = color.withValues(
           alpha:
               color.a *
@@ -104,3 +95,37 @@ double _dryNoise(int index, int seed) {
   value = ((value ^ (value >> 13)) * 12741) & 0x7fffffff;
   return (value ^ (value >> 16)) / 0x7fffffff;
 }
+
+// Shared envelope primitives: the bounds helper uses the same maximum inputs.
+const _dryBodyWidth = .65;
+double _dryStep(CraftStrokeStyle style) =>
+    style.pattern == CraftLinePattern.dotted
+    ? style.width + style.gap
+    : math.max(
+        1.0,
+        math.max(2.0, style.width * .2) * (1 - style.dryCoverage * .5),
+      );
+double _dryLength(CraftStrokeStyle style, double step) =>
+    math.min(style.width * .3, step * .7);
+double _dryAcrossLimit(CraftStrokeStyle style) =>
+    style.dryCoverage == 0 ? .33 : .45;
+double _dryForwardOffset(CraftStrokeStyle style, double step, double a) =>
+    (a - .5) * step * .8 * style.dryCoverage;
+double _dryGrainWidth(CraftStrokeStyle style, double b) =>
+    math.max(.12, switch (style.tool) {
+      CraftStrokeTool.pencil => style.width * .075,
+      CraftStrokeTool.chalk =>
+        style.width * (.03 + b * .055 + style.dryCoverage * .04),
+      _ => style.width * .13,
+    });
+double _dryGrainLength(
+  CraftStrokeStyle style,
+  double length,
+  double a,
+  double jitter,
+) => switch (style.tool) {
+  CraftStrokeTool.pencil => length * (.65 + jitter * .3),
+  CraftStrokeTool.chalk =>
+    length * (.12 + a * .25 + style.dryCoverage * (1 + a) * .8),
+  _ => length * (.8 + jitter * .3),
+};

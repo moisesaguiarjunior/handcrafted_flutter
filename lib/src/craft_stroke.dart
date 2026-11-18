@@ -182,6 +182,77 @@ Path trimCraftPath(Path source, {required double progress}) {
   return spanPath(spans, preserveClosed: true)..fillType = source.fillType;
 }
 
+/// Conservative local envelope for [paintCraftStroke], independent of seed.
+///
+/// Includes instrument width, native miter joins and maximum dry dispersion.
+/// Nonzero progress retains the full source envelope for stable reveal layout;
+/// zero/no drawable spans return Rect.zero. All paint input limits still apply.
+/// [rasterPadding] adds nonnegative local clearance (default2), covering the
+/// tested native/browser fringe at unit scale/DPR>=1. Under downscaling reserve
+/// at least two device pixels after transforming instead. This is not a tight alpha scan,
+/// transformed screen bound, freehand bound or permission to exceed path limits.
+Rect craftStrokeBounds(
+  Path source, {
+  CraftStrokeStyle style = const CraftStrokeStyle(),
+  double progress = 1,
+  double rasterPadding = 2,
+}) {
+  final spans = _craftStrokeSpans(source, style, progress);
+  if (!rasterPadding.isFinite || rasterPadding < 0) {
+    throw ArgumentError('Expected finite nonnegative raster padding');
+  }
+  if (spans.isEmpty) return Rect.zero;
+  double radius;
+  if (_isDryTool(style.tool)) {
+    final step = _dryStep(style), length = _dryLength(style, step);
+    final body =
+        style.width * _dryBodyWidth / 2 +
+        (style.pattern == CraftLinePattern.dotted ? length / 2 : 0);
+    // L1 is intentionally conservative: across and forward directions are unit
+    // vectors, and every round grain adds half its actual maximum stroke width.
+    final grain =
+        style.width * _dryAcrossLimit(style) +
+        _dryForwardOffset(style, step, 1).abs() +
+        _dryGrainLength(style, length, 1, .5 * style.variation) / 2 +
+        _dryGrainWidth(style, 1) / 2;
+    radius = math.max(body, grain);
+  } else {
+    final nativeJoin =
+        style.tool != CraftStrokeTool.brush &&
+        style.pattern != CraftLinePattern.dotted;
+    radius =
+        style.width /
+        2 *
+        (nativeJoin && style.join == StrokeJoin.miter ? _inkMiterLimit : 1);
+  }
+  final bounds = source.getBounds().inflate(radius + rasterPadding);
+  if (!bounds.isFinite || !bounds.width.isFinite || !bounds.height.isFinite) {
+    throw ArgumentError('Stroke envelope overflows finite coordinates');
+  }
+  return bounds;
+}
+
+const _inkMiterLimit = 4.0;
+
+bool _isDryTool(CraftStrokeTool tool) =>
+    tool == CraftStrokeTool.pencil ||
+    tool == CraftStrokeTool.chalk ||
+    tool == CraftStrokeTool.wax;
+
+List<PathSpan> _craftStrokeSpans(
+  Path source,
+  CraftStrokeStyle style,
+  double progress,
+) {
+  style._validate();
+  return pathSpans(
+    checkedPathMetrics(source),
+    progress: progress,
+    dash: style.pattern == CraftLinePattern.dashed ? style.dash : null,
+    gap: style.gap,
+  );
+}
+
 /// Draws ink or dry instruments on a caller-supplied curved or straight path.
 ///
 /// Progress reveals global arc length; pattern phase restarts per contour and
@@ -203,17 +274,8 @@ void paintCraftStroke(
   int seed = 7,
   double progress = 1,
 }) {
-  style._validate();
-  final metrics = checkedPathMetrics(source);
-  final spans = pathSpans(
-    metrics,
-    progress: progress,
-    dash: style.pattern == CraftLinePattern.dashed ? style.dash : null,
-    gap: style.gap,
-  );
-  if (style.tool == CraftStrokeTool.pencil ||
-      style.tool == CraftStrokeTool.chalk ||
-      style.tool == CraftStrokeTool.wax) {
+  final spans = _craftStrokeSpans(source, style, progress);
+  if (_isDryTool(style.tool)) {
     for (final span in spans) {
       _paintDryStroke(canvas, span, color, style, seed);
     }
@@ -344,6 +406,7 @@ Paint _inkStrokePaint(Color color, CraftStrokeStyle style) => Paint()
   ..strokeWidth = style.width
   ..strokeCap = StrokeCap.round
   ..strokeJoin = style.join
+  ..strokeMiterLimit = _inkMiterLimit
   ..color = style.tool == CraftStrokeTool.marker
       ? color.withValues(alpha: color.a * .68)
       : color;

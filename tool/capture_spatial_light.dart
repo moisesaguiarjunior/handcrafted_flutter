@@ -7,7 +7,7 @@ import 'capture_support.dart';
 
 void main() {
   testWidgets('capture live light studio', (t) async {
-    await t.runAsync(() => loadShowcaseFonts(materialIcons: true));
+    await t.runAsync(loadShowcaseFonts);
     t.view.devicePixelRatio = 1;
     addTearDown(t.view.resetDevicePixelRatio);
     addTearDown(t.view.resetPhysicalSize);

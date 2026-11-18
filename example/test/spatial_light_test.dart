@@ -39,6 +39,28 @@ void main() {
       }
     },
   );
+  testWidgets('embedded board smaller than the handle has a safe fallback', (
+    t,
+  ) async {
+    await t.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: SingleChildScrollView(
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(
+                width: 80,
+                child: SpatialLightStudy(previewOnly: true),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await t.pumpAndSettle();
+    expect(t.takeException(), isNull);
+    expect(find.byKey(const ValueKey('studio-lamp')), findsNothing);
+  });
   testWidgets(
     'drag, shape, height and rotation retain prepared geometry and lamp position',
     (t) async {

@@ -167,7 +167,8 @@ class _SpatialLightStudyState extends State<SpatialLightStudy> {
         builder: (context, constraints) {
           final width = constraints.maxWidth.clamp(0.0, 900.0);
           final scale = width / 640;
-          if (width < 48) return const SizedBox.shrink();
+          if (width < 48 || width * 360 / 640 < 48)
+            return const SizedBox.shrink();
           return SizedBox(
             width: width,
             height: width * 360 / 640,
@@ -203,34 +204,7 @@ class _SpatialLightStudyState extends State<SpatialLightStudy> {
                       onPanUpdate: (details) {
                         moveLamp(lamp.position + details.delta / scale);
                       },
-                      child: const ExcludeSemantics(
-                        child: SizedBox(
-                          width: 48,
-                          height: 48,
-                          child: Center(
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: Color(0xFFFFD66D),
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0x55DCA63E),
-                                    blurRadius: 14,
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(8),
-                                child: Icon(
-                                  Icons.light_mode_outlined,
-                                  size: 24,
-                                  color: DemoPalette.ink,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      child: const SizedBox(width: 48, height: 48),
                     ),
                   ),
                 ),
@@ -403,6 +377,27 @@ class StudioPainter extends CustomPainter {
         )..layout();
         label.paint(canvas, Offset(studioCenters[i].dx - label.width / 2, 303));
         label.dispose();
+      }
+      // Keep the visible source at its true scene coordinate. Only the invisible
+      // 48px hit target is clamped to fit the viewport near an edge.
+      canvas.drawCircle(
+        lamp.position,
+        16,
+        Paint()..color = const Color(0xFFFFD66D),
+      );
+      final sunInk = Paint()
+        ..color = DemoPalette.ink
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.5;
+      canvas.drawCircle(lamp.position, 4, sunInk);
+      for (var i = 0; i < 8; i++) {
+        final a = i * math.pi / 4;
+        final direction = Offset(math.cos(a), math.sin(a));
+        canvas.drawLine(
+          lamp.position + direction * 8,
+          lamp.position + direction * 11,
+          sunInk,
+        );
       }
     } finally {
       canvas.restore();

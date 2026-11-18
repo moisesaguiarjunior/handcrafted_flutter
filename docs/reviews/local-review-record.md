@@ -166,3 +166,22 @@ The new synthetic PNG uses source-over relief suitable for transparent export;
 it does not export opaque-substrate volume shading as a sprite. Performance on
 phones, native assistive-tech sessions and promotion of a public pocket preset
 are outside this review/delivery.
+
+## Spatial light studio and 0.3.0 source release
+
+- Base: `618da56`; exact approved source:
+  `147c0562e23aff7c4c08d51d17c566611c44ed55`.
+- Independent Astra agent reviewed requirements, actual callers, point-source
+  sampling, gallery wiring, Android-host tooling and release documentation.
+- Initial candidate `118a13b` required changes: a board shorter than its 48px
+  target supplied inverted clamp limits. Both dimensions are now guarded with
+  an 80px-width regression. The visible lamp also stays at its sampled scene
+  position while the invisible target is bounded independently.
+- Final outcome: no blocking findings; five focused native tests and diff checks
+  independently passed. This is local independent agent review, not a GitHub
+  reviewer object or human approval.
+- Author additionally ran Android-emulator debug integration smoke and Chrome
+  widget tests. Neither is a physical-device performance result. The interactive
+  hosted-site visit remains incomplete because browser control disconnected.
+- Distance, world-space rotation and undersized-board negative controls failed
+  when their protected behavior was removed; restored source remains exact.

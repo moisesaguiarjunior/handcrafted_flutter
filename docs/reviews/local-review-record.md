@@ -106,3 +106,12 @@ and green CI; check Git tags for publication status.
   and 0 publication warnings. Five deliberate regressions failed as intended.
   [Exact-source review](local-volume-84509a1.md). Publication/CI remain in the PR;
   this is an example recipe, without device-performance or public API claims.
+
+- Prepared volume / bands source `7e44fb128d8362bca44066b577ccdf4c79ba9a67`
+  independently approved by Astra after reviewing `ffd0e7c`. Two low findings
+  were corrected: sample light at two differently oriented stations, and reject
+  a collapsed rail before selecting its metric. Full checks:131 package /102
+  example tests;15 package Chrome /4 example Chrome with one native lifecycle
+  observation skipped on web; publication0warnings. Three behavioral mutations
+  failed as intended. Original comparison/mixed captures remain byte-identical.
+  No private consumer artwork or on-phone evidence is included.

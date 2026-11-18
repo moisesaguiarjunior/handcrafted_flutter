@@ -116,9 +116,15 @@ visual recipes; letterhead stays real text over a substrate. See
 
 Move the light across a thin sheet, a rounded shape and overlapping cuts.
 The experimental recipe keeps grain, volume and lighting independent, including
-pieces rotated under the same scene source. This is an example study, without
-changing the package's relief API. [Try it](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=volume) ·
+pieces rotated under the same scene source. `CraftLight`, `CraftVolume` and `CraftBand` keep the existing relief painter
+intact and make this prepared lighting available to consumers. [Try it](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=volume) ·
 [Recipe, comparison and limits](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/local-volume.md).
+
+![Folded cotton pockets, pale recessed sewing, felt appliques and a lit curved paper ribbon](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/fabric-and-band.png)
+
+Compose an open pocket from back, lining, note, face and folded lip. Move the
+note behind the face with explicit progress; apply the same light to a curved
+paper ribbon with contour-following seams. [Construction and cost limits](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/local-volume.md#curved-ribbon-and-pocket-construction).
 
 ## Cut EVA, different impressions
 
@@ -264,6 +270,7 @@ in an application. Keep source-access credentials outside code and URLs.
 | `CraftTheme`, `CraftPanel`, `CraftButton`, `CraftChoice`, `CraftHeading` | Themed material roles around native panels, actions, choices and headings |
 | `paintFoamFinish`, `FoamFinish` | Pebbled, mottled, grooved and crosshatched EVA impressions |
 | `paintWatercolor`, `paintWatercolorSpread` | Layered pigment and an explicitly progressed organic wet front |
+| `CraftLight`, `CraftVolume`, `CraftBand` | Prepared sheet/rounded volume, shared light and curved ribbon rails |
 | `paintCraftRelief`, `CraftReliefText` | Directional motif shading and native raised/inset lettering |
 | `pigmentOutline` | Reproducible organic contours |
 | `CraftOutline` | Value-based rectangle, rounded rectangle and organic recipes |

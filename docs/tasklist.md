@@ -124,3 +124,13 @@ and overlap shadows clip to the receiver. Prepared geometry survives relighting.
 [Recipe and limitations](local-volume.md). Exact independent review and CI precede
 promotion. This does not complete a general scene-light API, realistic clay,
 folded cloth/pocket geometry, full shadow interaction or device measurements.
+
+## Lit fabric and curved bands
+
+CraftLight/CraftVolume extract the reviewed proof for consumers; CraftBand adds
+curved sheet lighting, copy-safe rails and distance attachments. A pocket recipe
+shows layered opening/occlusion, soft folds and pale recessed irregular sewing.
+Native controls provide finite insertion progress. Generic source and synthetic
+media only. Exact review/CI precede publication; consumer adoption and Android /
+iPhone measurement remain separately reported. Stop before physical-device
+measurement for this delivery.

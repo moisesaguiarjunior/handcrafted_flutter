@@ -26,3 +26,5 @@ export 'src/craft_theme.dart';
 export 'src/craft_panel.dart';
 export 'src/craft_button.dart';
 export 'src/craft_heading.dart';
+
+export 'src/craft_volume.dart';

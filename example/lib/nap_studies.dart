@@ -294,15 +294,19 @@ class _LayeredFoamPainter extends CustomPainter {
       );
       face.shade(canvas, light);
       canvas.save();
-      canvas.clipPath(face.outline);
-      seam.paint(
-        canvas,
-        thread: const Color(0xFFDBE2BD),
-        width: .9,
-        compression: .25,
-        relief: CraftReliefKind.inset,
-      );
-      canvas.restore();
+      try {
+        canvas.clipPath(face.outline);
+        seam.paint(
+          canvas,
+          thread: const Color(0xFFDBE2BD),
+          width: .9,
+          compression: .25,
+          relief: CraftReliefKind.inset,
+          light: light.planar,
+        );
+      } finally {
+        canvas.restore();
+      }
     } finally {
       canvas.restore();
     }

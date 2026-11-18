@@ -52,6 +52,7 @@ class CraftNap {
     _outline = Path.from(outline);
     _origin = bounds.topLeft;
     if (bounds.isEmpty || density == 0) return;
+    final orientation = math.atan2(math.sin(direction), math.cos(direction));
     final random = math.Random(seed);
     final clumps = [
       for (var i = 0; i < 5; i++)
@@ -65,7 +66,7 @@ class CraftNap {
         field += .23 * math.exp(-d.distanceSquared * 24);
       }
       final accepted = random.nextDouble() < density * field.clamp(0, 1);
-      final angle = direction + (random.nextDouble() - .5) * 2.4;
+      final angle = orientation + (random.nextDouble() - .5) * 2.4;
       final length = scale * (.55 + random.nextDouble() * 1.6);
       final bend = scale * (random.nextDouble() - .5) * .65;
       final tone = random.nextInt(4);

@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:flutter/painting.dart';
@@ -61,6 +62,15 @@ void main() {
       expect(occupied(await render(CraftNap(cut(), density: 0))), 0);
     },
   );
+  test('large finite directions retain natural angular variation', () async {
+    for (final direction in [1e20, -1e20, 1e308]) {
+      final principal = math.atan2(math.sin(direction), math.cos(direction));
+      expect(
+        await render(CraftNap(cut(), direction: direction)),
+        await render(CraftNap(cut(), direction: principal)),
+      );
+    }
+  });
   test(
     'geometry translates with the cut without changing its local grain',
     () async {

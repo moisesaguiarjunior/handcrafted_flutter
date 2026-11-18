@@ -136,13 +136,11 @@ class PocketGeometry {
       irregularity: .16,
       seed: 93,
     );
+    seamFrame = CraftStitchFrame.sample(seam, progress: 1);
   }
 
   /// Static complete thread, shared by all pocket colorways and lights.
-  late final CraftStitchFrame seamFrame = CraftStitchFrame.sample(
-    seam,
-    progress: 1,
-  );
+  late final CraftStitchFrame seamFrame;
 
   /// Independent cuts and the inset sewing path for this original recipe.
   late final Path back, front, cavity, lip, seam, patch;

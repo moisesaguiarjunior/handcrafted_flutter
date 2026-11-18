@@ -99,7 +99,7 @@ class _VisibleFitComparisonState extends State<VisibleFitComparison> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final w = constraints.maxWidth;
-        if (w <= 0) {
+        if (w <= 0 || constraints.maxHeight <= 0) {
           return const SizedBox.shrink();
         }
         final visibleWidth = math.min(150.0, w * .25);

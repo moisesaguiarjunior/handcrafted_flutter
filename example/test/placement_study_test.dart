@@ -15,6 +15,7 @@ void main() {
             children: [
               SizedBox(width: 12, child: StrokeClearanceStudy()),
               SizedBox(width: 0, child: VisibleFitComparison()),
+              SizedBox(width: 300, height: 0, child: VisibleFitComparison()),
             ],
           ),
         ),

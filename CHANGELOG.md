@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add CraftNap: prepared short matte fiber finish with independent scale,
+  density, direction and paint contrast, bounded to8192 candidates in four tonal
+  paths. Existing cotton/suede tiles remain unchanged. Add real-size comparison
+  and layered EVA with receiver-clipped shadow and localized pressed sewing.
+
 - Add independently authored CraftBandWidth keys, profile-following edge rails
   and smooth closed bands with continuous joins. Cut, mesh and shadow use the
   same bounded stations. Shadow blur is independent of thickness and ground lift;

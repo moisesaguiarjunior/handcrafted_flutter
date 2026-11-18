@@ -55,16 +55,18 @@ do not maintain a second decorative path or shrink native text to fit.
 Physical-device performance evidence remains separate from these geometric and
 raster checks. None of these requests authorizes a new animation clock or cache.
 
-## Short nap and layered foam: requested comparison
+## Short nap and layered foam: implemented comparison candidate
 
 Compare woven cotton, short irregular matte fibers and thin EVA on synthetic
 40..100px cuts. Nap scale, density, direction and contrast should be independent;
 avoid a visible grid. Existing cotton/velvety material tiles remain available,
-but their presence does not establish this new independently parameterized nap
-contract or small-size fidelity.
+and the prepared CraftNap finish now supplies independent fiber geometry and
+paint contrast. See [comparison and limits](../short-nap.md). Small-size specimens
+are a visual proof, not calibrated physical-fabric fidelity.
 
 For EVA over EVA, reuse separate CraftVolume cuts and one CraftLight. Clip the
 upper piece's shadow to the lower receiver; keep their bevels/heights independent.
 Compare diffuse pigment variation plus fine pores and localized sewing, without
-turning the whole surface into a dotted finish. This is a requested specimen,
-not a new shipped foam or cotton API. Prioritize the shaped band contract first.
+turning the whole surface into a dotted finish. The original layered badge demonstrates this order with existing foam/volume
+APIs. The new API is a fiber finish; no new foam/cotton enum or badge preset is
+exported. Independent review/CI/publication are recorded separately.

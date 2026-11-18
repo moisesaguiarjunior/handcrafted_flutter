@@ -380,3 +380,12 @@ lighting engine, stitch path, random source or clock was added. Synthetic exampl
 and small-screen captures do not contain consumer shapes or artwork.
 The placement follow-up distinguishes current crop/pose, pocket-layer and stroke
 contracts from proposed extraction; see [fidelity requests](requests/material-placement-fidelity.md).
+
+For short matte nap, searched MaterialTextures cotton/suede/felt tiles, foam finish,
+shared path validation, volume normals, receiver clipping and existing capture /
+control recipes. Fixed tiles cannot independently vary nap density/direction.
+CraftNap is therefore a prepared finish, with bounded local candidate geometry
+batched into four tonal paths. It reuses path validation and ordinary clipped
+Flutter paint; the existing material enum/cache are unchanged. Layered foam
+reuses mottled finish, grain, CraftVolume/CraftLight and prepared inset sewing.
+All comparison cuts are original synthetic geometry; no consumer art is included.

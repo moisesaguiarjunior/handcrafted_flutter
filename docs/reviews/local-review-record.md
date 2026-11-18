@@ -131,3 +131,19 @@ fabric capture remains byte-identical; new synthetic captures cover 320/390/428p
 The clean package publication dry-run reported zero warnings. These checks do not
 claim physical-device performance or completion of the separate placement,
 pocket-parameter and dry-mark-bounds requests.
+
+## Prepared short matte nap
+
+Independent Astra review required changes at `3e5113b` and approved exact source
+`66bfc9ce6618cccfba1d59f102e8145c3554dd2a`. Large finite mean angles are reduced
+before fiber jitter; the synthetic layered seam shares the piece light and both
+canvas saves restore on exceptions. The independent angular-concentration probe
+and five package nap tests passed after correction.
+
+Full checks passed 140 package / 107 example tests. Five nap tests passed in
+Chrome; four example tests exercise geometry retention and native controls with
+250% text at 320/390/428px. Removing clip or angle reduction fails the protected
+raster assertions. Actual small-artboard captures and the layered foam badge
+reuse the gallery painters. Physical-device measurements, native assistive-tech
+sessions and tactile fidelity remain unverified; placement/pocket/bounds requests
+are not completed by this finish.

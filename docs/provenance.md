@@ -76,3 +76,8 @@ third-party artwork is bundled by these additions.
 The layered-foam and pressed-mark comparison uses original scalloped strips and
 leaf silhouettes built from Flutter paths. It reuses the public material and
 thread renderers; no supplied reference image or consumer geometry is bundled.
+
+The short-nap finish uses original seeded curved fibers in four tonal path
+batches. Its comparison cuts and layered leaf badge are original procedural
+geometry, rendered by the actual package/example painters. No reference image,
+consumer contour, imported art or new third-party algorithm is distributed.

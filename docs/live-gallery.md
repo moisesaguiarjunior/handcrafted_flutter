@@ -68,3 +68,9 @@ is mounted. Layer/material controls remain native and do not scale down text.
 The `?study=volume` study compares existing relief with prepared thin
 and rounded height profiles. Native controls relight prepared geometry, a
 rotated mixed composition, folded pockets and independently shaped paper bands. [Recipe, scope and limits](local-volume.md).
+
+Cloth, chalk & folds (`?study=softCraft`) also compares woven cotton, prepared
+short matte nap and thin EVA on 40/70/100px artboards. Four native controls adjust
+scale, density, direction and contrast; an original layered badge demonstrates
+receiver-clipped foam shadows and localized pressed sewing. See
+[short nap and layered foam](short-nap.md). There is no additional clock.

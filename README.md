@@ -133,6 +133,16 @@ same contour used by the lighting mesh and shadow; closed smooth curves join
 without end caps. Thickness, ground lift and shadow softness are independent.
 [Paper band recipe and limits](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/local-volume.md#independently-shaped-paper-bands).
 
+## Short fibers, at screen size
+
+![Woven cotton, short matte nap and EVA at actual small artboard sizes, plus a layered foam applique](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/short-nap-and-layered-foam.png)
+
+Compose a soft applique or layered badge without adopting a ready-made scene.
+`CraftNap` prepares irregular matte fibers with independent scale, density and
+direction; adjust contrast without rebuilding. Separate EVA cuts share light,
+retain their own beveled edges and receive a clipped overlap shadow.
+[Recipe and limits](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/short-nap.md).
+
 ## Cut EVA, different impressions
 
 ![Pebbled, mottled, grooved and crosshatched original foam cuts](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/foam-finishes.png)
@@ -277,6 +287,7 @@ in an application. Keep source-access credentials outside code and URLs.
 | `CraftTheme`, `CraftPanel`, `CraftButton`, `CraftChoice`, `CraftHeading` | Themed material roles around native panels, actions, choices and headings |
 | `paintFoamFinish`, `FoamFinish` | Pebbled, mottled, grooved and crosshatched EVA impressions |
 | `paintWatercolor`, `paintWatercolorSpread` | Layered pigment and an explicitly progressed organic wet front |
+| `CraftNap` | Prepared short-fiber finish, independent geometry and paint contrast |
 | `CraftLight`, `CraftVolume`, `CraftBand` | Prepared sheet/rounded volume, shared light and curved ribbon rails |
 | `paintCraftRelief`, `CraftReliefText` | Directional motif shading and native raised/inset lettering |
 | `pigmentOutline` | Reproducible organic contours |

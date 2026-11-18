@@ -1,3 +1,5 @@
+import 'nap_studies.dart';
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -570,6 +572,8 @@ class _SoftCraftPlaygroundState extends State<SoftCraftPlayground> {
       const Text(
         'Shading suggests indentation and folded light. No cloth displacement, optical coating or wind simulation is claimed. Text and controls stay native.',
       ),
+      const SizedBox(height: 28),
+      const NapPlayground(),
     ],
   );
 }

@@ -17,6 +17,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/layers/cabinet.png
+    - assets/layers/placement-pebble.png
   fonts:
     - family: Inter
       fonts:

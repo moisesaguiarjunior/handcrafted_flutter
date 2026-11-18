@@ -5,20 +5,55 @@ import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 /// Geometry stays prepared when only the shared light or insertion changes.
 class FabricComposition extends StatefulWidget {
   /// Creates an original clock-free material composition.
-  const FabricComposition({super.key, this.light, this.insertion = .25});
+  const FabricComposition({
+    super.key,
+    this.light,
+    this.insertion = .25,
+    this.pocketOpening = 1,
+    this.foldDepth = 7,
+    this.surfaceHeight = 4,
+    this.seamCompression = .2,
+  });
 
   /// Shared scene-space light.
   final CraftLight? light;
 
   /// Host-owned finite progress; one puts the decorative note behind the lip.
   final double insertion;
+
+  /// Mouth separation, 0..1, independently of note insertion.
+  final double pocketOpening;
+
+  /// Folded lip depth in this example's source units, 1..14.
+  final double foldDepth;
+
+  /// Front's apparent material height, .5..8.
+  final double surfaceHeight;
+
+  /// Paint-only pressure of the localized inset seam, 0..1.
+  final double seamCompression;
   @override
   State<FabricComposition> createState() => _FabricCompositionState();
 }
 
 class _FabricCompositionState extends State<FabricComposition> {
   final textures = MaterialTextures(seed: 93);
-  late final geometry = PocketGeometry();
+  late PocketGeometry geometry = _preparePocket();
+  PocketGeometry _preparePocket() => PocketGeometry(
+    opening: widget.pocketOpening,
+    foldDepth: widget.foldDepth,
+    surfaceHeight: widget.surfaceHeight,
+  );
+  @override
+  void didUpdateWidget(FabricComposition old) {
+    super.didUpdateWidget(old);
+    if (old.pocketOpening != widget.pocketOpening ||
+        old.foldDepth != widget.foldDepth ||
+        old.surfaceHeight != widget.surfaceHeight) {
+      geometry = _preparePocket();
+    }
+  }
+
   late final band = CraftBand(
     craftCurveThrough(const [
       Offset(18, 300),
@@ -60,6 +95,7 @@ class _FabricCompositionState extends State<FabricComposition> {
             seams,
             widget.light ?? CraftLight(),
             widget.insertion,
+            widget.seamCompression,
           ),
         ),
       ),
@@ -70,7 +106,27 @@ class _FabricCompositionState extends State<FabricComposition> {
 /// Prepared example geometry, with an explicit occluding mouth.
 class PocketGeometry {
   /// Prepares all cuts and the seam outside paint.
-  PocketGeometry() {
+  PocketGeometry({
+    this.opening = 1,
+    this.foldDepth = 7,
+    this.surfaceHeight = 4,
+  }) {
+    if (!opening.isFinite ||
+        opening < 0 ||
+        opening > 1 ||
+        !foldDepth.isFinite ||
+        foldDepth < 1 ||
+        foldDepth > 14 ||
+        !surfaceHeight.isFinite ||
+        surfaceHeight < .5 ||
+        surfaceHeight > 8) {
+      throw ArgumentError(
+        'Expected opening0..1, fold1..14 and front height.5..8',
+      );
+    }
+    final frontTop = 64 + 21 * opening, frontControl = 39 + 80 * opening;
+    final lipBottom = frontTop + foldDepth,
+        lipControl = frontControl + foldDepth * 8 / 7;
     back = Path()
       ..moveTo(16, 64)
       ..quadraticBezierTo(98, 34, 180, 64)
@@ -80,8 +136,8 @@ class PocketGeometry {
       ..quadraticBezierTo(13, 251, 14, 223)
       ..close();
     front = Path()
-      ..moveTo(16, 85)
-      ..quadraticBezierTo(98, 119, 180, 85)
+      ..moveTo(16, frontTop)
+      ..quadraticBezierTo(98, frontControl, 180, frontTop)
       ..lineTo(183, 222)
       ..quadraticBezierTo(184, 251, 157, 255)
       ..quadraticBezierTo(97, 267, 39, 254)
@@ -90,14 +146,14 @@ class PocketGeometry {
     cavity = Path()
       ..moveTo(16, 64)
       ..quadraticBezierTo(98, 39, 180, 64)
-      ..lineTo(180, 85)
-      ..quadraticBezierTo(98, 119, 16, 85)
+      ..lineTo(180, frontTop)
+      ..quadraticBezierTo(98, frontControl, 16, frontTop)
       ..close();
     lip = Path()
-      ..moveTo(16, 85)
-      ..quadraticBezierTo(98, 119, 180, 85)
-      ..lineTo(180, 92)
-      ..quadraticBezierTo(98, 127, 16, 92)
+      ..moveTo(16, frontTop)
+      ..quadraticBezierTo(98, frontControl, 180, frontTop)
+      ..lineTo(180, lipBottom)
+      ..quadraticBezierTo(98, lipControl, 16, lipBottom)
       ..close();
     backVolume = CraftVolume(
       back,
@@ -108,7 +164,7 @@ class PocketGeometry {
     frontVolume = CraftVolume(
       front,
       CraftVolumeProfile.rounded,
-      height: 4,
+      height: surfaceHeight,
       bevel: 13,
     );
     lipVolume = CraftVolume(lip, CraftVolumeProfile.sheet, height: 1, bevel: 3);
@@ -139,6 +195,15 @@ class PocketGeometry {
     seamFrame = CraftStitchFrame.sample(seam, progress: 1);
   }
 
+  /// Example-owned mouth geometry control, independent of insertion.
+  final double opening;
+
+  /// Example-owned lip depth, independent of front material height.
+  final double foldDepth;
+
+  /// Apparent front material height; no cloth deformation is simulated.
+  final double surfaceHeight;
+
   /// Static complete thread, shared by all pocket colorways and lights.
   late final CraftStitchFrame seamFrame;
 
@@ -155,9 +220,15 @@ class PocketGeometry {
     CraftLight light, {
     required Color color,
     double insertion = .25,
+    double seamCompression = .2,
   }) {
-    if (!insertion.isFinite || insertion < 0 || insertion > 1) {
-      throw ArgumentError('Expected insertion0..1');
+    if (!insertion.isFinite ||
+        insertion < 0 ||
+        insertion > 1 ||
+        !seamCompression.isFinite ||
+        seamCompression < 0 ||
+        seamCompression > 1) {
+      throw ArgumentError('Expected insertion and seam compression0..1');
     }
     backVolume.shadow(canvas, light);
     void cloth(Path cut, Color tone, CraftVolume volume) {
@@ -247,7 +318,7 @@ class PocketGeometry {
         canvas,
         thread: const Color(0xFFFFF0CD),
         width: 1.5,
-        compression: .2,
+        compression: seamCompression,
         relief: CraftReliefKind.inset,
         light: light.planar,
       );
@@ -266,13 +337,14 @@ class _FabricPainter extends CustomPainter {
     this.seams,
     this.light,
     this.insertion,
+    this.seamCompression,
   );
   final MaterialTextures textures;
   final PocketGeometry geometry;
   final CraftBand band;
   final List<CraftStitchFrame> seams;
   final CraftLight light;
-  final double insertion;
+  final double insertion, seamCompression;
   @override
   void paint(Canvas canvas, Size size) {
     canvas.save();
@@ -326,6 +398,7 @@ class _FabricPainter extends CustomPainter {
             light.inLocalSpace(rotation),
             color: color,
             insertion: insertion,
+            seamCompression: seamCompression,
           );
         } finally {
           canvas.restore();
@@ -340,6 +413,7 @@ class _FabricPainter extends CustomPainter {
   bool shouldRepaint(_FabricPainter old) =>
       old.light != light ||
       old.insertion != insertion ||
+      old.seamCompression != seamCompression ||
       old.textures != textures ||
       old.geometry != geometry ||
       old.band != band;

@@ -96,3 +96,13 @@ and green CI; check Git tags for publication status.
   by Astra for the 0.2.0 source release; 94 package / 89 example checks, eight
   Chrome tests, web build, enforced locks and 22 license/version hashes passed.
   Main/tag CI passed; public-tag consumer resolution matched the exact source.
+
+- Local volume: `84509a1027fc64e2231932f274a0ea9094b03746` independently
+  approved by Astra after an initial changes-required review of `a66366c`.
+  Corrections preserve compact artboard proportions, describe receiver-hole
+  coverage accurately and close the raster fixture on exceptions. Full checks:
+  115 package / 111 example tests, 10 package Chrome / 12 example Chrome tests
+  (one native-only lifecycle observation skipped on web), clean analysis/format
+  and 0 publication warnings. Five deliberate regressions failed as intended.
+  [Exact-source review](local-volume-84509a1.md). Publication/CI remain in the PR;
+  this is an example recipe, without device-performance or public API claims.

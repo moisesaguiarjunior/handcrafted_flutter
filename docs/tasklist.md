@@ -113,3 +113,14 @@ reuse the existing page, native controls and capture helpers. Shared geometry,
 legacy defaults and explicit progress remain; this is light, not displacement.
 [API and sample](eva-foam.md#raised-yarn-and-pressed-marks). Exact independent
 review and CI precede public promotion; device measurements remain separate.
+
+## Local volume and shared directional light
+
+Example-only controlled comparison: existing rims, a thin EVA-like sheet and a
+rounded clay-like profile use the same original cut, color and grain. A second
+composition rotates thin and rounded pieces under one source. Direction, elevation,
+softness, warmth and ambient light are explicit; contact/projection are separate
+and overlap shadows clip to the receiver. Prepared geometry survives relighting.
+[Recipe and limitations](local-volume.md). Exact independent review and CI precede
+promotion. This does not complete a general scene-light API, realistic clay,
+folded cloth/pocket geometry, full shadow interaction or device measurements.

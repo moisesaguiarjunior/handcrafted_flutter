@@ -110,6 +110,16 @@ then choose clean, torn, handmade or postage edges independently. These are
 visual recipes; letterhead stays real text over a substrate. See
 [paper recipes and controls](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/paper-recipes.md).
 
+## Light, from a thin cut to a rounded piece
+
+[![Thin foam and rounded clay-like pieces under one shared light](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/local-volume-mixed.png)](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=volume)
+
+Move the light across a thin sheet, a rounded shape and overlapping cuts.
+The experimental recipe keeps grain, volume and lighting independent, including
+pieces rotated under the same scene source. This is an example study, without
+changing the package's relief API. [Try it](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=volume) ·
+[Recipe, comparison and limits](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/local-volume.md).
+
 ## Cut EVA, different impressions
 
 ![Pebbled, mottled, grooved and crosshatched original foam cuts](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/foam-finishes.png)

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'bounded_effects.dart';
 import 'foam_studies.dart';
+import 'volume_studies.dart';
 import 'soft_craft_studies.dart';
 import 'gallery_welcome.dart';
 import 'cover_studies.dart' show ReliefObjectsSheet;
@@ -249,6 +250,7 @@ class _GalleryPage extends StatelessWidget {
   Widget _content() => switch (selected) {
     GalleryStudy.experience => const ExperienceFrameStudy(),
     GalleryStudy.foam => const FoamPlayground(),
+    GalleryStudy.volume => const LocalVolumePlayground(),
     GalleryStudy.softCraft => const SoftCraftPlayground(),
     GalleryStudy.vocabulary => const MaterialVocabularyStudy(),
     GalleryStudy.cover => GalleryWelcome(select: select),

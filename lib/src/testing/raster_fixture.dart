@@ -1,3 +1,5 @@
+// Internal test fixture shared across browser-served test package roots.
+// Not exported by the library and not used by production painters.
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 

@@ -352,6 +352,8 @@ public material or renderer API. Actual receiver clipping protects overlap/holes
 See [recipe and limits](local-volume.md).
 
 Package tests retain `test/support/raster.dart` as a forwarding import; the shared
-fixture lives in `example/lib/test_support/raster.dart` so browser-hosted example
-tests can resolve it without escaping the served package. There is one raster
-implementation, still responsible for picture/image disposal.
+fixture lives in unexported `lib/src/testing/raster_fixture.dart` so both test
+packages can resolve its package URI without escaping a browser-served root. It
+is imported only by tests and creates no production painter dependency. There
+is one raster implementation, responsible for exception-safe recorder, picture
+and image disposal.

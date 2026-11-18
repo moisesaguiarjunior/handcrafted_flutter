@@ -10,7 +10,7 @@ import 'package:handcrafted_example/volume_studies.dart';
 
 import 'support/fonts.dart';
 
-import 'package:handcrafted_example/test_support/raster.dart';
+import 'package:handcrafted_flutter/src/testing/raster_fixture.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

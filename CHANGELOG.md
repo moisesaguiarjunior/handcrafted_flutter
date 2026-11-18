@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Preserve stateful choice labels when selection changes and postcard editor
+  focus/composition across responsive layouts. Bound decorative mark geometry
+  before preparation, retaining both the visual refresh and pressed-foam study.
+
 - Append CraftMaterial.leather: a pebbled hide grain with rounded, top-left lit
   cells, darker valleys, sparse pores and faint wrinkles in the same cached
   96px tile contract. Update exhaustive material switches.

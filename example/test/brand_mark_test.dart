@@ -24,19 +24,32 @@ void main() {
     }
   });
 
-  testWidgets('leather mark lays out at narrow and tiny sizes', (tester) async {
-    for (final size in const [Size(320, 140), Size(60, 24), Size(1, 1)]) {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Center(
-            child: SizedBox.fromSize(
-              size: size,
-              child: const LeatherBrandMark(),
+  testWidgets(
+    'leather mark stays within paint budgets at tiny and large sizes',
+    (tester) async {
+      tester.view.physicalSize = const Size(3000, 1200);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      for (final size in const [
+        Size(320, 140),
+        Size(60, 24),
+        Size(1, 1),
+        Size(1800, 600),
+        Size(2560, 1000),
+      ]) {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Center(
+              child: SizedBox.fromSize(
+                size: size,
+                child: const LeatherBrandMark(),
+              ),
             ),
           ),
-        ),
-      );
-      expect(tester.takeException(), isNull, reason: '$size');
-    }
-  });
+        );
+        expect(tester.takeException(), isNull, reason: '$size');
+      }
+    },
+  );
 }

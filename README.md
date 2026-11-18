@@ -201,8 +201,9 @@ closed silhouette, respecting concavities and holes. See [contour seams](https:/
   widgets; labels, fields, focus order and semantics are not baked into images.
 - **Selection is not color alone.** `CraftChoice` draws a check mark beside the
   label, without depending on an icon font.
-- **Words keep their size.** The example compositions reflow at large text scales instead of
-  shrinking text to fit an illustration.
+- **Form labels and content keep their size.** The example forms reflow at large
+  text scales. Decorative artwork, including the wordmark, scales independently
+  to fit its available space; it is not a substitute for readable UI text.
 - **Motion is finite and respectful.** `SceneEntrance` settles immediately when
   the platform asks for reduced motion and pauses in the background.
 

@@ -24,6 +24,10 @@ class _PaintedNoteState extends State<PaintedNote> {
     text: 'The water was cold and perfect. I found you a shell.',
   );
   final to = TextEditingController(text: 'Grandma Rosa');
+  // Move the native editors between the two decorative arrangements without
+  // replacing their elements, editing state or focus attachments.
+  final messageLocation = GlobalKey();
+  final recipientLocation = GlobalKey();
   bool stitched = true;
   bool kept = false;
 
@@ -40,24 +44,30 @@ class _PaintedNoteState extends State<PaintedNote> {
 
   @override
   Widget build(BuildContext context) {
-    final message = TextField(
-      key: const ValueKey('painted-note-text'),
-      controller: note,
-      minLines: 2,
-      maxLines: null,
-      onChanged: _edited,
-      decoration: const InputDecoration(
-        labelText: 'Message',
-        border: UnderlineInputBorder(),
+    final message = KeyedSubtree(
+      key: messageLocation,
+      child: TextField(
+        key: const ValueKey('painted-note-text'),
+        controller: note,
+        minLines: 2,
+        maxLines: null,
+        onChanged: _edited,
+        decoration: const InputDecoration(
+          labelText: 'Message',
+          border: UnderlineInputBorder(),
+        ),
       ),
     );
-    final recipient = TextField(
-      key: const ValueKey('postcard-to'),
-      controller: to,
-      onChanged: _edited,
-      decoration: const InputDecoration(
-        labelText: 'To',
-        border: UnderlineInputBorder(),
+    final recipient = KeyedSubtree(
+      key: recipientLocation,
+      child: TextField(
+        key: const ValueKey('postcard-to'),
+        controller: to,
+        onChanged: _edited,
+        decoration: const InputDecoration(
+          labelText: 'To',
+          border: UnderlineInputBorder(),
+        ),
       ),
     );
     return ConstrainedBox(

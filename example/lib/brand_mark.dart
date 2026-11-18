@@ -48,51 +48,62 @@ class _LeatherBrandMarkState extends State<LeatherBrandMark> {
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, box) {
-      final size = Size(box.maxWidth, box.maxHeight);
+      // The decoration scales from a bounded artboard; preparing geometry at
+      // unrestricted display dimensions would exceed stitch and inset budgets.
+      final size = Size(
+        math.min(box.maxWidth, 1200),
+        math.min(box.maxHeight, 400),
+      );
       final tag = _geometryFor(size);
       final ink = Color.lerp(DemoPalette.cognac, Colors.black, .38)!;
-      return Stack(
-        children: [
-          Positioned.fill(
-            child: ExcludeSemantics(
-              child: CustomPaint(painter: _TagPainter(textures, tag)),
-            ),
-          ),
-          Positioned.fromRect(
-            rect: tag.label,
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  CraftReliefText(
-                    widget.title,
-                    depth: 2,
-                    style: TextStyle(
-                      fontFamily: 'Caveat',
-                      fontWeight: FontWeight.w700,
-                      fontSize: tag.body.height * .42,
-                      height: 1,
-                      color: ink,
-                    ),
-                  ),
-                  SizedBox(height: tag.body.height * .03),
-                  CraftReliefText(
-                    widget.subtitle,
-                    depth: 1.2,
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                      fontSize: tag.body.height * .075,
-                      letterSpacing: tag.body.height * .04,
-                      color: ink,
-                    ),
-                  ),
-                ],
+      return FittedBox(
+        fit: BoxFit.contain,
+        child: SizedBox.fromSize(
+          size: size,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: ExcludeSemantics(
+                  child: CustomPaint(painter: _TagPainter(textures, tag)),
+                ),
               ),
-            ),
+              Positioned.fromRect(
+                rect: tag.label,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CraftReliefText(
+                        widget.title,
+                        depth: 2,
+                        style: TextStyle(
+                          fontFamily: 'Caveat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: tag.body.height * .42,
+                          height: 1,
+                          color: ink,
+                        ),
+                      ),
+                      SizedBox(height: tag.body.height * .03),
+                      CraftReliefText(
+                        widget.subtitle,
+                        depth: 1.2,
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                          fontSize: tag.body.height * .075,
+                          letterSpacing: tag.body.height * .04,
+                          color: ink,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       );
     },
   );

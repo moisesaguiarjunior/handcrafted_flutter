@@ -16,6 +16,92 @@ CraftPanelStyle surface(Color color, {bool cloth = false}) => CraftPanelStyle(
 );
 
 void main() {
+  testWidgets('stateful choice label survives selection changes', (
+    tester,
+  ) async {
+    final selected = ValueNotifier(false);
+    addTearDown(selected.dispose);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: ValueListenableBuilder<bool>(
+              valueListenable: selected,
+              builder: (context, value, _) => CraftChoice(
+                style: surface(Colors.white),
+                selected: value,
+                onSelected: (v) => selected.value = v,
+                child: const _StatefulLabel(),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    final original = tester.state(find.byType(_StatefulLabel));
+    for (var i = 0; i < 3; i++) {
+      await tester.tap(find.text('Choice label'));
+      await tester.pumpAndSettle();
+      expect(tester.state(find.byType(_StatefulLabel)), same(original));
+    }
+  });
+
+  testWidgets(
+    'selected choice paints an actual check on an otherwise blank surface',
+    (tester) async {
+      final boundary = GlobalKey();
+      Widget view(bool selected) => MaterialApp(
+        theme: ThemeData(
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(foregroundColor: Colors.black),
+          ),
+        ),
+        home: Scaffold(
+          body: Center(
+            child: RepaintBoundary(
+              key: boundary,
+              child: SizedBox(
+                width: 100,
+                height: 60,
+                child: CraftChoice(
+                  style: CraftPanelStyle(
+                    material: CraftMaterial.paper,
+                    color: Colors.white,
+                    strength: 0,
+                    shape: const CraftOutline.rectangle(),
+                    padding: EdgeInsets.zero,
+                  ),
+                  selected: selected,
+                  onSelected: (_) {},
+                  child: const SizedBox(width: 30, height: 16),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      int darkPixels(List<int> image) {
+        var result = 0;
+        for (var i = 0; i < image.length; i += 4) {
+          if (image[i] < 100 &&
+              image[i + 1] < 100 &&
+              image[i + 2] < 100 &&
+              image[i + 3] > 100) {
+            result++;
+          }
+        }
+        return result;
+      }
+
+      await tester.pumpWidget(view(false));
+      await tester.pumpAndSettle();
+      expect(darkPixels(await widgetPixels(tester, boundary)), 0);
+      await tester.pumpWidget(view(true));
+      await tester.pumpAndSettle();
+      expect(darkPixels(await widgetPixels(tester, boundary)), greaterThan(12));
+    },
+  );
+
   testWidgets(
     'selection has a visible native check mark even without role overrides',
     (tester) async {
@@ -372,4 +458,15 @@ void main() {
       );
     },
   );
+}
+
+class _StatefulLabel extends StatefulWidget {
+  const _StatefulLabel();
+  @override
+  State<_StatefulLabel> createState() => _StatefulLabelState();
+}
+
+class _StatefulLabelState extends State<_StatefulLabel> {
+  @override
+  Widget build(BuildContext context) => const Text('Choice label');
 }

@@ -333,3 +333,12 @@ owner and actual gallery/capture shell. Added only optional inset stroke lightin
 to canonical thread paint; raised defaults remain intact. Original foam layers
 and leaf motifs compare narrow pressed lips with raised cream yarn inside the
 existing foam study, not a new renderer, scene preset, cache or clock.
+
+For visual-refresh integration, searched native button child slots, keyed editor
+identity, postcard breakpoints, mark geometry budgets and existing capture/tests.
+Retained the check renderer while keeping the stateful label in one stable row
+slot. Host-owned keyed editor locations preserve the same native editing state
+across the postcard's two layouts. A bounded mark artboard scales as decorative
+art before path preparation; ordinary form content remains unscaled. Original
+leather/README commits and the pressed-foam study are both retained, without a
+parallel material, UI-state engine, clock or decorative inset implementation.

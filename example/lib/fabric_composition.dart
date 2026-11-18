@@ -30,12 +30,15 @@ class _FabricCompositionState extends State<FabricComposition> {
   );
   late final seams = [
     for (final offset in [-11.0, 11.0])
-      runningStitchPath(
-        band.rail(offset),
-        dash: 5,
-        gap: 4,
-        irregularity: .08,
-        seed: 41,
+      CraftStitchFrame.sample(
+        runningStitchPath(
+          band.rail(offset),
+          dash: 5,
+          gap: 4,
+          irregularity: .08,
+          seed: 41,
+        ),
+        progress: 1,
       ),
   ];
   @override
@@ -134,6 +137,12 @@ class PocketGeometry {
       seed: 93,
     );
   }
+
+  /// Static complete thread, shared by all pocket colorways and lights.
+  late final CraftStitchFrame seamFrame = CraftStitchFrame.sample(
+    seam,
+    progress: 1,
+  );
 
   /// Independent cuts and the inset sewing path for this original recipe.
   late final Path back, front, cavity, lip, seam, patch;
@@ -236,7 +245,7 @@ class PocketGeometry {
           style: const CraftStrokeStyle(width: 2),
         );
       }
-      CraftStitchFrame.sample(seam, progress: 1).paint(
+      seamFrame.paint(
         canvas,
         thread: const Color(0xFFFFF0CD),
         width: 1.5,
@@ -263,7 +272,7 @@ class _FabricPainter extends CustomPainter {
   final MaterialTextures textures;
   final PocketGeometry geometry;
   final CraftBand band;
-  final List<Path> seams;
+  final List<CraftStitchFrame> seams;
   final CraftLight light;
   final double insertion;
   @override
@@ -296,7 +305,7 @@ class _FabricPainter extends CustomPainter {
       );
       band.shade(canvas, light);
       for (final seam in seams) {
-        CraftStitchFrame.sample(seam, progress: 1).paint(
+        seam.paint(
           canvas,
           thread: const Color(0xFFFFF3D9),
           width: 1,

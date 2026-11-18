@@ -366,3 +366,7 @@ nine cross-section vertices; its rails feed existing stitches. The pocket recipe
 uses existing cotton/felt/paper, inset thread and native progress controls. No
 parallel lighting engine, texture cache, clock or private artwork was added. Core
 proof tests moved to package tests instead of being duplicated in the example.
+
+Complete seams in the folded-pocket example are prepared once with the band/cut,
+then reused across colors, relighting and insertion. This keeps static thread
+sampling outside paint, matching the prepared geometry ownership contract.

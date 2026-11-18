@@ -108,8 +108,8 @@ Use `trimCraftPath(band.centerline, progress: progress)` for an explicit reveal.
 
 A band supports width 4..96, apparent height .5..8 and sampling interval 1..6,
 with at most 2048 intervals / 18441 cross-section vertices. Rails are sampled
-normal offsets, not a polygon-offset guarantee. Keep bend radius above half the
-width; self-crossings or very sharp corners can overlap. Flat end cuts are useful
+normal offsets, not a polygon-offset guarantee. Keep bend radius above the inward-side distance (or conservatively the larger
+side distance); self-crossings or very sharp corners can overlap. Flat end cuts are useful
 for consumer-owned joins. The package does not place a bridge, route or doorstep.
 Substrate painting still observes MaterialTextures' own 2048-axis limit; split
 a larger scene into separately prepared cuts rather than raising a global guard.

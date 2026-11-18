@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:ui' show Canvas, PictureRecorder;
 import 'dart:typed_data';
 
@@ -170,6 +171,10 @@ void main() {
   });
   test('width keys reject discontinuous joins and excessive preparation', () {
     final source = curve();
+    expect(
+      () => CraftBand(source, widthProfile: _OversizedWidths()),
+      throwsArgumentError,
+    );
     for (final keys in [
       [
         const CraftBandWidth(progress: .1, positive: 5, negative: 5),
@@ -251,4 +256,18 @@ void main() {
       );
     },
   );
+}
+
+class _OversizedWidths extends ListBase<CraftBandWidth> {
+  @override
+  int get length => 129;
+  @override
+  set length(int value) =>
+      throw StateError('Must reject length before mutation');
+  @override
+  CraftBandWidth operator [](int index) =>
+      throw StateError('Must reject length before reading');
+  @override
+  void operator []=(int index, CraftBandWidth value) =>
+      throw StateError('Must reject length before mutation');
 }

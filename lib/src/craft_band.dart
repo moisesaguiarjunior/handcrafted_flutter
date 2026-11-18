@@ -26,7 +26,8 @@ class CraftBandWidth {
 ///
 /// A single smooth path follows the shared 8192-length/coordinate budget, with at
 /// most 2048 intervals and nine cross-section vertices per station. Tight bends
-/// and self-crossings can overlap: use a radius greater than half the width.
+/// and self-crossings can overlap: keep the bend radius above the inward-side
+/// distance (or the larger side distance as a conservative bound).
 /// Preparation and station normals are independent of light and substrate grain.
 class CraftBand {
   /// Prepares the centerline once, outside paint.
@@ -36,9 +37,7 @@ class CraftBand {
     this.height = 2,
     this.sampleSpacing = 3,
     List<CraftBandWidth>? widthProfile,
-  }) : widthProfile = List.unmodifiable(
-         widthProfile ?? const <CraftBandWidth>[],
-       ) {
+  }) : widthProfile = _copyBandWidths(widthProfile) {
     if (!width.isFinite ||
         width < 4 ||
         width > 96 ||
@@ -149,7 +148,9 @@ class CraftBand {
     const cross = 9;
     _positions = Float32List(_points.length * cross * 2);
     _normals = Float32List(_points.length * cross * 3);
-    final heights = Float64List(_points.length * cross);
+    final heights = this.widthProfile.isEmpty
+        ? null
+        : Float64List(_points.length * cross);
     for (var i = 0; i < _points.length; i++) {
       final t = _points[i], n = Offset(-t.vector.dy, t.vector.dx);
       final (positive, negative) = _widths[i];
@@ -172,9 +173,11 @@ class CraftBand {
         _positions[v * 2] = p.dx;
         _positions[v * 2 + 1] = p.dy;
         final distance = offset < 0 ? negative + offset : positive - offset;
-        heights[v] = distance >= bevel
-            ? height
-            : height * math.sin(distance / bevel * math.pi / 2);
+        if (heights != null) {
+          heights[v] = distance >= bevel
+              ? height
+              : height * math.sin(distance / bevel * math.pi / 2);
+        }
         final slope = distance >= bevel
             ? 0.0
             : -offset.sign *
@@ -190,7 +193,7 @@ class CraftBand {
     }
     // Profile changes also tilt the surface along the curve. Constant-width
     // normals retain the original renderer exactly.
-    if (this.widthProfile.isNotEmpty) {
+    if (heights != null) {
       for (var i = 0; i < _points.length; i++) {
         final before = i == 0 ? (_closed ? _points.length - 2 : 0) : i - 1;
         final after = i == _points.length - 1 ? (_closed ? 1 : i) : i + 1;
@@ -357,4 +360,13 @@ class CraftBand {
     lift: lift,
     softness: softness,
   );
+}
+
+List<CraftBandWidth> _copyBandWidths(List<CraftBandWidth>? source) {
+  final count = source?.length ?? 0;
+  if (count < 0 || count == 1 || count > 128) {
+    throw ArgumentError('Expected zero or 2..128 width keys');
+  }
+  // Bound both allocation and element access before touching caller data.
+  return List.unmodifiable([for (var i = 0; i < count; i++) source![i]]);
 }

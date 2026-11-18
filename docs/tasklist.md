@@ -149,3 +149,6 @@ for acceptance boundaries and existing contracts.
   handles explicit crop/placement/pivot; the pocket is still an example recipe;
   stroke padding remains caller-owned. Do not infer these APIs from the band work.
 - Android/iPhone measurement remains an external evidence gate.
+- Short matte nap and layered EVA: requested 40..100px synthetic comparison with
+  independent grain controls and receiver-clipped layer shadows; not implemented
+  by the shaped-band work. See the fidelity request above.

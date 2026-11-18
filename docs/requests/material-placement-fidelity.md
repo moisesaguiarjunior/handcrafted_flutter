@@ -54,3 +54,17 @@ do not maintain a second decorative path or shrink native text to fit.
 
 Physical-device performance evidence remains separate from these geometric and
 raster checks. None of these requests authorizes a new animation clock or cache.
+
+## Short nap and layered foam: requested comparison
+
+Compare woven cotton, short irregular matte fibers and thin EVA on synthetic
+40..100px cuts. Nap scale, density, direction and contrast should be independent;
+avoid a visible grid. Existing cotton/velvety material tiles remain available,
+but their presence does not establish this new independently parameterized nap
+contract or small-size fidelity.
+
+For EVA over EVA, reuse separate CraftVolume cuts and one CraftLight. Clip the
+upper piece's shadow to the lower receiver; keep their bevels/heights independent.
+Compare diffuse pigment variation plus fine pores and localized sewing, without
+turning the whole surface into a dotted finish. This is a requested specimen,
+not a new shipped foam or cotton API. Prioritize the shaped band contract first.

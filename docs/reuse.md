@@ -342,3 +342,16 @@ across the postcard's two layouts. A bounded mark artboard scales as decorative
 art before path preparation; ordinary form content remains unscaled. Original
 leather/README commits and the pressed-foam study are both retained, without a
 parallel material, UI-state engine, clock or decorative inset implementation.
+
+For the example-only local-volume proof, searched material grain, relief, path
+metrics/insets, mesh ownership, specimen layout and capture helpers. Reused
+MaterialTextures, trimCraftPath, paintCraftRelief, SpecimenRow and the shared
+capture shell. New bounded height/normal preparation stays outside paint; native
+light controls and inverse planar light conversion use no new clock, dependency,
+public material or renderer API. Actual receiver clipping protects overlap/holes.
+See [recipe and limits](local-volume.md).
+
+Package tests retain `test/support/raster.dart` as a forwarding import; the shared
+fixture lives in `example/lib/test_support/raster.dart` so browser-hosted example
+tests can resolve it without escaping the served package. There is one raster
+implementation, still responsible for picture/image disposal.

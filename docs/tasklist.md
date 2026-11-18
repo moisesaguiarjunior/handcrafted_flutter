@@ -153,3 +153,14 @@ for acceptance boundaries and existing contracts.
   comparison now implemented, with independent fiber controls and receiver-clipped
   layer shadows. [Recipe, scope and limits](short-nap.md); exact review, CI,
   publication and consumer fidelity remain separate gates.
+
+## Launch and spatial-light studio
+
+- Implement one original scene for rounded clay-like volume, EVA and paper with
+  a draggable XY lamp and independent height/distance response.
+- Keep light fixed while changing a shape or rotating a piece; reuse prepared
+  profiles, directional shading and resource ownership. No new package API.
+- Validate native adjustable controls, narrow/enlarged layouts and Android
+  emulator execution separately from physical-device performance.
+- Consolidate 0.3.0 changes and tag the independently reviewed source; verify
+  hosted gallery and retain pub.dev upload as an explicit owner action.

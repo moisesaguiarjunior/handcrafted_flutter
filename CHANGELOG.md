@@ -1,6 +1,11 @@
 # Changelog
 
-## Unreleased
+## 0.3.0
+
+- Add an example-only light studio: a draggable shared lamp over clay-like
+  rounded volume, EVA and paper, with height/distance, shape and rotation
+  controls. Sample directional lighting at each piece center; no new light
+  solver, clock or simulated clay API. Add a disposable Android smoke host.
 
 - Add CraftPlacement.fit and CraftImagePart.placed: align declared visible bounds
   while retaining the full painting window, source hinge and native pose/input.
@@ -71,8 +76,6 @@
   Add a regression through the actual gallery in paper and cloth themes.
 - Clarify paint/thread mode guidance, link directly to the six stitch families,
   and document the experience frame's space-saving drawer navigation.
-
-## 0.3.0
 
 - Prepare first pub.dev distribution: curated screenshots/metadata, portable
   README links, archive exclusions and dry-run/documentation validation in CI.

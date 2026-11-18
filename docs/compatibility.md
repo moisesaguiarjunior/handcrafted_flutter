@@ -11,14 +11,15 @@ No lower SDK support is claimed without testing it.
 | Linux-hosted Flutter tests | CI format, strict analysis, package/example behavior tests | Not a Linux desktop shipping build or phone benchmark |
 | Local Flutter test renderer | Real-font layout checks and deterministic PNG/frame captures | Not interactive browser or native-device approval |
 | Web gallery | Release build/Pages deployment and focused Chrome widget tests | Automated browser behavior is covered; no full manual browser or phone certification; build emits a CupertinoIcons font warning |
-| Android and iOS | No native/device result in this package | Not validated for release, performance or input latency |
+| Android emulator | Debug integration smoke of light/paint/thread gallery, generated native host | Not a physical-device benchmark, release-mode validation or input-latency measurement |
+| iOS | No native/device result in this package | Not validated for release, performance or input latency |
 | Windows/macOS/Linux desktop apps | No shipping desktop build matrix | Tests run on a desktop do not establish native app support |
 | Wasm | Build's dry-run output only | No Wasm runtime compatibility claim |
 
 ## API policy before 1.0
 
 Version 0.3.0 is prepared for the first hosted publication; upload has not yet
-been performed. The v0.2.0 source release is unchanged. Until hosted publication,
+been performed. The v0.1.0/v0.2.0 tags remain unchanged; v0.3.0 is a source release. Until hosted publication,
 source consumers should pin a reviewed immutable Git tag/SHA and commit their lockfile.
 We follow semantic versioning when making releases: incompatible API changes advance the pre-1.0 minor version;
 patches document bug fixes, invalid-input handling and corrected layout behavior.

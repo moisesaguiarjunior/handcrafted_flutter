@@ -401,3 +401,12 @@ The pocket's independent controls stay in its original example recipe, with
 paint-only changes retaining prepared geometry. Synthetic authoring/capture and
 frozen-renderer parity use existing native resource/font ownership. No private
 art, second matrix, hit-test engine, clock or global cache was introduced.
+
+For the spatial-light launch scene, searched CraftLight normalization, local-space
+conversion, CraftVolume profiles/shadows, MixedVolumeStudy, gallery routes and
+capture ownership. Reused all prepared rendering and material resources. The
+example samples a bounded point lamp once per piece, including distance falloff,
+then converts that directional sample to the piece frame. Native sliders/chips
+provide keyboard and assistive access alongside the drag handle. No point-light
+API, physics solver, global cache or extra clock is exported. The Android smoke
+uses a temporary generated host and copies the actual example unchanged.

@@ -117,3 +117,15 @@ neither shared caches nor prepared-geometry APIs are justified without profiling
 - [Bounded solid freehand](requests/freehand-capture.md) now has a minimal
   point/stroke-budget renderer; independent review/publication tracked separately.
   Decorative arc limits stay intact; consumer capture adoption is not automatic.
+
+## Launch preparation
+
+The light studio (`?study=light`) composes clay-like rounded volume, EVA and
+paper under a draggable scene lamp. Position and height are independent;
+shape/rotation retain the world source and prepared geometry. Lighting is sampled
+at piece centers, without per-pixel point lighting or mutual occlusion.
+
+Close the 0.3.0 source release with consolidated changes, an immutable reviewed
+tag, Android-emulator smoke, browser visit and publication gates. Hosted pub.dev
+upload/account ownership remains separate. Physical Android/iPhone performance
+measurements and assistive-technology sessions are still pending.

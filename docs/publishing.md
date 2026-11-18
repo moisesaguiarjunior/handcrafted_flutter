@@ -108,3 +108,13 @@ a validated package upload authenticated by its responsible Google account.
 The preparation requires no credentials in source, popularity evidence,
 physical-device benchmark or automatic publisher workflow. Performance claims
 still need their own measurements; Flutter's tested minimum remains explicit.
+
+## 0.3.0 source release closure
+
+The 0.3.0 Git source release consolidates the candidate and later materials,
+volume, contour-fit and light-studio deliveries. The hosted upload has not been
+performed. The Android debug smoke is reproducible with `tool/check_android.py`;
+it does not measure phone performance. Independent source review is recorded in
+[the local review index](reviews/local-review-record.md). The interactive hosted
+browser visit remains a separate incomplete launch check after a browser-control
+connection failure; successful builds and widget tests do not replace that visit.

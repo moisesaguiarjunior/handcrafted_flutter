@@ -39,6 +39,10 @@ class GalleryWelcome extends StatelessWidget {
               spacing: 12,
               runSpacing: 8,
               children: [
+                OutlinedButton(
+                  onPressed: () => select(GalleryStudy.light),
+                  child: const Text('Move the light'),
+                ),
                 FilledButton(
                   onPressed: () => select(GalleryStudy.spreading),
                   child: const Text('Watch the paint spread'),

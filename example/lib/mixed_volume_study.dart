@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
-import 'local_volume.dart';
-
 /// Original composition testing local volume under one scene-space light.
 /// Shapes and profiles are example recipes, independent of a consumer's artwork.
 class MixedVolumeStudy extends StatefulWidget {
@@ -10,7 +8,7 @@ class MixedVolumeStudy extends StatefulWidget {
   const MixedVolumeStudy({super.key, this.light});
 
   /// One shared directional source for uniformly scaled, planar-rotated pieces.
-  final VolumeLight? light;
+  final CraftLight? light;
 
   @override
   State<MixedVolumeStudy> createState() => _MixedVolumeStudyState();
@@ -28,7 +26,7 @@ class _MixedVolumeStudyState extends State<MixedVolumeStudy> {
         ..lineTo(-68, 39)
         ..quadraticBezierTo(-87, 38, -94, 25)
         ..close(),
-      VolumeProfile.sheet,
+      CraftVolumeProfile.sheet,
       const Color(0xFF83B7CC),
       const Offset(140, 99),
       -.13,
@@ -39,7 +37,7 @@ class _MixedVolumeStudyState extends State<MixedVolumeStudy> {
         ..cubicTo(-78, -53, 2, -56, 72, -26)
         ..cubicTo(68, 33, -15, 60, -75, 24)
         ..close(),
-      VolumeProfile.rounded,
+      CraftVolumeProfile.rounded,
       const Color(0xFFE9A081),
       const Offset(385, 100),
       .29,
@@ -53,7 +51,7 @@ class _MixedVolumeStudyState extends State<MixedVolumeStudy> {
         ..quadraticBezierTo(-11, 3, -132, 30)
         ..lineTo(-116, 3)
         ..close(),
-      VolumeProfile.sheet,
+      CraftVolumeProfile.sheet,
       const Color(0xFFE6BF65),
       const Offset(203, 228),
       -.16,
@@ -64,7 +62,7 @@ class _MixedVolumeStudyState extends State<MixedVolumeStudy> {
         ..addOval(const Rect.fromLTWH(-43, -43, 86, 86))
         ..addOval(const Rect.fromLTWH(-13, -4, 7, 7))
         ..addOval(const Rect.fromLTWH(6, -4, 7, 7)),
-      VolumeProfile.rounded,
+      CraftVolumeProfile.rounded,
       const Color(0xFF9BAF83),
       const Offset(433, 233),
       -.25,
@@ -86,7 +84,7 @@ class _MixedVolumeStudyState extends State<MixedVolumeStudy> {
           painter: _MixedPainter(
             textures,
             pieces,
-            widget.light ?? VolumeLight(),
+            widget.light ?? CraftLight(),
           ),
         ),
       ),
@@ -97,12 +95,12 @@ class _MixedVolumeStudyState extends State<MixedVolumeStudy> {
 class _Piece {
   _Piece(
     Path cut,
-    VolumeProfile profile,
+    CraftVolumeProfile profile,
     this.color,
     this.center,
     this.rotation,
-  ) : volume = PreparedVolume(cut, profile);
-  final PreparedVolume volume;
+  ) : volume = CraftVolume(cut, profile);
+  final CraftVolume volume;
   final Color color;
   final Offset center;
   final double rotation;
@@ -112,7 +110,7 @@ class _MixedPainter extends CustomPainter {
   _MixedPainter(this.textures, this.pieces, this.light);
   final MaterialTextures textures;
   final List<_Piece> pieces;
-  final VolumeLight light;
+  final CraftLight light;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -146,7 +144,9 @@ class _MixedPainter extends CustomPainter {
             piece.volume.outline,
             material: CraftMaterial.eva,
             color: piece.color,
-            strength: piece.volume.profile == VolumeProfile.sheet ? .32 : .08,
+            strength: piece.volume.profile == CraftVolumeProfile.sheet
+                ? .32
+                : .08,
           );
           piece.volume.shade(canvas, local);
         } finally {

@@ -357,3 +357,12 @@ packages can resolve its package URI without escaping a browser-served root. It
 is imported only by tests and creates no production painter dependency. There
 is one raster implementation, responsible for exception-safe recorder, picture
 and image disposal.
+
+For lit fabric and curved bands, reused the reviewed local-volume field, inverse
+light transform and exception-safe mesh lifecycle. Promoted them to CraftLight /
+CraftVolume, with private buffers, copied paths and independent height/bevel.
+CraftBand shares the shader and shadows, using bounded arc-length stations and
+nine cross-section vertices; its rails feed existing stitches. The pocket recipe
+uses existing cotton/felt/paper, inset thread and native progress controls. No
+parallel lighting engine, texture cache, clock or private artwork was added. Core
+proof tests moved to package tests instead of being duplicated in the example.

@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../example/lib/volume_studies.dart';
 import '../example/lib/mixed_volume_study.dart';
+import '../example/lib/fabric_composition.dart';
 import '../example/test/support/fonts.dart';
 import 'capture_support.dart';
 
@@ -28,6 +29,12 @@ void main() {
       'build/local-volume/mixed.png',
       const Size(1000, 650),
       const Padding(padding: EdgeInsets.all(32), child: MixedVolumeStudy()),
+    );
+    await captureExample(
+      tester,
+      'build/local-volume/fabric.png',
+      const Size(1000, 660),
+      const Padding(padding: EdgeInsets.all(24), child: FabricComposition()),
     );
     for (final width in [320.0, 390.0]) {
       await captureExample(

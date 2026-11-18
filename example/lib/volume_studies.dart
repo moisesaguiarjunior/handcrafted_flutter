@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
-import 'local_volume.dart';
 import 'material_studies.dart';
 import 'mixed_volume_study.dart';
+import 'fabric_composition.dart';
 
 const _coral = Color(0xFFEFA07C);
 
@@ -13,7 +13,7 @@ class VolumeStudies extends StatefulWidget {
   const VolumeStudies({super.key, this.light, this.compact = false});
 
   /// Explicit host-controlled light; null chooses the fixed capture condition.
-  final VolumeLight? light;
+  final CraftLight? light;
 
   /// A single row suitable for a 320/390px screen comparison.
   final bool compact;
@@ -42,7 +42,7 @@ class _VolumeStudiesState extends State<VolumeStudies> {
                 textures,
                 models,
                 mode,
-                widget.light ?? VolumeLight(),
+                widget.light ?? CraftLight(),
                 widget.compact,
               ),
             ),
@@ -113,11 +113,13 @@ class _VolumeModels {
       ..quadraticBezierTo(102, y + 80, 57, y + 40)
       ..close();
     cuts = [cloud, corner, tile(344), tile(306)];
-    sheet = [for (final p in cuts) PreparedVolume(p, VolumeProfile.sheet)];
-    rounded = [for (final p in cuts) PreparedVolume(p, VolumeProfile.rounded)];
+    sheet = [for (final p in cuts) CraftVolume(p, CraftVolumeProfile.sheet)];
+    rounded = [
+      for (final p in cuts) CraftVolume(p, CraftVolumeProfile.rounded),
+    ];
   }
   late final List<Path> cuts;
-  late final List<PreparedVolume> sheet, rounded;
+  late final List<CraftVolume> sheet, rounded;
 }
 
 class _VolumePainter extends CustomPainter {
@@ -131,7 +133,7 @@ class _VolumePainter extends CustomPainter {
   final MaterialTextures textures;
   final _VolumeModels models;
   final int mode;
-  final VolumeLight light;
+  final CraftLight light;
   final bool compact;
   @override
   void paint(Canvas canvas, Size size) {
@@ -213,7 +215,8 @@ class _LocalVolumePlaygroundState extends State<LocalVolumePlayground> {
       elevation = 1,
       ambient = .65,
       softness = .25,
-      warmth = .4;
+      warmth = .4,
+      insertion = .25;
   Widget _slider(
     String label,
     String key,
@@ -242,7 +245,7 @@ class _LocalVolumePlaygroundState extends State<LocalVolumePlayground> {
   );
   @override
   Widget build(BuildContext context) {
-    final light = VolumeLight(
+    final light = CraftLight(
       x: -.85 + 1.7 * direction,
       y: -.7,
       z: elevation,
@@ -311,6 +314,18 @@ class _LocalVolumePlaygroundState extends State<LocalVolumePlayground> {
         ),
         const SizedBox(height: 12),
         MixedVolumeStudy(light: light),
+        const SizedBox(height: 24),
+        const Text('A folded pocket and a curved paper ribbon'),
+        _slider(
+          'Insert the note',
+          'fabric-insertion',
+          insertion,
+          0,
+          1,
+          (v) => setState(() => insertion = v),
+          'percent',
+        ),
+        FabricComposition(light: light, insertion: insertion),
         const SizedBox(height: 24),
         VolumeStudies(light: light),
         const SizedBox(height: 24),

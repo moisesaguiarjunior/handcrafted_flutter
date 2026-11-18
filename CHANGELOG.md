@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add prepared CraftLight/CraftVolume/CraftBand for bounded opaque-substrate volume, shared directional light and curved ribbon rails; original folded-pocket recipe and native insertion control. Existing relief defaults remain unchanged.
+
 - Preserve stateful choice labels when selection changes and postcard editor
   focus/composition across responsive layouts. Bound decorative mark geometry
   before preparation, retaining both the visual refresh and pressed-foam study.

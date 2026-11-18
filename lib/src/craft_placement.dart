@@ -61,7 +61,7 @@ final class CraftPlacement {
   }
 
   /// Fits the declared visible contour to [target] without trimming source paint.
-  /// Uniform contain fit; alignment is finite in [-1,1] on each axis. The default
+  /// Uniform contain fit; alignment is finite in `-1..1` on each axis. The default
   /// hinge is the visible center. [rect] can extend beyond target because it also
   /// retains padding/shadow; reserve that full transformed region in the parent.
   factory CraftPlacement.fit({

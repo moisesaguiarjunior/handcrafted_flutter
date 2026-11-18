@@ -34,7 +34,7 @@ class _VolumeStudiesState extends State<VolumeStudies> {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       AspectRatio(
-        aspectRatio: widget.compact ? 1.3 : 300 / 430,
+        aspectRatio: widget.compact ? 300 / 160 : 300 / 430,
         child: ExcludeSemantics(
           child: IgnorePointer(
             child: CustomPaint(

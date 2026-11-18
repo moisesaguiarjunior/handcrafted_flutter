@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handcrafted_example/local_volume.dart';
 import 'package:handcrafted_example/volume_studies.dart';
@@ -185,6 +186,30 @@ void main() {
       expect(canvas.depth, 0);
     }
   });
+  test('raster fixture closes the recording if its painter throws', () async {
+    final oldCreate = ui.Picture.onCreate, oldDispose = ui.Picture.onDispose;
+    final created = <ui.Picture>[], disposed = <ui.Picture>[];
+    ui.Picture.onCreate = (p) {
+      created.add(p);
+      oldCreate?.call(p);
+    };
+    ui.Picture.onDispose = (p) {
+      disposed.add(p);
+      oldDispose?.call(p);
+    };
+    try {
+      await expectLater(
+        pixels((c) => throw StateError('Fixture failure')),
+        throwsStateError,
+      );
+      expect(created, hasLength(1));
+      expect(disposed, orderedEquals(created));
+    } finally {
+      ui.Picture.onCreate = oldCreate;
+      ui.Picture.onDispose = oldDispose;
+    }
+  }, skip: kIsWeb); // Native lifecycle callbacks are the observation mechanism.
+
   test(
     'preparation rejects excessive contour work before creating a field',
     () {
@@ -235,6 +260,13 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
+      final compact = find.byWidgetPredicate(
+        (w) => w is VolumeStudies && w.compact,
+      );
+      final paintSize = tester.getSize(
+        find.descendant(of: compact, matching: find.byType(CustomPaint)).first,
+      );
+      expect(paintSize.aspectRatio, closeTo(300 / 160, .00001));
       await tester.pumpWidget(const SizedBox());
       expect(tester.binding.transientCallbackCount, 0);
     });

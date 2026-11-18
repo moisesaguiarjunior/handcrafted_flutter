@@ -30,7 +30,8 @@ controls to examine the new profiles.
 
 The example's contact and projected shadows are separate draws. Raising a piece
 moves and softens its projected shadow. For the overlap specimen, the upper
-piece's shadow clips to the lower receiver, including its holes. There is no
+piece's shadow clips to the lower receiver. A separate regression fixture
+checks that receiver holes also stay untouched. There is no
 scene-wide shadow map or general mutual-occlusion system.
 
 ## Using the recipe

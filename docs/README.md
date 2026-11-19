@@ -11,6 +11,7 @@
 - [Adoption recipes and evidence-driven extensions](consumer-adoption.md)
 - [Reuse map](reuse.md)
 - [Lint policy and capture boundaries](lint-policy.md)
+- [Continuous surfaces, fibers and repeated prints](surface-continuity.md)
 - [Material-focused roadmap](roadmap.md)
 - [Adoption hardening and evidence gates](requests/adoption-hardening.md)
 - [Proposed authored-scene composition recipes](requests/authored-scene-composition.md)

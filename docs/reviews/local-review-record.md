@@ -224,3 +224,27 @@ are outside this review/delivery.
   keep one narrowly scoped import exception; runtime rendering and approved
   pixel baselines are unchanged. This is an independent local agent review,
   not a human or GitHub reviewer object. Physical-device evidence remains pending.
+
+## Bounded source-space surfaces and repeatable prints
+
+- Exact corrected source `134dd49e35ec1951b08f6f058de0d20c5e072134` received an
+  independent Astra review with no blocking findings. This is example-owned
+  synthetic content; package painters, exports and defaults are unchanged.
+- Initial `ec26187` required two corrections: restarting only once per viewport
+  did not prove per-strip failure, and excessive finite source coordinates could
+  collapse in native path storage. The proof now prepares a fresh owner in every
+  negative-control strip and compares both composites with the same metrics and
+  bounds. All four source coordinates are bounded and a 1e12 origin is rejected.
+- The reviewer independently ran 18 focused native tests including capture and
+  confirmed all ten recipe/scale comparisons pass retained-source bounds and
+  fail the per-strip restart bounds. Resource owners survive through readback.
+- Author additionally passed 149 package and 136 example tests, 17 headless
+  Chrome tests, native transparent-alpha checks and short/enlarged layouts.
+  Isolated mutations removing viewport translation, the alpha mask or coordinate
+  protection each failed the protected assertion; working source stayed intact.
+- The capture reports actual clipping error, changed channels and cold recording
+  separately from raster/readback wall samples. Pixel equivalence, consumer
+  reference fidelity, arbitrary-size worlds and physical-device performance are
+  not established. Existing goldens and private consumer artwork were untouched.
+- This is a local independent agent review, not human visual acceptance or a
+  GitHub reviewer object. CI, source integration and release upload are distinct.

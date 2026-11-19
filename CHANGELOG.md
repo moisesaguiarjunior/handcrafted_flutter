@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add example-owned retained source-space paper/pigment, native soft alpha masks,
+  directional fiber overlays and repeating cloth/paper prints. Include synthetic
+  1×/3× clipping/phase counterexamples and separated recording/readback samples;
+  no default painter or public API changes, unlimited worlds or phone claims.
+
 - Adopt the official flutter_lints preset while retaining strict analysis and
   public API documentation rules. Keep narrow documented exceptions for tools
   composing actual example painters, and enforce the policy with synthetic

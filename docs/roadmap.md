@@ -149,4 +149,15 @@ The first compatibility follow-up prepares an unreleased 0.3.1 source floor of
 Flutter 3.35.7 / Dart 3.9.2, with endpoint analysis/tests/web builds and separate
 fresh-resolution/locked-baseline CI lanes. [Evidence and limits](sdk-compatibility.md).
 The hosted 0.3.0 archive and tag keep their original requirements; release upload
-is a separate action. Standard-lint adoption remains a subsequent isolated change.
+is a separate action. Standard-lint adoption shipped in PR #47 with strict inheritance counterexamples.
+
+
+## Bounded continuous-surface proofs
+
+The [synthetic continuity/fidelity request](requests/continuous-materials.md)
+now has an [example-owned source-space recipe](surface-continuity.md): retained
+paper/pigment above 1024px, a native soft alpha mask, configurable directional
+fibers and check/diamond prints on existing substrates. This is not automatic
+consumer adoption or reference-art equivalence. Strip raster differences are
+measured, not hidden. Arbitrary-size worlds, cross-engine visual acceptance and
+physical-device performance remain open; no new material/cache API is implied.

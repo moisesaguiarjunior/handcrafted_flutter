@@ -181,8 +181,23 @@ interactive hosted-browser approval and phone performance remain separate.
 | --- | --- | --- |
 | HC-A01 | Current docs and focused reuse map | Shipped in PR #45; extraction history and links retained |
 | HC-A02 | Tested SDK floor and CI matrix | Unreleased 0.3.1 candidate: Flutter 3.35.7 and 3.47.9; fresh-resolution matrix plus locked baseline; see sdk-compatibility.md |
-| HC-A03 | Standard lint preset | flutter_lints candidate with narrow cross-package capture exceptions and synthetic guard checks; see lint-policy.md |
+| HC-A03 | Standard lint preset | Shipped in PR #47; narrow capture exceptions and effective strict/project-rule inheritance guards; see lint-policy.md |
 | HC-A04 | Rendering/preparation baselines | Reuse the workload harness; report cold/warm preparation separately from frame timings |
 | HC-A05 | Grain opacity experiment | Pixel parity across substrates/alpha/clips before claiming saveLayer can be removed |
 | HC-A06 | Scoped texture sharing | Conditional on evidence; explicit borrowed/owned lifecycle, seed and disposal semantics |
 | HC-A07 | Physical-device evidence | Android/iOS profile validation remains a later owner-controlled gate |
+
+
+## Continuous-surface and pattern proofs
+
+| ID | Work | Boundary |
+| --- | --- | --- |
+| HC-S01 | Fixed source domain and clipped viewports | Synthetic 960×1728 recipe and 1×/3× counterexamples; clip rounding is measured, not pixel equivalence |
+| HC-S02 | Quiet wash with soft alpha | Native mask recipe; separate core/feather/curve/outline; no default painter change |
+| HC-S03 | Directional fibers and repeating print | Bounded example geometry on existing substrates; direction/length/density/strength and print phase remain explicit |
+| HC-S04 | Beyond 2048 and cross-engine acceptance | Open; bounded proof does not implement arbitrary-size documents |
+| HC-S05 | Consumer visual adoption | Open; no private art/data copied and no reference fidelity claimed |
+
+See [request](requests/continuous-materials.md) and [proof/limits](surface-continuity.md).
+Phone measurements remain deferred; broader performance baselines (HC-A04) are
+not completed by exploratory raster/readback samples.

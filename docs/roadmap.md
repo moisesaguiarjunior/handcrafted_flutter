@@ -131,3 +131,16 @@ on 2026-11-18; hosted resolution and a native-action smoke passed in a fresh
 consumer. The interactive browser visit remains incomplete after a connection
 failure. Physical Android/iPhone performance
 measurements and assistive-technology sessions are still pending.
+
+## Adoption hardening after 0.3.0
+
+The [external-review follow-up](requests/adoption-hardening.md) prioritizes current
+release documentation, a tested wider SDK floor, and a standard lint preset.
+Rendering changes follow reproducible preparation/paint measurements and pixel
+parity. Scoped sharing is conditional; no global cache or new ownership API is
+promised. Physical Android/iPhone profiling remains a separate later gate.
+
+The reuse guide is now a current contract index; its full extraction notes remain
+in [history](history/reuse-extractions.md). Old tags/branches and useful standalone
+example entrypoints are preserved. Test coverage is evidence of exercised code,
+not certification of performance, accessibility or platform compatibility.

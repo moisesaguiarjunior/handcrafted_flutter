@@ -24,12 +24,14 @@ resolves and checks its own supported pins.
 
 The normal check script also runs `python3 tool/check_lint_policy.py`. It reuses
 the publication snapshot helper and real Flutter analyzer, inserts synthetic
-print/unbraced-if probes in lib, example/lib and tool, and requires each preset/
-inherited diagnostic. Public API documentation is additionally checked in the
+print/unbraced-if probes plus dynamic-call and strict-cast violations in lib,
+example/lib and tool, and requires each preset/project-specific diagnostic. Public API documentation is additionally checked in the
 library contexts, where that rule applies. The disposable snapshot is removed;
 working files and local notes are not modified or copied into fixtures.
 
-This guard fails if the preset or inherited control-flow rule is removed. A clean
+This guard fails if the preset, project-specific dynamic-call rule or strict
+casts are removed. It also fails if the tool scope stops inheriting the root
+policy and includes only the upstream preset. A clean
 analyzer alone would not prove dormant rules were still active. The usual
 format/analyze/test and publication checks remain required.
 

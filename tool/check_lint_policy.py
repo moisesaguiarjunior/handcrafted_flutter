@@ -19,15 +19,18 @@ def main() -> None:
         contexts = {
             "lib/lint_guard_probe.dart": [
                 "avoid_print", "curly_braces_in_flow_control_structures",
+                "avoid_dynamic_calls", "invalid_assignment",
                 "public_member_api_docs",
             ],
             "example/lib/lint_guard_probe.dart": [
                 "avoid_print", "curly_braces_in_flow_control_structures",
+                "avoid_dynamic_calls", "invalid_assignment",
                 "public_member_api_docs",
             ],
             # API docs apply to library entrypoints, not standalone CLI scripts.
             "tool/lint_guard_probe.dart": [
                 "avoid_print", "curly_braces_in_flow_control_structures",
+                "avoid_dynamic_calls", "invalid_assignment",
             ],
         }
         for name in contexts:
@@ -35,9 +38,11 @@ def main() -> None:
             if probe.exists():
                 raise RuntimeError(f"Synthetic probe collides with source: {name}")
             probe.write_text(
-                "void lintGuardProbe(bool enabled) {\n"
+                "void lintGuardProbe(bool enabled, dynamic receiver) {\n"
                 "  if (enabled)\n"
                 "    print('Synthetic lint guard');\n"
+                "  final int typed = receiver;\n"
+                "  receiver.invokeSyntheticGuard(typed);\n"
                 "}\n"
             )
         result = subprocess.run(

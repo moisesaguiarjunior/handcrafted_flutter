@@ -134,41 +134,48 @@ void main() {
       expect(raster.sublist(middle, middle + 4), [255, 250, 242, 255]);
     },
   );
-  test('profile shadow follows the wide edge; lift and softness leave surface unchanged', () async {
-    final band = CraftBand(
-      Path()
-        ..moveTo(10, 30)
-        ..lineTo(85, 30),
-      height: 1,
-      widthProfile: const [
-        CraftBandWidth(progress: 0, positive: 5, negative: 5),
-        CraftBandWidth(progress: .5, positive: 23, negative: 5),
-        CraftBandWidth(progress: 1, positive: 5, negative: 5),
-      ],
-    );
-    Future<Uint8List> shadow({double lift = 0, double softness = 1}) => pixels((
-      c,
-    ) {
-      c.drawColor(const Color(0xFFFFFFFF), BlendMode.src);
-      band.shadow(c, CraftLight(x: 0, y: -1), lift: lift, softness: softness);
-    });
-    final contact = await shadow();
-    final wide = (54 * 100 + 47) * 4, narrow = (54 * 100 + 12) * 4;
-    expect(contact[wide], lessThan(contact[narrow]));
-    final surface = await render(band, CraftLight());
-    expect(await shadow(lift: 12), isNot(contact));
-    expect(await shadow(softness: 3), isNot(contact));
-    expect(await render(band, CraftLight()), surface);
-    final recorder = PictureRecorder();
-    try {
-      expect(
-        () => band.shadow(Canvas(recorder), CraftLight(), softness: 0),
-        throwsArgumentError,
+  test(
+    'profile shadow follows the wide edge; lift and softness leave surface unchanged',
+    () async {
+      final band = CraftBand(
+        Path()
+          ..moveTo(10, 30)
+          ..lineTo(85, 30),
+        height: 1,
+        widthProfile: const [
+          CraftBandWidth(progress: 0, positive: 5, negative: 5),
+          CraftBandWidth(progress: .5, positive: 23, negative: 5),
+          CraftBandWidth(progress: 1, positive: 5, negative: 5),
+        ],
       );
-    } finally {
-      recorder.endRecording().dispose();
-    }
-  });
+      Future<Uint8List> shadow({double lift = 0, double softness = 1}) =>
+          pixels((c) {
+            c.drawColor(const Color(0xFFFFFFFF), BlendMode.src);
+            band.shadow(
+              c,
+              CraftLight(x: 0, y: -1),
+              lift: lift,
+              softness: softness,
+            );
+          });
+      final contact = await shadow();
+      final wide = (54 * 100 + 47) * 4, narrow = (54 * 100 + 12) * 4;
+      expect(contact[wide], lessThan(contact[narrow]));
+      final surface = await render(band, CraftLight());
+      expect(await shadow(lift: 12), isNot(contact));
+      expect(await shadow(softness: 3), isNot(contact));
+      expect(await render(band, CraftLight()), surface);
+      final recorder = PictureRecorder();
+      try {
+        expect(
+          () => band.shadow(Canvas(recorder), CraftLight(), softness: 0),
+          throwsArgumentError,
+        );
+      } finally {
+        recorder.endRecording().dispose();
+      }
+    },
+  );
   test('width keys reject discontinuous joins and excessive preparation', () {
     final source = curve();
     expect(

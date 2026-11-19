@@ -395,8 +395,9 @@ void _paintBrush(
       ..style = PaintingStyle.stroke
       ..strokeWidth = math.min(.7, style.width * .08)
       ..strokeJoin = StrokeJoin.round
-      ..color = const Color(0xFFFFFFFF)
-          .withValues(alpha: color.a * .28 * style.variation),
+      ..color = const Color(
+        0xFFFFFFFF,
+      ).withValues(alpha: color.a * .28 * style.variation),
   );
   canvas.restore();
 }

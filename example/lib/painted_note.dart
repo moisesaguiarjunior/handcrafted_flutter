@@ -75,8 +75,9 @@ class _PaintedNoteState extends State<PaintedNote> {
       child: Theme(
         data: Theme.of(context).copyWith(
           extensions: [
-            ...Theme.of(context).extensions.values
-                .where((extension) => extension is! CraftTheme),
+            ...Theme.of(
+              context,
+            ).extensions.values.where((extension) => extension is! CraftTheme),
             exampleMaterialTheme(cloth: false),
           ],
         ),

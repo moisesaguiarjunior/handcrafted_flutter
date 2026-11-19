@@ -44,8 +44,9 @@ void main() {
     try {
       image = MemoryImage(
         Uint8List.fromList(
-          (await raster.toByteData(format: ui.ImageByteFormat.png))!.buffer
-              .asUint8List(),
+          (await raster.toByteData(
+            format: ui.ImageByteFormat.png,
+          ))!.buffer.asUint8List(),
         ),
       );
     } finally {

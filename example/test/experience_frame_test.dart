@@ -188,8 +188,9 @@ void main() {
           );
           await tester.pumpAndSettle();
           final destination = experienceArtworkRect(size);
-          final point = importedLidPart(progress: progress)
-              .mapSourcePoint(lidSourceRect.center);
+          final point = importedLidPart(
+            progress: progress,
+          ).mapSourcePoint(lidSourceRect.center);
           final expected =
               tester.getTopLeft(find.byKey(artKey)) +
               destination.topLeft +

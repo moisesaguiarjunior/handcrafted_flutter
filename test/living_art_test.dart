@@ -10,39 +10,45 @@ import 'support/widget_raster.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  test('dry and wet pink bases react differently while time and layer content replay', () async {
-    Future<List<int>> render(double wetness, double progress) => pixels((c) {
-      c.drawColor(const Color(0xFFFFFDF8), BlendMode.src);
-      LivingMaterialPainter(
-        LivingTechnique.watercolor,
-        progress,
-        experiment: WatercolorExperiment.layers,
-        wetness: wetness,
-      ).paint(c, const Size(100, 80));
-    });
-    final dry = await render(0, .6), wet = await render(1, .6);
-    expect(dry, isNot(wet));
-    await render(.3, .15);
-    expect(wet, await render(1, .6));
-    expect(
-      await render(1, 0),
-      await render(0, 0),
-      reason: 'The existing pink layer precedes the new brush contact',
-    );
-    expect(wet, isNot(await render(1, .2)));
-  });
-  test('moving brush wash changes over time without changing earlier recipe inputs', () async {
-    Future<List<int>> render(double p) => pixels(
-      (c) => LivingMaterialPainter(
-        LivingTechnique.watercolor,
-        p,
-        experiment: WatercolorExperiment.stroke,
-      ).paint(c, const Size(100, 80)),
-    );
-    final early = await render(.2), late = await render(.8);
-    expect(early, isNot(late));
-    expect(early, await render(.2));
-  });
+  test(
+    'dry and wet pink bases react differently while time and layer content replay',
+    () async {
+      Future<List<int>> render(double wetness, double progress) => pixels((c) {
+        c.drawColor(const Color(0xFFFFFDF8), BlendMode.src);
+        LivingMaterialPainter(
+          LivingTechnique.watercolor,
+          progress,
+          experiment: WatercolorExperiment.layers,
+          wetness: wetness,
+        ).paint(c, const Size(100, 80));
+      });
+      final dry = await render(0, .6), wet = await render(1, .6);
+      expect(dry, isNot(wet));
+      await render(.3, .15);
+      expect(wet, await render(1, .6));
+      expect(
+        await render(1, 0),
+        await render(0, 0),
+        reason: 'The existing pink layer precedes the new brush contact',
+      );
+      expect(wet, isNot(await render(1, .2)));
+    },
+  );
+  test(
+    'moving brush wash changes over time without changing earlier recipe inputs',
+    () async {
+      Future<List<int>> render(double p) => pixels(
+        (c) => LivingMaterialPainter(
+          LivingTechnique.watercolor,
+          p,
+          experiment: WatercolorExperiment.stroke,
+        ).paint(c, const Size(100, 80)),
+      );
+      final early = await render(.2), late = await render(.8);
+      expect(early, isNot(late));
+      expect(early, await render(.2));
+    },
+  );
   test(
     'dragged wash stays on a continuous swept band with an unpainted future',
     () async {
@@ -138,33 +144,36 @@ void main() {
       expect(await widgetPixels(tester, boundary), hidden);
     },
   );
-  test('thread passes have nonperiodic motion and never paint the below-cloth connectors', () async {
-    Future<List<int>> render(double p) => pixels(
-      (c) => LivingMaterialPainter(
-        LivingTechnique.embroidery,
-        p,
-      ).paint(c, const Size(100, 80)),
-    );
-    final first = await render(.13);
-    expect(first, await render(.13));
-    expect(first, isNot(await render(.57)));
-    for (final p in [0.0, .13, .42, .81, 1.0]) {
-      final image = await render(p);
-      expect(
-        image[(42 * 100 + 41) * 4 + 3],
-        0,
-        reason: 'Connector is beneath the cloth at $p',
+  test(
+    'thread passes have nonperiodic motion and never paint the below-cloth connectors',
+    () async {
+      Future<List<int>> render(double p) => pixels(
+        (c) => LivingMaterialPainter(
+          LivingTechnique.embroidery,
+          p,
+        ).paint(c, const Size(100, 80)),
       );
-    }
-    final end = await render(1);
-    expect(
-      [
-        for (var y = 44; y < 48; y++)
-          for (var x = 31; x < 36; x++) end[(y * 100 + x) * 4 + 3],
-      ].any((v) => v > 0),
-      isTrue,
-    );
-  });
+      final first = await render(.13);
+      expect(first, await render(.13));
+      expect(first, isNot(await render(.57)));
+      for (final p in [0.0, .13, .42, .81, 1.0]) {
+        final image = await render(p);
+        expect(
+          image[(42 * 100 + 41) * 4 + 3],
+          0,
+          reason: 'Connector is beneath the cloth at $p',
+        );
+      }
+      final end = await render(1);
+      expect(
+        [
+          for (var y = 44; y < 48; y++)
+            for (var x = 31; x < 36; x++) end[(y * 100 + x) * 4 + 3],
+        ].any((v) => v > 0),
+        isTrue,
+      );
+    },
+  );
   test(
     'finishing preserves existing stitches and adds the chosen count in order',
     () async {
@@ -209,46 +218,55 @@ void main() {
       expect(await render(1, 4), await render(1, 8));
     },
   );
-  test('loose thread and needle props are independent and hidden below cloth', () async {
-    Future<List<int>> render(double p, bool loose, bool needle) => pixels(
-      (c) => LivingMaterialPainter(
-        LivingTechnique.embroidery,
-        p,
-        threadExperiment: ThreadExperiment.embroidery,
-        showLooseThread: loose,
-        showNeedle: needle,
-      ).paint(c, const Size(100, 80)),
-    );
-    // One strand is underway near the start of the reveal.
-    final plain = await render(.003, false, false);
-    expect(await render(.003, true, false), isNot(plain));
-    expect(await render(.003, false, true), isNot(plain));
-    expect(
-      await render(.003, true, true),
-      isNot(await render(.003, true, false)),
-    );
-    // Every contour uses .72 above-cloth and .28 hidden return. Probe within
-    // the first return interval (the authored sprig currently has >100 spans).
-    final seam = Path()
-      ..moveTo(270, 290)
-      ..cubicTo(275, 230, 330, 160, 310, 65);
-    final total =
-        craftStitchPath(
-          seam,
-          kind: CraftStitchKind.backstitch,
-          pitch: 9,
-        ).computeMetrics().length +
-        100;
-    final below = .9 / total;
-    expect(await render(below, true, true), await render(below, false, false));
-    expect(await render(1, true, true), await render(1, false, false));
-  });
-  test('balloon and kite have different authored rhythms on the same supplied time', () {
-    final kite = studySway(.4), balloon = studyBalloonDrift(.4);
-    expect(kite.rotation, isNot(closeTo(balloon.rotation, .001)));
-    expect(kite.translation, isNot(balloon.translation));
-    expect(studyBalloonDrift(0).translation, Offset.zero);
-    expect(studyBalloonDrift(1).translation, Offset.zero);
-    expect(studyBalloonDrift(.4).translation, balloon.translation);
-  });
+  test(
+    'loose thread and needle props are independent and hidden below cloth',
+    () async {
+      Future<List<int>> render(double p, bool loose, bool needle) => pixels(
+        (c) => LivingMaterialPainter(
+          LivingTechnique.embroidery,
+          p,
+          threadExperiment: ThreadExperiment.embroidery,
+          showLooseThread: loose,
+          showNeedle: needle,
+        ).paint(c, const Size(100, 80)),
+      );
+      // One strand is underway near the start of the reveal.
+      final plain = await render(.003, false, false);
+      expect(await render(.003, true, false), isNot(plain));
+      expect(await render(.003, false, true), isNot(plain));
+      expect(
+        await render(.003, true, true),
+        isNot(await render(.003, true, false)),
+      );
+      // Every contour uses .72 above-cloth and .28 hidden return. Probe within
+      // the first return interval (the authored sprig currently has >100 spans).
+      final seam = Path()
+        ..moveTo(270, 290)
+        ..cubicTo(275, 230, 330, 160, 310, 65);
+      final total =
+          craftStitchPath(
+            seam,
+            kind: CraftStitchKind.backstitch,
+            pitch: 9,
+          ).computeMetrics().length +
+          100;
+      final below = .9 / total;
+      expect(
+        await render(below, true, true),
+        await render(below, false, false),
+      );
+      expect(await render(1, true, true), await render(1, false, false));
+    },
+  );
+  test(
+    'balloon and kite have different authored rhythms on the same supplied time',
+    () {
+      final kite = studySway(.4), balloon = studyBalloonDrift(.4);
+      expect(kite.rotation, isNot(closeTo(balloon.rotation, .001)));
+      expect(kite.translation, isNot(balloon.translation));
+      expect(studyBalloonDrift(0).translation, Offset.zero);
+      expect(studyBalloonDrift(1).translation, Offset.zero);
+      expect(studyBalloonDrift(.4).translation, balloon.translation);
+    },
+  );
 }

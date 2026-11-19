@@ -25,29 +25,32 @@ void main() {
       if (data[i] > 0) 1,
   ].length;
 
-  test('seeded non-woven fibers clip edges and holes; copied paths cannot mutate paint', () async {
-    final source = cut();
-    final nap = CraftNap(source, seed: 31);
-    final a = await render(nap);
-    expect(occupied(a), greaterThan(100));
-    expect(await render(CraftNap(cut(), seed: 31)), a);
-    expect(await render(CraftNap(cut(), seed: 32)), isNot(a));
-    for (var y = 32; y <= 46; y++) {
-      for (var x = 43; x <= 57; x++) {
-        expect(a[(y * 100 + x) * 4 + 3], 0, reason: 'receiver hole at $x,$y');
+  test(
+    'seeded non-woven fibers clip edges and holes; copied paths cannot mutate paint',
+    () async {
+      final source = cut();
+      final nap = CraftNap(source, seed: 31);
+      final a = await render(nap);
+      expect(occupied(a), greaterThan(100));
+      expect(await render(CraftNap(cut(), seed: 31)), a);
+      expect(await render(CraftNap(cut(), seed: 32)), isNot(a));
+      for (var y = 32; y <= 46; y++) {
+        for (var x = 43; x <= 57; x++) {
+          expect(a[(y * 100 + x) * 4 + 3], 0, reason: 'receiver hole at $x,$y');
+        }
       }
-    }
-    source.reset();
-    nap.outline.reset();
-    expect(await render(nap), a);
-    for (final p in [
-      const Offset(2, 2),
-      const Offset(50, 39),
-      const Offset(99, 79),
-    ]) {
-      expect(a[(p.dy.toInt() * 100 + p.dx.toInt()) * 4 + 3], 0);
-    }
-  });
+      source.reset();
+      nap.outline.reset();
+      expect(await render(nap), a);
+      for (final p in [
+        const Offset(2, 2),
+        const Offset(50, 39),
+        const Offset(99, 79),
+      ]) {
+        expect(a[(p.dy.toInt() * 100 + p.dx.toInt()) * 4 + 3], 0);
+      }
+    },
+  );
   test(
     'scale density direction and contrast independently change actual deposits',
     () async {
@@ -83,37 +86,40 @@ void main() {
       expect(translated, await pixels((c) => nap.paint(c)));
     },
   );
-  test('invalid recipes and excessive work fail before painting, even at zero density', () async {
-    for (final value in [double.nan, double.infinity, -.1]) {
-      expect(() => CraftNap(cut(), density: value), throwsArgumentError);
-    }
-    expect(() => CraftNap(cut(), scale: .49), throwsArgumentError);
-    expect(() => CraftNap(cut(), direction: double.nan), throwsArgumentError);
-    expect(() => CraftNap(Path()..lineTo(20, 20)), throwsArgumentError);
-    expect(
-      () => CraftNap(
-        Path()..addRect(const Rect.fromLTWH(0, 0, 320, 320)),
+  test(
+    'invalid recipes and excessive work fail before painting, even at zero density',
+    () async {
+      for (final value in [double.nan, double.infinity, -.1]) {
+        expect(() => CraftNap(cut(), density: value), throwsArgumentError);
+      }
+      expect(() => CraftNap(cut(), scale: .49), throwsArgumentError);
+      expect(() => CraftNap(cut(), direction: double.nan), throwsArgumentError);
+      expect(() => CraftNap(Path()..lineTo(20, 20)), throwsArgumentError);
+      expect(
+        () => CraftNap(
+          Path()..addRect(const Rect.fromLTWH(0, 0, 320, 320)),
+          scale: .5,
+          density: 0,
+        ),
+        throwsArgumentError,
+      );
+      expect(
+        () => CraftNap(Path()..addRect(const Rect.fromLTWH(0, 0, 321, 10))),
+        throwsArgumentError,
+      );
+      final empty = CraftNap(Path());
+      await expectLater(
+        pixels((c) => empty.paint(c, contrast: double.nan)),
+        throwsArgumentError,
+      );
+      expect(occupied(await render(empty)), 0);
+      // Every documented small swatch supports the full control range.
+      final largest = CraftNap(
+        Path()..addRect(const Rect.fromLTWH(0, 0, 100, 100)),
         scale: .5,
-        density: 0,
-      ),
-      throwsArgumentError,
-    );
-    expect(
-      () => CraftNap(Path()..addRect(const Rect.fromLTWH(0, 0, 321, 10))),
-      throwsArgumentError,
-    );
-    final empty = CraftNap(Path());
-    await expectLater(
-      pixels((c) => empty.paint(c, contrast: double.nan)),
-      throwsArgumentError,
-    );
-    expect(occupied(await render(empty)), 0);
-    // Every documented small swatch supports the full control range.
-    final largest = CraftNap(
-      Path()..addRect(const Rect.fromLTWH(0, 0, 100, 100)),
-      scale: .5,
-      density: 1,
-    );
-    expect(occupied(await render(largest)), greaterThan(1000));
-  });
+        density: 1,
+      );
+      expect(occupied(await render(largest)), greaterThan(1000));
+    },
+  );
 }

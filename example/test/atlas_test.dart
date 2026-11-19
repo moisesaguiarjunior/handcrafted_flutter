@@ -48,9 +48,9 @@ void main() {
         final bitmap = await boundary.toImage(pixelRatio: 1);
         try {
           return List<int>.of(
-            (await bitmap.toByteData(format: ui.ImageByteFormat.rawRgba))!
-                .buffer
-                .asUint8List(),
+            (await bitmap.toByteData(
+              format: ui.ImageByteFormat.rawRgba,
+            ))!.buffer.asUint8List(),
           );
         } finally {
           bitmap.dispose();
@@ -97,9 +97,9 @@ void main() {
         final bitmap = await plainBoundary.toImage(pixelRatio: 1);
         try {
           return List<int>.of(
-            (await bitmap.toByteData(format: ui.ImageByteFormat.rawRgba))!
-                .buffer
-                .asUint8List(),
+            (await bitmap.toByteData(
+              format: ui.ImageByteFormat.rawRgba,
+            ))!.buffer.asUint8List(),
           );
         } finally {
           bitmap.dispose();
@@ -190,8 +190,9 @@ void main() {
         final image = await boundary.toImage(pixelRatio: 1);
         try {
           return List<int>.of(
-            (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!.buffer
-                .asUint8List(),
+            (await image.toByteData(
+              format: ui.ImageByteFormat.rawRgba,
+            ))!.buffer.asUint8List(),
           );
         } finally {
           image.dispose();

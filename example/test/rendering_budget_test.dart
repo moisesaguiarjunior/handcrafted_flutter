@@ -76,29 +76,32 @@ void main() {
     recorder.endRecording().dispose();
   }
 
-  test('equivalent recipes retain owners and invalidation disposes only their scope', () {
-    final a = BudgetResources(count: 6), b = BudgetResources(count: 1);
-    for (var i = 0; i < 6; i++) {
-      paintOwner(a, i);
-    }
-    expect(a.requestedKinds, 6);
-    a.configure(count: 6, seed: 23);
-    expect((a.created, a.disposed, a.live), (6, 0, 6));
-    a.configure(count: 3, seed: 23);
-    expect((a.created, a.disposed, a.live), (6, 3, 3));
-    expect(() => a.configure(count: 25, seed: 99), throwsArgumentError);
-    expect((a.created, a.disposed, a.live), (6, 3, 3));
-    a.configure(count: 3, seed: 24);
-    expect((a.created, a.disposed, a.live), (9, 6, 3));
-    expect(a.requestedKinds, 0);
-    a.dispose();
-    a.dispose();
-    expect((a.created, a.disposed, a.live), (9, 9, 0));
-    expect(() => paintOwner(a, 0), throwsStateError);
-    paintOwner(b, 0);
-    expect((b.created, b.disposed, b.live), (1, 0, 1));
-    b.dispose();
-  });
+  test(
+    'equivalent recipes retain owners and invalidation disposes only their scope',
+    () {
+      final a = BudgetResources(count: 6), b = BudgetResources(count: 1);
+      for (var i = 0; i < 6; i++) {
+        paintOwner(a, i);
+      }
+      expect(a.requestedKinds, 6);
+      a.configure(count: 6, seed: 23);
+      expect((a.created, a.disposed, a.live), (6, 0, 6));
+      a.configure(count: 3, seed: 23);
+      expect((a.created, a.disposed, a.live), (6, 3, 3));
+      expect(() => a.configure(count: 25, seed: 99), throwsArgumentError);
+      expect((a.created, a.disposed, a.live), (6, 3, 3));
+      a.configure(count: 3, seed: 24);
+      expect((a.created, a.disposed, a.live), (9, 6, 3));
+      expect(a.requestedKinds, 0);
+      a.dispose();
+      a.dispose();
+      expect((a.created, a.disposed, a.live), (9, 9, 0));
+      expect(() => paintOwner(a, 0), throwsStateError);
+      paintOwner(b, 0);
+      expect((b.created, b.disposed, b.live), (1, 0, 1));
+      b.dispose();
+    },
+  );
 
   testWidgets('in-place seed changes invalidate the actual material painter', (
     tester,

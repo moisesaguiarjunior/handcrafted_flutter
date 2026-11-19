@@ -38,35 +38,38 @@ void main() {
     return n;
   }
 
-  test('mouth fold and thickness alter their actual regions; pressure is localized', () async {
-    final open = await render(PocketGeometry()),
-        closed = await render(PocketGeometry(opening: 0));
-    expect(
-      changes(open, closed, const Rect.fromLTWH(12, 12, 75, 24)),
-      greaterThan(30),
-    );
-    final shallow = await render(PocketGeometry(foldDepth: 2)),
-        deep = await render(PocketGeometry(foldDepth: 12));
-    expect(
-      changes(shallow, deep, const Rect.fromLTWH(10, 25, 80, 12)),
-      greaterThan(20),
-    );
-    expect(changes(shallow, deep, const Rect.fromLTWH(30, 58, 35, 6)), 0);
-    final thin = await render(PocketGeometry(surfaceHeight: 1)),
-        thick = await render(PocketGeometry(surfaceHeight: 7));
-    expect(
-      changes(thin, thick, const Rect.fromLTWH(7, 35, 10, 30)),
-      greaterThan(20),
-    );
-    final geometry = PocketGeometry(),
-        unpressed = await render(PocketGeometry(), seam: 0);
-    final pressed = await render(geometry, seam: 1);
-    expect(
-      changes(unpressed, pressed, const Rect.fromLTWH(10, 35, 78, 40)),
-      greaterThan(30),
-    );
-    expect(changes(unpressed, pressed, const Rect.fromLTWH(60, 57, 6, 6)), 0);
-  });
+  test(
+    'mouth fold and thickness alter their actual regions; pressure is localized',
+    () async {
+      final open = await render(PocketGeometry()),
+          closed = await render(PocketGeometry(opening: 0));
+      expect(
+        changes(open, closed, const Rect.fromLTWH(12, 12, 75, 24)),
+        greaterThan(30),
+      );
+      final shallow = await render(PocketGeometry(foldDepth: 2)),
+          deep = await render(PocketGeometry(foldDepth: 12));
+      expect(
+        changes(shallow, deep, const Rect.fromLTWH(10, 25, 80, 12)),
+        greaterThan(20),
+      );
+      expect(changes(shallow, deep, const Rect.fromLTWH(30, 58, 35, 6)), 0);
+      final thin = await render(PocketGeometry(surfaceHeight: 1)),
+          thick = await render(PocketGeometry(surfaceHeight: 7));
+      expect(
+        changes(thin, thick, const Rect.fromLTWH(7, 35, 10, 30)),
+        greaterThan(20),
+      );
+      final geometry = PocketGeometry(),
+          unpressed = await render(PocketGeometry(), seam: 0);
+      final pressed = await render(geometry, seam: 1);
+      expect(
+        changes(unpressed, pressed, const Rect.fromLTWH(10, 35, 78, 40)),
+        greaterThan(30),
+      );
+      expect(changes(unpressed, pressed, const Rect.fromLTWH(60, 57, 6, 6)), 0);
+    },
+  );
   testWidgets(
     'paint-only pressure and insertion reuse geometry, mouth changes replace it',
     (tester) async {

@@ -10,6 +10,7 @@
 - [Adoption recipes and evidence-driven extensions](consumer-adoption.md)
 - [Reuse map](reuse.md)
 - [Material-focused roadmap](roadmap.md)
+- [Adoption hardening and evidence gates](requests/adoption-hardening.md)
 - [Proposed authored-scene composition recipes](requests/authored-scene-composition.md)
 - [Bounded gravity/wind and response styles](bounded-physics.md)
 - [Bounded pour, droplets and light](bounded-effects.md)

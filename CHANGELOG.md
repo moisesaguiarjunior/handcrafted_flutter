@@ -15,7 +15,7 @@
   to the pocket recipe. Keep default imagery and original image adapter topology.
 
 - Add CraftNap: prepared short matte fiber finish with independent scale,
-  density, direction and paint contrast, bounded to8192 candidates in four tonal
+  density, direction and paint contrast, bounded to 8,192 candidates in four tonal
   paths. Existing cotton/suede tiles remain unchanged. Add real-size comparison
   and layered EVA with receiver-clipped shadow and localized pressed sewing.
 

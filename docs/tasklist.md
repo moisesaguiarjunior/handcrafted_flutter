@@ -18,8 +18,8 @@ a passing widget test is not a phone benchmark or visual approval.
 | HC-R01 | Traceable independent reviews | Record added; retrospective audit approved at `7c7225a` |
 | HC-R02 | Remove consumer-specific actor preset | Published in PR #12; final review at `87786ec` |
 | HC-R03 | Dependency/license release audit | 22 license hashes verified; clipper2 0.0.3 BSL-1.0 attribution retained |
-| HC-R05 | Hosted publication readiness | 0.3.0 candidate: metadata/screenshots, archive exclusions and CI dry-run/docs gate; owner account and actual upload remain separate |
-| HC-R04 | Immutable version/tag | `v0.1.0` at `87786ec` retained; consolidated `v0.2.0` release candidate prepared; exact review/CI/tag tracked by PR/release |
+| HC-R05 | Hosted publication readiness | 0.3.0 published on pub.dev; archive/tag parity and fresh hosted consumption verified; API/score generation remains separate |
+| HC-R04 | Immutable version/tag | `v0.1.0` and `v0.2.0` retained; immutable `v0.3.0` at `2e63fee`, matching the first hosted archive |
 | HC-P01 | Public clock-free image crop/artboard placement | Shipped in PR #11 at `e420be8`; independent review and CI passed |
 | HC-P02 | Long freehand paths | Source adapter `paintCraftFreehand`: 128 strokes/8192 points and native parity; consumer adoption pending |
 | HC-P03 | Rope, ribbon and embroidery over textures or contours | Published in PR #13 at `086763e`; native/Chrome checks and original compositions |
@@ -172,3 +172,17 @@ The hosted archive matches v0.3.0; fresh hosted dependency resolution and a nati
 button inside EVA passed without Git/path overrides. No publisher transfer or
 automated upload was configured. Hosted API/score generation is asynchronous;
 interactive hosted-browser approval and phone performance remain separate.
+
+## Adoption hardening after 0.3.0
+
+[Acceptance criteria and delivery order](requests/adoption-hardening.md).
+
+| ID | Work | Boundary |
+| --- | --- | --- |
+| HC-A01 | Current docs and focused reuse map | Correct shipped-version wording; retain extraction history and links |
+| HC-A02 | Tested SDK floor and CI matrix | Isolated SDK resolution, analysis, tests and web build before widening constraints |
+| HC-A03 | Standard lint preset | Isolated rule adoption, minimal fixes, existing strict/API rules retained |
+| HC-A04 | Rendering/preparation baselines | Reuse the workload harness; report cold/warm preparation separately from frame timings |
+| HC-A05 | Grain opacity experiment | Pixel parity across substrates/alpha/clips before claiming saveLayer can be removed |
+| HC-A06 | Scoped texture sharing | Conditional on evidence; explicit borrowed/owned lifecycle, seed and disposal semantics |
+| HC-A07 | Physical-device evidence | Android/iOS profile validation remains a later owner-controlled gate |

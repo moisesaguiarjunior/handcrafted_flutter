@@ -2,6 +2,7 @@
 
 - [Live gallery, deployment and generic motion capture](live-gallery.md)
 - [Compatibility and evolution](compatibility.md)
+- [SDK matrix, supported floors and lockfile lanes](sdk-compatibility.md)
 - [Hosted publication readiness and validation](publishing.md)
 - [Light studio and Android smoke](light-studio.md)
 - [0.3.0 source release](releases/0.3.0.md)

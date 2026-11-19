@@ -81,8 +81,9 @@ void main() {
       const HandcraftedGalleryApp(initialStudy: GalleryStudy.stitches),
     );
     final context = tester.element(find.byType(StitchPlayground));
-    final media = MediaQuery.of(context)
-        .copyWith(textScaler: const TextScaler.linear(2.5));
+    final media = MediaQuery.of(
+      context,
+    ).copyWith(textScaler: const TextScaler.linear(2.5));
     await tester.pumpWidget(
       MediaQuery(
         data: media,
@@ -91,8 +92,9 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(
-      MediaQuery.textScalerOf(tester.element(find.byType(StitchPlayground)))
-          .scale(10),
+      MediaQuery.textScalerOf(
+        tester.element(find.byType(StitchPlayground)),
+      ).scale(10),
       25,
     );
     await tester.tap(find.byTooltip('Open navigation menu'));

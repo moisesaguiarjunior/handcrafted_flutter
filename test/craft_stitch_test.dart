@@ -92,38 +92,41 @@ void main() {
       );
     },
   );
-  test('short closed chain/cross use three cells and account for them before painting', () async {
-    final tiny = Path()..addOval(const Rect.fromLTWH(40, 30, 10, 10));
-    for (final kind in [CraftStitchKind.chain, CraftStitchKind.cross]) {
-      final result = craftStitchPath(tiny, kind: kind, pitch: 48, depth: 4);
-      expect(result.getBounds().width, greaterThan(5));
-      expect(result.getBounds().height, greaterThan(5));
-      expect(
-        result.computeMetrics().length,
-        kind == CraftStitchKind.chain ? 3 : 6,
-      );
-    }
-    final crowded = Path()
-      ..moveTo(0, 0)
-      ..lineTo(3960, 0);
-    for (var i = 0; i < 31; i++) {
-      crowded.addOval(Rect.fromLTWH(10.0 + i * 3, 20, 1, 1));
-    }
-    final actual = await pixels(
-      (c) => expect(
-        () => paintCraftStitch(
-          c,
-          crowded,
-          thread: const Color(0xFF112233),
-          kind: CraftStitchKind.chain,
-          pitch: 4,
-          depth: 1,
+  test(
+    'short closed chain/cross use three cells and account for them before painting',
+    () async {
+      final tiny = Path()..addOval(const Rect.fromLTWH(40, 30, 10, 10));
+      for (final kind in [CraftStitchKind.chain, CraftStitchKind.cross]) {
+        final result = craftStitchPath(tiny, kind: kind, pitch: 48, depth: 4);
+        expect(result.getBounds().width, greaterThan(5));
+        expect(result.getBounds().height, greaterThan(5));
+        expect(
+          result.computeMetrics().length,
+          kind == CraftStitchKind.chain ? 3 : 6,
+        );
+      }
+      final crowded = Path()
+        ..moveTo(0, 0)
+        ..lineTo(3960, 0);
+      for (var i = 0; i < 31; i++) {
+        crowded.addOval(Rect.fromLTWH(10.0 + i * 3, 20, 1, 1));
+      }
+      final actual = await pixels(
+        (c) => expect(
+          () => paintCraftStitch(
+            c,
+            crowded,
+            thread: const Color(0xFF112233),
+            kind: CraftStitchKind.chain,
+            pitch: 4,
+            depth: 1,
+          ),
+          throwsArgumentError,
         ),
-        throwsArgumentError,
-      ),
-    );
-    expect(actual, await pixels((_) {}));
-  });
+      );
+      expect(actual, await pixels((_) {}));
+    },
+  );
   test(
     'holes retain their seam topology and degenerate paths add no ink',
     () async {

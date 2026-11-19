@@ -34,8 +34,10 @@ class SoftCraftSamples extends StatelessWidget {
     children: [
       Text(
         'Small things, softly made',
-        style: Theme.of(context).textTheme.headlineMedium
-            ?.copyWith(fontFamily: 'Caveat', fontSize: 42),
+        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+          fontFamily: 'Caveat',
+          fontSize: 42,
+        ),
       ),
       const Text(
         'Compact weave, a soft nap, and thread that gently gathers the cloth.',

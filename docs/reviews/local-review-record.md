@@ -185,3 +185,24 @@ are outside this review/delivery.
   hosted-site visit remains incomplete because browser control disconnected.
 - Distance, world-space rotation and undersized-board negative controls failed
   when their protected behavior was removed; restored source remains exact.
+
+## Adoption hardening and the wider source SDK floor
+
+- Documentation source `aa61fd5943027fe02c7cd2b57b416306c3dd5338` approved by
+  independent Astra review. All extraction notes retained with five relocated
+  links; current reuse map and shipped material/release wording corrected.
+- Compatibility source `f0ae45fd5663de606f1e41004f12a1feed5c5705` approved with
+  no blocking findings. The reviewer independently reproduced all 30 files of
+  formatter-only reflow and a missing-example-lock failure in the baseline lane.
+- Exact-candidate disposable checks passed on Flutter 3.35.7 / Dart 3.9.2 and
+  Flutter 3.47.9 / Dart 3.13.7: strict analysis, 149 package tests, 119 example
+  tests and release web build on each. Baseline locked checks and publication/
+  Dartdoc gates also passed. Endpoint CI remains a separate required result.
+- Negative controls confirmed the clock test fails if disabled TickerMode is
+  ignored (progress jumps to completion), and the portable semantics matcher
+  fails if selected state is removed. The disposable mutations were restored;
+  no native painter or prepared geometry changed.
+- These are local independent agent reviews, not human or GitHub review objects.
+  The 0.3.1 source is unreleased; published 0.3.0 and old tags remain immutable.
+  Physical-device, full hosted-browser and cross-engine visual approval are not
+  implied by the matrix. Standard lint adoption and performance work remain later.

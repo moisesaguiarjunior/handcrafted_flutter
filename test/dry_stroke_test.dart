@@ -40,36 +40,39 @@ void main() {
       ),
     ),
   );
-  test('dry tools retain real gaps, seeded replay and distinct deposits for all patterns', () async {
-    for (final pattern in CraftLinePattern.values) {
-      final results = <Uint8List>[];
-      for (final tool in tools) {
-        final first = await render(tool, pattern: pattern);
-        await render(tool, seed: 91, pattern: pattern);
-        expect(await render(tool, pattern: pattern), first);
-        expect(await render(tool, seed: 24, pattern: pattern), isNot(first));
-        expect(
-          await render(tool, variation: 0, seed: 24, pattern: pattern),
-          await render(tool, variation: 0, seed: 91, pattern: pattern),
-        );
-        expect(
-          await render(tool, progress: 0, pattern: pattern),
-          await pixels((_) {}),
-        );
-        if (pattern != CraftLinePattern.solid) {
-          // Middle of the first actual gap, clear of round cap/deposit bounds.
-          final x = pattern == CraftLinePattern.dotted ? 22 : 24;
-          for (var y = 32; y < 48; y++) {
-            expect(first[(y * 100 + x) * 4 + 3], 0, reason: '$tool/$pattern');
+  test(
+    'dry tools retain real gaps, seeded replay and distinct deposits for all patterns',
+    () async {
+      for (final pattern in CraftLinePattern.values) {
+        final results = <Uint8List>[];
+        for (final tool in tools) {
+          final first = await render(tool, pattern: pattern);
+          await render(tool, seed: 91, pattern: pattern);
+          expect(await render(tool, pattern: pattern), first);
+          expect(await render(tool, seed: 24, pattern: pattern), isNot(first));
+          expect(
+            await render(tool, variation: 0, seed: 24, pattern: pattern),
+            await render(tool, variation: 0, seed: 91, pattern: pattern),
+          );
+          expect(
+            await render(tool, progress: 0, pattern: pattern),
+            await pixels((_) {}),
+          );
+          if (pattern != CraftLinePattern.solid) {
+            // Middle of the first actual gap, clear of round cap/deposit bounds.
+            final x = pattern == CraftLinePattern.dotted ? 22 : 24;
+            for (var y = 32; y < 48; y++) {
+              expect(first[(y * 100 + x) * 4 + 3], 0, reason: '$tool/$pattern');
+            }
           }
+          results.add(first);
         }
-        results.add(first);
+        expect(results[0], isNot(results[1]));
+        expect(results[1], isNot(results[2]));
+        expect(results[0], isNot(results[2]));
       }
-      expect(results[0], isNot(results[1]));
-      expect(results[1], isNot(results[2]));
-      expect(results[0], isNot(results[2]));
-    }
-  });
+    },
+  );
   test(
     'transparent dry ink never paints or erases an existing substrate',
     () async {
@@ -90,62 +93,70 @@ void main() {
         final translucent = await render(tool, color: const Color(0x4079445F));
         final opaque = await render(tool);
         expect(
-          [for (var i = 3; i < opaque.length; i += 4) translucent[i]]
-              .reduce((a, b) => a + b),
+          [
+            for (var i = 3; i < opaque.length; i += 4) translucent[i],
+          ].reduce((a, b) => a + b),
           lessThan(
-            [for (var i = 3; i < opaque.length; i += 4) opaque[i]]
-                .reduce((a, b) => a + b),
+            [
+              for (var i = 3; i < opaque.length; i += 4) opaque[i],
+            ].reduce((a, b) => a + b),
           ),
         );
       }
     },
   );
-  test('dry instruments accept the full arc budget at minimum dash and dot spacing', () async {
-    final longest = Path()
-      ..moveTo(4, 40)
-      ..lineTo(8196, 40);
-    for (final tool in tools) {
-      for (final pattern in CraftLinePattern.values) {
-        final actual = await pixels(
-          (c) => paintCraftStroke(
-            c,
-            longest,
-            color: const Color(0xFF79445F),
-            style: CraftStrokeStyle(
-              tool: tool,
-              pattern: pattern,
-              width: .5,
-              dash: .5,
-              gap: .5,
-              variation: 1,
+  test(
+    'dry instruments accept the full arc budget at minimum dash and dot spacing',
+    () async {
+      final longest = Path()
+        ..moveTo(4, 40)
+        ..lineTo(8196, 40);
+      for (final tool in tools) {
+        for (final pattern in CraftLinePattern.values) {
+          final actual = await pixels(
+            (c) => paintCraftStroke(
+              c,
+              longest,
+              color: const Color(0xFF79445F),
+              style: CraftStrokeStyle(
+                tool: tool,
+                pattern: pattern,
+                width: .5,
+                dash: .5,
+                gap: .5,
+                variation: 1,
+              ),
             ),
-          ),
-        );
-        expect(actual.any((v) => v > 0), isTrue, reason: '$tool/$pattern');
+          );
+          expect(actual.any((v) => v > 0), isTrue, reason: '$tool/$pattern');
+        }
       }
-    }
-  });
-  test('dry tools reject invalid later contours before painting and keep arc guard', () async {
-    final blank = await pixels((_) {});
-    for (final tool in tools) {
-      final actual = await pixels((c) {
-        final excessive = Path()
-          ..addPath(path, Offset.zero)
-          ..moveTo(0, 1)
-          ..lineTo(8193, 1);
-        expect(
-          () => paintCraftStroke(
-            c,
-            excessive,
-            color: const Color(0xFFFFFFFF),
-            style: CraftStrokeStyle(tool: tool),
-          ),
-          throwsArgumentError,
-        );
-      });
-      expect(actual, blank);
-    }
-  });
+    },
+  );
+  test(
+    'dry tools reject invalid later contours before painting and keep arc guard',
+    () async {
+      final blank = await pixels((_) {});
+      for (final tool in tools) {
+        final actual = await pixels((c) {
+          final excessive = Path()
+            ..addPath(path, Offset.zero)
+            ..moveTo(0, 1)
+            ..lineTo(8193, 1);
+          expect(
+            () => paintCraftStroke(
+              c,
+              excessive,
+              color: const Color(0xFFFFFFFF),
+              style: CraftStrokeStyle(tool: tool),
+            ),
+            throwsArgumentError,
+          );
+        });
+        expect(actual, blank);
+      }
+    },
+  );
   test(
     'dense chalk increases deposited grain without filling a solid stripe',
     () async {
@@ -167,14 +178,14 @@ void main() {
       );
       final sparse = await render(0), dense = await render(1);
       expect(dense, await render(1));
-      int alphaSum(Uint8List image) =>
-          [for (var i = 3; i < image.length; i += 4) image[i]]
-              .fold(0, (a, b) => a + b);
+      int alphaSum(Uint8List image) => [
+        for (var i = 3; i < image.length; i += 4) image[i],
+      ].fold(0, (a, b) => a + b);
       expect(alphaSum(dense), greaterThan(alphaSum(sparse) * 1.5));
       expect(
-        [for (var x = 15; x < 85; x++) dense[(40 * 100 + x) * 4 + 3]]
-            .toSet()
-            .length,
+        [
+          for (var x = 15; x < 85; x++) dense[(40 * 100 + x) * 4 + 3],
+        ].toSet().length,
         greaterThan(10),
       );
       final blank = await pixels((c) {

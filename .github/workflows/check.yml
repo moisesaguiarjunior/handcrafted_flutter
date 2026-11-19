@@ -19,6 +19,22 @@ jobs:
           name: library-coverage
           path: coverage/lcov.info
           if-no-files-found: error
+  compatibility:
+    name: Compatibility (${{ matrix.flutter }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        flutter: ['3.35.7', '3.47.9']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ matrix.flutter }}
+          channel: stable
+      # Each SDK pins its own flutter_test/sky_engine transitive dependencies.
+      # Keep the committed release locks enforced in the package job above.
+      - run: bash tool/check_compatibility.sh
   coverage:
     needs: package
     if: >-

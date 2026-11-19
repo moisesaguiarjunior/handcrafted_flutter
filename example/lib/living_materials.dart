@@ -76,9 +76,12 @@ class _LivingMaterialStudyState extends State<LivingMaterialStudy> {
           Text(
             wash
                 ? switch (experiment) {
-                    WatercolorExperiment.contact => 'A brush touches one spot, then lifts while the wet edge spreads.',
-                    WatercolorExperiment.stroke => 'Drag the brush along a curve. A continuous wash spreads from the sides of its trail.',
-                    WatercolorExperiment.layers => 'Watch blue spread into pink. Base wetness controls how far it travels.',
+                    WatercolorExperiment.contact =>
+                      'A brush touches one spot, then lifts while the wet edge spreads.',
+                    WatercolorExperiment.stroke =>
+                      'Drag the brush along a curve. A continuous wash spreads from the sides of its trail.',
+                    WatercolorExperiment.layers =>
+                      'Watch blue spread into pink. Base wetness controls how far it travels.',
                     WatercolorExperiment.botanical =>
                       'Reveal layered botanical washes on paper.',
                   }

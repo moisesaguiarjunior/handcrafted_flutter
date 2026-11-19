@@ -25,8 +25,9 @@ void main() {
     try {
       provider = MemoryImage(
         Uint8List.fromList(
-          (await image.toByteData(format: ui.ImageByteFormat.png))!.buffer
-              .asUint8List(),
+          (await image.toByteData(
+            format: ui.ImageByteFormat.png,
+          ))!.buffer.asUint8List(),
         ),
       );
     } finally {
@@ -127,9 +128,9 @@ void main() {
             final bitmap = await boundary.toImage(pixelRatio: 1);
             try {
               return Uint8List.fromList(
-                (await bitmap.toByteData(format: ui.ImageByteFormat.rawRgba))!
-                    .buffer
-                    .asUint8List(),
+                (await bitmap.toByteData(
+                  format: ui.ImageByteFormat.rawRgba,
+                ))!.buffer.asUint8List(),
               );
             } finally {
               bitmap.dispose();
@@ -299,9 +300,9 @@ void main() {
       );
       expect(part().mapSourcePoint(const Offset(40, 20)), const Offset(30, 40));
       expect(
-        () =>
-            part(source: const Rect.fromLTWH(90, 10, 40, 20))
-                .mapSourcePoint(mark),
+        () => part(
+          source: const Rect.fromLTWH(90, 10, 40, 20),
+        ).mapSourcePoint(mark),
         throwsArgumentError,
       );
       expect(

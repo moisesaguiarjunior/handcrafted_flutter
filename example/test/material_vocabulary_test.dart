@@ -39,7 +39,8 @@ void main() {
         expect(
           surfaces,
           hasLength(1),
-          reason: 'The primary card must not silently enter the plain fallback at a common desktop width.',
+          reason:
+              'The primary card must not silently enter the plain fallback at a common desktop width.',
         );
         expect(
           tester.getSize(find.byWidget(surfaces.single.widget)).width,

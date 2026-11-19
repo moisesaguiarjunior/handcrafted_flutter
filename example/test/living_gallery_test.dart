@@ -301,7 +301,7 @@ void main() {
       await tester.tap(find.widgetWithText(ListTile, 'Paint spreading'));
       await tester.pumpAndSettle();
       expect(find.text('Let the color find its way'), findsOneWidget);
-      await tester.tap(find.widgetWithText(TextButton, 'Copy link'));
+      await tester.tap(find.text('Copy link'));
       await tester.pumpAndSettle();
       expect(Uri.parse(copied!).queryParameters['study'], 'spreading');
       await tester.binding.defaultBinaryMessenger.handlePlatformMessage(
@@ -385,21 +385,24 @@ void main() {
       semantics.dispose();
     },
   );
-  test('study routes restore named studies while unknown links return to the start', () async {
-    const parser = GalleryRouteParser(GalleryStudy.cover);
-    for (final study in GalleryStudy.values) {
+  test(
+    'study routes restore named studies while unknown links return to the start',
+    () async {
+      const parser = GalleryRouteParser(GalleryStudy.cover);
+      for (final study in GalleryStudy.values) {
+        expect(
+          await parser.parseRouteInformation(
+            parser.restoreRouteInformation(study),
+          ),
+          study,
+        );
+      }
       expect(
         await parser.parseRouteInformation(
-          parser.restoreRouteInformation(study),
+          RouteInformation(uri: Uri.parse('/?study=unknown')),
         ),
-        study,
+        GalleryStudy.cover,
       );
-    }
-    expect(
-      await parser.parseRouteInformation(
-        RouteInformation(uri: Uri.parse('/?study=unknown')),
-      ),
-      GalleryStudy.cover,
-    );
-  });
+    },
+  );
 }

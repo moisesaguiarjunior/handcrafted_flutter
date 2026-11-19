@@ -91,8 +91,10 @@ String galleryDescription(GalleryStudy study) => switch (study) {
     'Change material themes while keeping native text, focus and selection.',
   GalleryStudy.experience =>
     'Fit artwork independently; keep words, touch targets and footer native.',
-  GalleryStudy.cover => 'Explore materials, marks and movement. Choose a study to try its controls.',
-  GalleryStudy.light => 'Move one lamp over clay, EVA and paper; turn a piece under the same light.',
+  GalleryStudy.cover =>
+    'Explore materials, marks and movement. Choose a study to try its controls.',
+  GalleryStudy.light =>
+    'Move one lamp over clay, EVA and paper; turn a piece under the same light.',
   GalleryStudy.volume =>
     'Compare local volume before sharing light across a scene.',
   GalleryStudy.softCraft =>

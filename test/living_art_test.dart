@@ -1,3 +1,7 @@
+// This integration probe intentionally paints the actual example artwork.
+// It cannot import the example package from the root package dependency graph.
+// ignore_for_file: avoid_relative_lib_imports
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';

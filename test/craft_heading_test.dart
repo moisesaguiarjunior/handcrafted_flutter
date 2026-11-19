@@ -27,7 +27,7 @@ void main() {
             themeAnimationStyle: AnimationStyle.noAnimation,
             theme: ThemeData(
               textTheme: const TextTheme(headlineMedium: lettering),
-              extensions: [if (materials != null) materials],
+              extensions: [?materials],
             ),
             home: Scaffold(
               body: Align(

@@ -53,9 +53,9 @@ class CraftImagePart extends StatelessWidget {
     sourceHinge: placement.sourceHinge,
     pose: placement.pose,
     sourceClip: sourceClip,
-    child: child,
     semanticLabel: semanticLabel,
     filterQuality: filterQuality,
+    child: child,
   );
 
   /// Any normal Flutter image provider, retaining Flutter's cache/lifecycle.

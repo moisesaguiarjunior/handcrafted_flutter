@@ -206,3 +206,21 @@ are outside this review/delivery.
   The 0.3.1 source is unreleased; published 0.3.0 and old tags remain immutable.
   Physical-device, full hosted-browser and cross-engine visual approval are not
   implied by the matrix. Standard lint adoption and performance work remain later.
+
+## Standard lint preset and effective inheritance
+
+- Exact implementation `2b7a64ba497c70028f7664067933ce751f80c2e1` received an
+  independent Astra review with no blocking findings. The reviewer started from
+  requirements and actual analyzer configuration, not author rationale.
+- Initial candidate `ce750c2` required changes: the guard checked two upstream
+  preset rules in tool scope, so losing project-specific/strict inheritance could
+  pass. The corrected guard additionally requires dynamic-call and strict-cast
+  diagnostics. The reviewer independently reproduced both broken configurations
+  in isolated copies; each now fails, while the original passes.
+- Author negative controls also removed the root preset and confirmed failure.
+  Baseline locked analysis, 149 package tests and 119 example tests passed.
+  Publication archive/Dartdoc gates reported zero warnings/errors; no upload.
+- Official lint packages are development-only. Cross-package capture commands
+  keep one narrowly scoped import exception; runtime rendering and approved
+  pixel baselines are unchanged. This is an independent local agent review,
+  not a human or GitHub reviewer object. Physical-device evidence remains pending.

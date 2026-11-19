@@ -1,3 +1,5 @@
+include: package:flutter_lints/flutter.yaml
+
 analyzer:
   exclude:
     - build/**
@@ -7,8 +9,8 @@ analyzer:
     strict-raw-types: true
 linter:
   rules:
-    - public_member_api_docs
-    - avoid_dynamic_calls
-    - always_declare_return_types
-    - unawaited_futures
-    - curly_braces_in_flow_control_structures
+    public_member_api_docs: true
+    avoid_dynamic_calls: true
+    always_declare_return_types: true
+    unawaited_futures: true
+    curly_braces_in_flow_control_structures: true

@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Adopt the official flutter_lints preset while retaining strict analysis and
+  public API documentation rules. Keep narrow documented exceptions for tools
+  composing actual example painters, and enforce the policy with synthetic
+  violations in disposable snapshots. Lint dependencies are developer-only.
+
 - Prepare 0.3.1 with a tested Flutter 3.35.7 / Dart 3.9.2 source floor and a
   two-SDK CI matrix alongside the existing locked release baseline. Use the
   shared boolean TickerMode accessor with a single documented deprecation

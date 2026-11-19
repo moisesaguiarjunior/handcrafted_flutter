@@ -183,9 +183,7 @@ void main() {
       ].fold(0, (a, b) => a + b);
       expect(alphaSum(dense), greaterThan(alphaSum(sparse) * 1.5));
       expect(
-        [
-          for (var x = 15; x < 85; x++) dense[(40 * 100 + x) * 4 + 3],
-        ].toSet().length,
+        {for (var x = 15; x < 85; x++) dense[(40 * 100 + x) * 4 + 3]}.length,
         greaterThan(10),
       );
       final blank = await pixels((c) {

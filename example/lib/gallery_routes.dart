@@ -11,8 +11,10 @@ class GalleryRouteParser extends RouteInformationParser<GalleryStudy> {
   /// Startup fallback when the platform route has no study query.
   final GalleryStudy initialStudy;
   @override
-  Future<GalleryStudy> parseRouteInformation(RouteInformation info) {
-    final requested = info.uri.queryParameters['study'];
+  Future<GalleryStudy> parseRouteInformation(
+    RouteInformation routeInformation,
+  ) {
+    final requested = routeInformation.uri.queryParameters['study'];
     return SynchronousFuture(
       requested == null
           ? initialStudy

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
-import '../lib/pendulum_studies.dart';
+import 'package:handcrafted_example/pendulum_studies.dart';
 import 'support/fonts.dart';
 
 void main() {

@@ -36,6 +36,7 @@
 | Visible-contour fit retaining the full paint window | `CraftPlacement.fit`, `CraftImagePart.placed` |
 | Conservative local decorative stroke envelopes | `craftStrokeBounds` |
 | Cross-SDK validation and resolution lanes | `tool/check_compatibility.sh`, `docs/sdk-compatibility.md` |
+| Standard analysis and scoped capture exceptions | `analysis_options.yaml`, `tool/analysis_options.yaml`, `tool/check_lint_policy.py` |
 | Format, analysis and behavior checks | `tool/check.sh` |
 
 Search by name, behavior and type before introducing a parallel implementation.

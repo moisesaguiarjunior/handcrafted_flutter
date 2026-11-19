@@ -391,3 +391,12 @@ Flutter's containsSemantics matcher rather than reflection or a second clock.
 Only its compatibility deprecation is suppressed, on one documented line. CI
 separates exact release locks from fresh per-SDK resolution and builds the actual
 gallery. No rendering, seed, texture ownership or published tag changes.
+
+For the standard lint preset, searched analyzer scopes, package imports, capture
+entrypoints, example dependency graphs and existing checks. Reused flutter_lints
+and the source snapshot helper rather than inventing another linter/validator.
+Library and example retain the full preset/strict/API rules. The cross-package
+capture tool scope allows only relative-lib imports; one root integration probe
+has the same documented file-level exception. Snapshot-based synthetic violations
+prove preset and inherited rule enforcement without mutating the working tree.
+No runtime dependency, renderer, clock, cache or capture command is replaced.

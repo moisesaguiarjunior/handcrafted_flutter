@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
-import '../lib/main_trims.dart' as app;
-import '../lib/trim_studies.dart';
+import 'package:handcrafted_example/main_trims.dart' as app;
+import 'package:handcrafted_example/trim_studies.dart';
 import 'support/fonts.dart';
 
 void main() {

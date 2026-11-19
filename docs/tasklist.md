@@ -181,7 +181,7 @@ interactive hosted-browser approval and phone performance remain separate.
 | --- | --- | --- |
 | HC-A01 | Current docs and focused reuse map | Shipped in PR #45; extraction history and links retained |
 | HC-A02 | Tested SDK floor and CI matrix | Unreleased 0.3.1 candidate: Flutter 3.35.7 and 3.47.9; fresh-resolution matrix plus locked baseline; see sdk-compatibility.md |
-| HC-A03 | Standard lint preset | Isolated rule adoption, minimal fixes, existing strict/API rules retained |
+| HC-A03 | Standard lint preset | flutter_lints candidate with narrow cross-package capture exceptions and synthetic guard checks; see lint-policy.md |
 | HC-A04 | Rendering/preparation baselines | Reuse the workload harness; report cold/warm preparation separately from frame timings |
 | HC-A05 | Grain opacity experiment | Pixel parity across substrates/alpha/clips before claiming saveLayer can be removed |
 | HC-A06 | Scoped texture sharing | Conditional on evidence; explicit borrowed/owned lifecycle, seed and disposal semantics |

@@ -1,0 +1,8 @@
+include: ../analysis_options.yaml
+
+# Capture/authoring entrypoints deliberately compose example/lib across the
+# package boundary. Keep their stable commands and actual example painters;
+# the root package cannot take a path dev_dependency on its own consumer.
+linter:
+  rules:
+    avoid_relative_lib_imports: false

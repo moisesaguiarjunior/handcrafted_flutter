@@ -37,9 +37,9 @@ void main() {
       () => const CraftImagePart(
         key: ValueKey('invalid-crop'),
         image: AssetImage(layerAsset),
-        sourceSize: const Size(10, 10),
-        sourceRect: const Rect.fromLTWH(8, 0, 4, 4),
-        rect: const Rect.fromLTWH(0, 0, 4, 4),
+        sourceSize: Size(10, 10),
+        sourceRect: Rect.fromLTWH(8, 0, 4, 4),
+        rect: Rect.fromLTWH(0, 0, 4, 4),
       ).mapSourcePoint(Offset.zero),
       throwsArgumentError,
     );

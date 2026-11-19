@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+- Prepare 0.3.1 with a tested Flutter 3.35.7 / Dart 3.9.2 source floor and a
+  two-SDK CI matrix alongside the existing locked release baseline. Use the
+  shared boolean TickerMode accessor with a single documented deprecation
+  suppression on newer SDKs; pause/resume semantics are unchanged.
+- Use Flutter's semantic matchers across boolean/tristate SDK representations,
+  preserving explicit selected/enabled-state checks. Target the native sharing
+  action by its label instead of a framework-private button subclass.
+- Published 0.3.0 and its immutable tag retain their original SDK constraints.
+
 ## 0.3.0
 
 - Add an example-only light studio: a draggable shared lamp over clay-like

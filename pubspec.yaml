@@ -1,6 +1,6 @@
 name: handcrafted_flutter
 description: Paper, fabric and EVA textures, contour stitches, watercolor, relief and finite motion around native Flutter widgets.
-version: 0.3.0
+version: 0.3.1
 repository: https://github.com/moisesaguiarjunior/handcrafted_flutter
 homepage: https://moisesaguiarjunior.github.io/handcrafted_flutter/
 issue_tracker: https://github.com/moisesaguiarjunior/handcrafted_flutter/issues
@@ -21,8 +21,8 @@ screenshots:
   - description: A tooled leather journal, a raised balloon and a letterpress card.
     path: doc/screenshots/relief-objects.png
 environment:
-  sdk: '>=3.13.7 <4.0.0'
-  flutter: '>=3.47.9'
+  sdk: '>=3.9.2 <4.0.0'
+  flutter: '>=3.35.7'
 dependencies:
   clipper2: ^0.0.3
   flutter:

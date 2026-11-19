@@ -144,3 +144,9 @@ The reuse guide is now a current contract index; its full extraction notes remai
 in [history](history/reuse-extractions.md). Old tags/branches and useful standalone
 example entrypoints are preserved. Test coverage is evidence of exercised code,
 not certification of performance, accessibility or platform compatibility.
+
+The first compatibility follow-up prepares an unreleased 0.3.1 source floor of
+Flutter 3.35.7 / Dart 3.9.2, with endpoint analysis/tests/web builds and separate
+fresh-resolution/locked-baseline CI lanes. [Evidence and limits](sdk-compatibility.md).
+The hosted 0.3.0 archive and tag keep their original requirements; release upload
+is a separate action. Standard-lint adoption remains a subsequent isolated change.

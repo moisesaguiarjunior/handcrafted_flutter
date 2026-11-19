@@ -2,9 +2,14 @@
 
 ## Tested baseline
 
-Flutter 3.47.9 / Dart 3.13.7 is the current tested baseline and the declared
-minimum. Higher versions may work but are not all certified by that constraint.
-No lower SDK support is claimed without testing it.
+The unreleased 0.3.1 source candidate is tested on Flutter 3.35.7 / Dart 3.9.2
+and Flutter 3.47.9 / Dart 3.13.7. Its declared floor is the older tested pair;
+intermediate/newer versions are not individually certified by that constraint.
+[Matrix and reproducible commands](sdk-compatibility.md).
+
+Published 0.3.0 and tag v0.3.0 retain Flutter >=3.47.9 / Dart >=3.13.7.
+The wider floor requires the reviewed 0.3.1 source until a new hosted release is
+explicitly published. No old tag or hosted archive is rewritten.
 
 | Environment or artifact | Evidence | Boundary |
 | --- | --- | --- |

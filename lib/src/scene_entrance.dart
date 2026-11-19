@@ -67,7 +67,9 @@ class _SceneEntranceState extends State<SceneEntrance>
   void didChangeDependencies() {
     super.didChangeDependencies();
     _reduced = MediaQuery.disableAnimationsOf(context);
-    _tickerEnabled = TickerMode.valuesOf(context).enabled;
+    // Both supported SDKs expose the enabled flag through this accessor.
+    // ignore: deprecated_member_use
+    _tickerEnabled = TickerMode.of(context);
     _sync();
   }
 

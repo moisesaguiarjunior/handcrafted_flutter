@@ -35,6 +35,7 @@
 | Independent prepared short fibers | `CraftNap` |
 | Visible-contour fit retaining the full paint window | `CraftPlacement.fit`, `CraftImagePart.placed` |
 | Conservative local decorative stroke envelopes | `craftStrokeBounds` |
+| Cross-SDK validation and resolution lanes | `tool/check_compatibility.sh`, `docs/sdk-compatibility.md` |
 | Format, analysis and behavior checks | `tool/check.sh` |
 
 Search by name, behavior and type before introducing a parallel implementation.

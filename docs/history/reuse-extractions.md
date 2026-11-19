@@ -383,3 +383,11 @@ validator, native surface/action contract and immutable tag. Compared hosted
 archive files with Git objects and installed the hosted version in a disposable
 consumer without overrides. Only publication status and installation guidance
 change in main; no runtime implementation, credential or publisher automation.
+
+For SDK compatibility, searched TickerMode enabled/notifier access, actual clock
+pause/resume callers, boolean/tristate semantic flags, framework button subclasses,
+SDK pins and both existing test suites. Reused the common boolean accessor and
+Flutter's containsSemantics matcher rather than reflection or a second clock.
+Only its compatibility deprecation is suppressed, on one documented line. CI
+separates exact release locks from fresh per-SDK resolution and builds the actual
+gallery. No rendering, seed, texture ownership or published tag changes.

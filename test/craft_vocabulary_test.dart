@@ -1,5 +1,3 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/semantics.dart';
@@ -7,6 +5,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import 'support/widget_raster.dart';
+
+// Keep semantic assertions independent of bool/tristate SDK representation.
+Matcher _choiceState({bool? selected, bool? enabled}) {
+  // This shared matcher predates isSemantics and covers the tested SDK floor.
+  // ignore: deprecated_member_use
+  return containsSemantics(
+    isSelected: selected,
+    hasSelectedState: selected == null ? null : true,
+    isEnabled: enabled,
+    hasEnabledState: enabled == null ? null : true,
+  );
+}
 
 CraftPanelStyle surface(Color color, {bool cloth = false}) => CraftPanelStyle(
   material: cloth ? CraftMaterial.linen : CraftMaterial.paper,
@@ -243,10 +253,7 @@ void main() {
         final node = tester.getSemantics(
           find.widgetWithText(TextButton, 'Keep this note'),
         );
-        expect(
-          node.getSemanticsData().flagsCollection.isSelected,
-          ui.Tristate.isTrue,
-        );
+        expect(node, _choiceState(selected: true));
         expect(node.getSemanticsData().hasAction(SemanticsAction.tap), isTrue);
         expect(node.getSemanticsData().flagsCollection.isButton, isTrue);
         await tester.enterText(
@@ -265,12 +272,10 @@ void main() {
         expect(input.text, 'A tiny discovery');
         expect(focus.hasFocus, isTrue);
         expect(
-          tester
-              .getSemantics(find.widgetWithText(TextButton, 'Keep this note'))
-              .getSemanticsData()
-              .flagsCollection
-              .isSelected,
-          ui.Tristate.isTrue,
+          tester.getSemantics(
+            find.widgetWithText(TextButton, 'Keep this note'),
+          ),
+          _choiceState(selected: true),
         );
         await tester.tap(find.text('Save note'));
         expect(presses, 1);
@@ -409,14 +414,8 @@ void main() {
       final node = tester.getSemantics(
         find.widgetWithText(TextButton, 'Selected keepsake'),
       );
-      expect(
-        node.getSemanticsData().flagsCollection.isSelected,
-        ui.Tristate.isTrue,
-      );
-      expect(
-        node.getSemanticsData().flagsCollection.isEnabled,
-        ui.Tristate.isFalse,
-      );
+      expect(node, _choiceState(selected: true));
+      expect(node, _choiceState(enabled: false));
       expect(node.getSemanticsData().hasAction(SemanticsAction.tap), isFalse);
     } finally {
       handle.dispose();

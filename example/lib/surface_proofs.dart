@@ -51,7 +51,7 @@ final class SurfaceProof {
           domain.top,
           domain.right,
           domain.bottom,
-        ].every((v) => v.isFinite) ||
+        ].every((v) => v.isFinite && v.abs() <= 8192) ||
         domain.isEmpty ||
         domain.width > 2048 ||
         domain.height > 2048 ||
@@ -92,7 +92,7 @@ final class SurfaceProof {
     }
   }
 
-  /// Fixed source-space bounds, never the scrolling viewport bounds.
+  /// Fixed source-space bounds (coordinates within ±8192), never the viewport.
   final Rect domain;
 
   /// Recipe selected by the host, without a clock.

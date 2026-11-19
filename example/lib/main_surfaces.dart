@@ -38,64 +38,65 @@ class _SurfaceLabState extends State<SurfaceLab> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text('One surface, many windows')),
-    body: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: DropdownButtonFormField<SurfaceRecipe>(
-            initialValue: _recipe,
-            isExpanded: true,
-            decoration: const InputDecoration(labelText: 'Surface recipe'),
-            items: SurfaceRecipe.values
-                .map(
-                  (value) => DropdownMenuItem(
-                    value: value,
-                    child: Text(switch (value) {
-                      SurfaceRecipe.watercolor => 'Layered wash',
-                      SurfaceRecipe.featheredWash => 'Soft wash',
-                      SurfaceRecipe.fibers => 'Fibers',
-                      SurfaceRecipe.checker => 'Checks',
-                      SurfaceRecipe.diamonds => 'Diamonds',
-                    }),
+    body: LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth.clamp(1.0, 640.0);
+        return Align(
+          alignment: Alignment.topCenter,
+          child: SizedBox(
+            width: width,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: DropdownButtonFormField<SurfaceRecipe>(
+                      initialValue: _recipe,
+                      isExpanded: true,
+                      decoration: const InputDecoration(
+                        labelText: 'Surface recipe',
+                      ),
+                      items: SurfaceRecipe.values
+                          .map(
+                            (value) => DropdownMenuItem(
+                              value: value,
+                              child: Text(switch (value) {
+                                SurfaceRecipe.watercolor => 'Layered wash',
+                                SurfaceRecipe.featheredWash => 'Soft wash',
+                                SurfaceRecipe.fibers => 'Fibers',
+                                SurfaceRecipe.checker => 'Checks',
+                                SurfaceRecipe.diamonds => 'Diamonds',
+                              }),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        if (value != null) _select(value);
+                      },
+                    ),
                   ),
-                )
-                .toList(),
-            onChanged: (value) {
-              if (value != null) _select(value);
-            },
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Text(
-            'Scroll through a retained 960 × 1728 source. The texture '
-            'and print keep their position. Text stays outside the painting.',
-          ),
-        ),
-        Expanded(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final width = constraints.maxWidth.clamp(1.0, 640.0);
-              return Center(
-                child: SizedBox(
-                  width: width,
-                  child: SingleChildScrollView(
-                    child: ExcludeSemantics(
-                      child: IgnorePointer(
-                        child: CustomPaint(
-                          size: Size(width, _scene.domain.height),
-                          painter: _SurfacePainter(_scene, width),
-                        ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Text(
+                      'Scroll through a retained 960 × 1728 source. The texture '
+                      'and print keep their position. Text stays outside the painting.',
+                    ),
+                  ),
+                  ExcludeSemantics(
+                    child: IgnorePointer(
+                      child: CustomPaint(
+                        size: Size(width, _scene.domain.height),
+                        painter: _SurfacePainter(_scene, width),
                       ),
                     ),
                   ),
-                ),
-              );
-            },
+                ],
+              ),
+            ),
           ),
-        ),
-      ],
+        );
+      },
     ),
   );
 }

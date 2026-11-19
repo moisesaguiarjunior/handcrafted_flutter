@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -130,48 +129,44 @@ void main() {
                 ratio: ratio,
                 stripHeight: 64,
               );
-              final restarted = SurfaceProof(recipe: recipe, domain: viewport);
-              try {
-                final wrong = await rasterSurface(
-                  restarted,
-                  viewport,
-                  ratio: ratio,
-                );
-                var maximum = 0, changed = 0, sum = 0, wrongSum = 0;
-                for (var i = 0; i < whole.length; i++) {
-                  final delta = (whole[i] - strips[i]).abs();
-                  maximum = math.max(maximum, delta);
-                  if (delta > 0) changed++;
-                  sum += delta;
-                  wrongSum += (whole[i] - wrong[i]).abs();
-                }
-                comparison.add({
-                  'recipe': recipe.name,
-                  'ratio': ratio,
-                  'maxChannelDelta': maximum,
-                  'changedChannels': changed,
-                  'meanChannelDelta': sum / whole.length,
-                  'restartedMeanChannelDelta': wrongSum / whole.length,
-                });
-                costs.add({
-                  'recipe': recipe.name,
-                  'ratio': ratio,
-                  'coldRecordUs': recordUs,
-                  'firstRasterReadbackUs': firstRasterUs,
-                  'warmRasterReadbackUs': warmRasterUs,
-                });
-                final data = await rasterSurface(
-                  scene,
-                  viewport,
-                  ratio: ratio,
-                  png: true,
-                );
-                await File(
-                  'build/surface-proofs/${recipe.name}-${ratio.round()}x.png',
-                ).writeAsBytes(data);
-              } finally {
-                restarted.dispose();
-              }
+              final wrong = await rasterRestartedStrips(
+                recipe,
+                viewport,
+                ratio: ratio,
+              );
+              final delta = SurfaceRasterDelta(whole, strips);
+              final wrongDelta = SurfaceRasterDelta(whole, wrong);
+              expect(delta.withinFor(recipe), isTrue);
+              expect(wrongDelta.withinFor(recipe), isFalse);
+              comparison.add({
+                'recipe': recipe.name,
+                'ratio': ratio,
+                'maxChannelDelta': delta.maximum,
+                'changedChannels': delta.changed,
+                'meanChannelDelta': delta.mean,
+                'meanLimit': surfaceMeanLimit(recipe),
+                'restartedMaxChannelDelta': wrongDelta.maximum,
+                'restartedChangedChannels': wrongDelta.changed,
+                'restartedMeanChannelDelta': wrongDelta.mean,
+                'retainedWithinBounds': delta.withinFor(recipe),
+                'perStripRestartWithinBounds': wrongDelta.withinFor(recipe),
+              });
+              costs.add({
+                'recipe': recipe.name,
+                'ratio': ratio,
+                'coldRecordUs': recordUs,
+                'firstRasterReadbackUs': firstRasterUs,
+                'warmRasterReadbackUs': warmRasterUs,
+              });
+              final data = await rasterSurface(
+                scene,
+                viewport,
+                ratio: ratio,
+                png: true,
+              );
+              await File(
+                'build/surface-proofs/${recipe.name}-${ratio.round()}x.png',
+              ).writeAsBytes(data);
             }
           } finally {
             scene.dispose();

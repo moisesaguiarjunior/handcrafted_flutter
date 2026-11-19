@@ -37,14 +37,22 @@ A synthetic viewport at fractional coordinates is compared at 1× and 3× agains
 identical in this engine. Strip clipping has **measurable raster differences**;
 it is not pixel-equivalent. The initial Flutter 3.47.9 test-engine sample observed
 maximum channel deltas of 1–9 out of 255 and mean channel deltas below 0.16.
-The regression guard bounds isolated differences at 10 and the all-channel mean
-at 0.2; it also proves that restarting the source produces a different result.
+The regression guard bounds isolated differences at 10 and uses recipe-specific
+all-channel mean limits: layered wash 0.1, soft field 0.2, fibers 0.01, checks
+0.03 and diamonds 0.05. Native and headless Chrome samples informed these bounds.
+The negative control constructs and disposes a fresh source in **every strip**,
+then requires that composite to fail the same metrics/bounds at both scales.
 These diagnostic bounds are not a visual acceptance threshold for a consumer.
 
 The mask case at 3× has many small rounding differences, so a low mean must not
 be mistaken for identical pixels. The generated report includes changed-channel
 counts, maxima, means and the deliberate source-restart counterexample. Further
 cross-engine and visual comparison is required before adopting clipped strips.
+
+The example also restricts all absolute source coordinates to ±8192; a finite
+but excessive origin (such as 1e12) loses precision in native path storage and is
+explicitly rejected before recording. This is an example limit, not a new package
+contract.
 
 The 2048 logical-pixel limit **per axis** still applies to these painters; the
 1024px widget-decoration fallback is a separate contract. A 2300px source is

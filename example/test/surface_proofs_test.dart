@@ -17,7 +17,7 @@ void main() {
         '$recipe retains world phase at ${ratio}x across clipped strips',
         () async {
           final scene = SurfaceProof(recipe: recipe);
-          final restarted = SurfaceProof(recipe: recipe, domain: viewport);
+
           try {
             final whole = await rasterSurface(scene, viewport, ratio: ratio);
             final scrolled = await rasterSurface(
@@ -36,34 +36,28 @@ void main() {
               ratio: ratio,
               stripHeight: 64,
             );
-            var maximum = 0, changed = 0, total = 0;
-            for (var i = 0; i < whole.length; i++) {
-              final difference = (whole[i] - strips[i]).abs();
-              if (difference > maximum) maximum = difference;
-              if (difference > 0) changed++;
-              total += difference;
-            }
+            final delta = SurfaceRasterDelta(whole, strips);
             debugPrint(
-              '$recipe ratio=$ratio max=$maximum changed=$changed mean=${total / whole.length}',
+              '$recipe ratio=$ratio max=${delta.maximum} changed=${delta.changed} mean=${delta.mean}',
             );
-            // Measured raster clipping is not pixel-identical. Bound both isolated
-            // edge rounding and scene-wide error; never call this equivalence.
-            expect(maximum, lessThanOrEqualTo(10));
-            expect(total / whole.length, lessThan(.2));
-            final wrong = await rasterSurface(
-              restarted,
+            expect(delta.withinFor(recipe), isTrue);
+            final wrong = await rasterRestartedStrips(
+              recipe,
               viewport,
               ratio: ratio,
             );
+            final wrongDelta = SurfaceRasterDelta(whole, wrong);
+            debugPrint(
+              'restarted $recipe ratio=$ratio max=${wrongDelta.maximum} mean=${wrongDelta.mean}',
+            );
             expect(
-              wrong,
-              isNot(whole),
+              wrongDelta.withinFor(recipe),
+              isFalse,
               reason:
-                  'Changing the source bounds must expose phase/geometry changes',
+                  'Per-strip source restart must fail the same continuity bounds',
             );
           } finally {
             scene.dispose();
-            restarted.dispose();
           }
         },
       );
@@ -249,6 +243,13 @@ void main() {
     () {
       expect(
         () => SurfaceProof(
+          recipe: SurfaceRecipe.checker,
+          domain: const Rect.fromLTWH(1e12, 1e12, 320, 256),
+        ),
+        throwsArgumentError,
+      );
+      expect(
+        () => SurfaceProof(
           recipe: SurfaceRecipe.fibers,
           domain: const Rect.fromLTWH(0, 0, 960, 2300),
         ),
@@ -306,12 +307,26 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
+      await tester.drag(
+        find.byType(SingleChildScrollView),
+        const Offset(0, 300),
+      );
+      await tester.pumpAndSettle();
       await tester.tap(find.byType(DropdownButtonFormField<SurfaceRecipe>));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Fibers').last);
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
       expect(find.text('Fibers'), findsOneWidget);
+      tester.view.physicalSize = const Size(320, 320);
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      await tester.drag(
+        find.byType(SingleChildScrollView),
+        const Offset(0, -150),
+      );
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
     },
   );

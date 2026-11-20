@@ -37,6 +37,7 @@
 | Conservative local decorative stroke envelopes | `craftStrokeBounds` |
 | Cross-SDK validation and resolution lanes | `tool/check_compatibility.sh`, `docs/sdk-compatibility.md` |
 | Standard analysis and scoped capture exceptions | `analysis_options.yaml`, `tool/analysis_options.yaml`, `tool/check_lint_policy.py` |
+| Stuffed silhouettes with independent fabric/filling | `example/lib/stuffed_shapes.dart`, `example/lib/pillow_study.dart` (example-owned) |
 | Retained bounded surfaces, soft field masks and printed patterns | `example/lib/surface_proofs.dart`, `docs/surface-continuity.md` (example-owned) |
 | Format, analysis and behavior checks | `tool/check.sh` |
 

@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add an example-owned stuffed-shape study: original star, crescent and sun,
+  independently selected fabric and visual filling, pale contour sewing and
+  existing shared light. Document primary-source textile research and the
+  limits of the matte short-pile approximation; no public API/default changes.
+
 - Add example-owned retained source-space paper/pigment, native soft alpha masks,
   directional fiber overlays and repeating cloth/paper prints. Include synthetic
   1×/3× clipping/phase counterexamples and separated recording/readback samples;

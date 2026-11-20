@@ -54,6 +54,9 @@ enum GalleryStudy {
   /// Cut EVA with independent grain, finish and raised edges.
   foam,
 
+  /// Original stuffed silhouettes with independent fabric and filling.
+  pillows,
+
   /// Soft pockets, recessed thread, chalk and satin folded paper.
   softCraft,
 
@@ -68,6 +71,7 @@ String galleryLabel(GalleryStudy study) => switch (study) {
   GalleryStudy.cover => 'Start exploring',
   GalleryStudy.foam => 'EVA foam & layers',
   GalleryStudy.softCraft => 'Cloth, chalk & folds',
+  GalleryStudy.pillows => 'Stuffed shapes',
   GalleryStudy.volume => 'Local light & volume',
   GalleryStudy.light => 'Light studio',
   GalleryStudy.materials => 'Materials & relief',
@@ -97,6 +101,8 @@ String galleryDescription(GalleryStudy study) => switch (study) {
     'Move one lamp over clay, EVA and paper; turn a piece under the same light.',
   GalleryStudy.volume =>
     'Compare local volume before sharing light across a scene.',
+  GalleryStudy.pillows =>
+    'Compare cotton, felt and short matte pile, then vary visual filling.',
   GalleryStudy.softCraft =>
     'Try soft cloth, irregular sewing, chalk and folded paper.',
   GalleryStudy.foam =>
@@ -134,6 +140,7 @@ const galleryOrder = [
   GalleryStudy.ink,
   GalleryStudy.paper,
   GalleryStudy.foam,
+  GalleryStudy.pillows,
   GalleryStudy.softCraft,
   GalleryStudy.volume,
   GalleryStudy.materials,

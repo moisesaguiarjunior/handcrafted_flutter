@@ -248,3 +248,28 @@ are outside this review/delivery.
   not established. Existing goldens and private consumer artwork were untouched.
 - This is a local independent agent review, not human visual acceptance or a
   GitHub reviewer object. CI, source integration and release upload are distinct.
+
+## Stuffed silhouettes and independent fabric/filling
+
+- Corrected source `260bad9f36a298ebcec084c8309587a170b87036` received independent
+  Astra review with no blocking findings. The requirement is a researched,
+  example-owned composition using existing volume/fiber/thread primitives;
+  original cuts and explicit inputs introduce no public API or textile assets.
+- Initial candidate `bd46a03` required changes: a rejected paint input left the
+  caller's canvas scaled/translated with an extra save. Both the outer transform
+  and seam clip now restore in finally blocks; invalid display/paint inputs are
+  rejected before a widget mounts its painter.
+- The reviewer independently ran all 295 repository tests and native gallery
+  controls at 200% text in three narrow/short viewports. Separate error-path
+  probes fail on the prior source and pass after correction, including a fault
+  injected inside the seam clip. Input holes survive and bad cuts are rejected.
+- The generated comparison is byte-identical to the committed PNG. Author checks
+  also include 10 headless Chrome tests and four isolated negative controls:
+  filling removed, widget update ignored, validation removed and restoration
+  removed. Each protected assertion fails; the source is restored afterward.
+- Cotton/felt and short matte nap are separate from the shared filling profile.
+  The short-pile study is not calibrated minky; stretch, fuzzy silhouettes,
+  specular pile, low-fill wrinkling and physical stuffing remain open.
+- This local independent technical review is not founder visual acceptance,
+  consumer adoption, phone performance evidence or a GitHub review object.
+  Published tags remain unchanged; release upload and CI are separate gates.

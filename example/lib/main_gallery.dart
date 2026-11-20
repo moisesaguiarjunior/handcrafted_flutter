@@ -1,4 +1,5 @@
 import 'spatial_light_study.dart';
+import 'pillow_study.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -255,6 +256,7 @@ class _GalleryPage extends StatelessWidget {
     GalleryStudy.volume => const LocalVolumePlayground(),
     GalleryStudy.light => const SpatialLightStudy(),
     GalleryStudy.softCraft => const SoftCraftPlayground(),
+    GalleryStudy.pillows => const PillowStudy(),
     GalleryStudy.vocabulary => const MaterialVocabularyStudy(),
     GalleryStudy.cover => GalleryWelcome(select: select),
     GalleryStudy.materials => const Column(

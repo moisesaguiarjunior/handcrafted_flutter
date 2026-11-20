@@ -124,7 +124,10 @@ final class PlushPillowGeometry {
         final length = math.sqrt(
           light.x * light.x + light.y * light.y + light.z * light.z,
         );
-        final glint = Offset(light.x / length, light.y / length) * .28;
+        final directional =
+            light.direct / (light.ambient + light.direct + 1e-9);
+        final glint =
+            Offset(light.x / length, light.y / length) * (.28 * directional);
         for (var i = 0; i < _tufts.length; i++) {
           final path = _tufts[i];
           canvas.drawPath(

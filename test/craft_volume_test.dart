@@ -62,6 +62,29 @@ void main() {
     expect(await sample(thin, left), isNot(a));
   });
 
+  test('padding keeps broad-face response when source extent grows', () async {
+    final model = CraftVolume(
+      Path()..addRect(const Rect.fromLTWH(0, 0, 232, 232)),
+      CraftVolumeProfile.padded,
+      height: 24,
+    );
+    Future<Uint8List> scaled(double x) => pixels((c) {
+      c.scale(100 / 232);
+      c.drawPath(model.outline, Paint()..color = const Color(0xFFEFA07C));
+      model.shade(
+        c,
+        CraftLight(x: x, y: 0, z: .6, ambient: .5, direct: .5, softness: 0),
+      );
+    });
+    final a = await scaled(-1), b = await scaled(1);
+    var greatest = 0;
+    for (var x = 40; x < 60; x++) {
+      final i = (50 * 100 + x) * 4;
+      greatest = math.max(greatest, (a[i] - b[i]).abs());
+    }
+    expect(greatest, greaterThan(3));
+  });
+
   test('profiles differ with the same cut, color and light', () async {
     final sheet = CraftVolume(cut(), CraftVolumeProfile.sheet);
     final rounded = CraftVolume(cut(), CraftVolumeProfile.rounded);

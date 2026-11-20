@@ -77,6 +77,36 @@ void main() {
     },
   );
 
+  test(
+    'ambient-only illumination cannot move interior sherpa highlights',
+    () async {
+      final geometry = PlushPillowGeometry(pillowCut(PillowShape.star));
+      final interior = insetCraftPath(geometry.volume.outline, distance: 12);
+      final left = await render(
+        geometry,
+        PlushFabric.sherpa,
+        light: CraftLight(x: -1, y: 0, ambient: .8, direct: 0),
+        sewing: false,
+      );
+      final right = await render(
+        geometry,
+        PlushFabric.sherpa,
+        light: CraftLight(x: 1, y: 0, ambient: .8, direct: 0),
+        sewing: false,
+      );
+      var compared = 0;
+      for (var y = 0; y < 132; y++) {
+        for (var x = 0; x < 132; x++) {
+          if (!interior.contains(Offset(x - 10 + .5, y - 10 + .5))) continue;
+          final i = (y * 132 + x) * 4;
+          expect(left.sublist(i, i + 4), right.sublist(i, i + 4));
+          compared++;
+        }
+      }
+      expect(compared, greaterThan(100));
+    },
+  );
+
   testWidgets(
     'the mounted specimen paints the selected prepared fabric and filling',
     (tester) async {
@@ -239,7 +269,10 @@ void main() {
               .every((w) => w.filling == next),
           isTrue,
         );
-        final toggle = find.byType(SwitchListTile);
+        final toggle = find.widgetWithText(
+          SwitchListTile,
+          'Light from the right',
+        );
         await tester.ensureVisible(toggle);
         await tester.tap(toggle);
         await tester.pumpAndSettle();

@@ -288,6 +288,7 @@ class _PlushPillowStudyState extends State<PlushPillowStudy> {
   double filling = .85;
   double committedFilling = .85;
   bool reverseLight = false;
+  bool showJunction = false;
   @override
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -315,6 +316,11 @@ class _PlushPillowStudyState extends State<PlushPillowStudy> {
         value: reverseLight,
         onChanged: (v) => setState(() => reverseLight = v),
       ),
+      SwitchListTile(
+        title: const Text('Show junction stitch'),
+        value: showJunction,
+        onChanged: (v) => setState(() => showJunction = v),
+      ),
       Wrap(
         spacing: 24,
         runSpacing: 16,
@@ -326,6 +332,7 @@ class _PlushPillowStudyState extends State<PlushPillowStudy> {
                   fabric: fabric,
                   filling: committedFilling,
                   light: plushPillowLight(fromRight: reverseLight),
+                  sewing: showJunction,
                 ),
                 Text(
                   fabric == PlushFabric.shortPile

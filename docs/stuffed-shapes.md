@@ -159,15 +159,18 @@ oblique-depth recipes remain available; their comparison images are unchanged.
 
 `CraftVolumeProfile.padded` reuses the canonical grid, normals, light, shadows
 and mesh disposal. It prepares a smooth whole-face approximation with 320 fixed
-four-neighbor relaxation sweeps on the existing 2px lattice, then normalizes a
+four-neighbor relaxation sweeps on a scale-aware lattice (at least 2px spacing,
+at most 62 stations per axis), then normalizes a
 square-root dome to `height` and uses the existing three smoothing passes.
-It has no flat center-to-bevel plateau. This bounded visual approximation is
+The larger source cuts use a coarser lattice so diffusion reaches across the
+face instead of staying near its edge. This bounded visual approximation is
 not an equilibrium cloth solver, stretch model or physically calibrated stuffing.
 `bevel` remains validated for compatibility but does not control this profile.
-At the maximum 26,244 stations it visits at most 8,398,080 relaxation stations,
+At the maximum 3,844 padded stations it visits at most 1,230,080 relaxation stations,
 in addition to sampling, normalization and the shared smoothing/normal work.
 Preparation stays outside paint. Smaller shapes and disconnected lobes can have
-unequal apparent fullness; holes remain clipped by the original cut.
+unequal apparent fullness; fine details can lose volume on the coarser lattice,
+and holes remain clipped by the original cut.
 
 `PlushPillowGeometry` lives in the example. Short plush reuses `CraftNap` with
 fine low-contrast fibers. Curled sherpa adds seeded, overlapping small tuft

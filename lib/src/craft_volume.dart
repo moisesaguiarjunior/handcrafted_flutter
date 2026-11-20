@@ -17,8 +17,8 @@ enum CraftVolumeProfile {
   /// Broader rolled edge, domed face and small pressure depressions.
   rounded,
 
-  /// Smooth whole-face padding prepared with a bounded membrane approximation.
-  /// Unlike rounded, the broad center has no flat plateau. Not cloth physics.
+  /// Broad domed padding prepared with a scale-aware bounded approximation.
+  /// Not cloth physics; fine features may lose volume on the coarser grid.
   padded,
 }
 
@@ -109,7 +109,8 @@ class CraftLight {
 
 /// Prepared bounded distance/height/normal field for one original closed cut.
 ///
-/// This preparation samples contours at <=3px and a fixed 2px grid. Bounds <=320
+/// Contours are sampled at <=3px. Sheet/rounded use a fixed 2px grid; padded
+/// uses a scale-aware grid, at least 2px with <=62 stations per axis. Bounds <=320
 /// per axis, at most 320 contour segments and 26244 grid stations. Geometry and
 /// _normals survive light changes. Height-field shading is approximate, with an opaque-substrate requirement.
 class CraftVolume {
@@ -158,8 +159,11 @@ class CraftVolume {
         edges.add((points[i], points[(i + 1) % count]));
       }
     }
-    _columns = (bounds.width / 2).ceil() + 2;
-    _rows = (bounds.height / 2).ceil() + 2;
+    _gridStep = profile == CraftVolumeProfile.padded
+        ? math.max(2.0, bounds.longestSide / 60)
+        : 2.0;
+    _columns = (bounds.width / _gridStep).ceil() + 2;
+    _rows = (bounds.height / _gridStep).ceil() + 2;
     final heights = Float32List(_columns * _rows);
     final random = math.Random(seed);
     final dents = List.generate(
@@ -204,9 +208,9 @@ class CraftVolume {
       }
     }
     if (profile == CraftVolumeProfile.padded) {
-      // Reuse the validated 2px lattice and shared lighting mesh. A bounded
-      // relaxation smooths the whole face instead of stopping at a bevel rim.
-      // At most 320 * 26244 stations; no convergence or physical-pressure claim.
+      // Reuse the shared mesh with <=62 stations per axis. Scaling the lattice
+      // bounds work and avoids a fixed diffusion radius on larger source cuts.
+      // At most 320 * 3844 stations; no convergence/physical-pressure claim.
       final inside = List<bool>.generate(
         heights.length,
         (i) => _outline.contains(_point(i % _columns, i ~/ _columns)),
@@ -291,8 +295,8 @@ class CraftVolume {
         : heights[y * _columns + x];
     for (var y = 0; y < _rows; y++) {
       for (var x = 0; x < _columns; x++) {
-        final dx = (h(x + 1, y) - h(x - 1, y)) / 4,
-            dy = (h(x, y + 1) - h(x, y - 1)) / 4;
+        final dx = (h(x + 1, y) - h(x - 1, y)) / (2 * _gridStep),
+            dy = (h(x, y + 1) - h(x, y - 1)) / (2 * _gridStep);
         final length = math.sqrt(dx * dx + dy * dy + 1),
             i = (y * _columns + x) * 3;
         _normals[i] = -dx / length;
@@ -322,6 +326,7 @@ class CraftVolume {
 
   /// Number of prepared grid stations horizontally and vertically.
   late final int _columns, _rows;
+  late final double _gridStep;
 
   /// Unit normals in an ordinary Dart buffer; no image/native resource is owned.
   late final Float32List _normals;
@@ -331,8 +336,10 @@ class CraftVolume {
 
   /// Indices stay below 26244, within the native 16-bit grid range.
   late final Uint16List _indices;
-  Offset _point(int x, int y) =>
-      Offset(bounds.left - 1 + x * 2, bounds.top - 1 + y * 2);
+  Offset _point(int x, int y) => Offset(
+    bounds.left - _gridStep / 2 + x * _gridStep,
+    bounds.top - _gridStep / 2 + y * _gridStep,
+  );
 
   /// Paints smooth lighting into existing grain using two shared-edge meshes.
   /// Requires an opaque painted substrate; this composition is not alpha preserving.

@@ -147,3 +147,56 @@ writes `build/pillows/depth-comparison.png`; compare the original output against
 regenerating that reference. Deeper fabric, mask, native-control and pixel tests
 cover the optional path. Device profiling and application visual adoption remain
 separate gates.
+
+
+## Whole-face padding: short plush and curled sherpa
+
+![Short plush and curled sherpa on the same star at three padding amounts](assets/plush-pillows.png)
+
+A separate opt-in section in `?study=pillows` compares two textile finishes on
+exactly the same original star, color, filling and light. The earlier relief and
+oblique-depth recipes remain available; their comparison images are unchanged.
+
+`CraftVolumeProfile.padded` reuses the canonical grid, normals, light, shadows
+and mesh disposal. It prepares a smooth whole-face approximation with 320 fixed
+four-neighbor relaxation sweeps on a scale-aware lattice (at least 2px spacing,
+at most 62 stations per axis), then normalizes a
+square-root dome to `height` and uses the existing three smoothing passes.
+The larger source cuts use a coarser lattice so diffusion reaches across the
+face instead of staying near its edge. This bounded visual approximation is
+not an equilibrium cloth solver, stretch model or physically calibrated stuffing.
+`bevel` remains validated for compatibility but does not control this profile.
+At the maximum 3,844 padded stations it visits at most 1,230,080 relaxation stations,
+in addition to sampling, normalization and the shared smoothing/normal work.
+Preparation stays outside paint. Smaller shapes and disconnected lobes can have
+unequal apparent fullness; fine details can lose volume on the coarser lattice,
+and holes remain clipped by the original cut.
+
+`PlushPillowGeometry` lives in the example. Short plush reuses `CraftNap` with
+fine low-contrast fibers. Curled sherpa adds seeded, overlapping small tuft
+lobes in four retained tonal paths; changing light changes their highlight
+shift and the shared body shading. At most 8,192 tuft candidates are allowed,
+three lobes each; the existing nap budget also applies. This is a deliberately
+subtle illustrative finish, not fiber scattering or a 3D mesh. A short, bounded fringe softens only
+the sherpa silhouette; it does not model long fur.
+The new specimen hides sewing by default; the optional pale junction stitch
+has no dark puncture shading. Native padding commits on release or keyboard
+adjustment and relighting repaints the same retained geometry.
+
+The qualitative distinction is informed by the manufacturer's
+[short-pile overview](https://www.shannonfabrics.com/cuddle) and
+[textile comparison sheet](https://blog.shannonfabrics.com/hubfs/STT_Jan5_final.pdf)
+(checked 2026-11-20). No product photos, commercial patterns or textile images
+are redistributed; all cuts and tuft geometry are original code.
+
+Capture with `cd example && flutter test tool/capture_pillows.dart`:
+`build/pillows/plush-comparison.png` compares 25%, 65% and 100% padding. This is a
+new visual study, not a replacement golden or a claim of owner approval.
+Android/iPhone performance remains unmeasured.
+
+### Source compatibility
+
+The new enum case is additive in source but requires updating exhaustive
+`CraftVolumeProfile` switches. Existing `sheet` and `rounded` outputs and enum
+indices are preserved. This belongs in a future minor release, not the pending
+SDK-only patch. No version, immutable tag or hosted archive is changed here.

@@ -62,3 +62,9 @@ unchanged. See [0.2.0 migration](releases/0.2.0.md#upgrading-from-010).
 Version 0.3.0 adds CraftMaterial.eva, cotton, suede and leather. Exhaustive
 material switches need the corresponding cases; previous material indices and
 seeded output stay stable. Rope strandColors is optional and single-color behavior is unchanged.
+
+
+The unreleased whole-face padding study appends `CraftVolumeProfile.padded`.
+Exhaustive profile switches need this case, so it is reserved for a future minor
+release rather than the SDK-only patch candidate. Earlier enum indices, profiles,
+seeds and immutable hosted tags remain unchanged.

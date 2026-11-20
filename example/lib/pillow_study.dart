@@ -268,3 +268,122 @@ class PillowDepthComparison extends StatelessWidget {
 /// One explicit shared light for the optional raking-light study/comparison.
 CraftLight pillowRakingLight() =>
     CraftLight(z: .55, ambient: .65, direct: .5, softness: .5, warmth: .18);
+
+/// Native finite input over two textile studies on the same padded body.
+class PlushPillowStudy extends StatefulWidget {
+  /// Does not change the approved relief or oblique-depth specimens.
+  const PlushPillowStudy({super.key});
+  @override
+  State<PlushPillowStudy> createState() => _PlushPillowStudyState();
+}
+
+class _PlushPillowStudyState extends State<PlushPillowStudy> {
+  final paddingFocus = FocusNode(debugLabel: 'Plush padding');
+  @override
+  void dispose() {
+    paddingFocus.dispose();
+    super.dispose();
+  }
+
+  double filling = .85;
+  double committedFilling = .85;
+  bool reverseLight = false;
+  bool showJunction = false;
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        'Soft all the way to the tips',
+        style: Theme.of(context).textTheme.headlineSmall,
+      ),
+      const Text(
+        'One padded star, two fabrics. Same color, filling and light.',
+      ),
+      Text('Padding ${(filling * 100).round()}%'),
+      Slider(
+        value: filling,
+        focusNode: paddingFocus,
+        divisions: 20,
+        semanticFormatterCallback: (v) =>
+            '${(v * 100).round()} percent padding',
+        onChanged: (v) => setState(() => filling = v),
+        onChangeEnd: (v) => setState(() => committedFilling = v),
+      ),
+      const Text('Release to update the prepared body.'),
+      SwitchListTile(
+        title: const Text('Light from the right'),
+        value: reverseLight,
+        onChanged: (v) => setState(() => reverseLight = v),
+      ),
+      SwitchListTile(
+        title: const Text('Show junction stitch'),
+        value: showJunction,
+        onChanged: (v) => setState(() => showJunction = v),
+      ),
+      Wrap(
+        spacing: 24,
+        runSpacing: 16,
+        children: [
+          for (final fabric in PlushFabric.values)
+            Column(
+              children: [
+                PlushPillow(
+                  fabric: fabric,
+                  filling: committedFilling,
+                  light: plushPillowLight(fromRight: reverseLight),
+                  sewing: showJunction,
+                ),
+                Text(
+                  fabric == PlushFabric.shortPile
+                      ? 'Short plush'
+                      : 'Curled sherpa',
+                ),
+              ],
+            ),
+        ],
+      ),
+      const Text(
+        'Illustrative padding and fibers; not cloth physics or a 3D camera.',
+      ),
+    ],
+  );
+}
+
+/// Deterministic controlled proof, separate from the approved original PNG.
+class PlushPillowComparison extends StatelessWidget {
+  /// All rows compare equal geometry, filling, color and incoming light.
+  const PlushPillowComparison({super.key});
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        'Soft little stars',
+        style: TextStyle(fontFamily: 'Caveat', fontSize: 42),
+      ),
+      const Text('Short plush and curled sherpa. One shape, one light.'),
+      for (final filling in [.25, .65, 1.0]) ...[
+        const SizedBox(height: 14),
+        Text('${(filling * 100).round()}% padding'),
+        Row(
+          children: [
+            for (final fabric in PlushFabric.values)
+              Expanded(
+                child: Column(
+                  children: [
+                    PlushPillow(fabric: fabric, filling: filling, size: 270),
+                    Text(
+                      fabric == PlushFabric.shortPile
+                          ? 'Short plush'
+                          : 'Curled sherpa',
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
+      ],
+    ],
+  );
+}

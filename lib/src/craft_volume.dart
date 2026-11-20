@@ -16,6 +16,10 @@ enum CraftVolumeProfile {
 
   /// Broader rolled edge, domed face and small pressure depressions.
   rounded,
+
+  /// Broad domed padding prepared with a scale-aware bounded approximation.
+  /// Not cloth physics; fine features may lose volume on the coarser grid.
+  padded,
 }
 
 /// Explicit directional illumination in the current piece coordinate system.
@@ -105,7 +109,8 @@ class CraftLight {
 
 /// Prepared bounded distance/height/normal field for one original closed cut.
 ///
-/// This preparation samples contours at <=3px and a fixed 2px grid. Bounds <=320
+/// Contours are sampled at <=3px. Sheet/rounded use a fixed 2px grid; padded
+/// uses a scale-aware grid, at least 2px with <=62 stations per axis. Bounds <=320
 /// per axis, at most 320 contour segments and 26244 grid stations. Geometry and
 /// _normals survive light changes. Height-field shading is approximate, with an opaque-substrate requirement.
 class CraftVolume {
@@ -154,8 +159,20 @@ class CraftVolume {
         edges.add((points[i], points[(i + 1) % count]));
       }
     }
-    _columns = (bounds.width / 2).ceil() + 2;
-    _rows = (bounds.height / 2).ceil() + 2;
+    _gridStep = profile == CraftVolumeProfile.padded
+        ? math.max(2.0, bounds.longestSide / 60)
+        : 2.0;
+    int stations(double extent) {
+      final count = (extent / _gridStep).ceil();
+      // Avoid a 61st interval from floating-point roundoff at exact ratios.
+      return (profile == CraftVolumeProfile.padded
+              ? math.min(60, count)
+              : count) +
+          2;
+    }
+
+    _columns = stations(bounds.width);
+    _rows = stations(bounds.height);
     final heights = Float32List(_columns * _rows);
     final random = math.Random(seed);
     final dents = List.generate(
@@ -165,7 +182,7 @@ class CraftVolume {
         bounds.top + bounds.height * (.25 + random.nextDouble() * .5),
       ),
     );
-    for (var y = 0; y < _rows; y++) {
+    for (var y = 0; profile != CraftVolumeProfile.padded && y < _rows; y++) {
       for (var x = 0; x < _columns; x++) {
         final p = _point(x, y);
         if (!_outline.contains(p)) continue;
@@ -199,9 +216,44 @@ class CraftVolume {
         heights[y * _columns + x] = height;
       }
     }
+    if (profile == CraftVolumeProfile.padded) {
+      // Reuse the shared mesh with <=62 stations per axis. Scaling the lattice
+      // bounds work and avoids a fixed diffusion radius on larger source cuts.
+      // At most 320 * 3844 stations; no convergence/physical-pressure claim.
+      final inside = List<bool>.generate(
+        heights.length,
+        (i) => _outline.contains(_point(i % _columns, i ~/ _columns)),
+      );
+      heights.fillRange(0, heights.length, 0);
+      for (var pass = 0; pass < 320; pass++) {
+        for (var y = 1; y < _rows - 1; y++) {
+          for (var x = 1; x < _columns - 1; x++) {
+            final i = y * _columns + x;
+            if (inside[i]) {
+              heights[i] =
+                  (heights[i - 1] +
+                      heights[i + 1] +
+                      heights[i - _columns] +
+                      heights[i + _columns] +
+                      1) /
+                  4;
+            }
+          }
+        }
+      }
+      var peak = 0.0;
+      for (final value in heights) {
+        peak = math.max(peak, value);
+      }
+      if (peak > 0) {
+        for (var i = 0; i < heights.length; i++) {
+          heights[i] = thickness * math.sqrt(heights[i] / peak);
+        }
+      }
+    }
     for (
       var pass = 0;
-      profile == CraftVolumeProfile.rounded && pass < 3;
+      profile != CraftVolumeProfile.sheet && pass < 3;
       pass++
     ) {
       final smooth = Float32List(heights.length);
@@ -252,8 +304,8 @@ class CraftVolume {
         : heights[y * _columns + x];
     for (var y = 0; y < _rows; y++) {
       for (var x = 0; x < _columns; x++) {
-        final dx = (h(x + 1, y) - h(x - 1, y)) / 4,
-            dy = (h(x, y + 1) - h(x, y - 1)) / 4;
+        final dx = (h(x + 1, y) - h(x - 1, y)) / (2 * _gridStep),
+            dy = (h(x, y + 1) - h(x, y - 1)) / (2 * _gridStep);
         final length = math.sqrt(dx * dx + dy * dy + 1),
             i = (y * _columns + x) * 3;
         _normals[i] = -dx / length;
@@ -283,6 +335,7 @@ class CraftVolume {
 
   /// Number of prepared grid stations horizontally and vertically.
   late final int _columns, _rows;
+  late final double _gridStep;
 
   /// Unit normals in an ordinary Dart buffer; no image/native resource is owned.
   late final Float32List _normals;
@@ -292,8 +345,10 @@ class CraftVolume {
 
   /// Indices stay below 26244, within the native 16-bit grid range.
   late final Uint16List _indices;
-  Offset _point(int x, int y) =>
-      Offset(bounds.left - 1 + x * 2, bounds.top - 1 + y * 2);
+  Offset _point(int x, int y) => Offset(
+    bounds.left - _gridStep / 2 + x * _gridStep,
+    bounds.top - _gridStep / 2 + y * _gridStep,
+  );
 
   /// Paints smooth lighting into existing grain using two shared-edge meshes.
   /// Requires an opaque painted substrate; this composition is not alpha preserving.

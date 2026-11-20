@@ -179,3 +179,14 @@ now complements that original relief study. It reuses existing height/normal
 shading on a bounded projected envelope, with tapered tips and visible mid-sewing.
 Original relief stays default; this is 2.5D, not a new 3D engine or cloth solver.
 The depth UI commits filling on release; broader performance evidence remains open.
+
+
+## Whole-face plush proof
+
+A new opt-in comparison in the stuffed-shape study explores short plush and
+curled sherpa on the same padded star. The canonical volume prepares a bounded
+whole-face profile; textile paths remain example-owned. Old relief/depth studies
+and approved PNGs stay unchanged. Visual refinement/owner acceptance and physical
+Android/iPhone profiling remain open. The added enum case requires a future
+minor release; no patch/tag/publication is performed by this study.
+See [contracts and limits](stuffed-shapes.md#whole-face-padding-short-plush-and-curled-sherpa).

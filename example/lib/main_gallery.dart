@@ -256,7 +256,10 @@ class _GalleryPage extends StatelessWidget {
     GalleryStudy.volume => const LocalVolumePlayground(),
     GalleryStudy.light => const SpatialLightStudy(),
     GalleryStudy.softCraft => const SoftCraftPlayground(),
-    GalleryStudy.pillows => const PillowStudy(),
+    GalleryStudy.pillows => const Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [PillowStudy(), SizedBox(height: 32), PlushPillowStudy()],
+    ),
     GalleryStudy.vocabulary => const MaterialVocabularyStudy(),
     GalleryStudy.cover => GalleryWelcome(select: select),
     GalleryStudy.materials => const Column(

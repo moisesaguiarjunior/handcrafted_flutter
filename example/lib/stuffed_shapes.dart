@@ -6,6 +6,7 @@ import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 import 'showcase_theme.dart';
 
 part 'pillow_depth.dart';
+part 'pillow_plush.dart';
 
 /// Original example silhouettes; applications can supply their own closed cut.
 enum PillowShape {

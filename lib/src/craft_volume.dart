@@ -16,6 +16,10 @@ enum CraftVolumeProfile {
 
   /// Broader rolled edge, domed face and small pressure depressions.
   rounded,
+
+  /// Smooth whole-face padding prepared with a bounded membrane approximation.
+  /// Unlike rounded, the broad center has no flat plateau. Not cloth physics.
+  padded,
 }
 
 /// Explicit directional illumination in the current piece coordinate system.
@@ -165,7 +169,7 @@ class CraftVolume {
         bounds.top + bounds.height * (.25 + random.nextDouble() * .5),
       ),
     );
-    for (var y = 0; y < _rows; y++) {
+    for (var y = 0; profile != CraftVolumeProfile.padded && y < _rows; y++) {
       for (var x = 0; x < _columns; x++) {
         final p = _point(x, y);
         if (!_outline.contains(p)) continue;
@@ -199,9 +203,44 @@ class CraftVolume {
         heights[y * _columns + x] = height;
       }
     }
+    if (profile == CraftVolumeProfile.padded) {
+      // Reuse the validated 2px lattice and shared lighting mesh. A bounded
+      // relaxation smooths the whole face instead of stopping at a bevel rim.
+      // At most 320 * 26244 stations; no convergence or physical-pressure claim.
+      final inside = List<bool>.generate(
+        heights.length,
+        (i) => _outline.contains(_point(i % _columns, i ~/ _columns)),
+      );
+      heights.fillRange(0, heights.length, 0);
+      for (var pass = 0; pass < 320; pass++) {
+        for (var y = 1; y < _rows - 1; y++) {
+          for (var x = 1; x < _columns - 1; x++) {
+            final i = y * _columns + x;
+            if (inside[i]) {
+              heights[i] =
+                  (heights[i - 1] +
+                      heights[i + 1] +
+                      heights[i - _columns] +
+                      heights[i + _columns] +
+                      1) /
+                  4;
+            }
+          }
+        }
+      }
+      var peak = 0.0;
+      for (final value in heights) {
+        peak = math.max(peak, value);
+      }
+      if (peak > 0) {
+        for (var i = 0; i < heights.length; i++) {
+          heights[i] = thickness * math.sqrt(heights[i] / peak);
+        }
+      }
+    }
     for (
       var pass = 0;
-      profile == CraftVolumeProfile.rounded && pass < 3;
+      profile != CraftVolumeProfile.sheet && pass < 3;
       pass++
     ) {
       final smooth = Float32List(heights.length);

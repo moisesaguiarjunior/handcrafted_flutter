@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Explore whole-face padding with `CraftVolumeProfile.padded`, reusing retained
+  normals, lighting and shadows. Add opt-in example-owned short-plush and curled
+  sherpa comparisons with native padding/light controls. Old profiles/images
+  remain unchanged. The added enum case requires exhaustive-switch updates and
+  a future minor release; it is not part of the pending SDK-only patch.
+
 - Add optional rounded depth and shared raking-light controls to the stuffed-shape
   study, with a bounded projected side envelope and occluded equatorial sewing.
   Keep the original relief/default and comparison PNG unchanged. Depth filling

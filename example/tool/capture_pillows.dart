@@ -30,6 +30,16 @@ void main() {
         ),
         themeAnimationStyle: AnimationStyle.noAnimation,
       );
+      await captureExample(
+        tester,
+        'build/pillows/plush-comparison.png',
+        const Size(850, 1200),
+        const Padding(
+          padding: EdgeInsets.all(32),
+          child: PlushPillowComparison(),
+        ),
+        themeAnimationStyle: AnimationStyle.noAnimation,
+      );
       for (final width in [320.0, 390.0, 428.0]) {
         await captureExample(
           tester,

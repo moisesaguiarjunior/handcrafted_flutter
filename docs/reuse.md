@@ -30,6 +30,7 @@
 | Project mark composition and capture | `example/lib/brand_mark.dart`, `tool/capture_brand.dart` |
 | Public imported crop, source hinge and placement | `CraftImagePart`; `example/lib/imported_layers.dart` shows the consumer composition |
 | Shared example capture shell and PNG writer | `tool/capture_support.dart` |
+| Whole-face padded body, shared normal/light mesh and shadow | `CraftVolumeProfile.padded`; example textile finishes in `pillow_plush.dart` |
 | Prepared material height/normal fields and scene light | `CraftVolume`, `CraftLight` |
 | Curved bands with independent rails and shadows | `CraftBand`, `CraftBandWidth` |
 | Independent prepared short fibers | `CraftNap` |

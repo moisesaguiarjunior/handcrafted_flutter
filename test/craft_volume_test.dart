@@ -18,6 +18,50 @@ void main() {
     model.shade(c, light);
   });
 
+  test('padding relights the broad face beyond the edge bevel', () async {
+    final square = Path()..addRect(const Rect.fromLTWH(10, 10, 80, 80));
+    final padded = CraftVolume(square, CraftVolumeProfile.padded, height: 24);
+    final original = CraftVolume(
+      square,
+      CraftVolumeProfile.rounded,
+      height: 24,
+      bevel: 8,
+    );
+    final left = CraftLight(
+      x: -1,
+      y: 0,
+      z: .6,
+      ambient: .5,
+      direct: .5,
+      softness: 0,
+    );
+    final right = CraftLight(
+      x: 1,
+      y: 0,
+      z: .6,
+      ambient: .5,
+      direct: .5,
+      softness: 0,
+    );
+    final a = await sample(padded, left), b = await sample(padded, right);
+    final c = await sample(original, left), d = await sample(original, right);
+    final i = (50 * 100 + 35) * 4;
+    expect(
+      (a[i] - b[i]).abs(),
+      greaterThan(10),
+      reason: 'The padded face must curve well inside the short edge bevel',
+    );
+    expect((c[i] - d[i]).abs(), lessThan(10));
+    square.reset();
+    expect(await sample(padded, left), a);
+    final thin = CraftVolume(
+      padded.outline,
+      CraftVolumeProfile.padded,
+      height: 1,
+    );
+    expect(await sample(thin, left), isNot(a));
+  });
+
   test('profiles differ with the same cut, color and light', () async {
     final sheet = CraftVolume(cut(), CraftVolumeProfile.sheet);
     final rounded = CraftVolume(cut(), CraftVolumeProfile.rounded);

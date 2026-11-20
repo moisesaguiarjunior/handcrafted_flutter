@@ -162,8 +162,17 @@ class CraftVolume {
     _gridStep = profile == CraftVolumeProfile.padded
         ? math.max(2.0, bounds.longestSide / 60)
         : 2.0;
-    _columns = (bounds.width / _gridStep).ceil() + 2;
-    _rows = (bounds.height / _gridStep).ceil() + 2;
+    int stations(double extent) {
+      final count = (extent / _gridStep).ceil();
+      // Avoid a 61st interval from floating-point roundoff at exact ratios.
+      return (profile == CraftVolumeProfile.padded
+              ? math.min(60, count)
+              : count) +
+          2;
+    }
+
+    _columns = stations(bounds.width);
+    _rows = stations(bounds.height);
     final heights = Float32List(_columns * _rows);
     final random = math.Random(seed);
     final dents = List.generate(

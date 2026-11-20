@@ -161,3 +161,14 @@ fibers and check/diamond prints on existing substrates. This is not automatic
 consumer adoption or reference-art equivalence. Strip raster differences are
 measured, not hidden. Arbitrary-size worlds, cross-engine visual acceptance and
 physical-device performance remain open; no new material/cache API is implied.
+
+
+## Stuffed silhouette study
+
+The next material experiment uses original star, crescent and sun cuts as small
+stuffed shapes. [Fabric research and first recipe](stuffed-shapes.md) distinguish
+woven cotton, felt and a matte short-pile study, with independent visual filling,
+sewing and existing scene light. It composes prepared volume/nap/thread without
+adding a public pillow preset or another geometry/shading implementation.
+Stretch, fuzzy silhouettes, long fur, calibrated fabric compliance and physical
+stuffing are future work; performance/opacity evidence priorities remain intact.

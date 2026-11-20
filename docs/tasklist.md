@@ -201,3 +201,17 @@ interactive hosted-browser approval and phone performance remain separate.
 See [request](requests/continuous-materials.md) and [proof/limits](surface-continuity.md).
 Phone measurements remain deferred; broader performance baselines (HC-A04) are
 not completed by exploratory raster/readback samples.
+
+
+## Stuffed shapes and fabric selection
+
+| ID | Work | Boundary |
+| --- | --- | --- |
+| HC-C01 | Research cloth for small stuffed silhouettes | Primary-source fabric/nap/stretch distinctions; generic visual recipes, not copied product assets |
+| HC-C02 | Star, crescent and sun with configurable filling | Example-owned original cuts; existing bounded volume, no new package API or simulation |
+| HC-C03 | Independent fabric, filling, thread and light | Cotton/felt/matte short-pile comparison; unchanged pattern and native controls |
+| HC-C04 | Convincing minky/fleece/velour and soft deformation | Open: silhouette fuzz, directional sheen, stretch, low-fill folds and pressure response are not implemented |
+
+See [research, recipe and limits](stuffed-shapes.md). The first proof is a
+visual height/bevel approximation, not measured fiberfill volume or fabric
+elasticity. Independent review/CI and consumer visual acceptance stay separate.

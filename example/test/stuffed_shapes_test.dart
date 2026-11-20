@@ -164,6 +164,60 @@ void main() {
     },
   );
 
+  testWidgets('actual painter restores the canvas after a resource error', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Center(child: StuffedShape(shape: PillowShape.star)),
+      ),
+    );
+    final painter = tester
+        .widget<CustomPaint>(
+          find.descendant(
+            of: find.byType(StuffedShape),
+            matching: find.byType(CustomPaint),
+          ),
+        )
+        .painter!;
+    await tester.pumpWidget(const SizedBox());
+    final recorder = ui.PictureRecorder();
+    final canvas = Canvas(recorder)..translate(3, 5);
+    final count = canvas.getSaveCount(), transform = canvas.getTransform();
+    try {
+      expect(
+        () => painter.paint(canvas, const Size(180, 180)),
+        throwsStateError,
+      );
+      expect(canvas.getSaveCount(), count);
+      expect(canvas.getTransform(), transform);
+    } finally {
+      recorder.endRecording().dispose();
+    }
+  });
+
+  testWidgets(
+    'invalid paint inputs fail in build before a painter is mounted',
+    (tester) async {
+      for (final invalid in [
+        const StuffedShape(shape: PillowShape.star, compression: -1),
+        const StuffedShape(shape: PillowShape.star, color: Color(0x80FFFFFF)),
+        const StuffedShape(shape: PillowShape.star, size: double.infinity),
+      ]) {
+        await tester.pumpWidget(MaterialApp(home: invalid));
+        expect(tester.takeException(), isArgumentError);
+        expect(
+          find.descendant(
+            of: find.byType(StuffedShape),
+            matching: find.byType(CustomPaint),
+          ),
+          findsNothing,
+        );
+        await tester.pumpWidget(const SizedBox());
+      }
+    },
+  );
+
   testWidgets(
     'filling control changes the rendered cushion, not only its label',
     (tester) async {
@@ -199,6 +253,7 @@ void main() {
       await tester.pumpAndSettle();
       final full = await tester.runAsync(pixels);
       expect(empty, isNotNull);
+      expect(full, isNotNull);
       expect(full, isNot(empty));
       await tester.pumpWidget(const SizedBox());
     },

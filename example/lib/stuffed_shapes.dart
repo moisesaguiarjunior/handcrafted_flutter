@@ -156,16 +156,19 @@ final class StuffedShapeGeometry {
     volume.shade(canvas, light);
     if (sewing) {
       canvas.save();
-      canvas.clipPath(volume.outline);
-      seam.paint(
-        canvas,
-        thread: Color.lerp(color, DemoPalette.paper, .8)!,
-        width: .65,
-        compression: compression,
-        pucker: .18,
-        light: light.planar,
-      );
-      canvas.restore();
+      try {
+        canvas.clipPath(volume.outline);
+        seam.paint(
+          canvas,
+          thread: Color.lerp(color, DemoPalette.paper, .8)!,
+          width: .65,
+          compression: compression,
+          pucker: .18,
+          light: light.planar,
+        );
+      } finally {
+        canvas.restore();
+      }
     }
   }
 }
@@ -234,19 +237,31 @@ class _StuffedShapeState extends State<StuffedShape> {
   }
 
   @override
-  Widget build(BuildContext context) => SizedBox.square(
-    dimension: widget.size,
-    child: ExcludeSemantics(
-      child: IgnorePointer(
-        child: RepaintBoundary(
-          key: ValueKey('pillow-${widget.shape.name}'),
-          child: CustomPaint(
-            painter: _StuffedPainter(geometry, textures, widget),
+  Widget build(BuildContext context) {
+    if (!widget.size.isFinite ||
+        widget.size <= 0 ||
+        widget.color.a != 1 ||
+        !widget.compression.isFinite ||
+        widget.compression < 0 ||
+        widget.compression > 1) {
+      throw ArgumentError(
+        'Expected positive finite size, opaque fabric and compression 0..1',
+      );
+    }
+    return SizedBox.square(
+      dimension: widget.size,
+      child: ExcludeSemantics(
+        child: IgnorePointer(
+          child: RepaintBoundary(
+            key: ValueKey('pillow-${widget.shape.name}'),
+            child: CustomPaint(
+              painter: _StuffedPainter(geometry, textures, widget),
+            ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class _StuffedPainter extends CustomPainter {
@@ -257,19 +272,22 @@ class _StuffedPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     canvas.save();
-    canvas.scale(size.width / 132, size.height / 132);
-    canvas.translate(10, 10);
-    geometry.paint(
-      canvas,
-      textures,
-      specimen.light ??
-          CraftLight(ambient: .75, direct: .4, softness: .6, warmth: .18),
-      fabric: specimen.fabric,
-      color: specimen.color,
-      sewing: specimen.sewing,
-      compression: specimen.compression,
-    );
-    canvas.restore();
+    try {
+      canvas.scale(size.width / 132, size.height / 132);
+      canvas.translate(10, 10);
+      geometry.paint(
+        canvas,
+        textures,
+        specimen.light ??
+            CraftLight(ambient: .75, direct: .4, softness: .6, warmth: .18),
+        fabric: specimen.fabric,
+        color: specimen.color,
+        sewing: specimen.sewing,
+        compression: specimen.compression,
+      );
+    } finally {
+      canvas.restore();
+    }
   }
 
   @override

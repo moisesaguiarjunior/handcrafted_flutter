@@ -1,5 +1,6 @@
 import 'spatial_light_study.dart';
 import 'pillow_study.dart';
+import 'fluffy_study.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -253,6 +254,7 @@ class _GalleryPage extends StatelessWidget {
   Widget _content() => switch (selected) {
     GalleryStudy.experience => const ExperienceFrameStudy(),
     GalleryStudy.foam => const FoamPlayground(),
+    GalleryStudy.fluffy => const FluffyMaterialsStudy(),
     GalleryStudy.volume => const LocalVolumePlayground(),
     GalleryStudy.light => const SpatialLightStudy(),
     GalleryStudy.softCraft => const SoftCraftPlayground(),

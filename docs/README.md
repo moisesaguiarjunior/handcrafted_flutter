@@ -11,6 +11,7 @@
 - [Adoption recipes and evidence-driven extensions](consumer-adoption.md)
 - [Reuse map](reuse.md)
 - [Lint policy and capture boundaries](lint-policy.md)
+- [Substrate-independent fluffy finishes](fluffy-finishes.md)
 - [Stuffed shapes and fabric research](stuffed-shapes.md)
 - [Continuous surfaces, fibers and repeated prints](surface-continuity.md)
 - [Material-focused roadmap](roadmap.md)

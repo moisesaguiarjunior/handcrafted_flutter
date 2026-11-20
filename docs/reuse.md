@@ -33,7 +33,7 @@
 | Whole-face padded body, shared normal/light mesh and shadow | `CraftVolumeProfile.padded`; example textile finishes in `pillow_plush.dart` |
 | Prepared material height/normal fields and scene light | `CraftVolume`, `CraftLight` |
 | Curved bands with independent rails and shadows | `CraftBand`, `CraftBandWidth` |
-| Independent prepared short fibers | `CraftNap` |
+| Prepared short/long curled fibers and opt-in contour fringe | `CraftNap`; example `fluffy_study.dart` |
 | Visible-contour fit retaining the full paint window | `CraftPlacement.fit`, `CraftImagePart.placed` |
 | Conservative local decorative stroke envelopes | `craftStrokeBounds` |
 | Cross-SDK validation and resolution lanes | `tool/check_compatibility.sh`, `docs/sdk-compatibility.md` |

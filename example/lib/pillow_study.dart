@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import 'showcase_theme.dart';
 import 'stuffed_shapes.dart';
@@ -12,9 +13,19 @@ class PillowStudy extends StatefulWidget {
 }
 
 class _PillowStudyState extends State<PillowStudy> {
+  final fillingFocus = FocusNode(debugLabel: 'Pillow filling');
+  @override
+  void dispose() {
+    fillingFocus.dispose();
+    super.dispose();
+  }
+
   PillowFabric fabric = PillowFabric.cotton;
   double filling = .65;
+  double previewFilling = .65;
   bool sewing = true;
+  bool moreDepth = false;
+  bool rakingLight = false;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -49,6 +60,7 @@ class _PillowStudyState extends State<PillowStudy> {
       const SizedBox(height: 12),
       Text('Filling ${(filling * 100).round()}%'),
       Slider(
+        focusNode: fillingFocus,
         value: filling,
         min: 0,
         max: 1,
@@ -56,7 +68,30 @@ class _PillowStudyState extends State<PillowStudy> {
         label: '${(filling * 100).round()}%',
         semanticFormatterCallback: (v) =>
             '${(v * 100).round()} percent filling',
-        onChanged: (value) => setState(() => filling = value),
+        onChanged: (value) => setState(() {
+          filling = value;
+          if (!moreDepth) previewFilling = value;
+        }),
+        onChangeEnd: (value) => setState(() => previewFilling = value),
+      ),
+      SwitchListTile(
+        title: const Text('More depth'),
+        subtitle: const Text(
+          'Rounded sides; release the filling slider to update',
+        ),
+        value: moreDepth,
+        onChanged: (value) => setState(() {
+          moreDepth = value;
+          previewFilling = filling;
+        }),
+      ),
+      SwitchListTile(
+        title: const Text('Raking light'),
+        subtitle: const Text(
+          'Use the same lower light across all three shapes',
+        ),
+        value: rakingLight,
+        onChanged: (value) => setState(() => rakingLight = value),
       ),
       SwitchListTile(
         title: const Text('Show sewing'),
@@ -74,8 +109,10 @@ class _PillowStudyState extends State<PillowStudy> {
                 StuffedShape(
                   shape: shape,
                   fabric: fabric,
-                  filling: filling,
+                  filling: previewFilling,
                   sewing: sewing,
+                  moreDepth: moreDepth,
+                  light: rakingLight ? pillowRakingLight() : null,
                   color: switch (shape) {
                     PillowShape.star => DemoPalette.ochre,
                     PillowShape.moon => DemoPalette.indigo,
@@ -178,3 +215,56 @@ class PillowComparison extends StatelessWidget {
     ],
   );
 }
+
+/// Same original cut/color/filling/light with the optional deeper side panel.
+class PillowDepthComparison extends StatelessWidget {
+  /// The original comparison remains unchanged and is captured separately.
+  const PillowDepthComparison({super.key});
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        'A little more dimension',
+        style: TextStyle(fontFamily: 'Caveat', fontSize: 40),
+      ),
+      const Text(
+        'Same pattern, cloth, filling and light. Rounded sides add an oblique view.',
+      ),
+      const SizedBox(height: 16),
+      for (final shape in PillowShape.values) ...[
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            for (final depth in [false, true])
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(depth ? 'Rounded depth' : 'Original relief'),
+                    StuffedShape(
+                      shape: shape,
+                      filling: .9,
+                      size: 245,
+                      moreDepth: depth,
+                      light: pillowRakingLight(),
+                      color: switch (shape) {
+                        PillowShape.star => DemoPalette.ochre,
+                        PillowShape.moon => DemoPalette.indigo,
+                        PillowShape.sun => DemoPalette.rose,
+                      },
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 12),
+      ],
+    ],
+  );
+}
+
+/// One explicit shared light for the optional raking-light study/comparison.
+CraftLight pillowRakingLight() =>
+    CraftLight(z: .55, ambient: .65, direct: .5, softness: .5, warmth: .18);

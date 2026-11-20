@@ -98,3 +98,52 @@ cotton star and fabric on the same moon/color/filling/light. No existing golden
 is regenerated. This demonstrates a runnable recipe; visual acceptance for an
 application and performance on Android/iPhone remain separate gates. Do not
 introduce fabric-specific physics or promote a pillow API before that evidence.
+
+## Optional rounded depth
+
+The original relief remains the default. **More depth** selects a second,
+example-owned 2.5D projection with a rounded side envelope and sewing at its
+mid-section. **Raking light** independently selects one lower directional light
+for every shape. The comparison uses that same explicit light in both columns.
+
+![Original relief and optional rounded depth under the same raking light](assets/stuffed-shapes-depth.png)
+
+`StuffedShape(moreDepth: true)` opts in; `PillowDepthGeometry(original)` prepares
+the alternative. Both remain example types. The original cut, filling, seed and
+fabric inputs are reused. Existing CraftVolume/CraftNap and thread supply all
+lighting/grain/sewing; no new package mesh renderer or animation clock is added.
+
+The projected body is a union of sixteen tapered cross-sections of the same
+pattern. A bounded local-coverage heuristic reduces depth near thin tips, rather
+than extruding a moon tip into a blunt vertical wall. There are at most 320
+contour stations, 64 coverage probes per station, four scalar smoothing passes
+and sixteen section unions. The larger result must still satisfy the existing
+volume and nap budgets; some cuts accepted as a front can exceed the side budget.
+All geometry/occlusion work is prepared before paint, not during relighting.
+
+One cloth field covers the whole projected envelope, avoiding a stack of shaded
+flat cutouts. The original front projection masks the far-side sewing; only the
+exposed join is painted. A pale thread and one ground shadow provide depth cues.
+This is a fixed oblique illustration with approximate normals/occlusion, not a
+rotatable solid, perspective camera, cloth solver or physically lit closed mesh.
+Narrow shapes and arbitrary holes require their own visual validation.
+
+Depth reserves a 160px source window instead of 132px while retaining the same
+base source-to-display scale. The `size` argument controls the base front-panel
+scale; the deeper widget intentionally occupies a larger square to leave room
+for its body/default shadow. Native text/control sizes are independent of it.
+Extreme user-supplied lights can need additional caller-owned shadow clearance.
+
+Preparation is more expensive than changing paint. The depth slider updates its
+label while dragging and commits geometry at release, including native keyboard
+adjustments; original-relief dragging remains continuous. An exploratory desktop
+JIT preparation probe motivated simpler section unions instead of many bridge
+polygons. These debug samples do not establish frame times, mobile FPS or GPU
+memory, and do not complete the general performance-baseline roadmap task.
+
+The approved original comparison PNG remains unchanged. The capture command also
+writes `build/pillows/depth-comparison.png`; compare the original output against
+`docs/assets/stuffed-shapes.png` under the matching engine/fonts instead of
+regenerating that reference. Deeper fabric, mask, native-control and pixel tests
+cover the optional path. Device profiling and application visual adoption remain
+separate gates.

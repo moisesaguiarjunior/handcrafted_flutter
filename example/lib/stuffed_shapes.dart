@@ -5,6 +5,8 @@ import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import 'showcase_theme.dart';
 
+part 'pillow_depth.dart';
+
 /// Original example silhouettes; applications can supply their own closed cut.
 enum PillowShape {
   /// Five softly rounded points.
@@ -135,24 +137,7 @@ final class StuffedShapeGeometry {
       throw ArgumentError('Expected opaque fabric and compression 0..1');
     }
     volume.shadow(canvas, light);
-    textures.paint(
-      canvas,
-      volume.outline,
-      material: fabric == PillowFabric.felt
-          ? CraftMaterial.felt
-          : CraftMaterial.cotton,
-      color: color,
-      scale: 1.1,
-      strength: fabric == PillowFabric.shortPile ? 0 : .65,
-    );
-    if (fabric == PillowFabric.shortPile) {
-      nap.paint(
-        canvas,
-        ink: Color.lerp(color, DemoPalette.ink, .25)!,
-        highlight: Color.lerp(color, DemoPalette.paper, .35)!,
-        contrast: .7,
-      );
-    }
+    _paintPillowFabric(canvas, textures, volume.outline, nap, fabric, color);
     volume.shade(canvas, light);
     if (sewing) {
       canvas.save();
@@ -173,6 +158,34 @@ final class StuffedShapeGeometry {
   }
 }
 
+void _paintPillowFabric(
+  Canvas canvas,
+  MaterialTextures textures,
+  Path cut,
+  CraftNap nap,
+  PillowFabric fabric,
+  Color color,
+) {
+  textures.paint(
+    canvas,
+    cut,
+    material: fabric == PillowFabric.felt
+        ? CraftMaterial.felt
+        : CraftMaterial.cotton,
+    color: color,
+    scale: 1.1,
+    strength: fabric == PillowFabric.shortPile ? 0 : .65,
+  );
+  if (fabric == PillowFabric.shortPile) {
+    nap.paint(
+      canvas,
+      ink: Color.lerp(color, DemoPalette.ink, .25)!,
+      highlight: Color.lerp(color, DemoPalette.paper, .35)!,
+      contrast: .7,
+    );
+  }
+}
+
 /// Stateful resource owner surrounding decorative paint with native semantics.
 class StuffedShape extends StatefulWidget {
   /// Reuses its texture owner across paint-only fabric/light/color changes.
@@ -186,6 +199,7 @@ class StuffedShape extends StatefulWidget {
     this.sewing = true,
     this.compression = .14,
     this.size = 180,
+    this.moreDepth = false,
   });
 
   /// Example silhouette.
@@ -209,8 +223,12 @@ class StuffedShape extends StatefulWidget {
   /// Paint-only puncture shading, 0..1.
   final double compression;
 
-  /// Display size; source remains 112px and native controls never scale with it.
+  /// Base front-panel display scale; depth reserves 160/132 of this size.
+  /// Native controls never scale with the decoration.
   final double size;
+
+  /// Opt-in rounded gusset; false preserves the approved relief rendering.
+  final bool moreDepth;
 
   @override
   State<StuffedShape> createState() => _StuffedShapeState();
@@ -219,6 +237,9 @@ class StuffedShape extends StatefulWidget {
 class _StuffedShapeState extends State<StuffedShape> {
   final textures = MaterialTextures(seed: 71);
   late StuffedShapeGeometry geometry = _prepare();
+  late PillowDepthGeometry? depthGeometry = widget.moreDepth
+      ? PillowDepthGeometry(geometry)
+      : null;
   StuffedShapeGeometry _prepare() =>
       StuffedShapeGeometry(pillowCut(widget.shape), filling: widget.filling);
   @override
@@ -227,6 +248,11 @@ class _StuffedShapeState extends State<StuffedShape> {
     if (oldWidget.shape != widget.shape ||
         oldWidget.filling != widget.filling) {
       geometry = _prepare();
+    }
+    if (oldWidget.shape != widget.shape ||
+        oldWidget.filling != widget.filling ||
+        oldWidget.moreDepth != widget.moreDepth) {
+      depthGeometry = widget.moreDepth ? PillowDepthGeometry(geometry) : null;
     }
   }
 
@@ -249,13 +275,18 @@ class _StuffedShapeState extends State<StuffedShape> {
       );
     }
     return SizedBox.square(
-      dimension: widget.size,
+      dimension: widget.size * (widget.moreDepth ? 160 / 132 : 1),
       child: ExcludeSemantics(
         child: IgnorePointer(
           child: RepaintBoundary(
             key: ValueKey('pillow-${widget.shape.name}'),
             child: CustomPaint(
-              painter: _StuffedPainter(geometry, textures, widget),
+              painter: _StuffedPainter(
+                geometry,
+                textures,
+                widget,
+                depthGeometry,
+              ),
             ),
           ),
         ),
@@ -265,26 +296,42 @@ class _StuffedShapeState extends State<StuffedShape> {
 }
 
 class _StuffedPainter extends CustomPainter {
-  _StuffedPainter(this.geometry, this.textures, this.specimen);
+  _StuffedPainter(this.geometry, this.textures, this.specimen, this.depth);
   final StuffedShapeGeometry geometry;
   final MaterialTextures textures;
   final StuffedShape specimen;
+  final PillowDepthGeometry? depth;
   @override
   void paint(Canvas canvas, Size size) {
     canvas.save();
     try {
-      canvas.scale(size.width / 132, size.height / 132);
+      final window = depth == null ? 132.0 : 160.0;
+      canvas.scale(size.width / window, size.height / window);
       canvas.translate(10, 10);
-      geometry.paint(
-        canvas,
-        textures,
-        specimen.light ??
-            CraftLight(ambient: .75, direct: .4, softness: .6, warmth: .18),
-        fabric: specimen.fabric,
-        color: specimen.color,
-        sewing: specimen.sewing,
-        compression: specimen.compression,
-      );
+      final light =
+          specimen.light ??
+          CraftLight(ambient: .75, direct: .4, softness: .6, warmth: .18);
+      if (depth case final prepared?) {
+        prepared.paint(
+          canvas,
+          textures,
+          light,
+          fabric: specimen.fabric,
+          color: specimen.color,
+          sewing: specimen.sewing,
+          compression: specimen.compression,
+        );
+      } else {
+        geometry.paint(
+          canvas,
+          textures,
+          light,
+          fabric: specimen.fabric,
+          color: specimen.color,
+          sewing: specimen.sewing,
+          compression: specimen.compression,
+        );
+      }
     } finally {
       canvas.restore();
     }
@@ -293,6 +340,7 @@ class _StuffedPainter extends CustomPainter {
   @override
   bool shouldRepaint(_StuffedPainter oldDelegate) =>
       geometry != oldDelegate.geometry ||
+      depth != oldDelegate.depth ||
       specimen.fabric != oldDelegate.specimen.fabric ||
       specimen.color != oldDelegate.specimen.color ||
       specimen.light != oldDelegate.specimen.light ||

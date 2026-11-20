@@ -6,6 +6,39 @@ import 'package:handcrafted_example/fluffy_study.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 void main() {
+  testWidgets(
+    'each adjustable node names its control and speaks actual units',
+    (tester) async {
+      final semantics = tester.ensureSemantics();
+      try {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Scaffold(
+              body: SingleChildScrollView(child: FluffyMaterialsStudy()),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        for (final pair in [
+          ('Fiber length', '3.50 times'),
+          ('Curl', '65 percent'),
+          ('Edge fuzz', '80 percent'),
+          ('Density', '100 percent'),
+        ]) {
+          final slider = find.byKey(ValueKey(pair.$1));
+          await tester.ensureVisible(slider);
+          await tester.pumpAndSettle();
+          final data = tester.getSemantics(slider).getSemanticsData();
+          expect(data.label, contains(pair.$1));
+          expect(data.value, pair.$2);
+        }
+        await tester.pumpWidget(const SizedBox());
+      } finally {
+        semantics.dispose();
+      }
+    },
+  );
+
   testWidgets('native finish controls repaint both shapes at enlarged text', (
     tester,
   ) async {
@@ -55,7 +88,9 @@ void main() {
       final before = await tester.runAsync(actual);
       final length = find.byKey(const ValueKey('Fiber length'));
       await tester.ensureVisible(length);
-      await tester.tap(length);
+      await tester.tapAt(
+        tester.getRect(length).centerLeft + const Offset(25, 0),
+      );
       await tester.pumpAndSettle();
       tester.widget<Slider>(length).focusNode!.requestFocus();
       await tester.pump();

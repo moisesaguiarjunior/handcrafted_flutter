@@ -191,21 +191,26 @@ class _FluffyMaterialsStudyState extends State<FluffyMaterialsStudy> {
     double min,
     double max,
     ValueChanged<double> changed,
-  ) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(label),
-      Slider(
-        key: ValueKey(label),
-        focusNode: focus[label],
-        value: value,
-        min: min,
-        max: max,
-        divisions: 20,
-        label: value.toStringAsFixed(2),
-        onChanged: changed,
-      ),
-    ],
+  ) => MergeSemantics(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label),
+        Slider(
+          key: ValueKey(label),
+          focusNode: focus[label],
+          value: value,
+          min: min,
+          max: max,
+          divisions: label == 'Fiber length' ? 23 : 20,
+          label: value.toStringAsFixed(2),
+          semanticFormatterCallback: (v) => label == 'Fiber length'
+              ? '${v.toStringAsFixed(2)} times'
+              : '${(v * 100).round()} percent',
+          onChanged: changed,
+        ),
+      ],
+    ),
   );
   @override
   Widget build(BuildContext context) => Column(

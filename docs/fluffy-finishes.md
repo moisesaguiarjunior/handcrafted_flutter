@@ -48,7 +48,8 @@ shader, global cache or offscreen layer is added by this finish.
 
 `paintBounds` conservatively includes the possible fringe/stroke extent. Paint
 outside the cut is opt-in and still respects ancestor/caller clips. Reserve that
-margin without shrinking text or expanding touch/semantics automatically. On
+margin without shrinking text or expanding touch/semantics automatically. Only filled/unfilled transitions emit fringe: canceled even-odd contours and
+hidden same-winding internal contours emit none. On
 holed cuts, strands may extend a short way into the hole; they do not fill its
 interior. Thin details can have ambiguous outward directions at the probe scale.
 

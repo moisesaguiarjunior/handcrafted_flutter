@@ -107,14 +107,16 @@ class CraftNap {
         final t = metric.getTangentForOffset(metric.length * (i + .3) / count)!;
         final accepted = random.nextDouble() < density;
         var outward = Offset(-t.vector.dy, t.vector.dx);
-        if (_outline.contains(t.position + outward * .25)) outward = -outward;
+        final leftInside = _outline.contains(t.position + outward * .25);
+        final rightInside = _outline.contains(t.position - outward * .25);
+        if (leftInside) outward = -outward;
         final angle = (random.nextDouble() - .5) * 1.4;
         final along = outward * math.cos(angle) + t.vector * math.sin(angle);
         final length =
             scale * fiberLength * edgeFuzz * (.45 + random.nextDouble() * .75);
         final bend = (random.nextDouble() - .5) * length * .35;
         final tone = random.nextInt(4);
-        if (!accepted) continue;
+        if (!accepted || leftInside == rightInside) continue;
         _fiber(
           _fringeBatches[tone],
           t.position - _origin - outward * .2,

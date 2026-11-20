@@ -51,6 +51,47 @@ void main() {
   );
 
   test(
+    'fringe follows filled boundaries, not canceled or internal contours',
+    () async {
+      const outer = Rect.fromLTWH(15, 15, 70, 55);
+      final canceled = Path()
+        ..fillType = PathFillType.evenOdd
+        ..addRect(outer)
+        ..addRect(outer);
+      final invisible = await render(
+        CraftNap(canceled, edgeFuzz: 1, density: 1, fiberLength: 4),
+      );
+      expect(invisible.every((v) => v == 0), isTrue);
+      final solid = Path()..addRect(outer);
+      final internal = Path.from(solid)
+        ..addRect(const Rect.fromLTWH(35, 30, 25, 20));
+      final plain = await render(
+        CraftNap(solid, edgeFuzz: 1, density: 1, fiberLength: 4),
+      );
+      expect(
+        await render(
+          CraftNap(internal, edgeFuzz: 1, density: 1, fiberLength: 4),
+        ),
+        plain,
+      );
+      final hole = Path.from(internal)..fillType = PathFillType.evenOdd;
+      final clipped = await render(CraftNap(hole, density: 1, fiberLength: 4));
+      final fuzzy = await render(
+        CraftNap(hole, edgeFuzz: 1, density: 1, fiberLength: 4),
+      );
+      var enteringHole = 0;
+      for (var y = 32; y < 48; y++) {
+        for (var x = 37; x < 58; x++) {
+          final i = (y * 100 + x) * 4 + 3;
+          if (fuzzy[i] > clipped[i]) enteringHole++;
+        }
+      }
+      expect(enteringHole, greaterThan(0));
+      expect(fuzzy[(40 * 100 + 47) * 4 + 3], 0);
+    },
+  );
+
+  test(
     'opt-in fringe paints beyond the cut but within its declared extent',
     () async {
       final outline = cut();

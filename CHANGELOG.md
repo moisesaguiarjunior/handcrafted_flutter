@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add optional rounded depth and shared raking-light controls to the stuffed-shape
+  study, with a bounded projected side envelope and occluded equatorial sewing.
+  Keep the original relief/default and comparison PNG unchanged. Depth filling
+  commits at release; no new package API, 3D engine or cloth-physics claim.
+
 - Add an example-owned stuffed-shape study: original star, crescent and sun,
   independently selected fabric and visual filling, pale contour sewing and
   existing shared light. Document primary-source textile research and the

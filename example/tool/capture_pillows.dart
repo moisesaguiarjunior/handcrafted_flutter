@@ -20,6 +20,16 @@ void main() {
         const Padding(padding: EdgeInsets.all(32), child: PillowComparison()),
         themeAnimationStyle: AnimationStyle.noAnimation,
       );
+      await captureExample(
+        tester,
+        'build/pillows/depth-comparison.png',
+        const Size(900, 1200),
+        const Padding(
+          padding: EdgeInsets.all(32),
+          child: PillowDepthComparison(),
+        ),
+        themeAnimationStyle: AnimationStyle.noAnimation,
+      );
       for (final width in [320.0, 390.0, 428.0]) {
         await captureExample(
           tester,

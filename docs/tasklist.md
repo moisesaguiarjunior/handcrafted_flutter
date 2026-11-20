@@ -211,6 +211,7 @@ not completed by exploratory raster/readback samples.
 | HC-C02 | Star, crescent and sun with configurable filling | Example-owned original cuts; existing bounded volume, no new package API or simulation |
 | HC-C03 | Independent fabric, filling, thread and light | Cotton/felt/matte short-pile comparison; unchanged pattern and native controls |
 | HC-C04 | Convincing minky/fleece/velour and soft deformation | Open: silhouette fuzz, directional sheen, stretch, low-fill folds and pressure response are not implemented |
+| HC-C05 | Optional deeper stuffed-shape projection | Example-owned rounded side envelope, occluded mid-seam and shared raking light; original relief stays the default and its capture remains unchanged |
 
 See [research, recipe and limits](stuffed-shapes.md). The first proof is a
 visual height/bevel approximation, not measured fiberfill volume or fabric

@@ -273,3 +273,29 @@ are outside this review/delivery.
 - This local independent technical review is not founder visual acceptance,
   consumer adoption, phone performance evidence or a GitHub review object.
   Published tags remain unchanged; release upload and CI are separate gates.
+
+## Optional deeper stuffed-shape projection
+
+- Exact implementation `f42cc7024cd8aa54b0aec30bea7348246f615060` received an
+  independent Astra review with no blocking findings. Requirement: preserve the
+  approved relief/default and add an optional more-dimensional composition.
+- The reviewer ran all 300 repository tests and all 63 original shape/filling
+  combinations. Keyboard/touch at 200% text in three narrow/short viewports,
+  native error recovery and exact original PNG reproduction were also checked.
+- The new example uses existing volume/nap/thread on a bounded projected envelope.
+  It is explicitly 2.5D; the package API, original default and original comparison
+  image are unchanged. New sewing is clipped behind the front projection.
+- Author checks additionally passed 15 headless Chrome tests and analysis/tests/
+  gallery web builds at Flutter 3.35.7 and 3.47.9. Publication/Dartdoc dry-runs
+  reported zero warnings/errors, with no upload.
+- Isolated mutations removing the side envelope, removing seam occlusion and
+  ignoring the mode transition each failed the protected assertions. A tiny
+  intentional grain change failed the approved-PNG byte comparison; restored
+  source reproduced the original. Existing image references were never replaced.
+- Exploratory JIT preparation samples motivated simpler section unions instead
+  of bridge polygons. Depth geometry commits on native interaction end while the
+  original relief remains continuous. These samples are not frame/GPU/phone
+  measurements and do not complete the general performance-baseline task.
+- This independent local technical review is not founder visual acceptance of
+  the new variant or a GitHub review object. Application adoption, arbitrary-cut
+  visual fidelity, true 3D/cloth simulation and phone profiling remain separate.

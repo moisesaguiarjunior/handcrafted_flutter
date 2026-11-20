@@ -172,3 +172,10 @@ sewing and existing scene light. It composes prepared volume/nap/thread without
 adding a public pillow preset or another geometry/shading implementation.
 Stretch, fuzzy silhouettes, long fur, calibrated fabric compliance and physical
 stuffing are future work; performance/opacity evidence priorities remain intact.
+
+
+An opt-in [rounded depth projection](stuffed-shapes.md#optional-rounded-depth)
+now complements that original relief study. It reuses existing height/normal
+shading on a bounded projected envelope, with tapered tips and visible mid-sewing.
+Original relief stays default; this is 2.5D, not a new 3D engine or cloth solver.
+The depth UI commits filling on release; broader performance evidence remains open.

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Extend CraftNap with independent fiberLength, curl and opt-in edgeFuzz, with
+  explicit paint bounds and bounded contour candidates. Add an all-material
+  and padded-shape gallery study; preserve existing short-nap seeded output.
+
 - Explore whole-face padding with `CraftVolumeProfile.padded`, reusing retained
   normals, lighting and shadows. Add opt-in example-owned short-plush and curled
   sherpa comparisons with native padding/light controls. Old profiles/images

@@ -190,3 +190,12 @@ and approved PNGs stay unchanged. Visual refinement/owner acceptance and physica
 Android/iPhone profiling remain open. The added enum case requires a future
 minor release; no patch/tag/publication is performed by this study.
 See [contracts and limits](stuffed-shapes.md#whole-face-padding-short-plush-and-curled-sherpa).
+
+
+## Fluffy finish across substrates
+
+CraftNap now has opt-in length, curl and contour fringe with explicit paint
+bounds and candidate caps. The same finish composes over all nine materials
+and padded stars, moons and suns. Defaults and previous images remain unchanged.
+[Recipe and limits](fluffy-finishes.md). Owner visual review and physical-device
+profiling remain separate; no hosted release is performed by this addition.

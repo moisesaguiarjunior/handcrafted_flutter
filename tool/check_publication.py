@@ -42,6 +42,7 @@ def main() -> None:
         probes = [
             "WORKTREE.local.md",
             "example/publication-probe.local.md",
+            "example/tool/generated-capture-publication-probe.txt",
             "build/generated-publication-probe.txt",
             "coverage/generated-coverage-probe.info",
         ]

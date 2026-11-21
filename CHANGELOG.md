@@ -2,6 +2,10 @@
 
 ## 0.4.0
 
+- Keep root/example capture entrypoints Git-only; the prospective Pub archive
+  retains the runnable gallery and its licensed runtime assets. Add a nested
+  capture exclusion probe to the publication validator.
+
 - Retain image clipping across pose-only rebuilds by comparing the original
   immutable Path identity and preparing snapshots only when clipping is needed.
 - Reuse one current-scale shader per material owner and dispose replacements

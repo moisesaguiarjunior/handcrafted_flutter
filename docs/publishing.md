@@ -19,8 +19,10 @@ included WORKTREE.local.md despite Git ignoring that file locally. Both the
 shared .gitignore and .pubignore now exclude local notes; Pub uses its own
 explicit exclusions even when source control ignores the same file.
 
-Full guides, capture tools and large visual atlases remain in the source
-repository. Curated images live in `doc/screenshots/` and
+Full guides, root/example capture tools and large visual atlases remain in the
+source repository. `/example/tool/` capture entrypoints depend on the Git-only
+root tools and example test helpers; run captures from a Git checkout, not the
+hosted archive. The runnable gallery in `example/lib/` stays in the archive. Curated images live in `doc/screenshots/` and
 are declared in pubspec metadata; no duplicate image bytes are maintained.
 The library, core tests, runnable example and its licensed font/sprite assets
 remain in the archive. Example-only fonts do not become runtime library assets.
@@ -29,8 +31,10 @@ The README uses absolute repository/media links so it also works on pub.dev.
 The original dry-run produced an approximately 10 MB compressed archive with
 two warnings: a fixed clipper2 version and the top-level docs directory. The
 candidate uses ^0.0.3 with the same locked dependency, keeps docs Git-only and
-produces an approximately 1 MB archive with no warnings. Actual size may change
-as source or screenshots evolve. See [dependency notices](dependencies.md).
+produced an approximately 1 MB archive with no warnings at that earlier stage.
+The 0.4.0 candidate currently reports a rounded 2 MB compressed payload with
+zero warnings. These are historical/tool-reported rounded sizes, not byte-exact
+measurements; actual size changes as source or screenshots evolve. See [dependency notices](dependencies.md).
 
 ## Reproduce the gates
 

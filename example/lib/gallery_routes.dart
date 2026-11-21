@@ -87,6 +87,6 @@ Uri galleryShareLink(
       ? base
       : Uri.parse('https://moisesaguiarjunior.github.io/handcrafted_flutter/');
   return origin
-      .replace(queryParameters: {'study': study.name})
+      .replace(userInfo: '', queryParameters: {'study': study.name})
       .removeFragment();
 }

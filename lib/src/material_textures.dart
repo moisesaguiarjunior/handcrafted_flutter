@@ -56,8 +56,15 @@ class MaterialTextures {
     // CanvasKit's ImageShader.dispose consumes its supplied image handle in
     // both supported SDKs. Give it a private handle, keeping the cached tile
     // alive across scale changes. Native/Skwasm shaders do not consume it.
-    const consumesImage =
-        kIsWeb && !bool.fromEnvironment('dart.tool.dart2wasm');
+    const hasRendererDefines =
+        bool.hasEnvironment('FLUTTER_WEB_USE_SKWASM') ||
+        bool.hasEnvironment('FLUTTER_WEB_USE_SKIA');
+    // Follow the engine's renderer priority, including explicit test/run
+    // overrides. The Dart compiler target alone does not identify the renderer.
+    const useSkwasm = hasRendererDefines
+        ? bool.fromEnvironment('FLUTTER_WEB_USE_SKWASM')
+        : bool.fromEnvironment('dart.tool.dart2wasm');
+    const consumesImage = kIsWeb && !useSkwasm;
     final input = consumesImage ? image.clone() : image;
     final shader = ui.ImageShader(
       input,

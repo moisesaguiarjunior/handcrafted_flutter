@@ -66,7 +66,8 @@ claim a phone frame-time improvement.
 CanvasKit in both supported SDKs consumes the image handle supplied to its
 ImageShader when disposing that shader. Its JavaScript path receives a private
 cloned handle so a scale replacement cannot invalidate the owner's cached tile.
-Native and Skwasm use the tile handle directly. This renderer policy is covered
+The engine renderer defines take precedence over the compiler target, including
+explicit test/run overrides. Native and Skwasm use the tile handle directly. This renderer policy is covered
 by native/Chrome replacement, replay and disposal tests; Wasm execution remains
 outside the tested matrix. See the upstream
 [CanvasKit lifecycle](https://github.com/flutter/flutter/blob/3.35.7/engine/src/flutter/lib/web_ui/lib/src/engine/canvaskit/shader.dart#L295).

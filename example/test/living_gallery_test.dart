@@ -30,6 +30,18 @@ void main() {
         expect(link.path, '/handcrafted_flutter/');
         expect(link.queryParameters, {'study': 'fluffy'});
       }
+      final sanitized = galleryShareLink(
+        GalleryStudy.paper,
+        isWeb: true,
+        base: Uri.parse(
+          'https://fixture:synthetic@demo.invalid:8443/gallery/?old=1#old',
+        ),
+      );
+      expect(sanitized.userInfo, isEmpty);
+      expect(sanitized.host, 'demo.invalid');
+      expect(sanitized.port, 8443);
+      expect(sanitized.path, '/gallery/');
+      expect(sanitized.fragment, isEmpty);
       final browser = galleryShareLink(
         GalleryStudy.paper,
         isWeb: true,

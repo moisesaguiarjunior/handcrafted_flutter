@@ -299,3 +299,21 @@ are outside this review/delivery.
 - This independent local technical review is not founder visual acceptance of
   the new variant or a GitHub review object. Application adoption, arbitrary-cut
   visual fidelity, true 3D/cloth simulation and phone profiling remain separate.
+
+
+## Padded forms, fluffy finish and rendering fixes
+
+| PR | Exact independently approved source | Package / example tests | Corrected findings |
+| --- | --- | --- | --- |
+| [51](https://github.com/moisesaguiarjunior/handcrafted_flutter/pull/51) | `9d7c625f36a051c8c72795324d251b7c077c20b5` | 151 / 156 | Ambient-only tuft response, large-span padding and exact lattice cap |
+| [52](https://github.com/moisesaguiarjunior/handcrafted_flutter/pull/52) | `b89f6866385802a4a2fd4336d685ccec01f50fef` | 157 / 158 | Visible-fill fringe boundaries and named adjustable semantics with actual units |
+| [53](https://github.com/moisesaguiarjunior/handcrafted_flutter/pull/53) | `407b30c7401d4017f11e990789865c573fee3fa1` | 162 / 159 | Stable clipping, shader lifetime/renderer overrides, narrow selected layout, brush angle and canonical/sanitized sharing |
+
+Each source received a final no-blocking-findings outcome from an independent
+local Astra review before its first push, then green CI before merge. Reports
+and independent probes are retained privately. These are not human approvals or
+GitHub review objects. The first two preserve previously approved comparison
+images byte for byte. The last retains the opacity layer after failed Chrome
+parity for direct alpha, and adds focused Chrome checks to both SDK lanes.
+Phone performance, consumer adoption and hosted publication remain separate.
+The 0.4.0 release candidate receives its own exact-source review before tagging.

@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.4.0
+
+- Keep root/example capture entrypoints Git-only; the prospective Pub archive
+  retains the runnable gallery and its licensed runtime assets. Add a nested
+  capture exclusion probe to the publication validator.
 
 - Retain image clipping across pose-only rebuilds by comparing the original
   immutable Path identity and preparing snapshots only when clipping is needed.
@@ -20,8 +24,8 @@
 - Explore whole-face padding with `CraftVolumeProfile.padded`, reusing retained
   normals, lighting and shadows. Add opt-in example-owned short-plush and curled
   sherpa comparisons with native padding/light controls. Old profiles/images
-  remain unchanged. The added enum case requires exhaustive-switch updates and
-  a future minor release; it is not part of the pending SDK-only patch.
+  remain unchanged. The added enum case requires exhaustive-switch updates;
+  this is a pre-1.0 minor release.
 
 - Add optional rounded depth and shared raking-light controls to the stuffed-shape
   study, with a bounded projected side envelope and occluded equatorial sewing.
@@ -43,7 +47,7 @@
   composing actual example painters, and enforce the policy with synthetic
   violations in disposable snapshots. Lint dependencies are developer-only.
 
-- Prepare 0.3.1 with a tested Flutter 3.35.7 / Dart 3.9.2 source floor and a
+- Widen the tested SDK floor to Flutter 3.35.7 / Dart 3.9.2 with a
   two-SDK CI matrix alongside the existing locked release baseline. Use the
   shared boolean TickerMode accessor with a single documented deprecation
   suppression on newer SDKs; pause/resume semantics are unchanged.

@@ -3,7 +3,7 @@
 | Source/version | Flutter / Dart floor | Evidence |
 | --- | --- | --- |
 | Published 0.3.0 and v0.3.0 | 3.47.9 / 3.13.7 | Immutable published constraints and hosted consumer smoke |
-| Unreleased 0.3.1 source | 3.35.7 / 3.9.2 | Isolated SDK analysis, 149 library +119 example tests and release web gallery build; repeat on 3.47.9 / 3.13.7 and CI |
+| 0.4.0 Git source | 3.35.7 / 3.9.2 | CI at 3.35.7 and 3.47.9: library/example analysis and tests, focused Chrome resource/compositing regressions, release web gallery build |
 
 The older SDK is a chosen tested floor, not proof of the earliest possible engine.
 Successful endpoint builds do not certify every intermediate patch, native

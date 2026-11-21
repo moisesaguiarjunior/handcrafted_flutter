@@ -13,6 +13,47 @@ import 'package:handcrafted_example/paper_studies.dart';
 import 'support/fonts.dart';
 
 void main() {
+  test(
+    'native share links are published HTTPS URLs; browser paths are retained',
+    () {
+      for (final base in [
+        Uri.parse('file:///app/main.dart'),
+        Uri.parse('http://localhost:8765/?old=1'),
+      ]) {
+        final link = galleryShareLink(
+          GalleryStudy.fluffy,
+          isWeb: false,
+          base: base,
+        );
+        expect(link.scheme, 'https');
+        expect(link.host, 'moisesaguiarjunior.github.io');
+        expect(link.path, '/handcrafted_flutter/');
+        expect(link.queryParameters, {'study': 'fluffy'});
+      }
+      final sanitized = galleryShareLink(
+        GalleryStudy.paper,
+        isWeb: true,
+        base: Uri.parse(
+          'https://fixture:synthetic@demo.invalid:8443/gallery/?old=1#old',
+        ),
+      );
+      expect(sanitized.userInfo, isEmpty);
+      expect(sanitized.host, 'demo.invalid');
+      expect(sanitized.port, 8443);
+      expect(sanitized.path, '/gallery/');
+      expect(sanitized.fragment, isEmpty);
+      final browser = galleryShareLink(
+        GalleryStudy.paper,
+        isWeb: true,
+        base: Uri.parse('https://example.test/nested/gallery/?old=1#old'),
+      );
+      expect(
+        browser.toString(),
+        'https://example.test/nested/gallery/?study=paper',
+      );
+    },
+  );
+
   testWidgets(
     'moving brush restarts at contact and prop switches preserve supplied progress',
     (tester) async {
@@ -303,7 +344,14 @@ void main() {
       expect(find.text('Let the color find its way'), findsOneWidget);
       await tester.tap(find.text('Copy link'));
       await tester.pumpAndSettle();
-      expect(Uri.parse(copied!).queryParameters['study'], 'spreading');
+      final shared = Uri.parse(copied!);
+      expect(shared.scheme, kIsWeb ? Uri.base.scheme : 'https');
+      expect(
+        shared.host,
+        kIsWeb ? Uri.base.host : 'moisesaguiarjunior.github.io',
+      );
+      expect(shared.path, kIsWeb ? Uri.base.path : '/handcrafted_flutter/');
+      expect(shared.queryParameters['study'], 'spreading');
       await tester.binding.defaultBinaryMessenger.handlePlatformMessage(
         'flutter/navigation',
         const JSONMethodCodec().encodeMethodCall(

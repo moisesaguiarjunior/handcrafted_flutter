@@ -5,7 +5,7 @@
 | Fine-pore EVA and independent bounded impressions | `CraftMaterial.eva`, `paintFoamFinish` |
 | Seeded perimeter | `pigmentOutline` |
 | Value-based silhouette recipes | `CraftOutline`, `CraftSurface.shape` |
-| Material tiles and owned resources | `MaterialTextures`, `CraftMaterial` |
+| Material tiles, last-scale shaders and explicit disposal | `MaterialTextures`, `CraftMaterial` |
 | Bounded layered pigment with explicit palette | `paintWatercolor` |
 | Directional motif rims and native lettering | `paintCraftRelief`, `CraftReliefText` |
 | Native themed headings | `CraftHeading`, `CraftReliefStyle`, `CraftTheme.heading` |
@@ -28,7 +28,7 @@
 | Authored actor examples with independent progress | `example/lib/motion_studies.dart`, `example/lib/kite_art.dart` |
 | Canonical example palette and typography | `example/lib/showcase_theme.dart` |
 | Project mark composition and capture | `example/lib/brand_mark.dart`, `tool/capture_brand.dart` |
-| Public imported crop, source hinge and placement | `CraftImagePart`; `example/lib/imported_layers.dart` shows the consumer composition |
+| Identity-stable lazy image masks, crop, source hinge and placement | `CraftImagePart`; `example/lib/imported_layers.dart` shows the consumer composition |
 | Shared example capture shell and PNG writer | `tool/capture_support.dart` |
 | Whole-face padded body, shared normal/light mesh and shadow | `CraftVolumeProfile.padded`; example textile finishes in `pillow_plush.dart` |
 | Prepared material height/normal fields and scene light | `CraftVolume`, `CraftLight` |

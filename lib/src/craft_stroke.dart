@@ -296,7 +296,7 @@ void paintCraftStroke(
                   2;
           canvas.save();
           canvas.translate(tangent.position.dx, tangent.position.dy);
-          canvas.rotate(tangent.angle - .4);
+          canvas.rotate(math.atan2(tangent.vector.dy, tangent.vector.dx) - .4);
           canvas.drawOval(
             Rect.fromCenter(
               center: Offset.zero,

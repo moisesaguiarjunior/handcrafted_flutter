@@ -162,10 +162,7 @@ class CraftImagePart extends StatelessWidget {
     // Keep wrapper topology stable when an optional mask is added or removed.
     // Otherwise native editable/focus state in the overlay would be remounted.
     content = ClipPath(
-      clipper: _SourceClip(
-        sourceClip == null ? null : Path.from(sourceClip!),
-        sourceRect,
-      ),
+      clipper: _SourceClip(sourceClip, sourceRect),
       clipBehavior: sourceClip == null ? Clip.hardEdge : Clip.antiAlias,
       child: content,
     );
@@ -183,13 +180,17 @@ class CraftImagePart extends StatelessWidget {
 }
 
 class _SourceClip extends CustomClipper<Path> {
-  const _SourceClip(this.source, this.crop);
+  _SourceClip(this.source, this.crop);
+  // Compare the caller's immutable identity, not a fresh snapshot every build.
+  // RenderClipPath retains its computed clip while pose-only builds reconfigure
+  // this delegate. Copy only when geometry is actually requested.
+  late final Path? _snapshot = source == null ? null : Path.from(source!);
   final Path? source;
   final Rect crop;
   @override
-  Path getClip(Size size) => source == null
+  Path getClip(Size size) => _snapshot == null
       ? (Path()..addRect(Offset.zero & size))
-      : source!
+      : _snapshot
             .shift(-crop.topLeft)
             .transform(
               Matrix4.diagonal3Values(

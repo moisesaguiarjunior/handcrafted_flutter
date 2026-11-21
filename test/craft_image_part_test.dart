@@ -37,6 +37,64 @@ void main() {
   });
   tearDownAll(() => provider.evict());
 
+  testWidgets(
+    'pose updates retain clipping; new masks and crops invalidate it',
+    (tester) async {
+      final mask = Path()..addRect(crop);
+      Future<CustomClipper<Path>> mount(
+        Path path,
+        Rect source,
+        double angle,
+      ) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Stack(
+              children: [
+                CraftImagePart(
+                  key: const ValueKey('stable-mask'),
+                  image: provider,
+                  sourceSize: sourceSize,
+                  sourceRect: source,
+                  rect: const Rect.fromLTWH(30, 30, 80, 40),
+                  sourceClip: path,
+                  pose: PartPose(rotation: angle),
+                ),
+              ],
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        return tester
+            .widget<ClipPath>(
+              find.descendant(
+                of: find.byType(CraftImagePart),
+                matching: find.byType(ClipPath),
+              ),
+            )
+            .clipper!;
+      }
+
+      var prior = await mount(mask, crop, 0);
+      final original = prior.getClip(const Size(80, 40));
+      for (var i = 1; i <= 60; i++) {
+        final current = await mount(mask, crop, i * .01);
+        expect(current.shouldReclip(prior), isFalse);
+        prior = current;
+      }
+      final changed = await mount(Path()..addOval(crop), crop, 0);
+      expect(changed.shouldReclip(prior), isTrue);
+      expect(
+        changed.getClip(const Size(80, 40)).contains(const Offset(1, 1)),
+        isFalse,
+      );
+      final moved = await mount(mask, const Rect.fromLTWH(20, 10, 40, 20), 0);
+      expect(moved.shouldReclip(changed), isTrue);
+      expect(moved.shouldReclip(prior), isTrue);
+      expect(original.contains(const Offset(1, 1)), isTrue);
+      await tester.pumpWidget(const SizedBox());
+    },
+  );
+
   Offset expected(Offset source, Rect rect, PartPose pose) {
     final sx = rect.width / crop.width, sy = rect.height / crop.height;
     final anchor = Offset(

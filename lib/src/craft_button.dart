@@ -66,14 +66,14 @@ class CraftButton extends StatelessWidget {
             ),
             // Selection is shown by a native check mark, not color alone and
             // not a fixed outline that would fight the decorative cut.
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 6,
+              runSpacing: 4,
               children: [
-                if (selected == true) ...[
-                  const _CheckMark(),
-                  const SizedBox(width: 6),
-                ],
-                Flexible(
+                if (selected == true) const _CheckMark(),
+                KeyedSubtree(
                   key: const ValueKey('craft-button-label'),
                   child: child,
                 ),

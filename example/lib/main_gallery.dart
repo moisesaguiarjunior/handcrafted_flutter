@@ -3,6 +3,7 @@ import 'pillow_study.dart';
 import 'fluffy_study.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 
 import 'bounded_effects.dart';
@@ -118,9 +119,10 @@ class _GalleryPage extends StatelessWidget {
             Builder(
               builder: (context) {
                 Future<void> copyLink() async {
-                  final uri = Uri.base.replace(
-                    queryParameters: {'study': selected.name},
-                    fragment: '',
+                  final uri = galleryShareLink(
+                    selected,
+                    isWeb: kIsWeb,
+                    base: Uri.base,
                   );
                   await Clipboard.setData(ClipboardData(text: uri.toString()));
                   if (context.mounted) {

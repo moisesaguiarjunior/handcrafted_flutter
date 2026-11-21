@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+- Retain image clipping across pose-only rebuilds by comparing the original
+  immutable Path identity and preparing snapshots only when clipping is needed.
+- Reuse one current-scale shader per material owner and dispose replacements
+  and final shaders explicitly; protect cached tiles from CanvasKit disposal.
+  Keep the partial-strength layer because direct alpha fails Chrome pixel parity.
+- Let selected native choices wrap their check/label under narrow constraints
+  without shrinking text or losing native selected semantics and activation.
+- Correct dotted brush dab rotation to follow the canvas tangent direction.
+- Copy a canonical published HTTPS study link on native gallery hosts while
+  preserving browser origins and nested paths on the web.
+
 - Extend CraftNap with independent fiberLength, curl and opt-in edgeFuzz, with
   explicit paint bounds and bounded contour candidates. Add an all-material
   and padded-shape gallery study; preserve existing short-nap seeded output.

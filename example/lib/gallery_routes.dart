@@ -76,3 +76,15 @@ class GalleryRouter extends RouterDelegate<GalleryStudy> with ChangeNotifier {
     onDidRemovePage: (_) {},
   );
 }
+
+/// Shares browser origin/path on the web, the published gallery on native hosts.
+Uri galleryShareLink(
+  GalleryStudy study, {
+  required bool isWeb,
+  required Uri base,
+}) {
+  final origin = isWeb && (base.scheme == 'https' || base.scheme == 'http')
+      ? base
+      : Uri.parse('https://moisesaguiarjunior.github.io/handcrafted_flutter/');
+  return origin.replace(queryParameters: {'study': study.name}, fragment: '');
+}

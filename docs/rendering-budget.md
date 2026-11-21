@@ -53,3 +53,33 @@ heap/retained-image measurements, native-device frame time or acceptable phone
 performance. Collect those results before introducing shared resources or
 claiming a material budget. This delivery is the reproducible harness, not a
 published performance result.
+
+
+## Owner-scoped shader reuse and opacity parity
+
+The rendering review fixes keep one tile and at most one current-scale shader
+per material in each `MaterialTextures` owner. Color/strength changes reuse that
+shader; changing the scale replaces/disposes it, and owner disposal closes all
+shaders before tiles. This does not introduce sharing across separate owners or
+claim a phone frame-time improvement.
+
+CanvasKit in both supported SDKs consumes the image handle supplied to its
+ImageShader when disposing that shader. Its JavaScript path receives a private
+cloned handle so a scale replacement cannot invalidate the owner's cached tile.
+Native and Skwasm use the tile handle directly. This renderer policy is covered
+by native/Chrome replacement, replay and disposal tests; Wasm execution remains
+outside the tested matrix. See the upstream
+[CanvasKit lifecycle](https://github.com/flutter/flutter/blob/3.35.7/engine/src/flutter/lib/web_ui/lib/src/engine/canvaskit/shader.dart#L295).
+Cloning a handle retains the same backing pixels, not a separately rasterized tile.
+
+The production partial-strength layer is retained. A 162-case comparison across
+nine materials, three scales, three strengths, opaque/translucent fills, a hole
+and a canvas transform found identical direct-alpha output in the local native
+test renderer, but 59 changed cases (154 channels, maximum delta 28) in Chrome
+CanvasKit. Direct alpha is therefore an experiment, not the shipped path.
+`test/material_opacity_parity_test.dart` compares the shipped output pixel by
+pixel with an independent legacy compositing recipe and reports the alternative.
+Do not remove the layer based only on native parity or allocation counts.
+
+These observations concern resource identity and rendering output, not measured
+Android/iOS memory or frame timings. Existing profiling gates remain open.

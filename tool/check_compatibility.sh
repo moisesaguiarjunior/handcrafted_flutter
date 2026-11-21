@@ -6,6 +6,8 @@ cd "$(dirname "$0")/.."
 flutter pub upgrade
 flutter analyze --fatal-infos
 flutter test --reporter expanded
+# Shader/image ownership differs between native and CanvasKit; cover both SDKs.
+flutter test --platform chrome test/rendering_review_regressions_test.dart test/material_opacity_parity_test.dart
 (
   cd example
   flutter pub upgrade

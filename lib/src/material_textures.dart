@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 import 'dart:typed_data';
 
 import 'package:flutter/painting.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 /// Extracted texture families, independent of color and host theme.
 enum CraftMaterial {
@@ -34,7 +35,7 @@ enum CraftMaterial {
   leather,
 }
 
-/// Owner-scoped cache of static raster tiles, one per material.
+/// Owner-scoped cache of static raster tiles and the last shader per material.
 ///
 /// Create outside paint; reuse for a scene and call [dispose] when it ends.
 /// Seed is stable for the cache lifetime. Color and scale do not create entries.
@@ -46,7 +47,46 @@ class MaterialTextures {
   /// Seed used only when recording a tile.
   final int seed;
   final _pictures = <CraftMaterial, ui.Image>{};
+  final _shaders = <CraftMaterial, (double, ui.ImageShader)>{};
   bool _disposed = false;
+
+  ui.ImageShader _shader(CraftMaterial material, ui.Image image, double scale) {
+    final previous = _shaders[material];
+    if (previous != null && previous.$1 == scale) return previous.$2;
+    // CanvasKit's ImageShader.dispose consumes its supplied image handle in
+    // both supported SDKs. Give it a private handle, keeping the cached tile
+    // alive across scale changes. Native/Skwasm shaders do not consume it.
+    const consumesImage =
+        kIsWeb && !bool.fromEnvironment('dart.tool.dart2wasm');
+    final input = consumesImage ? image.clone() : image;
+    final shader = ui.ImageShader(
+      input,
+      TileMode.repeated,
+      TileMode.repeated,
+      Float64List.fromList([
+        scale,
+        0,
+        0,
+        0,
+        0,
+        scale,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+      ]),
+    );
+    _shaders[material] = (scale, shader);
+    previous?.$2.dispose();
+    return shader;
+  }
+
   static const _size = 96;
 
   /// Paints a clipped material fill; [scale] is logical pixels per tile unit.
@@ -89,49 +129,36 @@ class MaterialTextures {
     canvas.drawPath(outline, Paint()..color = color);
     if (strength == 0) return;
     final picture = _pictures.putIfAbsent(material, () => _draw(material));
+    final shader = _shader(material, picture, scale);
     canvas.save();
-    canvas.clipPath(outline);
-    // A bounded layer applies grain strength without fading the base color.
-    if (strength < 1) {
-      canvas.saveLayer(
-        bounds,
-        Paint()..color = Color.fromRGBO(255, 255, 255, strength),
-      );
+    try {
+      canvas.clipPath(outline);
+      // Preserve the existing compositing pixels until a direct-alpha path is
+      // demonstrated equivalent across engines, transforms and translucent ink.
+      if (strength < 1) {
+        canvas.saveLayer(
+          bounds,
+          Paint()..color = Color.fromRGBO(255, 255, 255, strength),
+        );
+      }
+      try {
+        canvas.translate(bounds.left, bounds.top);
+        canvas.drawPaint(Paint()..shader = shader);
+      } finally {
+        if (strength < 1) canvas.restore();
+      }
+    } finally {
+      canvas.restore();
     }
-    canvas.translate(bounds.left, bounds.top);
-    canvas.drawPaint(
-      Paint()
-        ..shader = ui.ImageShader(
-          picture,
-          TileMode.repeated,
-          TileMode.repeated,
-          Float64List.fromList([
-            scale,
-            0,
-            0,
-            0,
-            0,
-            scale,
-            0,
-            0,
-            0,
-            0,
-            1,
-            0,
-            0,
-            0,
-            0,
-            1,
-          ]),
-        ),
-    );
-    if (strength < 1) canvas.restore();
-    canvas.restore();
   }
 
-  /// Releases cached raster tiles. Repeated disposal is safe.
+  /// Releases cached shaders before their raster tiles. Repeated disposal is safe.
   void dispose() {
     if (_disposed) return;
+    for (final shader in _shaders.values) {
+      shader.$2.dispose();
+    }
+    _shaders.clear();
     for (final picture in _pictures.values) {
       picture.dispose();
     }

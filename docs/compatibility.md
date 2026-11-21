@@ -2,13 +2,13 @@
 
 ## Tested baseline
 
-The unreleased 0.3.1 source candidate is tested on Flutter 3.35.7 / Dart 3.9.2
+The 0.4.0 source release is tested on Flutter 3.35.7 / Dart 3.9.2
 and Flutter 3.47.9 / Dart 3.13.7. Its declared floor is the older tested pair;
 intermediate/newer versions are not individually certified by that constraint.
 [Matrix and reproducible commands](sdk-compatibility.md).
 
 Published 0.3.0 and tag v0.3.0 retain Flutter >=3.47.9 / Dart >=3.13.7.
-The wider floor requires the reviewed 0.3.1 source until a new hosted release is
+The wider floor requires the v0.4.0 Git source until a new hosted release is
 explicitly published. No old tag or hosted archive is rewritten.
 
 | Environment or artifact | Evidence | Boundary |
@@ -64,7 +64,8 @@ material switches need the corresponding cases; previous material indices and
 seeded output stay stable. Rope strandColors is optional and single-color behavior is unchanged.
 
 
-The unreleased whole-face padding study appends `CraftVolumeProfile.padded`.
-Exhaustive profile switches need this case, so it is reserved for a future minor
-release rather than the SDK-only patch candidate. Earlier enum indices, profiles,
-seeds and immutable hosted tags remain unchanged.
+Version 0.4.0 appends `CraftVolumeProfile.padded`. Exhaustive profile switches
+need this case; this is why the changes use a pre-1.0 minor version rather than
+the previously planned SDK-only patch. Earlier enum indices, sheet/rounded
+profiles and immutable hosted tags remain unchanged. The 0.3.1 source candidate
+was not a hosted release. See [0.4.0 migration](releases/0.4.0.md).

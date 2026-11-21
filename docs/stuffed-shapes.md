@@ -198,5 +198,5 @@ Android/iPhone performance remains unmeasured.
 
 The new enum case is additive in source but requires updating exhaustive
 `CraftVolumeProfile` switches. Existing `sheet` and `rounded` outputs and enum
-indices are preserved. This belongs in a future minor release, not the pending
-SDK-only patch. No version, immutable tag or hosted archive is changed here.
+indices are preserved. This is included in the 0.4.0 source release; see the
+[migration guide](releases/0.4.0.md). Prior tags and hosted archives are unchanged.

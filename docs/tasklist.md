@@ -180,10 +180,10 @@ interactive hosted-browser approval and phone performance remain separate.
 | ID | Work | Boundary |
 | --- | --- | --- |
 | HC-A01 | Current docs and focused reuse map | Shipped in PR #45; extraction history and links retained |
-| HC-A02 | Tested SDK floor and CI matrix | Unreleased 0.3.1 candidate: Flutter 3.35.7 and 3.47.9; fresh-resolution matrix plus locked baseline; see sdk-compatibility.md |
+| HC-A02 | Tested SDK floor and CI matrix | 0.4.0 source release: Flutter 3.35.7 and 3.47.9; fresh-resolution matrix plus locked baseline; see sdk-compatibility.md |
 | HC-A03 | Standard lint preset | Shipped in PR #47; narrow capture exceptions and effective strict/project-rule inheritance guards; see lint-policy.md |
 | HC-A04 | Rendering/preparation baselines | Reuse the workload harness; report cold/warm preparation separately from frame timings |
-| HC-A05 | Grain opacity experiment | Pixel parity across substrates/alpha/clips before claiming saveLayer can be removed |
+| HC-A05 | Grain opacity experiment | Completed: direct alpha changes Chrome pixels; retain saveLayer and protect the legacy composition |
 | HC-A06 | Scoped texture sharing | Conditional on evidence; explicit borrowed/owned lifecycle, seed and disposal semantics |
 | HC-A07 | Physical-device evidence | Android/iOS profile validation remains a later owner-controlled gate |
 
@@ -216,3 +216,11 @@ not completed by exploratory raster/readback samples.
 See [research, recipe and limits](stuffed-shapes.md). The first proof is a
 visual height/bevel approximation, not measured fiberfill volume or fabric
 elasticity. Independent review/CI and consumer visual acceptance stay separate.
+
+
+## 0.4.0 source release
+
+Consolidates the post-0.3.0 reviewed changes and supersedes the unshipped SDK-only
+0.3.1 patch plan. Padded enum migration is explicit. Release checks use the
+existing publishing/CI lanes; Git source delivery is separate from a pub.dev
+upload. [Release notes](releases/0.4.0.md).

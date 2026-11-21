@@ -342,17 +342,14 @@ phone performance remains unmeasured.
 flutter pub add handcrafted_flutter
 ```
 
-Git source baseline: [v0.3.0](https://github.com/moisesaguiarjunior/handcrafted_flutter/releases/tag/v0.3.0)
-([release notes and migration](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/releases/0.3.0.md)); the examples in this
-README follow the current source branch (0.3.1, unreleased). See
-[publication status and process](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/publishing.md).
+Latest tagged source: [v0.4.0](https://github.com/moisesaguiarjunior/handcrafted_flutter/releases/tag/v0.4.0)
+([release notes and migration](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/releases/0.4.0.md)).
+The README and live gallery include this source release's padded forms, fluffy
+finishes and rendering fixes. Version 0.4.0 has not been uploaded to pub.dev;
+`flutter pub add` above installs the available hosted release.
 
-For source distribution, use an immutable reviewed tag or SHA. The v0.3.0 tag
-below matches the first hosted 0.3.0 release.
-
-Published 0.3.0 requires Flutter 3.47.9 / Dart 3.13.7. The unreleased 0.3.1
-source candidate is tested down to Flutter 3.35.7 / Dart 3.9.2; that wider floor
-is not part of the hosted 0.3.0 version or its tag. See the
+Published 0.3.0 requires Flutter 3.47.9 / Dart 3.13.7. Tagged 0.4.0 supports
+Flutter >=3.35.7 / Dart >=3.9.2, tested at 3.35.7 and 3.47.9. See the
 [SDK matrix and lockfile guidance](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/sdk-compatibility.md).
 
 ### Use the tagged source
@@ -362,8 +359,13 @@ dependencies:
   handcrafted_flutter:
     git:
       url: https://github.com/moisesaguiarjunior/handcrafted_flutter.git
-      ref: v0.3.0
+      ref: v0.4.0
 ```
+
+Update exhaustive `CraftVolumeProfile` switches for `padded`. Existing tags and
+hosted 0.3.0 bytes are unchanged. See the
+[publication process](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/publishing.md)
+for the separate hosted upload.
 
 Keep your application's lockfile committed. Existing `v0.1.0` pins are unchanged;
 review the [migration note](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/releases/0.2.0.md#upgrading-from-010) before updating.

@@ -5,6 +5,11 @@ following owner-authorized Google authentication on 2026-11-18. The hosted archi
 matches the immutable v0.3.0 source tag. Previous tags remain unchanged. No
 automatic publishing or domain-publisher transfer was configured.
 
+Version 0.4.0 is a separate Git source release, with its
+[own migration notes](releases/0.4.0.md); it is not a hosted upload. The original
+0.3.0 archive and its tag remain unchanged. Publishing 0.4.0 to pub.dev requires
+a separate owner-authorized upload and fresh hosted-consumer verification.
+
 ## Archive, screenshots and source
 
 `.pubignore` is the publication contract. It repeats generated-file exclusions
@@ -57,8 +62,10 @@ wrapped without changing their expressions or intended behavior.
 
 ## SDK, dependency and platform boundaries
 
-Flutter 3.47.9 / Dart 3.13.7 remains the declared/tested minimum. Broader SDK
-support requires an actual compatibility matrix, not only lower constraints.
+Hosted 0.3.0 retains Flutter 3.47.9 / Dart 3.13.7. The 0.4.0 Git source declares
+Flutter >=3.35.7 / Dart >=3.9.2, backed by the two-SDK CI matrix.
+See [SDK evidence](sdk-compatibility.md); source compatibility is not inferred
+from lower constraints alone.
 The clipper2 range is ^0.0.3; locked hosted versions and license hashes remain
 unchanged. Metadata adds a gallery homepage, documentation, issue tracker,
 relevant topics and curated screenshots. Platform compatibility detected

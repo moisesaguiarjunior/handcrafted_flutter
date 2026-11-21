@@ -5,6 +5,7 @@
 - [SDK matrix, supported floors and lockfile lanes](sdk-compatibility.md)
 - [Hosted publication readiness and validation](publishing.md)
 - [Light studio and Android smoke](light-studio.md)
+- [0.4.0 source release and migration](releases/0.4.0.md)
 - [0.3.0 source release](releases/0.3.0.md)
 - [0.2.0 release notes and migration](releases/0.2.0.md)
 - [Runnable examples and capture recipe](showcase.md)

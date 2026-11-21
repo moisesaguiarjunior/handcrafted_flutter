@@ -145,8 +145,8 @@ in [history](history/reuse-extractions.md). Old tags/branches and useful standal
 example entrypoints are preserved. Test coverage is evidence of exercised code,
 not certification of performance, accessibility or platform compatibility.
 
-The first compatibility follow-up prepares an unreleased 0.3.1 source floor of
-Flutter 3.35.7 / Dart 3.9.2, with endpoint analysis/tests/web builds and separate
+The compatibility follow-up is included in the 0.4.0 source release, with a
+Flutter 3.35.7 / Dart 3.9.2 floor, endpoint analysis/tests/web builds and separate
 fresh-resolution/locked-baseline CI lanes. [Evidence and limits](sdk-compatibility.md).
 The hosted 0.3.0 archive and tag keep their original requirements; release upload
 is a separate action. Standard-lint adoption shipped in PR #47 with strict inheritance counterexamples.
@@ -187,8 +187,8 @@ A new opt-in comparison in the stuffed-shape study explores short plush and
 curled sherpa on the same padded star. The canonical volume prepares a bounded
 whole-face profile; textile paths remain example-owned. Old relief/depth studies
 and approved PNGs stay unchanged. Visual refinement/owner acceptance and physical
-Android/iPhone profiling remain open. The added enum case requires a future
-minor release; no patch/tag/publication is performed by this study.
+Android/iPhone profiling remain open. The added enum case is included in the
+0.4.0 source release; a hosted upload remains separate.
 See [contracts and limits](stuffed-shapes.md#whole-face-padding-short-plush-and-curled-sherpa).
 
 
@@ -199,3 +199,13 @@ bounds and candidate caps. The same finish composes over all nine materials
 and padded stars, moons and suns. Defaults and previous images remain unchanged.
 [Recipe and limits](fluffy-finishes.md). Owner visual review and physical-device
 profiling remain separate; no hosted release is performed by this addition.
+
+
+## 0.4.0 source release
+
+The reviewed source gathers padded profiles, independent fluffy finishes,
+continuous-surface proofs, the wider tested SDK floor and rendering fixes.
+See [migration and boundaries](releases/0.4.0.md). The old 0.3.1 patch plan is
+superseded by this minor release because exhaustive profile switches change.
+Hosted publication, consumer adoption, scoped sharing and physical-device
+profiling remain separate.

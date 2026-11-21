@@ -86,5 +86,7 @@ Uri galleryShareLink(
   final origin = isWeb && (base.scheme == 'https' || base.scheme == 'http')
       ? base
       : Uri.parse('https://moisesaguiarjunior.github.io/handcrafted_flutter/');
-  return origin.replace(queryParameters: {'study': study.name}, fragment: '');
+  return origin
+      .replace(queryParameters: {'study': study.name})
+      .removeFragment();
 }

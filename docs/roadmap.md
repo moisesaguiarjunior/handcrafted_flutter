@@ -226,3 +226,13 @@ reusing CraftBand shading with bounded affine image transport. It removes the
 rigid-link seam while retaining the original baseline. Planar stretch is visible;
 out-of-plane reverse faces, fabric physics and self-shadowing remain open.
 No public warp or character API is introduced. Exact review/CI precede publication.
+
+
+## Five generic gesture recipes
+
+The [material-gesture proof](material-gestures.md) completes the paper handoff,
+held two-sided textile, soft articulated figure, shared authored gust and
+printed two-hinge paper as example recipes on the existing 0.4.0 API.
+Physical cloth memory, arbitrary intersecting meshes and a general wind engine
+remain outside this delivery. Exact independent review, CI, consumer art direction
+and physical-phone performance are separate. No new package API or release.

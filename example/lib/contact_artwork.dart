@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import 'contact_poses.dart';
+import 'material_board.dart';
 import 'continuous_cloth.dart';
 import 'showcase_theme.dart';
 
@@ -163,20 +164,7 @@ class _BoardPainter extends CustomPainter {
   final MaterialTextures textures;
   @override
   void paint(Canvas canvas, Size size) {
-    textures.paint(
-      canvas,
-      Path()..addRect(Offset.zero & size),
-      material: CraftMaterial.paper,
-      color: DemoPalette.board,
-      strength: .35,
-    );
-    canvas.drawLine(
-      const Offset(70, 302),
-      const Offset(570, 302),
-      Paint()
-        ..color = DemoPalette.wood.withValues(alpha: .3)
-        ..strokeWidth = 1,
-    );
+    paintMaterialBoard(canvas, size, textures);
   }
 
   @override

@@ -406,3 +406,15 @@ Code and original documentation/media: [MIT](https://github.com/moisesaguiarjuni
 Example-only Inter and
 Caveat fonts retain their bundled SIL OFL 1.1 notices. See
 [dependency notices](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/dependencies.md) and [provenance](https://github.com/moisesaguiarjunior/handcrafted_flutter/blob/main/docs/provenance.md).
+
+
+### Material gestures
+
+![Lined fabric, a soft articulated figure, one breeze and a two-fold printed sheet](https://raw.githubusercontent.com/moisesaguiarjunior/handcrafted_flutter/main/docs/assets/material-gestures.png)
+
+Let a lined textile settle, pull a stool closer with a soft figure, pass one
+breeze through cloth and paper, or open two folds without losing the print.
+[Try the finite recipes](https://moisesaguiarjunior.github.io/handcrafted_flutter/?study=gestures)
+and [read their construction and limits](docs/material-gestures.md).
+These are example-owned compositions using the existing 0.4.0 API, with native
+controls and explicit progress; they do not introduce a cloth or wind solver.

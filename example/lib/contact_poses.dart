@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
-double _phase(double value, double from, double to) {
+/// Smooth authored phase, independent of frame history.
+double gesturePhase(double value, double from, double to) {
   final t = ((value - from) / (to - from)).clamp(0.0, 1.0);
   return t * t * (3 - 2 * t);
 }
 
-void _checkProgress(double progress) {
+/// Validates an external normalized timeline before sampling geometry.
+void checkGestureProgress(double progress) {
   if (!progress.isFinite || progress < 0 || progress > 1) {
     throw ArgumentError('Expected progress in 0..1');
   }
@@ -16,14 +18,14 @@ void _checkProgress(double progress) {
 class TransferPose {
   /// Samples approach, shared support and release from an external timeline.
   TransferPose(double progress) {
-    _checkProgress(progress);
-    final travel = _phase(progress, .15, .85);
+    checkGestureProgress(progress);
+    final travel = gesturePhase(progress, .15, .85);
     sheet = PartPose(
       translation: Offset(-30 + travel * 60, -12 * travel),
       rotation: -.16 + .3 * travel,
     );
-    leftRelease = _phase(progress, .68, 1);
-    rightApproach = 1 - _phase(progress, 0, .32);
+    leftRelease = gesturePhase(progress, .68, 1);
+    rightApproach = 1 - gesturePhase(progress, 0, .32);
   }
 
   /// Source sheet dimensions; its native child uses these same layout bounds.
@@ -107,9 +109,9 @@ enum ClothCut {
 class ClothPose {
   /// Keeps the shoulder fixed, then releases the distal link with a delay.
   ClothPose(double progress, this.cut) {
-    _checkProgress(progress);
-    final upperRelease = _phase(progress, .3, .7);
-    final tipRelease = _phase(progress, .48, .94);
+    checkGestureProgress(progress);
+    final upperRelease = gesturePhase(progress, .3, .7);
+    final tipRelease = gesturePhase(progress, .48, .94);
     upper = PartPose(rotation: .32 - .4 * upperRelease);
     lower = PartPose(rotation: 2.05 - 2.13 * tipRelease);
   }

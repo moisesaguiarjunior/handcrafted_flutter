@@ -6,13 +6,18 @@ import 'package:handcrafted_example/contact_artwork.dart';
 import 'package:handcrafted_example/contact_poses.dart';
 import 'package:handcrafted_example/contact_study.dart';
 import 'package:handcrafted_example/continuous_cloth.dart';
+import 'package:handcrafted_example/showcase_theme.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 double cross(Offset a, Offset b) => a.dx * b.dy - a.dy * b.dx;
 
-Future<ui.Image> raster(ContinuousClothFrame frame, ClothPrint print) async {
+Future<ui.Image> raster(
+  ContinuousClothFrame frame,
+  ClothPrint print, {
+  bool guides = false,
+}) async {
   final recorder = ui.PictureRecorder();
-  frame.paint(Canvas(recorder), print);
+  frame.paint(Canvas(recorder), print, guides: guides);
   final picture = recorder.endRecording();
   try {
     return await picture.toImage(640, 360);
@@ -105,6 +110,30 @@ void main() {
                 image.dispose();
               }
             }
+            final guided = ContinuousClothFrame(.5, cut);
+            final guidedImage = await raster(guided, print, guides: true);
+            try {
+              final bytes = (await guidedImage.toByteData())!.buffer
+                  .asUint8List();
+              for (final marker in [
+                (0.0, DemoPalette.indigo),
+                (guided.length / 2, DemoPalette.terracotta),
+                (guided.length, DemoPalette.terracotta),
+              ]) {
+                final point = guided.mapSource(
+                  Offset(guided.width / 2, marker.$1),
+                );
+                final index = (point.dy.floor() * 640 + point.dx.floor()) * 4;
+                final argb = marker.$2.toARGB32();
+                expect(
+                  bytes.sublist(index, index + 4),
+                  [(argb >> 16) & 255, (argb >> 8) & 255, argb & 255, 255],
+                  reason: 'Only the shoulder is pinned; the other markers move',
+                );
+              }
+            } finally {
+              guidedImage.dispose();
+            }
           } finally {
             print.dispose();
           }
@@ -120,6 +149,36 @@ void main() {
         again.dispose();
       } finally {
         textures.dispose();
+      }
+    },
+  );
+
+  test(
+    'failed source recording disposes its picture without borrowing ownership',
+    () {
+      final created = <ui.Picture>{}, disposed = <ui.Picture>{};
+      final oldCreate = ui.Picture.onCreate, oldDispose = ui.Picture.onDispose;
+      ui.Picture.onCreate = (picture) {
+        oldCreate?.call(picture);
+        created.add(picture);
+      };
+      ui.Picture.onDispose = (picture) {
+        oldDispose?.call(picture);
+        if (created.contains(picture)) {
+          disposed.add(picture);
+        }
+      };
+      try {
+        final textures = MaterialTextures(seed: 117)..dispose();
+        expect(
+          () => ClothPrint.prepare(textures, ClothCut.sleeve),
+          throwsStateError,
+        );
+        expect(created, hasLength(1));
+        expect(disposed, unorderedEquals(created));
+      } finally {
+        ui.Picture.onCreate = oldCreate;
+        ui.Picture.onDispose = oldDispose;
       }
     },
   );
@@ -156,6 +215,7 @@ void main() {
           ),
         ),
       );
+      await tester.ensureVisible(find.text('Let cloth settle'));
       await tester.tap(find.text('Let cloth settle'));
       await tester.pumpAndSettle();
       await tester.ensureVisible(find.text('Continuous strip'));

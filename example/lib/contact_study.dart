@@ -179,8 +179,16 @@ class _ContactStudyState extends State<ContactStudy> {
             ),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Show contact points'),
-              subtitle: const Text('Blue is held. Coral is free.'),
+              title: Text(
+                cloth && continuous
+                    ? 'Show material points'
+                    : 'Show contact points',
+              ),
+              subtitle: Text(
+                cloth && continuous
+                    ? 'Blue is pinned. Coral follows the cloth.'
+                    : 'Blue is held. Coral is free.',
+              ),
               value: contacts,
               onChanged: (v) => setState(() => contacts = v),
             ),

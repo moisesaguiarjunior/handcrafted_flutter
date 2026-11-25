@@ -123,7 +123,7 @@ class ContinuousClothFrame {
         canvas.drawCircle(
           mapSource(Offset(width / 2, y)),
           4,
-          Paint()..color = DemoPalette.indigo,
+          Paint()..color = y == 0 ? DemoPalette.indigo : DemoPalette.terracotta,
         );
       }
     }

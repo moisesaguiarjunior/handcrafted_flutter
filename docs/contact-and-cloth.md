@@ -159,3 +159,12 @@ explicit disposal through a second cut and replay. Negative controls shift the
 source print and omit disposal; both must fail. These are desktop/Chrome test
 and capture checks, not physical-device performance evidence or exact raster
 parity between rendering engines.
+
+The continuous guides distinguish the pinned shoulder (blue) from material
+coordinates moving with the strip (coral); they are not extra contact supports.
+An independent 8× binary coverage probe over five poses and both cuts found
+up to 0.189% unmatched samples between the coarser transport hull and the
+canonical outer band contour, limited to two 8× boundary layers (0.25 art
+units on that probe grid). Dense interior probes found no internal gaps.
+This measured outer discretization is not exact contour/raster parity or a
+universal error bound for other strip shapes or viewing scales.

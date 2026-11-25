@@ -235,3 +235,7 @@ upload. [Release notes](releases/0.4.0.md).
   flexible fold and cloth memory remain unproven.
 - [Recipe and boundaries](contact-and-cloth.md). Exact independent review, CI,
   visual acceptance and publication remain separate gates. No new package API.
+
+- Opt-in continuous textile: one cached material/sewing source, 48 shared-edge
+  triangles and the existing band contour/light/shadow; two-cut raster and image
+  ownership proofs. This is planar deformation; physical folding remains open.

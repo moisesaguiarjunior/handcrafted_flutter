@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import 'contact_poses.dart';
+import 'material_patch.dart';
 import 'showcase_theme.dart';
 
 /// Bounded example-owned transport of a printed source along a curved band.
@@ -136,55 +137,47 @@ class ClothPrint {
   factory ClothPrint.prepare(MaterialTextures textures, ClothCut cut) {
     final pose = ClothPose(0, cut);
     final width = pose.width, length = pose.upperLength + pose.lowerLength;
-    final recorder = ui.PictureRecorder();
-    ui.Picture? picture;
-    try {
-      final canvas = Canvas(recorder)..scale(2);
-      textures.paint(
-        canvas,
-        Path()..addRect(Rect.fromLTWH(0, 0, width, length)),
-        material: CraftMaterial.linen,
-        color: DemoPalette.sage,
-        strength: .8,
-      );
-      for (var row = 0; row < 16; row++) {
-        canvas.drawLine(
-          Offset(12, row * 16.0),
-          Offset(width - 12, row * 16.0),
-          Paint()
-            ..color = DemoPalette.paper.withValues(alpha: .5)
-            ..strokeWidth = 2,
+    return ClothPrint._(
+      width,
+      length,
+      recordMaterialPrint(Size(width, length), (canvas) {
+        textures.paint(
+          canvas,
+          Path()..addRect(Rect.fromLTWH(0, 0, width, length)),
+          material: CraftMaterial.linen,
+          color: DemoPalette.sage,
+          strength: .8,
         );
-      }
-      final seam = craftStitchPath(
-        Path()
-          ..moveTo(7, 0)
-          ..lineTo(7, length)
-          ..moveTo(width - 7, 0)
-          ..lineTo(width - 7, length),
-        pitch: 8,
-      );
-      CraftStitchFrame.sample(
-        seam,
-        progress: 1,
-      ).paint(canvas, thread: DemoPalette.cream, width: 1.25);
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(
-          Rect.fromLTWH(3, length - 14, width - 6, 14),
-          const Radius.circular(5),
-        ),
-        Paint()..color = DemoPalette.indigo,
-      );
-      picture = recorder.endRecording();
-      return ClothPrint._(
-        width,
-        length,
-        picture.toImageSync((width * 2).ceil(), (length * 2).ceil()),
-      );
-    } finally {
-      if (recorder.isRecording) recorder.endRecording().dispose();
-      picture?.dispose();
-    }
+        for (var row = 0; row < 16; row++) {
+          canvas.drawLine(
+            Offset(12, row * 16.0),
+            Offset(width - 12, row * 16.0),
+            Paint()
+              ..color = DemoPalette.paper.withValues(alpha: .5)
+              ..strokeWidth = 2,
+          );
+        }
+        final seam = craftStitchPath(
+          Path()
+            ..moveTo(7, 0)
+            ..lineTo(7, length)
+            ..moveTo(width - 7, 0)
+            ..lineTo(width - 7, length),
+          pitch: 8,
+        );
+        CraftStitchFrame.sample(
+          seam,
+          progress: 1,
+        ).paint(canvas, thread: DemoPalette.cream, width: 1.25);
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(
+            Rect.fromLTWH(3, length - 14, width - 6, 14),
+            const Radius.circular(5),
+          ),
+          Paint()..color = DemoPalette.indigo,
+        );
+      }),
+    );
   }
 
   ClothPrint._(this.width, this.length, this._image);
@@ -217,44 +210,14 @@ void _triangle(
   Offset d0,
   Offset d1,
   Offset d2,
-) {
-  final sx = s1 - s0, sy = s2 - s0, dx = d1 - d0, dy = d2 - d0;
-  final determinant = sx.dx * sy.dy - sy.dx * sx.dy;
-  final a = (dx.dx * sy.dy - dy.dx * sx.dy) / determinant;
-  final b = (dx.dy * sy.dy - dy.dy * sx.dy) / determinant;
-  final c = (-dx.dx * sy.dx + dy.dx * sx.dx) / determinant;
-  final d = (-dx.dy * sy.dx + dy.dy * sx.dx) / determinant;
-  final matrix = Matrix4.identity()
-    ..setEntry(0, 0, a)
-    ..setEntry(1, 0, b)
-    ..setEntry(0, 1, c)
-    ..setEntry(1, 1, d)
-    ..setEntry(0, 3, d0.dx - a * s0.dx - c * s0.dy)
-    ..setEntry(1, 3, d0.dy - b * s0.dx - d * s0.dy);
-  canvas.save();
-  try {
-    // Shared internal edges must not be antialiased independently.
-    canvas.clipPath(
-      Path()
-        ..moveTo(d0.dx, d0.dy)
-        ..lineTo(d1.dx, d1.dy)
-        ..lineTo(d2.dx, d2.dy)
-        ..close(),
-      doAntiAlias: false,
-    );
-    canvas.transform(matrix.storage);
-    canvas.drawImageRect(
-      print._image,
-      Rect.fromLTWH(
-        0,
-        0,
-        print._image.width.toDouble(),
-        print._image.height.toDouble(),
-      ),
-      Rect.fromLTWH(0, 0, print.width, print.length),
-      Paint()..filterQuality = FilterQuality.low,
-    );
-  } finally {
-    canvas.restore();
-  }
-}
+) => paintImageTriangle(
+  canvas,
+  print._image,
+  Size(print.width, print.length),
+  s0,
+  s1,
+  s2,
+  d0,
+  d1,
+  d2,
+);

@@ -239,3 +239,13 @@ upload. [Release notes](releases/0.4.0.md).
 - Opt-in continuous textile: one cached material/sewing source, 48 shared-edge
   triangles and the existing band contour/light/shadow; two-cut raster and image
   ownership proofs. This is planar deformation; physical folding remains open.
+
+
+## Five generic gesture recipes
+
+The [material-gesture proof](material-gestures.md) completes the paper handoff,
+held two-sided textile, soft articulated figure, shared authored gust and
+printed two-hinge paper as example recipes on the existing 0.4.0 API.
+Physical cloth memory, arbitrary intersecting meshes and a general wind engine
+remain outside this delivery. Exact independent review, CI, consumer art direction
+and physical-phone performance are separate. No new package API or release.

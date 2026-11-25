@@ -9,6 +9,9 @@ enum GalleryStudy {
   /// Contact transfer and articulated textile recipes.
   contact,
 
+  /// Two-sided cloth, soft articulation, one gust and two paper hinges.
+  gestures,
+
   /// Every material texture family.
   materials,
 
@@ -73,6 +76,7 @@ enum GalleryStudy {
 /// Human-readable study title.
 String galleryLabel(GalleryStudy study) => switch (study) {
   GalleryStudy.contact => 'Contact & cloth',
+  GalleryStudy.gestures => 'Material gestures',
   GalleryStudy.vocabulary => 'Material vocabulary',
   GalleryStudy.experience => 'Experience frame',
   GalleryStudy.cover => 'Start exploring',
@@ -99,6 +103,8 @@ String galleryLabel(GalleryStudy study) => switch (study) {
 
 /// A short orientation before interacting with a study.
 String galleryDescription(GalleryStudy study) => switch (study) {
+  GalleryStudy.gestures =>
+    'Follow lining, contact, wind and folds through one finite gesture.',
   GalleryStudy.contact =>
     'Pass a sheet between hands, then release an articulated textile.',
   GalleryStudy.vocabulary =>
@@ -146,6 +152,7 @@ const galleryOrder = [
   GalleryStudy.cover,
   GalleryStudy.light,
   GalleryStudy.contact,
+  GalleryStudy.gestures,
   GalleryStudy.vocabulary,
   GalleryStudy.experience,
   GalleryStudy.spreading,

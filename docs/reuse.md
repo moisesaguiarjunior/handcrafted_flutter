@@ -41,6 +41,8 @@
 | Stuffed silhouettes with independent fabric/filling | `example/lib/stuffed_shapes.dart`, `example/lib/pillow_depth.dart`, `example/lib/pillow_study.dart` (example-owned) |
 | Retained bounded surfaces, soft field masks and printed patterns | `example/lib/surface_proofs.dart`, `docs/surface-continuity.md` (example-owned) |
 | Example-owned paper contacts and articulated textile poses | `example/lib/contact_poses.dart`, `contact_artwork.dart`, `contact_study.dart`; [limits](contact-and-cloth.md) |
+| Example-owned two-sided cloth/paper, articulated figure and finite shared gust | `projected_material.dart`, `gesture_surfaces.dart`, `soft_figure.dart`, `wind_art.dart`; [construction and limits](material-gestures.md) |
+| Shared example affine transport and bounded source recording | `example/lib/material_patch.dart` |
 | Example-owned fixed-source textile transport over CraftBand | `example/lib/continuous_cloth.dart`; [planar scope and ownership](contact-and-cloth.md#continuous-printed-strip) |
 | Format, analysis and behavior checks | `tool/check.sh` |
 

@@ -219,3 +219,10 @@ Two textile geometries establish a rigid-link baseline with stable local marks;
 continuous flexible folding remains an investigation. Soft articulated figures,
 authored shared wind responses and two-sided folded paper are subsequent proofs,
 not promised character/physics APIs. Exact review and publication remain separate.
+
+
+The contact study now has an opt-in [continuous printed strip](contact-and-cloth.md#continuous-printed-strip),
+reusing CraftBand shading with bounded affine image transport. It removes the
+rigid-link seam while retaining the original baseline. Planar stretch is visible;
+out-of-plane reverse faces, fabric physics and self-shadowing remain open.
+No public warp or character API is introduced. Exact review/CI precede publication.

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:handcrafted_flutter/handcrafted_flutter.dart';
 
 import 'contact_poses.dart';
+import 'continuous_cloth.dart';
 import 'showcase_theme.dart';
 
 /// Statelessly sampled artwork; textures live only as long as this board.
@@ -11,6 +12,7 @@ class ContactArtwork extends StatefulWidget {
     super.key,
     required this.progress,
     this.cloth = false,
+    this.continuous = false,
     this.cut = ClothCut.sleeve,
     this.contacts = false,
     this.cameraAngle = 0,
@@ -21,6 +23,9 @@ class ContactArtwork extends StatefulWidget {
 
   /// Selects the articulated textile instead of the paper transfer.
   final bool cloth;
+
+  /// Opt-in continuous planar strip; the original articulated recipe is retained.
+  final bool continuous;
 
   /// Independent material cut for the textile recipe.
   final ClothCut cut;
@@ -41,8 +46,16 @@ class _ContactArtworkState extends State<ContactArtwork> {
     for (final cut in ClothCut.values) cut: _ClothResources(cut),
   };
 
+  final prints = <ClothCut, ClothPrint>{};
+  ContinuousClothFrame? continuousFrame;
+  double? previousProgress;
+  ClothCut? previousCut;
+
   @override
   void dispose() {
+    for (final print in prints.values) {
+      print.dispose();
+    }
     textures.dispose();
     super.dispose();
   }
@@ -51,6 +64,13 @@ class _ContactArtworkState extends State<ContactArtwork> {
   Widget build(BuildContext context) {
     final transfer = TransferPose(widget.progress);
     final cloth = ClothPose(widget.progress, widget.cut);
+    if (widget.cloth &&
+        widget.continuous &&
+        (previousProgress != widget.progress || previousCut != widget.cut)) {
+      continuousFrame = ContinuousClothFrame(widget.progress, widget.cut);
+      previousProgress = widget.progress;
+      previousCut = widget.cut;
+    }
     return ExcludeSemantics(
       child: IgnorePointer(
         child: AspectRatio(
@@ -71,12 +91,24 @@ class _ContactArtworkState extends State<ContactArtwork> {
                       if (widget.cloth)
                         Positioned.fill(
                           child: CustomPaint(
-                            painter: _ClothPainter(
-                              textures,
-                              cloth,
-                              clothCuts[widget.cut]!,
-                              widget.contacts,
-                            ),
+                            painter: widget.continuous
+                                ? _ContinuousPainter(
+                                    continuousFrame!,
+                                    prints.putIfAbsent(
+                                      widget.cut,
+                                      () => ClothPrint.prepare(
+                                        textures,
+                                        widget.cut,
+                                      ),
+                                    ),
+                                    widget.contacts,
+                                  )
+                                : _ClothPainter(
+                                    textures,
+                                    cloth,
+                                    clothCuts[widget.cut]!,
+                                    widget.contacts,
+                                  ),
                           ),
                         )
                       else ...[
@@ -346,19 +378,7 @@ class _ClothPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final light = CraftLight(x: -1, y: -1, z: 1.6, softness: .7);
-    canvas.drawLine(
-      const Offset(238, 65),
-      const Offset(442, 65),
-      Paint()
-        ..strokeWidth = 7
-        ..strokeCap = StrokeCap.round
-        ..color = DemoPalette.wood,
-    );
-    canvas.drawLine(
-      const Offset(340, 65),
-      ClothPose.shoulder,
-      Paint()..color = DemoPalette.wood,
-    );
+    _paintSupport(canvas);
     for (var i = 0; i < 2; i++) {
       final upper = i == 0;
       final origin = upper ? pose.upperOrigin : pose.lowerOrigin;
@@ -429,5 +449,37 @@ void _pin(Canvas canvas, Offset point, bool held) {
     point,
     3,
     Paint()..color = held ? DemoPalette.indigo : DemoPalette.terracotta,
+  );
+}
+
+class _ContinuousPainter extends CustomPainter {
+  const _ContinuousPainter(this.frame, this.print, this.contacts);
+  final ContinuousClothFrame frame;
+  final ClothPrint print;
+  final bool contacts;
+  @override
+  void paint(Canvas canvas, Size size) {
+    _paintSupport(canvas);
+    frame.paint(canvas, print, guides: contacts);
+  }
+
+  @override
+  bool shouldRepaint(_ContinuousPainter old) =>
+      frame != old.frame || print != old.print || contacts != old.contacts;
+}
+
+void _paintSupport(Canvas canvas) {
+  canvas.drawLine(
+    const Offset(238, 65),
+    const Offset(442, 65),
+    Paint()
+      ..strokeWidth = 7
+      ..strokeCap = StrokeCap.round
+      ..color = DemoPalette.wood,
+  );
+  canvas.drawLine(
+    const Offset(340, 65),
+    ClothPose.shoulder,
+    Paint()..color = DemoPalette.wood,
   );
 }

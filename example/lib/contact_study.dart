@@ -23,6 +23,7 @@ class _ContactStudyState extends State<ContactStudy> {
   int replay = 0;
   bool playing = false, cloth = false, contacts = false;
   ClothCut cut = ClothCut.sleeve;
+  bool continuous = false;
   double cameraAngle = 0;
 
   void play(double progress) => setState(() {
@@ -79,6 +80,7 @@ class _ContactStudyState extends State<ContactStudy> {
             ContactArtwork(
               progress: progress,
               cloth: cloth,
+              continuous: continuous,
               cut: cut,
               contacts: contacts,
               cameraAngle: cameraAngle,
@@ -86,9 +88,29 @@ class _ContactStudyState extends State<ContactStudy> {
             const SizedBox(height: 12),
             Text(
               cloth
-                  ? 'A pinned shoulder, a shared elbow and a delayed cuff. Two rigid links meet under an overlapping fold; this is not flexible cloth.'
+                  ? continuous
+                        ? 'One printed strip bends continuously. The same marks stay on the cloth; inner and outer edges compress and stretch. This is authored planar deformation.'
+                        : 'A pinned shoulder, a shared elbow and a delayed cuff. Two rigid links meet under an overlapping fold; this is not flexible cloth.'
                   : 'The receiving hand closes before the giving hand lets go. Fingers stay at the edges of the sheet.',
             ),
+            if (cloth) ...[
+              const SizedBox(height: 12),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  for (final item in [
+                    (false, 'Articulated links'),
+                    (true, 'Continuous strip'),
+                  ])
+                    ChoiceChip(
+                      label: Text(item.$2),
+                      selected: continuous == item.$1,
+                      onSelected: (_) => setState(() => continuous = item.$1),
+                    ),
+                ],
+              ),
+            ],
             const SizedBox(height: 12),
             Wrap(
               spacing: 8,
@@ -157,8 +179,16 @@ class _ContactStudyState extends State<ContactStudy> {
             ),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Show contact points'),
-              subtitle: const Text('Blue is held. Coral is free.'),
+              title: Text(
+                cloth && continuous
+                    ? 'Show material points'
+                    : 'Show contact points',
+              ),
+              subtitle: Text(
+                cloth && continuous
+                    ? 'Blue is pinned. Coral follows the cloth.'
+                    : 'Blue is held. Coral is free.',
+              ),
               value: contacts,
               onChanged: (v) => setState(() => contacts = v),
             ),

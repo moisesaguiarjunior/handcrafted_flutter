@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Add an opt-in continuous printed-strip example beside the articulated baseline.
+  Reuse CraftBand lighting/shadows and retain bounded source images through replay;
+  planar deformation is explicit, without a new library API or cloth simulation.
+
 - Add example-only paper contact and articulated textile studies with explicit
   support overlap, material-space marks, finite external sampling and native
   controls. Keep continuous flexible folding an open investigation; no API change.

@@ -1,4 +1,5 @@
 import 'spatial_light_study.dart';
+import 'contact_study.dart';
 import 'pillow_study.dart';
 import 'fluffy_study.dart';
 
@@ -259,6 +260,7 @@ class _GalleryPage extends StatelessWidget {
     GalleryStudy.fluffy => const FluffyMaterialsStudy(),
     GalleryStudy.volume => const LocalVolumePlayground(),
     GalleryStudy.light => const SpatialLightStudy(),
+    GalleryStudy.contact => const ContactStudy(),
     GalleryStudy.softCraft => const SoftCraftPlayground(),
     GalleryStudy.pillows => const Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

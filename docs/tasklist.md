@@ -224,3 +224,14 @@ Consolidates the post-0.3.0 reviewed changes and supersedes the unshipped SDK-on
 0.3.1 patch plan. Padded enum migration is explicit. Release checks use the
 existing publishing/CI lanes; Git source delivery is separate from a pub.dev
 upload. [Release notes](releases/0.4.0.md).
+
+
+## Contact and articulated textile investigations
+
+- Synthetic paper handoff: shared sheet/hand transform, explicit support overlap,
+  print-safe fingers and out-of-order sampling proof implemented in examples.
+- Two textile cuts: pinned shoulder, mapped elbow, delayed free end and fixed
+  material-space marks implemented. This is a rigid-link baseline; a continuous
+  flexible fold and cloth memory remain unproven.
+- [Recipe and boundaries](contact-and-cloth.md). Exact independent review, CI,
+  visual acceptance and publication remain separate gates. No new package API.

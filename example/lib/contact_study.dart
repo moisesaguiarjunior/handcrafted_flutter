@@ -16,6 +16,8 @@ class ContactStudy extends StatefulWidget {
 }
 
 class _ContactStudyState extends State<ContactStudy> {
+  // Preserve native focus and prepared artwork while restarting only the clock.
+  final contentKey = GlobalKey();
   double? manual = 0;
   double start = 0;
   int replay = 0;
@@ -43,6 +45,7 @@ class _ContactStudyState extends State<ContactStudy> {
       builder: (context, time) {
         final progress = reduced ? 1.0 : manual ?? start + (1 - start) * time;
         return Column(
+          key: contentKey,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(

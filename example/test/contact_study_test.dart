@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:handcrafted_example/contact_artwork.dart';
 import 'package:handcrafted_example/contact_poses.dart';
@@ -223,6 +224,50 @@ void main() {
         isTrue,
       );
       expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+    },
+  );
+
+  testWidgets(
+    'keyboard Play, Pause and Replay retain the native control focus',
+    (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(body: SingleChildScrollView(child: ContactStudy())),
+        ),
+      );
+      final button = find.byKey(const ValueKey('contact-play'));
+      await tester.ensureVisible(button);
+      FocusNode controlFocus(String text) => Focus.of(
+        tester.element(find.descendant(of: button, matching: find.text(text))),
+      );
+      final original = controlFocus('Play');
+      original.requestFocus();
+      await tester.pump();
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.pump();
+      expect(controlFocus('Pause'), same(original));
+      expect(original.hasPrimaryFocus, isTrue);
+      await tester.pump(const Duration(milliseconds: 400));
+      final progress = tester
+          .widget<ContactArtwork>(find.byType(ContactArtwork))
+          .progress;
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.pump();
+      expect(controlFocus('Play'), same(original));
+      await tester.pump(const Duration(seconds: 1));
+      expect(
+        tester.widget<ContactArtwork>(find.byType(ContactArtwork)).progress,
+        progress,
+      );
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 6));
+      expect(controlFocus('Replay'), same(original));
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.pump();
+      expect(controlFocus('Pause'), same(original));
+      expect(original.hasPrimaryFocus, isTrue);
       await tester.pumpWidget(const SizedBox());
     },
   );

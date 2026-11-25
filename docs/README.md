@@ -55,3 +55,5 @@ belong in this package repository.
 - [Visible-contour fit, conservative stroke clearance and pocket controls](visible-fit-and-stroke-bounds.md):
   retained paint margins, one native pose/input transform, frozen-renderer proofs.
 - [Short matte nap and layered foam](short-nap.md): independent fibers and receiver-clipped layers.
+
+- [Contact and articulated cloth](contact-and-cloth.md): handoff, explicit support and rigid-link limits.

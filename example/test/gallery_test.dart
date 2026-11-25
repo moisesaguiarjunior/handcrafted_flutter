@@ -61,6 +61,7 @@ void main() {
           matching: find.byType(Scrollable),
         ),
       );
+      await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(ListTile, 'Stitch families'));
       await tester.pumpAndSettle();
       expect(find.byType(StitchPlayground), findsOneWidget);

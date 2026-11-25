@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Add example-only paper contact and articulated textile studies with explicit
+  support overlap, material-space marks, finite external sampling and native
+  controls. Keep continuous flexible folding an open investigation; no API change.
+
 ## 0.4.0
 
 - Keep root/example capture entrypoints Git-only; the prospective Pub archive

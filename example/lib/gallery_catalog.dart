@@ -6,6 +6,9 @@ enum GalleryStudy {
   /// Three substrates under a draggable world-space lamp.
   light,
 
+  /// Contact transfer and articulated textile recipes.
+  contact,
+
   /// Every material texture family.
   materials,
 
@@ -69,6 +72,7 @@ enum GalleryStudy {
 
 /// Human-readable study title.
 String galleryLabel(GalleryStudy study) => switch (study) {
+  GalleryStudy.contact => 'Contact & cloth',
   GalleryStudy.vocabulary => 'Material vocabulary',
   GalleryStudy.experience => 'Experience frame',
   GalleryStudy.cover => 'Start exploring',
@@ -95,6 +99,8 @@ String galleryLabel(GalleryStudy study) => switch (study) {
 
 /// A short orientation before interacting with a study.
 String galleryDescription(GalleryStudy study) => switch (study) {
+  GalleryStudy.contact =>
+    'Pass a sheet between hands, then release an articulated textile.',
   GalleryStudy.vocabulary =>
     'Change material themes while keeping native text, focus and selection.',
   GalleryStudy.experience =>
@@ -139,6 +145,7 @@ String galleryDescription(GalleryStudy study) => switch (study) {
 const galleryOrder = [
   GalleryStudy.cover,
   GalleryStudy.light,
+  GalleryStudy.contact,
   GalleryStudy.vocabulary,
   GalleryStudy.experience,
   GalleryStudy.spreading,

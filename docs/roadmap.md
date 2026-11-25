@@ -209,3 +209,13 @@ See [migration and boundaries](releases/0.4.0.md). The old 0.3.1 patch plan is
 superseded by this minor release because exhaustive profile switches change.
 Hosted publication, consumer adoption, scoped sharing and physical-device
 profiling remain separate.
+
+
+## Contacts before character abstractions
+
+A [synthetic contact study](contact-and-cloth.md) composes existing poses, parts,
+material and sewing. Paper support changes hands without losing attachment.
+Two textile geometries establish a rigid-link baseline with stable local marks;
+continuous flexible folding remains an investigation. Soft articulated figures,
+authored shared wind responses and two-sided folded paper are subsequent proofs,
+not promised character/physics APIs. Exact review and publication remain separate.

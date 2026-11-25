@@ -217,25 +217,34 @@ class _ContactStudyState extends State<ContactStudy> {
               ),
             if (recipe == MaterialRecipe.wind) ...[
               const Text('Breeze strength'),
-              Slider(
-                key: const ValueKey('gust-strength'),
-                value: windStrength,
-                onChanged: (v) => setState(() => windStrength = v),
+              MergeSemantics(
+                child: Semantics(
+                  label: 'Breeze strength',
+                  child: Slider(
+                    key: const ValueKey('gust-strength'),
+                    value: windStrength,
+                    semanticFormatterCallback: (v) =>
+                        '${(v * 100).round()} percent',
+                    onChanged: (v) => setState(() => windStrength = v),
+                  ),
+                ),
               ),
             ],
-            Semantics(
-              label: 'Gesture progress',
-              child: Slider(
-                key: const ValueKey('contact-progress'),
-                value: progress,
-                semanticFormatterCallback: (v) =>
-                    '${(v * 100).round()} percent',
-                onChanged: reduced
-                    ? null
-                    : (v) => setState(() {
-                        manual = v;
-                        playing = false;
-                      }),
+            MergeSemantics(
+              child: Semantics(
+                label: 'Gesture progress',
+                child: Slider(
+                  key: const ValueKey('contact-progress'),
+                  value: progress,
+                  semanticFormatterCallback: (v) =>
+                      '${(v * 100).round()} percent',
+                  onChanged: reduced
+                      ? null
+                      : (v) => setState(() {
+                          manual = v;
+                          playing = false;
+                        }),
+                ),
               ),
             ),
             Text(
@@ -263,16 +272,18 @@ class _ContactStudyState extends State<ContactStudy> {
               onChanged: (v) => setState(() => contacts = v),
             ),
             const Text('Turn the whole composition'),
-            Semantics(
-              label: 'Composition angle',
-              child: Slider(
-                key: const ValueKey('contact-camera-angle'),
-                value: cameraAngle,
-                min: -.12,
-                max: .12,
-                semanticFormatterCallback: (v) =>
-                    '${(v * 180 / 3.141592653589793).round()} degrees',
-                onChanged: (v) => setState(() => cameraAngle = v),
+            MergeSemantics(
+              child: Semantics(
+                label: 'Composition angle',
+                child: Slider(
+                  key: const ValueKey('contact-camera-angle'),
+                  value: cameraAngle,
+                  min: -.12,
+                  max: .12,
+                  semanticFormatterCallback: (v) =>
+                      '${(v * 180 / 3.141592653589793).round()} degrees',
+                  onChanged: (v) => setState(() => cameraAngle = v),
+                ),
               ),
             ),
           ],

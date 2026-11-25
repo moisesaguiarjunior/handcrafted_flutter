@@ -247,16 +247,12 @@ class _SurfaceStoryPainter extends CustomPainter {
       windArt.paint(canvas, wind!, note!, textures, light, guides: guides);
     }
     if (guides) {
-      for (final point in [
-        Offset(print!.size.width / 2, 0),
-        Offset(print!.size.width / 2, print!.size.height * .5),
-        Offset(print!.size.width / 2, print!.size.height - .01),
-      ]) {
+      for (final point in materialGuideSources(recipe, print!.size)) {
         canvas.drawCircle(
           surface!.surfacePoint(point).screen,
           4,
           Paint()
-            ..color = point.dy == 0
+            ..color = point == materialGuideSources(recipe, print!.size).first
                 ? DemoPalette.indigo
                 : DemoPalette.terracotta,
         );
@@ -267,3 +263,18 @@ class _SurfaceStoryPainter extends CustomPainter {
   @override
   bool shouldRepaint(_SurfaceStoryPainter old) => true;
 }
+
+/// Fixed support first, then moving material anchors. Paper follows its actual
+/// fold axes rather than borrowing a textile's top-center convention.
+List<Offset> materialGuideSources(MaterialRecipe recipe, Size size) =>
+    recipe == MaterialRecipe.paper
+    ? [
+        const Offset(80, 0),
+        const Offset(160, 0),
+        Offset(size.width, size.height / 2),
+      ]
+    : [
+        Offset(size.width / 2, 0),
+        Offset(size.width / 2, size.height * .5),
+        Offset(size.width / 2, size.height - .01),
+      ];

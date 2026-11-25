@@ -103,6 +103,21 @@ void main() {
     expect(FoldedPaperFrame(0).angles[1], greaterThan(math.pi / 2));
   });
 
+  test('paper guide uses its fixed hinge and tracks the second fold axis', () {
+    final sources = materialGuideSources(
+      MaterialRecipe.paper,
+      FoldedPaperFrame.size,
+    );
+    expect(sources[0], const Offset(80, 0));
+    expect(sources[1], const Offset(160, 0));
+    final fixed = FoldedPaperFrame(0).sheet.surfacePoint(sources[0]);
+    for (var i = 0; i <= 100; i++) {
+      final f = FoldedPaperFrame(i / 100);
+      near(f.sheet.surfacePoint(sources[0]), fixed);
+      near(f.sheet.attach(sources[1]), f.hinges[2]);
+    }
+  });
+
   test(
     'actual raster changes lining, retains print and random-access output',
     () async {
@@ -404,6 +419,45 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     },
   );
+
+  testWidgets('breeze adjustable semantics includes its name and value', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: SingleChildScrollView(
+            child: ContactStudy(initialRecipe: MaterialRecipe.wind),
+          ),
+        ),
+      ),
+    );
+    await tester.ensureVisible(find.byKey(const ValueKey('gust-strength')));
+    await tester.pumpAndSettle();
+    final node = tester.getSemantics(
+      find.byKey(const ValueKey('gust-strength')),
+    );
+    final data = node.getSemanticsData();
+    expect(data.label, contains('Breeze strength'));
+    expect(data.value, '100 percent');
+    expect(data.hasAction(ui.SemanticsAction.decrease), isTrue);
+    for (final item in [
+      ('contact-progress', 'Gesture progress'),
+      ('contact-camera-angle', 'Composition angle'),
+    ]) {
+      await tester.ensureVisible(find.byKey(ValueKey(item.$1)));
+      await tester.pumpAndSettle();
+      final control = tester
+          .getSemantics(find.byKey(ValueKey(item.$1)))
+          .getSemanticsData();
+      expect(control.label, contains(item.$2));
+      expect(control.value, isNotEmpty);
+      expect(control.hasAction(ui.SemanticsAction.increase), isTrue);
+    }
+    semantics.dispose();
+    await tester.pumpWidget(const SizedBox());
+  });
 
   testWidgets('sources survive frames and are disposed on recipe replacement', (
     tester,

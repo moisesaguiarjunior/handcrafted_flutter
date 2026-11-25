@@ -82,7 +82,11 @@ class WindArt {
       Paint()..color = DemoPalette.cream,
     );
     if (guides) {
-      c.drawCircle(held, 3, Paint()..color = DemoPalette.indigo);
+      c.drawCircle(
+        frame.note.attach(const Offset(0, 63)).screen,
+        3,
+        Paint()..color = DemoPalette.indigo,
+      );
       c.drawCircle(
         frame.note.surfacePoint(const Offset(130, 63)).screen,
         3,
